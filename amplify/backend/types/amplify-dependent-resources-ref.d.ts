@@ -1,5 +1,15 @@
 export type AmplifyDependentResourcesAttributes = {
+  "api": {
+    "writingtracker": {
+      "GraphQLAPIEndpointOutput": "string",
+      "GraphQLAPIIdOutput": "string",
+      "GraphQLAPIKeyOutput": "string"
+    }
+  },
   "auth": {
+    "userPoolGroups": {
+      "usersGroupRole": "string"
+    },
     "writingtracker4905aa4d": {
       "AppClientID": "string",
       "AppClientIDWeb": "string",

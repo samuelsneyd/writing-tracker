@@ -26,7 +26,11 @@
         }
       },
       "auth": {
-        "writingtracker4905aa4d": {}
+        "writingtracker4905aa4d": {},
+        "userPoolGroups": {}
+      },
+      "api": {
+        "writingtracker": {}
       }
     }
   }

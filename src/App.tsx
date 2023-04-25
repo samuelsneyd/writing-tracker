@@ -9,7 +9,7 @@ const saveBook = async () => {
   try {
     const book = await DataStore.save(
       new Book({
-        name: 'My Third Book',
+        name: 'A New Book',
       }),
     );
     console.log('Book saved successfully!', book);

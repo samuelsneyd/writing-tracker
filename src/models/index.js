@@ -3,10 +3,11 @@ import { initSchema } from '@aws-amplify/datastore';
 import { schema } from './schema';
 
 
+
 const { Book, WordCount, TimeWriting } = initSchema(schema);
 
 export {
   Book,
   WordCount,
-  TimeWriting,
+  TimeWriting
 };

@@ -4,15 +4,24 @@
     "apiName": "writingtracker",
     "serviceName": "AppSync",
     "defaultAuthType": {
-      "mode": "API_KEY",
-      "expirationTime": 30,
-      "apiKeyExpirationDate": "2023-05-25T07:30:05.734Z",
-      "keyDescription": "writingtrackerapikey"
+      "mode": "AMAZON_COGNITO_USER_POOLS",
+      "cognitoUserPoolId": "authwritingtracker4905aa4d"
     },
     "conflictResolution": {
       "defaultResolutionStrategy": {
         "type": "AUTOMERGE"
       }
-    }
+    },
+    "additionalAuthTypes": [
+      {
+        "mode": "API_KEY",
+        "expirationTime": 30,
+        "apiKeyExpirationDate": "2023-05-25T21:35:41.814Z",
+        "keyDescription": "dev api key"
+      },
+      {
+        "mode": "AWS_IAM"
+      }
+    ]
   }
 }
