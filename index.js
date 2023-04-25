@@ -5,14 +5,21 @@
 import { AppRegistry } from 'react-native';
 import App from './src/App';
 import { name as appName } from './app.json';
-import { Amplify, Auth } from 'aws-amplify';
+import { Amplify, DataStore } from 'aws-amplify';
 import awsmobile from './src/aws-exports'; // Amplify CLI
+import { SQLiteAdapter } from '@aws-amplify/datastore-storage-adapter';
+import 'core-js/full/symbol/async-iterator';
 
 Amplify.configure({
   ...awsmobile,
   Analytics: {
-    disabled: true
-  }
+    disabled: true,
+  },
+});
+
+DataStore.configure({
+  // SQLite adapter promises improved local performance
+  storageAdapter: SQLiteAdapter,
 });
 
 AppRegistry.registerComponent(appName, () => App);

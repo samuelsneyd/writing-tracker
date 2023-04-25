@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "serviceConfiguration": {
+    "apiName": "writingtracker",
+    "serviceName": "AppSync",
+    "defaultAuthType": {
+      "mode": "API_KEY",
+      "expirationTime": 30,
+      "apiKeyExpirationDate": "2023-05-25T07:30:05.734Z",
+      "keyDescription": "writingtrackerapikey"
+    },
+    "conflictResolution": {
+      "defaultResolutionStrategy": {
+        "type": "AUTOMERGE"
+      }
+    }
+  }
+}
