@@ -1,0 +1,33 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-writingtracker-dev-142341-authRole",
+      "UnauthRoleArn": "arn:aws:iam::708059113076:role/amplify-writingtracker-dev-142341-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::708059113076:role/amplify-writingtracker-dev-142341-authRole",
+      "Region": "ap-southeast-2",
+      "DeploymentBucketName": "amplify-writingtracker-dev-142341-deployment",
+      "UnauthRoleName": "amplify-writingtracker-dev-142341-unauthRole",
+      "StackName": "amplify-writingtracker-dev-142341",
+      "StackId": "arn:aws:cloudformation:ap-southeast-2:708059113076:stack/amplify-writingtracker-dev-142341/335d5550-e310-11ed-adbc-02fcc7d94c84",
+      "AmplifyAppId": "d36sov6sgsfpbp",
+      "AuthTriggerTemplateURL": "https://s3.amazonaws.com/amplify-writingtracker-dev-142341-deployment/amplify-cfn-templates/auth/auth-trigger-cloudformation-template.json"
+    },
+    "categories": {
+      "function": {
+        "writingtrackere532e309PostConfirmation": {
+          "GROUP": "users",
+          "deploymentBucketName": "amplify-writingtracker-dev-142341-deployment",
+          "s3Key": "amplify-builds/writingtrackere532e309PostConfirmation-57623374594f5135374a-build.zip"
+        },
+        "writingtracker4905aa4dPostConfirmation": {
+          "GROUP": "users",
+          "deploymentBucketName": "amplify-writingtracker-dev-142341-deployment",
+          "s3Key": "amplify-builds/writingtracker4905aa4dPostConfirmation-3579554b6a322b395767-build.zip"
+        }
+      },
+      "auth": {
+        "writingtracker4905aa4d": {}
+      }
+    }
+  }
+}

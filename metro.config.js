@@ -6,6 +6,11 @@
  */
 
 module.exports = {
+  resolver: {
+    blockList: [
+      /amplify\/#current-cloud-backend\/.*/
+    ],
+  },
   transformer: {
     getTransformOptions: async () => ({
       transform: {
