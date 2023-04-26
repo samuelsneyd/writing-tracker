@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import { useEffect, useState } from 'react';
 import { Button, Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
 import { withAuthenticator } from 'aws-amplify-react-native';
 import { DataStore } from 'aws-amplify';
 import { Book } from './models';
@@ -9,7 +10,7 @@ const saveBook = async () => {
   try {
     const book = await DataStore.save(
       new Book({
-        name: 'A New Book',
+        name: 'This is a Book',
       }),
     );
     console.log('Book saved successfully!', book);
@@ -27,13 +28,38 @@ const fetchBooks = async () => {
   }
 };
 
+/**
+ * Wipes the local data store only, leaving the cloud store untouched.
+ */
+const wipeDataStore = async () => {
+  try {
+    await DataStore.clear();
+  } catch (error) {
+    console.log('Error wiping data', error);
+  }
+};
+
 const App = () => {
+  const [books, setBooks] = useState<Book[]>([]);
+
+  useEffect(() => {
+    const sub = DataStore.observeQuery(Book, book => book).subscribe(({ items }) => {
+      setBooks(items);
+    });
+
+    return () => {
+      sub.unsubscribe();
+    };
+  }, []);
+
   return (
     <NavigationContainer>
       <View>
         <Text>Hello there.</Text>
         <Button title="Add Data" onPress={saveBook} />
         <Button title="Fetch Data" onPress={fetchBooks} />
+        <Button title="Wipe Local Data" onPress={wipeDataStore} />
+        {books.map(book => <Text key={book.id}>{book.name}</Text>)}
       </View>
     </NavigationContainer>
   );
