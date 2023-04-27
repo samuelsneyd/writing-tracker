@@ -4,7 +4,7 @@ import { Button, Text, View } from 'react-native';
 import { DataStore } from 'aws-amplify';
 import { Book } from '../../models';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../../App';
+import { RootStackParamList } from '../../types/types';
 
 
 const saveBook = async () => {

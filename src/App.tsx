@@ -4,12 +4,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { withAuthenticator } from 'aws-amplify-react-native';
 import HomeScreen from './screens/HomeScreen/HomeScreen';
 import DetailsScreen from './screens/DetailsScreen/DetailsScreen';
+import { RootStackParamList } from './types/types';
 
-export type RootStackParamList = {
-  // ScreenName: Props | undefined
-  Home: undefined;
-  Details: undefined;
-};
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
