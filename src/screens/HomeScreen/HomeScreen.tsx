@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react';
 import { Button, Text, View } from 'react-native';
 import { DataStore } from 'aws-amplify';
 import { Book } from '../../models';
+import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../../App';
 
 
 const saveBook = async () => {
@@ -38,7 +40,9 @@ const wipeDataStore = async () => {
   }
 };
 
-const HomeScreen = () => {
+type HomeScreenProps = NativeStackScreenProps<RootStackParamList, 'Home'>
+
+const HomeScreen = ({ navigation }: HomeScreenProps) => {
   const [books, setBooks] = useState<Book[]>([]);
 
   useEffect(() => {
@@ -57,6 +61,7 @@ const HomeScreen = () => {
       <Button title="Add Data" onPress={saveBook} />
       <Button title="Fetch Data" onPress={fetchBooks} />
       <Button title="Wipe Local Data" onPress={wipeDataStore} />
+      <Button title="Go to Details" onPress={() => navigation.navigate('Details')} />
       {books.map(book => <Text key={book.id}>{book.name}</Text>)}
     </View>
   );

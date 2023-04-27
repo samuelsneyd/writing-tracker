@@ -5,8 +5,13 @@ import { withAuthenticator } from 'aws-amplify-react-native';
 import HomeScreen from './screens/HomeScreen/HomeScreen';
 import DetailsScreen from './screens/DetailsScreen/DetailsScreen';
 
+export type RootStackParamList = {
+  // ScreenName: Props | undefined
+  Home: undefined;
+  Details: undefined;
+};
 
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const App = () => {
   return (
