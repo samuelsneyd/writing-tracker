@@ -1,17 +1,16 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import { Button, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
-import type { RootStackParamList } from '../../types/types';
+import type { ProjectsStackParamList } from '../../types/types';
 import { DataStore } from 'aws-amplify';
 import { Project } from '../../models';
 import { capitalCase } from 'change-case';
 import { titleCase } from 'title-case';
 
+type ProjectDetailsScreenProps = NativeStackScreenProps<ProjectsStackParamList, 'Details'>
 
-type DetailsScreenProps = NativeStackScreenProps<RootStackParamList, 'Details'>
-
-const ProjectDetailsScreen = ({ route, navigation }: DetailsScreenProps) => {
+const ProjectDetailsScreen = ({ route }: ProjectDetailsScreenProps) => {
   const [project, setProject] = useState<Project>();
 
   useEffect(() => {
@@ -28,7 +27,6 @@ const ProjectDetailsScreen = ({ route, navigation }: DetailsScreenProps) => {
         </>
         : <Text>No project found!</Text>
       }
-      <Button title="Go to Home" onPress={() => navigation.navigate('Home')} />
     </View>
   );
 };
