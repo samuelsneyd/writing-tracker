@@ -5,7 +5,8 @@ import { DataStore } from 'aws-amplify';
 import { Project } from '../../models';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { RootStackParamList } from '../../types/types';
-
+import { capitalCase } from 'change-case';
+import { titleCase } from 'title-case';
 
 const saveProjects = async () => {
   try {
@@ -19,20 +20,20 @@ const saveProjects = async () => {
       DataStore.save(
         new Project({
           name: 'This is a Journal',
-          projectType: 'JOURNAL'
-        })
+          projectType: 'JOURNAL',
+        }),
       ),
       DataStore.save(
         new Project({
           name: 'This is a Blog',
-          projectType: 'BLOG'
-        })
+          projectType: 'BLOG',
+        }),
       ),
       DataStore.save(
         new Project({
           name: 'This is another project',
-          projectType: 'OTHER'
-        })
+          projectType: 'OTHER',
+        }),
       ),
     ]);
     console.log('Projects saved successfully!', projects);
@@ -44,18 +45,15 @@ const saveProjects = async () => {
 const fetchProjects = async () => {
   try {
     const projects = await DataStore.query(Project);
-    console.log('Posts retrieved successfully!', JSON.stringify(projects, null, 2));
+    console.log('Projects retrieved successfully!', JSON.stringify(projects, null, 2));
   } catch (error) {
-    console.log('Error retrieving books', error);
+    console.log('Error retrieving projects', error);
   }
 };
 
-/**
- * Wipes the local data store only, leaving the cloud store untouched.
- */
-const wipeDataStore = async () => {
+const wipeProjects = async () => {
   try {
-    await DataStore.clear();
+    await DataStore.delete(Project, project => project);
   } catch (error) {
     console.log('Error wiping data', error);
   }
@@ -67,9 +65,8 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
   const [projects, setProjects] = useState<Project[]>([]);
 
   useEffect(() => {
-    const sub = DataStore.observeQuery(Project, project => project).subscribe(({ items }) => {
-      setProjects(items);
-    });
+    const sub = DataStore.observeQuery(Project, project => project)
+      .subscribe(({ items }) => setProjects(items));
 
     return () => {
       sub.unsubscribe();
@@ -84,12 +81,15 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
       <View style={{ flex: 2, backgroundColor: 'skyblue', justifyContent: 'space-evenly', alignItems: 'center' }}>
         <Button title="Add Data" onPress={saveProjects} />
         <Button title="Fetch Data" onPress={fetchProjects} />
-        <Button title="Wipe Local Data" onPress={wipeDataStore} />
+        <Button title="Wipe Local Data" onPress={wipeProjects} />
         <Button title="Go to Details" onPress={() => navigation.navigate('Details')} />
       </View>
       <View style={{ flex: 3, backgroundColor: 'steelblue', justifyContent: 'space-evenly', alignItems: 'center' }}>
         {projects.map(project =>
-          <Text style={{ color: 'white' }} key={project.id}>{project.projectType}: {project.name}</Text>)}
+          <Text style={{ color: 'white' }} key={project.id}>
+            {capitalCase(project.projectType)}: {titleCase(project.name)}
+          </Text>,
+        )}
       </View>
     </View>
   );
