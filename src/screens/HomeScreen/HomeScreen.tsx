@@ -8,6 +8,7 @@ import type { RootStackParamList } from '../../types/types';
 import { capitalCase } from 'change-case';
 import { titleCase } from 'title-case';
 
+
 type HomeScreenProps = NativeStackScreenProps<RootStackParamList, 'Home'>
 
 const HomeScreen = ({ navigation }: HomeScreenProps) => {
@@ -87,7 +88,7 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
           <Button
             key={project.id}
             title={`${capitalCase(project.projectType)}: ${titleCase(project.name)}`}
-            onPress={() => navigation.navigate('Details', { id: project.id })}
+            onPress={() => navigation.navigate('Details', { id: project.id, name: project.name })}
           />,
         )}
       </View>
