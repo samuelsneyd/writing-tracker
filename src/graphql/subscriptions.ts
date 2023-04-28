@@ -2,14 +2,15 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const onCreateBook = /* GraphQL */ `
-  subscription OnCreateBook(
-    $filter: ModelSubscriptionBookFilterInput
+export const onCreateProject = /* GraphQL */ `
+  subscription OnCreateProject(
+    $filter: ModelSubscriptionProjectFilterInput
     $owner: String
   ) {
-    onCreateBook(filter: $filter, owner: $owner) {
+    onCreateProject(filter: $filter, owner: $owner) {
       id
       name
+      projectType
       wordCounts {
         items {
           id
@@ -20,7 +21,7 @@ export const onCreateBook = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
-          bookWordCountsId
+          projectWordCountsId
         }
         nextToken
         startedAt
@@ -35,7 +36,7 @@ export const onCreateBook = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
-          bookTimeSpentWritingId
+          projectTimeSpentWritingId
         }
         nextToken
         startedAt
@@ -49,14 +50,15 @@ export const onCreateBook = /* GraphQL */ `
     }
   }
 `;
-export const onUpdateBook = /* GraphQL */ `
-  subscription OnUpdateBook(
-    $filter: ModelSubscriptionBookFilterInput
+export const onUpdateProject = /* GraphQL */ `
+  subscription OnUpdateProject(
+    $filter: ModelSubscriptionProjectFilterInput
     $owner: String
   ) {
-    onUpdateBook(filter: $filter, owner: $owner) {
+    onUpdateProject(filter: $filter, owner: $owner) {
       id
       name
+      projectType
       wordCounts {
         items {
           id
@@ -67,7 +69,7 @@ export const onUpdateBook = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
-          bookWordCountsId
+          projectWordCountsId
         }
         nextToken
         startedAt
@@ -82,7 +84,7 @@ export const onUpdateBook = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
-          bookTimeSpentWritingId
+          projectTimeSpentWritingId
         }
         nextToken
         startedAt
@@ -96,14 +98,15 @@ export const onUpdateBook = /* GraphQL */ `
     }
   }
 `;
-export const onDeleteBook = /* GraphQL */ `
-  subscription OnDeleteBook(
-    $filter: ModelSubscriptionBookFilterInput
+export const onDeleteProject = /* GraphQL */ `
+  subscription OnDeleteProject(
+    $filter: ModelSubscriptionProjectFilterInput
     $owner: String
   ) {
-    onDeleteBook(filter: $filter, owner: $owner) {
+    onDeleteProject(filter: $filter, owner: $owner) {
       id
       name
+      projectType
       wordCounts {
         items {
           id
@@ -114,7 +117,7 @@ export const onDeleteBook = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
-          bookWordCountsId
+          projectWordCountsId
         }
         nextToken
         startedAt
@@ -129,7 +132,7 @@ export const onDeleteBook = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
-          bookTimeSpentWritingId
+          projectTimeSpentWritingId
         }
         nextToken
         startedAt
@@ -151,9 +154,10 @@ export const onCreateWordCount = /* GraphQL */ `
     onCreateWordCount(filter: $filter, owner: $owner) {
       id
       words
-      book {
+      project {
         id
         name
+        projectType
         wordCounts {
           nextToken
           startedAt
@@ -175,7 +179,7 @@ export const onCreateWordCount = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
-      bookWordCountsId
+      projectWordCountsId
     }
   }
 `;
@@ -187,9 +191,10 @@ export const onUpdateWordCount = /* GraphQL */ `
     onUpdateWordCount(filter: $filter, owner: $owner) {
       id
       words
-      book {
+      project {
         id
         name
+        projectType
         wordCounts {
           nextToken
           startedAt
@@ -211,7 +216,7 @@ export const onUpdateWordCount = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
-      bookWordCountsId
+      projectWordCountsId
     }
   }
 `;
@@ -223,9 +228,10 @@ export const onDeleteWordCount = /* GraphQL */ `
     onDeleteWordCount(filter: $filter, owner: $owner) {
       id
       words
-      book {
+      project {
         id
         name
+        projectType
         wordCounts {
           nextToken
           startedAt
@@ -247,7 +253,7 @@ export const onDeleteWordCount = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
-      bookWordCountsId
+      projectWordCountsId
     }
   }
 `;
@@ -259,9 +265,10 @@ export const onCreateTimeWriting = /* GraphQL */ `
     onCreateTimeWriting(filter: $filter, owner: $owner) {
       id
       minutes
-      book {
+      project {
         id
         name
+        projectType
         wordCounts {
           nextToken
           startedAt
@@ -283,7 +290,7 @@ export const onCreateTimeWriting = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
-      bookTimeSpentWritingId
+      projectTimeSpentWritingId
     }
   }
 `;
@@ -295,9 +302,10 @@ export const onUpdateTimeWriting = /* GraphQL */ `
     onUpdateTimeWriting(filter: $filter, owner: $owner) {
       id
       minutes
-      book {
+      project {
         id
         name
+        projectType
         wordCounts {
           nextToken
           startedAt
@@ -319,7 +327,7 @@ export const onUpdateTimeWriting = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
-      bookTimeSpentWritingId
+      projectTimeSpentWritingId
     }
   }
 `;
@@ -331,9 +339,10 @@ export const onDeleteTimeWriting = /* GraphQL */ `
     onDeleteTimeWriting(filter: $filter, owner: $owner) {
       id
       minutes
-      book {
+      project {
         id
         name
+        projectType
         wordCounts {
           nextToken
           startedAt
@@ -355,7 +364,7 @@ export const onDeleteTimeWriting = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
-      bookTimeSpentWritingId
+      projectTimeSpentWritingId
     }
   }
 `;

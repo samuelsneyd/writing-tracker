@@ -2,12 +2,18 @@
 import { initSchema } from '@aws-amplify/datastore';
 import { schema } from './schema';
 
+const ProjectType = {
+  "BOOK": "BOOK",
+  "JOURNAL": "JOURNAL",
+  "BLOG": "BLOG",
+  "OTHER": "OTHER"
+};
 
-
-const { Book, WordCount, TimeWriting } = initSchema(schema);
+const { Project, WordCount, TimeWriting } = initSchema(schema);
 
 export {
-  Book,
+  Project,
   WordCount,
-  TimeWriting
+  TimeWriting,
+  ProjectType
 };

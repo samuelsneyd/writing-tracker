@@ -2,24 +2,32 @@
 # all models in this schema. Learn more about authorization rules here: https://docs.amplify.aws/cli/graphql/authorization-rules
 input AMPLIFY { globalAuthRule: AuthRule = { allow: public } } # FOR TESTING ONLY!
 
-type Book @model @auth(rules: [{ allow: owner }]) {
+type Project @model @auth(rules: [{ allow: owner }]) {
   id: ID!
   name: String!
+  projectType: ProjectType!
   wordCounts: [WordCount] @hasMany
   TimeSpentWriting: [TimeWriting] @hasMany
   owner: String @auth(rules: [{ allow: owner, operations: [read] }])
 }
 
+enum ProjectType {
+  BOOK
+  JOURNAL
+  BLOG
+  OTHER
+}
+
 type WordCount @model @auth(rules: [{ allow: owner }]) {
   id: ID!
   words: Int!
-  book: Book @belongsTo
+  project: Project @belongsTo
   owner: String @auth(rules: [{ allow: owner, operations: [read] }])
 }
 
 type TimeWriting @model @auth(rules: [{ allow: owner }]) {
   id: ID!
   minutes: Int!
-  book: Book @belongsTo
+  project: Project @belongsTo
   owner: String @auth(rules: [{ allow: owner, operations: [read] }])
 }

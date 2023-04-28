@@ -2,11 +2,12 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const getBook = /* GraphQL */ `
-  query GetBook($id: ID!) {
-    getBook(id: $id) {
+export const getProject = /* GraphQL */ `
+  query GetProject($id: ID!) {
+    getProject(id: $id) {
       id
       name
+      projectType
       wordCounts {
         items {
           id
@@ -17,7 +18,7 @@ export const getBook = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
-          bookWordCountsId
+          projectWordCountsId
         }
         nextToken
         startedAt
@@ -32,7 +33,7 @@ export const getBook = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
-          bookTimeSpentWritingId
+          projectTimeSpentWritingId
         }
         nextToken
         startedAt
@@ -46,16 +47,17 @@ export const getBook = /* GraphQL */ `
     }
   }
 `;
-export const listBooks = /* GraphQL */ `
-  query ListBooks(
-    $filter: ModelBookFilterInput
+export const listProjects = /* GraphQL */ `
+  query ListProjects(
+    $filter: ModelProjectFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    listBooks(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listProjects(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
         name
+        projectType
         wordCounts {
           nextToken
           startedAt
@@ -76,14 +78,14 @@ export const listBooks = /* GraphQL */ `
     }
   }
 `;
-export const syncBooks = /* GraphQL */ `
-  query SyncBooks(
-    $filter: ModelBookFilterInput
+export const syncProjects = /* GraphQL */ `
+  query SyncProjects(
+    $filter: ModelProjectFilterInput
     $limit: Int
     $nextToken: String
     $lastSync: AWSTimestamp
   ) {
-    syncBooks(
+    syncProjects(
       filter: $filter
       limit: $limit
       nextToken: $nextToken
@@ -92,6 +94,7 @@ export const syncBooks = /* GraphQL */ `
       items {
         id
         name
+        projectType
         wordCounts {
           nextToken
           startedAt
@@ -117,9 +120,10 @@ export const getWordCount = /* GraphQL */ `
     getWordCount(id: $id) {
       id
       words
-      book {
+      project {
         id
         name
+        projectType
         wordCounts {
           nextToken
           startedAt
@@ -141,7 +145,7 @@ export const getWordCount = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
-      bookWordCountsId
+      projectWordCountsId
     }
   }
 `;
@@ -155,9 +159,10 @@ export const listWordCounts = /* GraphQL */ `
       items {
         id
         words
-        book {
+        project {
           id
           name
+          projectType
           owner
           createdAt
           updatedAt
@@ -171,7 +176,7 @@ export const listWordCounts = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
-        bookWordCountsId
+        projectWordCountsId
       }
       nextToken
       startedAt
@@ -194,9 +199,10 @@ export const syncWordCounts = /* GraphQL */ `
       items {
         id
         words
-        book {
+        project {
           id
           name
+          projectType
           owner
           createdAt
           updatedAt
@@ -210,7 +216,7 @@ export const syncWordCounts = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
-        bookWordCountsId
+        projectWordCountsId
       }
       nextToken
       startedAt
@@ -222,9 +228,10 @@ export const getTimeWriting = /* GraphQL */ `
     getTimeWriting(id: $id) {
       id
       minutes
-      book {
+      project {
         id
         name
+        projectType
         wordCounts {
           nextToken
           startedAt
@@ -246,7 +253,7 @@ export const getTimeWriting = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
-      bookTimeSpentWritingId
+      projectTimeSpentWritingId
     }
   }
 `;
@@ -260,9 +267,10 @@ export const listTimeWritings = /* GraphQL */ `
       items {
         id
         minutes
-        book {
+        project {
           id
           name
+          projectType
           owner
           createdAt
           updatedAt
@@ -276,7 +284,7 @@ export const listTimeWritings = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
-        bookTimeSpentWritingId
+        projectTimeSpentWritingId
       }
       nextToken
       startedAt
@@ -299,9 +307,10 @@ export const syncTimeWritings = /* GraphQL */ `
       items {
         id
         minutes
-        book {
+        project {
           id
           name
+          projectType
           owner
           createdAt
           updatedAt
@@ -315,7 +324,7 @@ export const syncTimeWritings = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
-        bookTimeSpentWritingId
+        projectTimeSpentWritingId
       }
       nextToken
       startedAt

@@ -2,7 +2,14 @@ import { ModelInit, MutableModel } from "@aws-amplify/datastore";
 // @ts-ignore
 import { LazyLoading, LazyLoadingDisabled, AsyncCollection, AsyncItem } from "@aws-amplify/datastore";
 
-type BookMetaData = {
+export enum ProjectType {
+  BOOK = "BOOK",
+  JOURNAL = "JOURNAL",
+  BLOG = "BLOG",
+  OTHER = "OTHER"
+}
+
+type ProjectMetaData = {
   readOnlyFields: 'createdAt' | 'updatedAt';
 }
 
@@ -14,9 +21,10 @@ type TimeWritingMetaData = {
   readOnlyFields: 'createdAt' | 'updatedAt';
 }
 
-type EagerBook = {
+type EagerProject = {
   readonly id: string;
   readonly name: string;
+  readonly projectType: ProjectType | keyof typeof ProjectType;
   readonly wordCounts?: (WordCount | null)[] | null;
   readonly TimeSpentWriting?: (TimeWriting | null)[] | null;
   readonly owner?: string | null;
@@ -24,9 +32,10 @@ type EagerBook = {
   readonly updatedAt?: string | null;
 }
 
-type LazyBook = {
+type LazyProject = {
   readonly id: string;
   readonly name: string;
+  readonly projectType: ProjectType | keyof typeof ProjectType;
   readonly wordCounts: AsyncCollection<WordCount>;
   readonly TimeSpentWriting: AsyncCollection<TimeWriting>;
   readonly owner?: string | null;
@@ -34,16 +43,16 @@ type LazyBook = {
   readonly updatedAt?: string | null;
 }
 
-export declare type Book = LazyLoading extends LazyLoadingDisabled ? EagerBook : LazyBook
+export declare type Project = LazyLoading extends LazyLoadingDisabled ? EagerProject : LazyProject
 
-export declare const Book: (new (init: ModelInit<Book, BookMetaData>) => Book) & {
-  copyOf(source: Book, mutator: (draft: MutableModel<Book, BookMetaData>) => MutableModel<Book, BookMetaData> | void): Book;
+export declare const Project: (new (init: ModelInit<Project, ProjectMetaData>) => Project) & {
+  copyOf(source: Project, mutator: (draft: MutableModel<Project, ProjectMetaData>) => MutableModel<Project, ProjectMetaData> | void): Project;
 }
 
 type EagerWordCount = {
   readonly id: string;
   readonly words: number;
-  readonly book?: Book | null;
+  readonly project?: Project | null;
   readonly owner?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
@@ -52,7 +61,7 @@ type EagerWordCount = {
 type LazyWordCount = {
   readonly id: string;
   readonly words: number;
-  readonly book: AsyncItem<Book | undefined>;
+  readonly project: AsyncItem<Project | undefined>;
   readonly owner?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
@@ -67,7 +76,7 @@ export declare const WordCount: (new (init: ModelInit<WordCount, WordCountMetaDa
 type EagerTimeWriting = {
   readonly id: string;
   readonly minutes: number;
-  readonly book?: Book | null;
+  readonly project?: Project | null;
   readonly owner?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
@@ -76,7 +85,7 @@ type EagerTimeWriting = {
 type LazyTimeWriting = {
   readonly id: string;
   readonly minutes: number;
-  readonly book: AsyncItem<Book | undefined>;
+  readonly project: AsyncItem<Project | undefined>;
   readonly owner?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;

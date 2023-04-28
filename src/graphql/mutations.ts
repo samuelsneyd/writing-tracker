@@ -2,14 +2,15 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const createBook = /* GraphQL */ `
-  mutation CreateBook(
-    $input: CreateBookInput!
-    $condition: ModelBookConditionInput
+export const createProject = /* GraphQL */ `
+  mutation CreateProject(
+    $input: CreateProjectInput!
+    $condition: ModelProjectConditionInput
   ) {
-    createBook(input: $input, condition: $condition) {
+    createProject(input: $input, condition: $condition) {
       id
       name
+      projectType
       wordCounts {
         items {
           id
@@ -20,7 +21,7 @@ export const createBook = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
-          bookWordCountsId
+          projectWordCountsId
         }
         nextToken
         startedAt
@@ -35,7 +36,7 @@ export const createBook = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
-          bookTimeSpentWritingId
+          projectTimeSpentWritingId
         }
         nextToken
         startedAt
@@ -49,14 +50,15 @@ export const createBook = /* GraphQL */ `
     }
   }
 `;
-export const updateBook = /* GraphQL */ `
-  mutation UpdateBook(
-    $input: UpdateBookInput!
-    $condition: ModelBookConditionInput
+export const updateProject = /* GraphQL */ `
+  mutation UpdateProject(
+    $input: UpdateProjectInput!
+    $condition: ModelProjectConditionInput
   ) {
-    updateBook(input: $input, condition: $condition) {
+    updateProject(input: $input, condition: $condition) {
       id
       name
+      projectType
       wordCounts {
         items {
           id
@@ -67,7 +69,7 @@ export const updateBook = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
-          bookWordCountsId
+          projectWordCountsId
         }
         nextToken
         startedAt
@@ -82,7 +84,7 @@ export const updateBook = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
-          bookTimeSpentWritingId
+          projectTimeSpentWritingId
         }
         nextToken
         startedAt
@@ -96,14 +98,15 @@ export const updateBook = /* GraphQL */ `
     }
   }
 `;
-export const deleteBook = /* GraphQL */ `
-  mutation DeleteBook(
-    $input: DeleteBookInput!
-    $condition: ModelBookConditionInput
+export const deleteProject = /* GraphQL */ `
+  mutation DeleteProject(
+    $input: DeleteProjectInput!
+    $condition: ModelProjectConditionInput
   ) {
-    deleteBook(input: $input, condition: $condition) {
+    deleteProject(input: $input, condition: $condition) {
       id
       name
+      projectType
       wordCounts {
         items {
           id
@@ -114,7 +117,7 @@ export const deleteBook = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
-          bookWordCountsId
+          projectWordCountsId
         }
         nextToken
         startedAt
@@ -129,7 +132,7 @@ export const deleteBook = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
-          bookTimeSpentWritingId
+          projectTimeSpentWritingId
         }
         nextToken
         startedAt
@@ -151,9 +154,10 @@ export const createWordCount = /* GraphQL */ `
     createWordCount(input: $input, condition: $condition) {
       id
       words
-      book {
+      project {
         id
         name
+        projectType
         wordCounts {
           nextToken
           startedAt
@@ -175,7 +179,7 @@ export const createWordCount = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
-      bookWordCountsId
+      projectWordCountsId
     }
   }
 `;
@@ -187,9 +191,10 @@ export const updateWordCount = /* GraphQL */ `
     updateWordCount(input: $input, condition: $condition) {
       id
       words
-      book {
+      project {
         id
         name
+        projectType
         wordCounts {
           nextToken
           startedAt
@@ -211,7 +216,7 @@ export const updateWordCount = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
-      bookWordCountsId
+      projectWordCountsId
     }
   }
 `;
@@ -223,9 +228,10 @@ export const deleteWordCount = /* GraphQL */ `
     deleteWordCount(input: $input, condition: $condition) {
       id
       words
-      book {
+      project {
         id
         name
+        projectType
         wordCounts {
           nextToken
           startedAt
@@ -247,7 +253,7 @@ export const deleteWordCount = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
-      bookWordCountsId
+      projectWordCountsId
     }
   }
 `;
@@ -259,9 +265,10 @@ export const createTimeWriting = /* GraphQL */ `
     createTimeWriting(input: $input, condition: $condition) {
       id
       minutes
-      book {
+      project {
         id
         name
+        projectType
         wordCounts {
           nextToken
           startedAt
@@ -283,7 +290,7 @@ export const createTimeWriting = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
-      bookTimeSpentWritingId
+      projectTimeSpentWritingId
     }
   }
 `;
@@ -295,9 +302,10 @@ export const updateTimeWriting = /* GraphQL */ `
     updateTimeWriting(input: $input, condition: $condition) {
       id
       minutes
-      book {
+      project {
         id
         name
+        projectType
         wordCounts {
           nextToken
           startedAt
@@ -319,7 +327,7 @@ export const updateTimeWriting = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
-      bookTimeSpentWritingId
+      projectTimeSpentWritingId
     }
   }
 `;
@@ -331,9 +339,10 @@ export const deleteTimeWriting = /* GraphQL */ `
     deleteTimeWriting(input: $input, condition: $condition) {
       id
       minutes
-      book {
+      project {
         id
         name
+        projectType
         wordCounts {
           nextToken
           startedAt
@@ -355,7 +364,7 @@ export const deleteTimeWriting = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
-      bookTimeSpentWritingId
+      projectTimeSpentWritingId
     }
   }
 `;

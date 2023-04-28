@@ -1,7 +1,7 @@
 export const schema = {
     "models": {
-        "Book": {
-            "name": "Book",
+        "Project": {
+            "name": "Project",
             "fields": {
                 "id": {
                     "name": "id",
@@ -17,6 +17,15 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
+                "projectType": {
+                    "name": "projectType",
+                    "isArray": false,
+                    "type": {
+                        "enum": "ProjectType"
+                    },
+                    "isRequired": true,
+                    "attributes": []
+                },
                 "wordCounts": {
                     "name": "wordCounts",
                     "isArray": true,
@@ -28,7 +37,7 @@ export const schema = {
                     "isArrayNullable": true,
                     "association": {
                         "connectionType": "HAS_MANY",
-                        "associatedWith": "bookWordCountsId"
+                        "associatedWith": "projectWordCountsId"
                     }
                 },
                 "TimeSpentWriting": {
@@ -42,7 +51,7 @@ export const schema = {
                     "isArrayNullable": true,
                     "association": {
                         "connectionType": "HAS_MANY",
-                        "associatedWith": "bookTimeSpentWritingId"
+                        "associatedWith": "projectTimeSpentWritingId"
                     }
                 },
                 "owner": {
@@ -70,7 +79,7 @@ export const schema = {
                 }
             },
             "syncable": true,
-            "pluralName": "Books",
+            "pluralName": "Projects",
             "attributes": [
                 {
                     "type": "model",
@@ -114,17 +123,17 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "book": {
-                    "name": "book",
+                "project": {
+                    "name": "project",
                     "isArray": false,
                     "type": {
-                        "model": "Book"
+                        "model": "Project"
                     },
                     "isRequired": false,
                     "attributes": [],
                     "association": {
                         "connectionType": "BELONGS_TO",
-                        "targetName": "bookWordCountsId"
+                        "targetName": "projectWordCountsId"
                     }
                 },
                 "owner": {
@@ -196,17 +205,17 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "book": {
-                    "name": "book",
+                "project": {
+                    "name": "project",
                     "isArray": false,
                     "type": {
-                        "model": "Book"
+                        "model": "Project"
                     },
                     "isRequired": false,
                     "attributes": [],
                     "association": {
                         "connectionType": "BELONGS_TO",
-                        "targetName": "bookTimeSpentWritingId"
+                        "targetName": "projectTimeSpentWritingId"
                     }
                 },
                 "owner": {
@@ -262,8 +271,18 @@ export const schema = {
             ]
         }
     },
-    "enums": {},
+    "enums": {
+        "ProjectType": {
+            "name": "ProjectType",
+            "values": [
+                "BOOK",
+                "JOURNAL",
+                "BLOG",
+                "OTHER"
+            ]
+        }
+    },
     "nonModels": {},
     "codegenVersion": "3.4.2",
-    "version": "a6288d91a28ef3bf0ffdec933debb412"
+    "version": "c1517ec631b072427bc074fbd51b257d"
 };
