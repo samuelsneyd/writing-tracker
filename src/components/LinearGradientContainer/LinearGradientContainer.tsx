@@ -1,10 +1,11 @@
 import * as React from 'react';
 import LinearGradient from 'react-native-linear-gradient';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 type LinearGradientContainerProps = {
   children?: JSX.Element;
 }
+
 const LinearGradientContainer = ({ children }: LinearGradientContainerProps) => {
   return (
     <LinearGradient

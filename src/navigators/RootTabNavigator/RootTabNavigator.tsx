@@ -6,6 +6,7 @@ import HomeStackNavigator from '../HomeStackNavigator/HomeStackNavigator';
 import ProjectsStackNavigator from '../ProjectsStackNavigator/ProjectsStackNavigator';
 import SettingsStackNavigator from '../SettingsStackNavigator/SettingsStackNavigator';
 import BrowseStackNavigator from '../BrowseStackNavigator/BrowseStackNavigator';
+import AddDataStackNavigator from '../AddDataNavigator/AddDataStackNavigator';
 
 const Tab = createBottomTabNavigator<RootTabParamList>();
 
@@ -17,11 +18,20 @@ const RootTabNavigator = () => {
           const iconMap: Record<keyof RootTabParamList, () => string> = {
             HomeStackNavigator: () => focused ? 'ios-home' : 'ios-home-outline',
             ProjectsStackNavigator: () => focused ? 'ios-book' : 'ios-book-outline',
+            AddDataStackNavigator: () => focused ? 'ios-add-circle' : 'ios-add-circle',
             SettingsStackNavigator: () => focused ? 'ios-list' : 'ios-list-outline',
             BrowseStackNavigator: () => focused ? 'ios-grid' : 'ios-grid-outline',
           };
 
-          return <Ionicons name={iconMap[route.name]()} size={size} color={color} />;
+          const sizeMap: Record<keyof RootTabParamList, () => number> = {
+            HomeStackNavigator: () => 1,
+            ProjectsStackNavigator: () => 1,
+            AddDataStackNavigator: () => 1.5,
+            SettingsStackNavigator: () => 1,
+            BrowseStackNavigator: () => 1,
+          };
+
+          return <Ionicons name={iconMap[route.name]()} size={sizeMap[route.name]() * size} color={color} />;
         },
         tabBarStyle: {
           // backgroundColor: 'transparent',
@@ -43,6 +53,11 @@ const RootTabNavigator = () => {
         name="ProjectsStackNavigator"
         options={{ title: 'Projects' }}
         component={ProjectsStackNavigator}
+      />
+      <Tab.Screen
+        name="AddDataStackNavigator"
+        options={{ tabBarLabel: () => null }}
+        component={AddDataStackNavigator}
       />
       <Tab.Screen
         name="SettingsStackNavigator"

@@ -3,9 +3,9 @@ import { View } from 'react-native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { HomeStackParamList } from '../../types/types';
 
-type HomeScreenProps = NativeStackScreenProps<HomeStackParamList, 'Home'>
+type Props = NativeStackScreenProps<HomeStackParamList, 'Home'>
 
-const HomeScreen = ({ navigation }: HomeScreenProps) => {
+const HomeScreen = ({ navigation }: Props) => {
   return (
     <View style={{ flex: 1 }}>
       <View style={{ flex: 1, backgroundColor: 'powderblue' }} />

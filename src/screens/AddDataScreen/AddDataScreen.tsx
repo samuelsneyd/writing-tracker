@@ -1,16 +1,16 @@
 import * as React from 'react';
 import { Text, View } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { BrowseStackParamList } from '../../types/types';
+import { AddDataStackParamList } from '../../types/types';
 
-type Props = NativeStackScreenProps<BrowseStackParamList, 'Browse'>
+type Props = NativeStackScreenProps<AddDataStackParamList, 'AddData'>
 
-const BrowseScreen = ({ navigation }: Props) => {
+const AddDataScreen = ({ navigation }: Props) => {
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Browse</Text>
+      <Text>Add Data</Text>
     </View>
   );
 };
 
-export default BrowseScreen;
+export default AddDataScreen;

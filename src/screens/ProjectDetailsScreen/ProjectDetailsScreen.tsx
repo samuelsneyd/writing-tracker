@@ -8,9 +8,9 @@ import { Project } from '../../models';
 import { capitalCase } from 'change-case';
 import { titleCase } from 'title-case';
 
-type ProjectDetailsScreenProps = NativeStackScreenProps<ProjectsStackParamList, 'Details'>
+type Props = NativeStackScreenProps<ProjectsStackParamList, 'Details'>
 
-const ProjectDetailsScreen = ({ route }: ProjectDetailsScreenProps) => {
+const ProjectDetailsScreen = ({ route }: Props) => {
   const [project, setProject] = useState<Project>();
 
   useEffect(() => {

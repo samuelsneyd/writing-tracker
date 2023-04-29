@@ -2,6 +2,7 @@ type RootTabParamList = {
   // ScreenName: Props | undefined
   HomeStackNavigator: undefined;
   ProjectsStackNavigator: undefined;
+  AddDataStackNavigator: undefined;
   SettingsStackNavigator: undefined;
   BrowseStackNavigator: undefined;
 }
@@ -15,6 +16,10 @@ type ProjectsStackParamList = {
   Details: Required<{ id: string, name: string }>;
 };
 
+type AddDataStackParamList = {
+  AddData: undefined;
+}
+
 type SettingsStackParamList = {
   Settings: undefined;
 };
@@ -27,6 +32,7 @@ export type {
   RootTabParamList,
   HomeStackParamList,
   ProjectsStackParamList,
+  AddDataStackParamList,
   SettingsStackParamList,
   BrowseStackParamList,
 };
