@@ -23,7 +23,12 @@ const RootTabNavigator = () => {
 
           return <Ionicons name={iconMap[route.name]()} size={size} color={color} />;
         },
-
+        tabBarStyle: {
+          // backgroundColor: 'transparent',
+          // borderTopWidth: 0,
+          // position: 'absolute',
+          // elevation: 0,
+        },
         headerShown: false,
         tabBarActiveTintColor: undefined,
         tabBarInactiveTintColor: 'gray',
