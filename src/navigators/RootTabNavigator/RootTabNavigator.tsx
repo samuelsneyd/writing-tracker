@@ -18,7 +18,7 @@ const RootTabNavigator = () => {
           const iconMap: Record<keyof RootTabParamList, () => string> = {
             HomeStackNavigator: () => focused ? 'ios-home' : 'ios-home-outline',
             ProjectsStackNavigator: () => focused ? 'ios-book' : 'ios-book-outline',
-            AddDataStackNavigator: () => focused ? 'ios-add-circle' : 'ios-add-circle',
+            AddDataStackNavigator: () => focused ? 'ios-add-circle' : 'ios-add-circle-outline',
             SettingsStackNavigator: () => focused ? 'ios-list' : 'ios-list-outline',
             BrowseStackNavigator: () => focused ? 'ios-grid' : 'ios-grid-outline',
           };
