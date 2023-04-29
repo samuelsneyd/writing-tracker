@@ -5,7 +5,7 @@ type RootTabParamList = {
   AddDataStackNavigator: undefined;
   SettingsStackNavigator: undefined;
   BrowseStackNavigator: undefined;
-}
+};
 
 type HomeStackParamList = {
   Home: undefined;
@@ -18,7 +18,7 @@ type ProjectsStackParamList = {
 
 type AddDataStackParamList = {
   AddData: undefined;
-}
+};
 
 type SettingsStackParamList = {
   Settings: undefined;
@@ -28,6 +28,11 @@ type BrowseStackParamList = {
   Browse: undefined;
 };
 
+type Quote = {
+  quote: string;
+  author: string;
+};
+
 export type {
   RootTabParamList,
   HomeStackParamList,
@@ -35,4 +40,5 @@ export type {
   AddDataStackParamList,
   SettingsStackParamList,
   BrowseStackParamList,
+  Quote,
 };
