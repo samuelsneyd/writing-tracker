@@ -1,6 +1,6 @@
 # This "input" configures a global authorization rule to enable public access to
 # all models in this schema. Learn more about authorization rules here: https://docs.amplify.aws/cli/graphql/authorization-rules
-input AMPLIFY { globalAuthRule: AuthRule = { allow: public } } # FOR TESTING ONLY!
+# input AMPLIFY { globalAuthRule: AuthRule = { allow: public } } # FOR TESTING ONLY!
 
 type Project @model @auth(rules: [{ allow: owner }]) {
   id: ID!
@@ -21,13 +21,13 @@ enum ProjectType {
 type WordCount @model @auth(rules: [{ allow: owner }]) {
   id: ID!
   words: Int!
-  project: Project @belongsTo
+  project: Project! @belongsTo
   owner: String @auth(rules: [{ allow: owner, operations: [read] }])
 }
 
 type TimeWriting @model @auth(rules: [{ allow: owner }]) {
   id: ID!
   minutes: Int!
-  project: Project @belongsTo
+  project: Project! @belongsTo
   owner: String @auth(rules: [{ allow: owner, operations: [read] }])
 }

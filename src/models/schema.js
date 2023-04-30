@@ -129,7 +129,7 @@ export const schema = {
                     "type": {
                         "model": "Project"
                     },
-                    "isRequired": false,
+                    "isRequired": true,
                     "attributes": [],
                     "association": {
                         "connectionType": "BELONGS_TO",
@@ -211,7 +211,7 @@ export const schema = {
                     "type": {
                         "model": "Project"
                     },
-                    "isRequired": false,
+                    "isRequired": true,
                     "attributes": [],
                     "association": {
                         "connectionType": "BELONGS_TO",
@@ -284,5 +284,5 @@ export const schema = {
     },
     "nonModels": {},
     "codegenVersion": "3.4.2",
-    "version": "c1517ec631b072427bc074fbd51b257d"
+    "version": "ef19a26433bebd2278afb4a3ab38d5f0"
 };
