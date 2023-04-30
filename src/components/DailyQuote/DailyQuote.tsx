@@ -1,14 +1,14 @@
 import * as React from 'react';
-import { View, Text } from 'react-native';
+import { Layout, Text } from '@ui-kitten/components';
 import useDailyQuote from '../../hooks/useDailyQuote/useDailyQuote';
 
 const DailyQuote = () => {
   const dailyQuote = useDailyQuote();
 
   return (
-    <View>
-      <Text>"{dailyQuote.quote}" - {dailyQuote.author}</Text>
-    </View>
+    <Layout style={{ justifyContent: 'center', alignItems: 'center', margin: 10 }}>
+      <Text appearance="hint">"{dailyQuote.quote}" - {dailyQuote.author}</Text>
+    </Layout>
   );
 };
 

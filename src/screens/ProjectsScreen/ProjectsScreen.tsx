@@ -1,13 +1,12 @@
 import * as React from 'react';
-import { Button, Text, View } from 'react-native';
+import { SafeAreaView, StyleSheet } from 'react-native';
 import { useEffect, useState } from 'react';
 import { Project, WordCount } from '../../models';
 import { DataStore, Predicates } from 'aws-amplify';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { ProjectsStackParamList } from '../../types/types';
-import { capitalCase } from 'change-case';
-import { titleCase } from 'title-case';
 import util from '../../utils/util';
+import { Divider, Layout, TopNavigation, Text, Button, ListItem, List } from '@ui-kitten/components';
 
 type Props = NativeStackScreenProps<ProjectsStackParamList, 'Projects'>
 
@@ -107,30 +106,44 @@ const ProjectsScreen = ({ navigation }: Props) => {
     }
   };
 
+  const renderItem = ({ item }: { item: Project }) => {
+    return (
+      <ListItem
+        title={item.projectType}
+        description={item.name}
+        onPress={() => navigation.navigate('Details', { id: item.id, name: item.name })}
+      />
+    );
+  };
+
   return (
-    <View style={{ flex: 1, alignItems: 'center' }}>
-      <View style={{ flex: 1, justifyContent: 'center' }}>
-        <Text>Projects</Text>
-      </View>
-      <View style={{ flex: 2, justifyContent: 'space-around' }}>
-        <Button title="Add Projects" onPress={addProjects} />
-        <Button title="Fetch Projects" onPress={fetchProjects} />
-        <Button title="Wipe Projects" onPress={wipeProjects} />
-        <Button title="Add Word Counts" onPress={addWordCounts} />
-        <Button title="Fetch Word Counts" onPress={fetchWordCounts} />
-        <Button title="Wipe Word Counts" onPress={wipeWordCounts} />
-      </View>
-      <View style={{ flex: 3, justifyContent: 'space-evenly' }}>
-        {projects.map(project =>
-          <Button
-            key={project.id}
-            title={`${capitalCase(project.projectType)}: ${titleCase(project.name)}`}
-            onPress={() => navigation.navigate('Details', { id: project.id, name: project.name })}
-          />,
-        )}
-      </View>
-    </View>
+    <SafeAreaView style={{ flex: 1 }}>
+      <TopNavigation title="Projects" alignment="center" />
+      <Divider />
+      <Layout style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <Text category="h1">Projects</Text>
+        <Button size="small" onPress={addProjects}>Add Projects</Button>
+        <Button size="small" onPress={fetchProjects}>Fetch Projects</Button>
+        <Button size="small" onPress={wipeProjects}>Wipe Projects</Button>
+        <Button size="small" onPress={addWordCounts}>Add Word Counts</Button>
+        <Button size="small" onPress={fetchWordCounts}>Fetch Word Counts</Button>
+        <Button size="small" onPress={wipeWordCounts}>Wipe Word Counts</Button>
+        <Divider />
+      </Layout>
+      <List
+        style={styles.container}
+        data={projects}
+        ItemSeparatorComponent={Divider}
+        renderItem={renderItem}
+      />
+    </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    maxHeight: 200,
+  },
+});
 
 export default ProjectsScreen;

@@ -8,7 +8,7 @@ const Stack = createNativeStackNavigator<ProjectsStackParamList>();
 
 const ProjectsStackNavigator = () => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Projects" component={ProjectsScreen} />
       <Stack.Screen
         name="Details"
