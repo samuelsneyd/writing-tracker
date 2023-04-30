@@ -98,7 +98,7 @@ export type WordCount = {
   __typename: "WordCount",
   id: string,
   words: number,
-  project?: Project | null,
+  project: Project,
   owner?: string | null,
   createdAt: string,
   updatedAt: string,
@@ -119,7 +119,7 @@ export type TimeWriting = {
   __typename: "TimeWriting",
   id: string,
   minutes: number,
-  project?: Project | null,
+  project: Project,
   owner?: string | null,
   createdAt: string,
   updatedAt: string,
@@ -503,7 +503,7 @@ export type CreateWordCountMutation = {
     __typename: "WordCount",
     id: string,
     words: number,
-    project?:  {
+    project:  {
       __typename: "Project",
       id: string,
       name: string,
@@ -524,7 +524,7 @@ export type CreateWordCountMutation = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
-    } | null,
+    },
     owner?: string | null,
     createdAt: string,
     updatedAt: string,
@@ -545,7 +545,7 @@ export type UpdateWordCountMutation = {
     __typename: "WordCount",
     id: string,
     words: number,
-    project?:  {
+    project:  {
       __typename: "Project",
       id: string,
       name: string,
@@ -566,7 +566,7 @@ export type UpdateWordCountMutation = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
-    } | null,
+    },
     owner?: string | null,
     createdAt: string,
     updatedAt: string,
@@ -587,7 +587,7 @@ export type DeleteWordCountMutation = {
     __typename: "WordCount",
     id: string,
     words: number,
-    project?:  {
+    project:  {
       __typename: "Project",
       id: string,
       name: string,
@@ -608,7 +608,7 @@ export type DeleteWordCountMutation = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
-    } | null,
+    },
     owner?: string | null,
     createdAt: string,
     updatedAt: string,
@@ -629,7 +629,7 @@ export type CreateTimeWritingMutation = {
     __typename: "TimeWriting",
     id: string,
     minutes: number,
-    project?:  {
+    project:  {
       __typename: "Project",
       id: string,
       name: string,
@@ -650,7 +650,7 @@ export type CreateTimeWritingMutation = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
-    } | null,
+    },
     owner?: string | null,
     createdAt: string,
     updatedAt: string,
@@ -671,7 +671,7 @@ export type UpdateTimeWritingMutation = {
     __typename: "TimeWriting",
     id: string,
     minutes: number,
-    project?:  {
+    project:  {
       __typename: "Project",
       id: string,
       name: string,
@@ -692,7 +692,7 @@ export type UpdateTimeWritingMutation = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
-    } | null,
+    },
     owner?: string | null,
     createdAt: string,
     updatedAt: string,
@@ -713,7 +713,7 @@ export type DeleteTimeWritingMutation = {
     __typename: "TimeWriting",
     id: string,
     minutes: number,
-    project?:  {
+    project:  {
       __typename: "Project",
       id: string,
       name: string,
@@ -734,7 +734,7 @@ export type DeleteTimeWritingMutation = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
-    } | null,
+    },
     owner?: string | null,
     createdAt: string,
     updatedAt: string,
@@ -880,7 +880,7 @@ export type GetWordCountQuery = {
     __typename: "WordCount",
     id: string,
     words: number,
-    project?:  {
+    project:  {
       __typename: "Project",
       id: string,
       name: string,
@@ -901,7 +901,7 @@ export type GetWordCountQuery = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
-    } | null,
+    },
     owner?: string | null,
     createdAt: string,
     updatedAt: string,
@@ -925,7 +925,7 @@ export type ListWordCountsQuery = {
       __typename: "WordCount",
       id: string,
       words: number,
-      project?:  {
+      project:  {
         __typename: "Project",
         id: string,
         name: string,
@@ -936,7 +936,7 @@ export type ListWordCountsQuery = {
         _version: number,
         _deleted?: boolean | null,
         _lastChangedAt: number,
-      } | null,
+      },
       owner?: string | null,
       createdAt: string,
       updatedAt: string,
@@ -964,7 +964,7 @@ export type SyncWordCountsQuery = {
       __typename: "WordCount",
       id: string,
       words: number,
-      project?:  {
+      project:  {
         __typename: "Project",
         id: string,
         name: string,
@@ -975,7 +975,7 @@ export type SyncWordCountsQuery = {
         _version: number,
         _deleted?: boolean | null,
         _lastChangedAt: number,
-      } | null,
+      },
       owner?: string | null,
       createdAt: string,
       updatedAt: string,
@@ -998,7 +998,7 @@ export type GetTimeWritingQuery = {
     __typename: "TimeWriting",
     id: string,
     minutes: number,
-    project?:  {
+    project:  {
       __typename: "Project",
       id: string,
       name: string,
@@ -1019,7 +1019,7 @@ export type GetTimeWritingQuery = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
-    } | null,
+    },
     owner?: string | null,
     createdAt: string,
     updatedAt: string,
@@ -1043,7 +1043,7 @@ export type ListTimeWritingsQuery = {
       __typename: "TimeWriting",
       id: string,
       minutes: number,
-      project?:  {
+      project:  {
         __typename: "Project",
         id: string,
         name: string,
@@ -1054,7 +1054,7 @@ export type ListTimeWritingsQuery = {
         _version: number,
         _deleted?: boolean | null,
         _lastChangedAt: number,
-      } | null,
+      },
       owner?: string | null,
       createdAt: string,
       updatedAt: string,
@@ -1082,7 +1082,7 @@ export type SyncTimeWritingsQuery = {
       __typename: "TimeWriting",
       id: string,
       minutes: number,
-      project?:  {
+      project:  {
         __typename: "Project",
         id: string,
         name: string,
@@ -1093,7 +1093,7 @@ export type SyncTimeWritingsQuery = {
         _version: number,
         _deleted?: boolean | null,
         _lastChangedAt: number,
-      } | null,
+      },
       owner?: string | null,
       createdAt: string,
       updatedAt: string,
@@ -1279,7 +1279,7 @@ export type OnCreateWordCountSubscription = {
     __typename: "WordCount",
     id: string,
     words: number,
-    project?:  {
+    project:  {
       __typename: "Project",
       id: string,
       name: string,
@@ -1300,7 +1300,7 @@ export type OnCreateWordCountSubscription = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
-    } | null,
+    },
     owner?: string | null,
     createdAt: string,
     updatedAt: string,
@@ -1321,7 +1321,7 @@ export type OnUpdateWordCountSubscription = {
     __typename: "WordCount",
     id: string,
     words: number,
-    project?:  {
+    project:  {
       __typename: "Project",
       id: string,
       name: string,
@@ -1342,7 +1342,7 @@ export type OnUpdateWordCountSubscription = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
-    } | null,
+    },
     owner?: string | null,
     createdAt: string,
     updatedAt: string,
@@ -1363,7 +1363,7 @@ export type OnDeleteWordCountSubscription = {
     __typename: "WordCount",
     id: string,
     words: number,
-    project?:  {
+    project:  {
       __typename: "Project",
       id: string,
       name: string,
@@ -1384,7 +1384,7 @@ export type OnDeleteWordCountSubscription = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
-    } | null,
+    },
     owner?: string | null,
     createdAt: string,
     updatedAt: string,
@@ -1405,7 +1405,7 @@ export type OnCreateTimeWritingSubscription = {
     __typename: "TimeWriting",
     id: string,
     minutes: number,
-    project?:  {
+    project:  {
       __typename: "Project",
       id: string,
       name: string,
@@ -1426,7 +1426,7 @@ export type OnCreateTimeWritingSubscription = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
-    } | null,
+    },
     owner?: string | null,
     createdAt: string,
     updatedAt: string,
@@ -1447,7 +1447,7 @@ export type OnUpdateTimeWritingSubscription = {
     __typename: "TimeWriting",
     id: string,
     minutes: number,
-    project?:  {
+    project:  {
       __typename: "Project",
       id: string,
       name: string,
@@ -1468,7 +1468,7 @@ export type OnUpdateTimeWritingSubscription = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
-    } | null,
+    },
     owner?: string | null,
     createdAt: string,
     updatedAt: string,
@@ -1489,7 +1489,7 @@ export type OnDeleteTimeWritingSubscription = {
     __typename: "TimeWriting",
     id: string,
     minutes: number,
-    project?:  {
+    project:  {
       __typename: "Project",
       id: string,
       name: string,
@@ -1510,7 +1510,7 @@ export type OnDeleteTimeWritingSubscription = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
-    } | null,
+    },
     owner?: string | null,
     createdAt: string,
     updatedAt: string,
