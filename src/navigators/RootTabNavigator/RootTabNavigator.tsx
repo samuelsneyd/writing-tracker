@@ -4,9 +4,9 @@ import { RootTabParamList } from '../../types/types';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import HomeStackNavigator from '../HomeStackNavigator/HomeStackNavigator';
 import ProjectsStackNavigator from '../ProjectsStackNavigator/ProjectsStackNavigator';
-import SettingsStackNavigator from '../SettingsStackNavigator/SettingsStackNavigator';
 import BrowseStackNavigator from '../BrowseStackNavigator/BrowseStackNavigator';
 import AddDataStackNavigator from '../AddDataNavigator/AddDataStackNavigator';
+import GoalsStackNavigator from '../GoalsStackNavigator/GoalsStackNavigator';
 
 const Tab = createBottomTabNavigator<RootTabParamList>();
 
@@ -19,7 +19,7 @@ const RootTabNavigator = () => {
             HomeStackNavigator: () => focused ? 'ios-home' : 'ios-home-outline',
             ProjectsStackNavigator: () => focused ? 'ios-book' : 'ios-book-outline',
             AddDataStackNavigator: () => focused ? 'ios-add-circle' : 'ios-add-circle-outline',
-            SettingsStackNavigator: () => focused ? 'ios-list' : 'ios-list-outline',
+            GoalsStackNavigator: () => focused ? 'ios-disc' : 'ios-disc-outline',
             BrowseStackNavigator: () => focused ? 'ios-grid' : 'ios-grid-outline',
           };
 
@@ -27,7 +27,7 @@ const RootTabNavigator = () => {
             HomeStackNavigator: () => 1,
             ProjectsStackNavigator: () => 1,
             AddDataStackNavigator: () => 1.5,
-            SettingsStackNavigator: () => 1,
+            GoalsStackNavigator: () => 1,
             BrowseStackNavigator: () => 1,
           };
 
@@ -60,13 +60,13 @@ const RootTabNavigator = () => {
         component={AddDataStackNavigator}
       />
       <Tab.Screen
-        name="SettingsStackNavigator"
-        options={{ title: 'Settings' }}
-        component={SettingsStackNavigator}
+        name="GoalsStackNavigator"
+        options={{ title: 'Goals' }}
+        component={GoalsStackNavigator}
       />
       <Tab.Screen
         name="BrowseStackNavigator"
-        options={{ title: 'Browse' }}
+        options={{ title: 'More' }}
         component={BrowseStackNavigator}
       />
     </Tab.Navigator>

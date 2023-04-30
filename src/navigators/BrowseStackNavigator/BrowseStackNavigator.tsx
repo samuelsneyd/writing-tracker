@@ -8,7 +8,7 @@ const BrowseStack = createNativeStackNavigator<BrowseStackParamList>();
 const BrowseStackNavigator = () => {
   return (
     <BrowseStack.Navigator>
-      <BrowseStack.Screen name="Browse" component={BrowseScreen} />
+      <BrowseStack.Screen name="Browse" options={{ title: 'More' }} component={BrowseScreen} />
     </BrowseStack.Navigator>
   );
 };
