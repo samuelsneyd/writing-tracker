@@ -3,13 +3,13 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { HomeStackParamList } from '../../types/types';
 import HomeScreen from '../../screens/HomeScreen/HomeScreen';
 
-const HomeStack = createNativeStackNavigator<HomeStackParamList>();
+const Stack = createNativeStackNavigator<HomeStackParamList>();
 
 const HomeStackNavigator = () => {
   return (
-    <HomeStack.Navigator>
-      <HomeStack.Screen name="Home" component={HomeScreen} />
-    </HomeStack.Navigator>
+    <Stack.Navigator>
+      <Stack.Screen name="Home" component={HomeScreen} />
+    </Stack.Navigator>
   );
 };
 

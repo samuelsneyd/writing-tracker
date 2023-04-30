@@ -3,13 +3,13 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { SettingsStackParamList } from '../../types/types';
 import SettingsScreen from '../../screens/SettingsScreen/SettingsScreen';
 
-const SettingsStack = createNativeStackNavigator<SettingsStackParamList>();
+const Stack = createNativeStackNavigator<SettingsStackParamList>();
 
 const SettingsStackNavigator = () => {
   return (
-    <SettingsStack.Navigator>
-      <SettingsStack.Screen name="Settings" component={SettingsScreen} />
-    </SettingsStack.Navigator>
+    <Stack.Navigator>
+      <Stack.Screen name="Settings" component={SettingsScreen} />
+    </Stack.Navigator>
   );
 };
 

@@ -3,13 +3,13 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { BrowseStackParamList } from '../../types/types';
 import BrowseScreen from '../../screens/BrowseScreen/BrowseScreen';
 
-const BrowseStack = createNativeStackNavigator<BrowseStackParamList>();
+const Stack = createNativeStackNavigator<BrowseStackParamList>();
 
 const BrowseStackNavigator = () => {
   return (
-    <BrowseStack.Navigator>
-      <BrowseStack.Screen name="Browse" options={{ title: 'More' }} component={BrowseScreen} />
-    </BrowseStack.Navigator>
+    <Stack.Navigator>
+      <Stack.Screen name="Browse" options={{ title: 'More' }} component={BrowseScreen} />
+    </Stack.Navigator>
   );
 };
 

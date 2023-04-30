@@ -3,13 +3,13 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { AddDataStackParamList } from '../../types/types';
 import AddDataScreen from '../../screens/AddDataScreen/AddDataScreen';
 
-const AddDataStack = createNativeStackNavigator<AddDataStackParamList>();
+const Stack = createNativeStackNavigator<AddDataStackParamList>();
 
 const AddDataStackNavigator = () => {
   return (
-    <AddDataStack.Navigator>
-      <AddDataStack.Screen name="AddData" options={{ title: 'Add Words' }} component={AddDataScreen} />
-    </AddDataStack.Navigator>
+    <Stack.Navigator>
+      <Stack.Screen name="AddData" options={{ title: 'Add Words' }} component={AddDataScreen} />
+    </Stack.Navigator>
   );
 };
 

@@ -4,18 +4,18 @@ import { ProjectsStackParamList } from '../../types/types';
 import ProjectDetailsScreen from '../../screens/ProjectDetailsScreen/ProjectDetailsScreen';
 import ProjectsScreen from '../../screens/ProjectsScreen/ProjectsScreen';
 
-const ProjectsStack = createNativeStackNavigator<ProjectsStackParamList>();
+const Stack = createNativeStackNavigator<ProjectsStackParamList>();
 
 const ProjectsStackNavigator = () => {
   return (
-    <ProjectsStack.Navigator>
-      <ProjectsStack.Screen name="Projects" component={ProjectsScreen} />
-      <ProjectsStack.Screen
+    <Stack.Navigator>
+      <Stack.Screen name="Projects" component={ProjectsScreen} />
+      <Stack.Screen
         name="Details"
         options={({ route }) => ({ title: route.params.name })}
         component={ProjectDetailsScreen}
       />
-    </ProjectsStack.Navigator>
+    </Stack.Navigator>
   );
 };
 
