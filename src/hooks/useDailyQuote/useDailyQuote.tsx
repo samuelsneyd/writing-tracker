@@ -4,7 +4,7 @@ import type { Quote } from '../../types/types';
 import quotes from './quotes';
 
 /**
- * Returns the daily quote. The quote updates daily, in order,
+ * Returns the daily quote. The quote updates daily, sequentially,
  * based on the device's local timezone.
  */
 const useDailyQuote = (): Quote => {
