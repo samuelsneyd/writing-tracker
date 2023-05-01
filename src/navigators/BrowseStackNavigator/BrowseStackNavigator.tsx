@@ -7,7 +7,7 @@ const Stack = createNativeStackNavigator<BrowseStackParamList>();
 
 const BrowseStackNavigator = () => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Browse" options={{ title: 'More' }} component={BrowseScreen} />
     </Stack.Navigator>
   );
