@@ -9,7 +9,7 @@ type Props = NativeStackScreenProps<GoalsStackParamList, 'Goals'>
 const GoalsScreen = ({ navigation }: Props) => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <TopNavigation title="Home" alignment="center" />
+      <TopNavigation title="Goals" alignment="center" />
       <Divider />
       <Layout style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <Text category="h1">Goals</Text>
