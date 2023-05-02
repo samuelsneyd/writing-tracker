@@ -5,7 +5,7 @@ import { withAuthenticator } from 'aws-amplify-react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { ApplicationProvider, IconRegistry } from '@ui-kitten/components';
 import RootTabNavigator from './navigators/RootTabNavigator/RootTabNavigator';
-import { cyanTheme } from './themes/cyan-theme';
+import { cyanTheme } from './themes';
 
 const App = () => {
   return (
