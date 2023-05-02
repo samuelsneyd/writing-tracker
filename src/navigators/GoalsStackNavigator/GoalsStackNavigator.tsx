@@ -7,7 +7,7 @@ const Stack = createNativeStackNavigator<GoalsStackParamList>();
 
 const GoalsStackNavigator = () => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Goals" component={GoalsScreen} />
     </Stack.Navigator>
   );

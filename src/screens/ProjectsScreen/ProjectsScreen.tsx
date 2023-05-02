@@ -122,12 +122,12 @@ const ProjectsScreen = ({ navigation }: Props) => {
       <Divider />
       <Layout style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <Text category="h1">Projects</Text>
-        <Button size="small" onPress={addProjects}>Add Projects</Button>
-        <Button size="small" onPress={fetchProjects}>Fetch Projects</Button>
-        <Button size="small" onPress={wipeProjects}>Wipe Projects</Button>
-        <Button size="small" onPress={addWordCounts}>Add Word Counts</Button>
-        <Button size="small" onPress={fetchWordCounts}>Fetch Word Counts</Button>
-        <Button size="small" onPress={wipeWordCounts}>Wipe Word Counts</Button>
+        {/*<Button size="small" onPress={addProjects}>Add Projects</Button>*/}
+        {/*<Button size="small" onPress={fetchProjects}>Fetch Projects</Button>*/}
+        {/*<Button size="small" onPress={wipeProjects}>Wipe Projects</Button>*/}
+        {/*<Button size="small" onPress={addWordCounts}>Add Word Counts</Button>*/}
+        {/*<Button size="small" onPress={fetchWordCounts}>Fetch Word Counts</Button>*/}
+        {/*<Button size="small" onPress={wipeWordCounts}>Wipe Word Counts</Button>*/}
         <Divider />
       </Layout>
       <List
@@ -142,7 +142,7 @@ const ProjectsScreen = ({ navigation }: Props) => {
 
 const styles = StyleSheet.create({
   container: {
-    maxHeight: 200,
+    flex: 1
   },
 });
 

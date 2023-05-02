@@ -1,15 +1,20 @@
 import * as React from 'react';
-import { Text, View } from 'react-native';
+import { SafeAreaView } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { SettingsStackParamList } from '../../types/types';
+import { Divider, Layout, TopNavigation, Text } from '@ui-kitten/components';
 
 type Props = NativeStackScreenProps<SettingsStackParamList, 'Settings'>
 
 const SettingsScreen = ({ navigation }: Props) => {
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Settings</Text>
-    </View>
+    <SafeAreaView style={{ flex: 1 }}>
+      <TopNavigation title="Home" alignment="center" />
+      <Divider />
+      <Layout style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <Text category="h1">Settings</Text>
+      </Layout>
+    </SafeAreaView>
   );
 };
 

@@ -7,7 +7,7 @@ const Stack = createNativeStackNavigator<AddDataStackParamList>();
 
 const AddDataStackNavigator = () => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="AddData" options={{ title: 'Add Words' }} component={AddDataScreen} />
     </Stack.Navigator>
   );

@@ -1,15 +1,20 @@
 import * as React from 'react';
-import { Text, View } from 'react-native';
+import { SafeAreaView } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { AddDataStackParamList } from '../../types/types';
+import { Divider, Layout, TopNavigation, Text } from '@ui-kitten/components';
 
 type Props = NativeStackScreenProps<AddDataStackParamList, 'AddData'>
 
 const AddDataScreen = ({ navigation }: Props) => {
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Add Data</Text>
-    </View>
+    <SafeAreaView style={{ flex: 1 }}>
+      <TopNavigation title="Add Words" alignment="center" />
+      <Divider />
+      <Layout style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <Text category="h1">Add Words</Text>
+      </Layout>
+    </SafeAreaView>
   );
 };
 
