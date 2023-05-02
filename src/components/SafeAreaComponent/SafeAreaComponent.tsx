@@ -9,10 +9,10 @@ import {
 
 type Inset = 'top' | 'bottom';
 
-export interface SafeAreaLayoutProps extends StyledComponentProps, LayoutProps {
+export type SafeAreaLayoutProps = StyledComponentProps & LayoutProps & {
   insets?: Inset;
   children?: React.ReactNode;
-}
+};
 
 export const SafeAreaLayout: React.FC<SafeAreaLayoutProps> = ({ insets, ...props }) => {
   const theme = useTheme();
