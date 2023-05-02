@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { BottomNavigation, BottomNavigationTab, Icon } from '@ui-kitten/components';
 import { RootTabParamList } from '../../types/types';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import HomeStackNavigator from '../HomeStackNavigator/HomeStackNavigator';
 import ProjectsStackNavigator from '../ProjectsStackNavigator/ProjectsStackNavigator';
 import BrowseStackNavigator from '../BrowseStackNavigator/BrowseStackNavigator';
@@ -10,65 +10,33 @@ import GoalsStackNavigator from '../GoalsStackNavigator/GoalsStackNavigator';
 
 const Tab = createBottomTabNavigator<RootTabParamList>();
 
+const BottomTabBar = ({ navigation, state }: any) => {
+  return (
+    <BottomNavigation
+      appearance="noIndicator"
+      selectedIndex={state.index}
+      onSelect={index => navigation.navigate(state.routeNames[index])}
+    >
+      <BottomNavigationTab title="Home" icon={<Icon name={"home-outline"} />} />
+      <BottomNavigationTab title="Projects" icon={<Icon name="book-open-outline" />} />
+      <BottomNavigationTab title="Add" icon={<Icon name="plus-circle-outline" />} />
+      <BottomNavigationTab title="Goals" icon={<Icon name="edit-outline" />} />
+      <BottomNavigationTab title="More" icon={<Icon name="grid-outline" />} />
+    </BottomNavigation>
+  );
+};
+
 const RootTabNavigator = () => {
   return (
     <Tab.Navigator
-      screenOptions={({ route }) => ({
-        tabBarIcon: ({ focused, color, size }) => {
-          const iconMap: Record<keyof RootTabParamList, () => string> = {
-            HomeStackNavigator: () => focused ? 'ios-home' : 'ios-home-outline',
-            ProjectsStackNavigator: () => focused ? 'ios-book' : 'ios-book-outline',
-            AddDataStackNavigator: () => focused ? 'ios-add-circle' : 'ios-add-circle-outline',
-            GoalsStackNavigator: () => focused ? 'ios-disc' : 'ios-disc-outline',
-            BrowseStackNavigator: () => focused ? 'ios-grid' : 'ios-grid-outline',
-          };
-
-          const sizeMap: Record<keyof RootTabParamList, () => number> = {
-            HomeStackNavigator: () => 1,
-            ProjectsStackNavigator: () => 1,
-            AddDataStackNavigator: () => 1.5,
-            GoalsStackNavigator: () => 1,
-            BrowseStackNavigator: () => 1,
-          };
-
-          return <Ionicons name={iconMap[route.name]()} size={sizeMap[route.name]() * size} color={color} />;
-        },
-        tabBarStyle: {
-          // backgroundColor: 'transparent',
-          // borderTopWidth: 0,
-          // position: 'absolute',
-          // elevation: 0,
-        },
-        headerShown: false,
-        tabBarActiveTintColor: undefined,
-        tabBarInactiveTintColor: 'gray',
-      })}
+      tabBar={props => <BottomTabBar {...props} />}
+      screenOptions={{ headerShown: false }}
     >
-      <Tab.Screen
-        name="HomeStackNavigator"
-        options={{ title: 'Home' }}
-        component={HomeStackNavigator}
-      />
-      <Tab.Screen
-        name="ProjectsStackNavigator"
-        options={{ title: 'Projects' }}
-        component={ProjectsStackNavigator}
-      />
-      <Tab.Screen
-        name="AddDataStackNavigator"
-        options={{ tabBarLabel: () => null }}
-        component={AddDataStackNavigator}
-      />
-      <Tab.Screen
-        name="GoalsStackNavigator"
-        options={{ title: 'Goals' }}
-        component={GoalsStackNavigator}
-      />
-      <Tab.Screen
-        name="BrowseStackNavigator"
-        options={{ title: 'More' }}
-        component={BrowseStackNavigator}
-      />
+      <Tab.Screen name="HomeStackNavigator" component={HomeStackNavigator} />
+      <Tab.Screen name="ProjectsStackNavigator" component={ProjectsStackNavigator} />
+      <Tab.Screen name="AddDataStackNavigator" component={AddDataStackNavigator} />
+      <Tab.Screen name="GoalsStackNavigator" component={GoalsStackNavigator} />
+      <Tab.Screen name="BrowseStackNavigator" component={BrowseStackNavigator} />
     </Tab.Navigator>
   );
 };
