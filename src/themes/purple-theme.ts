@@ -1,8 +1,7 @@
 import { default as defaultTheme } from '@eva-design/eva';
+import type { customTheme } from './themes';
 
-export const purpleTheme = {
-  ...defaultTheme,
-
+const overrideTheme: customTheme = {
   'color-primary-100': '#F6C9FB',
   'color-primary-200': '#E896F7',
   'color-primary-300': '#C95FE7',
@@ -48,4 +47,9 @@ export const purpleTheme = {
   'color-danger-700': '#941110',
   'color-danger-800': '#770A12',
   'color-danger-900': '#620613',
+};
+
+export const purpleTheme = {
+  ...defaultTheme,
+  ...overrideTheme,
 };
