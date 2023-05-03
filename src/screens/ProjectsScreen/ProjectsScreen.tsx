@@ -5,8 +5,8 @@ import { Project, WordCount } from '../../models';
 import { DataStore, Predicates } from 'aws-amplify';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { ProjectsStackParamList } from '../../types/types';
-import util from '../../utils/util';
 import { Divider, Layout, TopNavigation, Text, Button, ListItem, List } from '@ui-kitten/components';
+import util from '../../utils/util';
 
 type Props = NativeStackScreenProps<ProjectsStackParamList, 'Projects'>
 
@@ -141,9 +141,7 @@ const ProjectsScreen = ({ navigation }: Props) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1
-  },
+  container: { flex: 1 },
 });
 
 export default ProjectsScreen;
