@@ -1,8 +1,7 @@
 import { default as defaultTheme } from '@eva-design/eva';
+import type { customTheme } from './themes';
 
-const cyanTheme = {
-  ...defaultTheme,
-
+const overrideTheme: customTheme = {
   'color-primary-100': '#D5FDF3',
   'color-primary-200': '#ACFCED',
   'color-primary-300': '#81F6EA',
@@ -67,6 +66,7 @@ const cyanTheme = {
   'color-basic-transparent-600': 'rgba(128, 128, 128, 0.48)',
 };
 
-export {
-  cyanTheme,
+export const cyanTheme = {
+  ...defaultTheme,
+  ...overrideTheme,
 };

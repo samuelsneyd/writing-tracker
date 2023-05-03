@@ -1,8 +1,7 @@
 import { default as defaultTheme } from '@eva-design/eva';
+import type { customTheme } from './themes';
 
-export const oceanSunriseTheme = {
-  ...defaultTheme,
-
+const overrideTheme: customTheme = {
   'color-primary-100': '#CAF6EA',
   'color-primary-200': '#98EEDD',
   'color-primary-300': '#5ECCBF',
@@ -48,4 +47,9 @@ export const oceanSunriseTheme = {
   'color-danger-700': '#866E03',
   'color-danger-800': '#6C5601',
   'color-danger-900': '#594601',
+};
+
+export const oceanSunriseTheme = {
+  ...defaultTheme,
+  ...overrideTheme,
 };
