@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { StyleSheet } from 'react-native';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { MoreStackParamList } from '../../types/types';
+import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import type { MoreStackParamList } from '../../types/types';
 import { Divider, TopNavigation } from '@ui-kitten/components';
 import { SafeAreaLayout } from '../../components/SafeAreaComponent/SafeAreaComponent';
 import { MenuGridList } from '../../components/MenuGridList/MenuGridList';

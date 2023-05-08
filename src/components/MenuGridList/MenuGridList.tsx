@@ -14,6 +14,7 @@ export type MenuGridListProps = Omit<ListProps, 'renderItem'> & {
 
 export const MenuGridList = (props: MenuGridListProps): ListElement => {
   const { contentContainerStyle, onItemPress, ...listProps } = props;
+
   const renderItem = (info: ListRenderItemInfo<MenuItem>): ListItemElement => (
     <Card
       style={styles.item}
