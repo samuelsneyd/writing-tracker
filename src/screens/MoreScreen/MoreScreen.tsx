@@ -1,20 +1,18 @@
 import * as React from 'react';
 import { StyleSheet } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { BrowseStackParamList } from '../../types/types';
+import { MoreStackParamList } from '../../types/types';
 import { Divider, TopNavigation } from '@ui-kitten/components';
 import { SafeAreaLayout } from '../../components/SafeAreaComponent/SafeAreaComponent';
 import { MenuGridList } from '../../components/MenuGridList/MenuGridList';
 import { data } from './data';
 
-type Props = NativeStackScreenProps<BrowseStackParamList, 'Browse'>
+type Props = NativeStackScreenProps<MoreStackParamList, 'More'>
 
-const BrowseScreen = ({ navigation }: Props) => {
-
+const MoreScreen = ({ navigation }: Props) => {
   const onItemPress = (index: number): void => {
-    // TODO - set up routes
-    // navigation.navigate(data[index].route);
-    navigation.navigate('Browse');
+    // Parent allows navigation to a different tab from inside nested stack
+    navigation.getParent()!.navigate(data[index].route);
   };
 
   return (
@@ -32,4 +30,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default BrowseScreen;
+export default MoreScreen;

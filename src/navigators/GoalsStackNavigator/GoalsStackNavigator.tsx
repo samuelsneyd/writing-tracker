@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { GoalsStackParamList } from '../../types/types';
+import type { GoalsStackParamList } from '../../types/types';
 import GoalsScreen from '../../screens/GoalsScreen/GoalsScreen';
 
 const Stack = createNativeStackNavigator<GoalsStackParamList>();

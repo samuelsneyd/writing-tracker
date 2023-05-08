@@ -4,7 +4,7 @@ type RootTabParamList = {
   ProjectsStackNavigator: undefined;
   AddDataStackNavigator: undefined;
   GoalsStackNavigator: undefined;
-  BrowseStackNavigator: undefined;
+  MoreStackNavigator: undefined;
 };
 
 type HomeStackParamList = {
@@ -24,8 +24,13 @@ type GoalsStackParamList = {
   Goals: undefined;
 };
 
-type BrowseStackParamList = {
-  Browse: undefined;
+type MoreStackParamList = {
+  More: undefined;
+  Awards: undefined;
+  Themes: undefined;
+  Challenges: undefined;
+  Charts: undefined;
+  Settings: undefined;
 };
 
 type SettingsStackParamList = {
@@ -43,7 +48,7 @@ export type {
   ProjectsStackParamList,
   AddDataStackParamList,
   GoalsStackParamList,
-  BrowseStackParamList,
+  MoreStackParamList,
   SettingsStackParamList,
   Quote,
 };

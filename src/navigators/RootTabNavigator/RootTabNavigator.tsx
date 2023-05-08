@@ -1,23 +1,22 @@
 import * as React from 'react';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createBottomTabNavigator, BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import { BottomNavigation, BottomNavigationTab, Icon } from '@ui-kitten/components';
-import { RootTabParamList } from '../../types/types';
+import type { RootTabParamList } from '../../types/types';
 import HomeStackNavigator from '../HomeStackNavigator/HomeStackNavigator';
 import ProjectsStackNavigator from '../ProjectsStackNavigator/ProjectsStackNavigator';
-import BrowseStackNavigator from '../BrowseStackNavigator/BrowseStackNavigator';
+import MoreStackNavigator from '../MoreStackNavigator/MoreStackNavigator';
 import AddDataStackNavigator from '../AddDataNavigator/AddDataStackNavigator';
 import GoalsStackNavigator from '../GoalsStackNavigator/GoalsStackNavigator';
 
 const Tab = createBottomTabNavigator<RootTabParamList>();
 
-const BottomTabBar = ({ navigation, state }: any) => {
+const BottomTabBar = ({ navigation, state }: BottomTabBarProps) => {
   return (
     <BottomNavigation
-      appearance="noIndicator"
       selectedIndex={state.index}
       onSelect={index => navigation.navigate(state.routeNames[index])}
     >
-      <BottomNavigationTab title="Home" icon={<Icon name={"home-outline"} />} />
+      <BottomNavigationTab title="Home" icon={<Icon name="home-outline" />} />
       <BottomNavigationTab title="Projects" icon={<Icon name="book-open-outline" />} />
       <BottomNavigationTab title="Add" icon={<Icon name="plus-circle-outline" />} />
       <BottomNavigationTab title="Goals" icon={<Icon name="edit-outline" />} />
@@ -29,6 +28,7 @@ const BottomTabBar = ({ navigation, state }: any) => {
 const RootTabNavigator = () => {
   return (
     <Tab.Navigator
+      id="RootTabNavigator"
       tabBar={props => <BottomTabBar {...props} />}
       screenOptions={{ headerShown: false }}
     >
@@ -36,7 +36,7 @@ const RootTabNavigator = () => {
       <Tab.Screen name="ProjectsStackNavigator" component={ProjectsStackNavigator} />
       <Tab.Screen name="AddDataStackNavigator" component={AddDataStackNavigator} />
       <Tab.Screen name="GoalsStackNavigator" component={GoalsStackNavigator} />
-      <Tab.Screen name="BrowseStackNavigator" component={BrowseStackNavigator} />
+      <Tab.Screen name="MoreStackNavigator" component={MoreStackNavigator} />
     </Tab.Navigator>
   );
 };

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { SettingsStackParamList } from '../../types/types';
+import type { SettingsStackParamList } from '../../types/types';
 import SettingsScreen from '../../screens/SettingsScreen/SettingsScreen';
 
 const Stack = createNativeStackNavigator<SettingsStackParamList>();
