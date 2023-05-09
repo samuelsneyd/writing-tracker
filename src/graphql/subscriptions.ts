@@ -15,6 +15,7 @@ export const onCreateProject = /* GraphQL */ `
         items {
           id
           words
+          date
           owner
           createdAt
           updatedAt
@@ -26,10 +27,11 @@ export const onCreateProject = /* GraphQL */ `
         nextToken
         startedAt
       }
-      TimeSpentWriting {
+      timeSpentWriting {
         items {
           id
           minutes
+          date
           owner
           createdAt
           updatedAt
@@ -63,6 +65,7 @@ export const onUpdateProject = /* GraphQL */ `
         items {
           id
           words
+          date
           owner
           createdAt
           updatedAt
@@ -74,10 +77,11 @@ export const onUpdateProject = /* GraphQL */ `
         nextToken
         startedAt
       }
-      TimeSpentWriting {
+      timeSpentWriting {
         items {
           id
           minutes
+          date
           owner
           createdAt
           updatedAt
@@ -111,6 +115,7 @@ export const onDeleteProject = /* GraphQL */ `
         items {
           id
           words
+          date
           owner
           createdAt
           updatedAt
@@ -122,10 +127,11 @@ export const onDeleteProject = /* GraphQL */ `
         nextToken
         startedAt
       }
-      TimeSpentWriting {
+      timeSpentWriting {
         items {
           id
           minutes
+          date
           owner
           createdAt
           updatedAt
@@ -154,6 +160,7 @@ export const onCreateWordCount = /* GraphQL */ `
     onCreateWordCount(filter: $filter, owner: $owner) {
       id
       words
+      date
       project {
         id
         name
@@ -162,7 +169,7 @@ export const onCreateWordCount = /* GraphQL */ `
           nextToken
           startedAt
         }
-        TimeSpentWriting {
+        timeSpentWriting {
           nextToken
           startedAt
         }
@@ -191,6 +198,7 @@ export const onUpdateWordCount = /* GraphQL */ `
     onUpdateWordCount(filter: $filter, owner: $owner) {
       id
       words
+      date
       project {
         id
         name
@@ -199,7 +207,7 @@ export const onUpdateWordCount = /* GraphQL */ `
           nextToken
           startedAt
         }
-        TimeSpentWriting {
+        timeSpentWriting {
           nextToken
           startedAt
         }
@@ -228,6 +236,7 @@ export const onDeleteWordCount = /* GraphQL */ `
     onDeleteWordCount(filter: $filter, owner: $owner) {
       id
       words
+      date
       project {
         id
         name
@@ -236,7 +245,7 @@ export const onDeleteWordCount = /* GraphQL */ `
           nextToken
           startedAt
         }
-        TimeSpentWriting {
+        timeSpentWriting {
           nextToken
           startedAt
         }
@@ -265,6 +274,7 @@ export const onCreateTimeWriting = /* GraphQL */ `
     onCreateTimeWriting(filter: $filter, owner: $owner) {
       id
       minutes
+      date
       project {
         id
         name
@@ -273,7 +283,7 @@ export const onCreateTimeWriting = /* GraphQL */ `
           nextToken
           startedAt
         }
-        TimeSpentWriting {
+        timeSpentWriting {
           nextToken
           startedAt
         }
@@ -302,6 +312,7 @@ export const onUpdateTimeWriting = /* GraphQL */ `
     onUpdateTimeWriting(filter: $filter, owner: $owner) {
       id
       minutes
+      date
       project {
         id
         name
@@ -310,7 +321,7 @@ export const onUpdateTimeWriting = /* GraphQL */ `
           nextToken
           startedAt
         }
-        TimeSpentWriting {
+        timeSpentWriting {
           nextToken
           startedAt
         }
@@ -339,6 +350,7 @@ export const onDeleteTimeWriting = /* GraphQL */ `
     onDeleteTimeWriting(filter: $filter, owner: $owner) {
       id
       minutes
+      date
       project {
         id
         name
@@ -347,7 +359,7 @@ export const onDeleteTimeWriting = /* GraphQL */ `
           nextToken
           startedAt
         }
-        TimeSpentWriting {
+        timeSpentWriting {
           nextToken
           startedAt
         }

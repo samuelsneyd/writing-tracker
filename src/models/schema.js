@@ -40,8 +40,8 @@ export const schema = {
                         "associatedWith": "projectWordCountsId"
                     }
                 },
-                "TimeSpentWriting": {
-                    "name": "TimeSpentWriting",
+                "writingTimes": {
+                    "name": "writingTimes",
                     "isArray": true,
                     "type": {
                         "model": "TimeWriting"
@@ -51,7 +51,7 @@ export const schema = {
                     "isArrayNullable": true,
                     "association": {
                         "connectionType": "HAS_MANY",
-                        "associatedWith": "projectTimeSpentWritingId"
+                        "associatedWith": "projectWritingTimesId"
                     }
                 },
                 "owner": {
@@ -120,6 +120,13 @@ export const schema = {
                     "name": "words",
                     "isArray": false,
                     "type": "Int",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "date": {
+                    "name": "date",
+                    "isArray": false,
+                    "type": "AWSDateTime",
                     "isRequired": true,
                     "attributes": []
                 },
@@ -205,6 +212,13 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
+                "date": {
+                    "name": "date",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": true,
+                    "attributes": []
+                },
                 "project": {
                     "name": "project",
                     "isArray": false,
@@ -215,7 +229,7 @@ export const schema = {
                     "attributes": [],
                     "association": {
                         "connectionType": "BELONGS_TO",
-                        "targetName": "projectTimeSpentWritingId"
+                        "targetName": "projectWritingTimesId"
                     }
                 },
                 "owner": {
@@ -284,5 +298,5 @@ export const schema = {
     },
     "nonModels": {},
     "codegenVersion": "3.4.2",
-    "version": "ef19a26433bebd2278afb4a3ab38d5f0"
+    "version": "2c1f032105a1fc829e13a473a24be265"
 };

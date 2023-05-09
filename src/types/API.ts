@@ -78,7 +78,7 @@ export type Project = {
   name: string,
   projectType: ProjectType,
   wordCounts?: ModelWordCountConnection | null,
-  TimeSpentWriting?: ModelTimeWritingConnection | null,
+  timeSpentWriting?: ModelTimeWritingConnection | null,
   owner?: string | null,
   createdAt: string,
   updatedAt: string,
@@ -98,6 +98,7 @@ export type WordCount = {
   __typename: "WordCount",
   id: string,
   words: number,
+  date: string,
   project: Project,
   owner?: string | null,
   createdAt: string,
@@ -119,6 +120,7 @@ export type TimeWriting = {
   __typename: "TimeWriting",
   id: string,
   minutes: number,
+  date: string,
   project: Project,
   owner?: string | null,
   createdAt: string,
@@ -145,6 +147,7 @@ export type DeleteProjectInput = {
 export type CreateWordCountInput = {
   id?: string | null,
   words: number,
+  date: string,
   owner?: string | null,
   _version?: number | null,
   projectWordCountsId?: string | null,
@@ -152,6 +155,7 @@ export type CreateWordCountInput = {
 
 export type ModelWordCountConditionInput = {
   words?: ModelIntInput | null,
+  date?: ModelStringInput | null,
   owner?: ModelStringInput | null,
   and?: Array< ModelWordCountConditionInput | null > | null,
   or?: Array< ModelWordCountConditionInput | null > | null,
@@ -190,6 +194,7 @@ export type ModelIDInput = {
 export type UpdateWordCountInput = {
   id: string,
   words?: number | null,
+  date?: string | null,
   owner?: string | null,
   _version?: number | null,
   projectWordCountsId?: string | null,
@@ -203,6 +208,7 @@ export type DeleteWordCountInput = {
 export type CreateTimeWritingInput = {
   id?: string | null,
   minutes: number,
+  date: string,
   owner?: string | null,
   _version?: number | null,
   projectTimeSpentWritingId?: string | null,
@@ -210,6 +216,7 @@ export type CreateTimeWritingInput = {
 
 export type ModelTimeWritingConditionInput = {
   minutes?: ModelIntInput | null,
+  date?: ModelStringInput | null,
   owner?: ModelStringInput | null,
   and?: Array< ModelTimeWritingConditionInput | null > | null,
   or?: Array< ModelTimeWritingConditionInput | null > | null,
@@ -220,6 +227,7 @@ export type ModelTimeWritingConditionInput = {
 export type UpdateTimeWritingInput = {
   id: string,
   minutes?: number | null,
+  date?: string | null,
   owner?: string | null,
   _version?: number | null,
   projectTimeSpentWritingId?: string | null,
@@ -250,6 +258,7 @@ export type ModelProjectConnection = {
 export type ModelWordCountFilterInput = {
   id?: ModelIDInput | null,
   words?: ModelIntInput | null,
+  date?: ModelStringInput | null,
   owner?: ModelStringInput | null,
   and?: Array< ModelWordCountFilterInput | null > | null,
   or?: Array< ModelWordCountFilterInput | null > | null,
@@ -260,6 +269,7 @@ export type ModelWordCountFilterInput = {
 export type ModelTimeWritingFilterInput = {
   id?: ModelIDInput | null,
   minutes?: ModelIntInput | null,
+  date?: ModelStringInput | null,
   owner?: ModelStringInput | null,
   and?: Array< ModelTimeWritingFilterInput | null > | null,
   or?: Array< ModelTimeWritingFilterInput | null > | null,
@@ -308,6 +318,7 @@ export type ModelSubscriptionStringInput = {
 export type ModelSubscriptionWordCountFilterInput = {
   id?: ModelSubscriptionIDInput | null,
   words?: ModelSubscriptionIntInput | null,
+  date?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionWordCountFilterInput | null > | null,
   or?: Array< ModelSubscriptionWordCountFilterInput | null > | null,
 };
@@ -327,6 +338,7 @@ export type ModelSubscriptionIntInput = {
 export type ModelSubscriptionTimeWritingFilterInput = {
   id?: ModelSubscriptionIDInput | null,
   minutes?: ModelSubscriptionIntInput | null,
+  date?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionTimeWritingFilterInput | null > | null,
   or?: Array< ModelSubscriptionTimeWritingFilterInput | null > | null,
 };
@@ -348,6 +360,7 @@ export type CreateProjectMutation = {
         __typename: "WordCount",
         id: string,
         words: number,
+        date: string,
         owner?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -359,12 +372,13 @@ export type CreateProjectMutation = {
       nextToken?: string | null,
       startedAt?: number | null,
     } | null,
-    TimeSpentWriting?:  {
+    timeSpentWriting?:  {
       __typename: "ModelTimeWritingConnection",
       items:  Array< {
         __typename: "TimeWriting",
         id: string,
         minutes: number,
+        date: string,
         owner?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -402,6 +416,7 @@ export type UpdateProjectMutation = {
         __typename: "WordCount",
         id: string,
         words: number,
+        date: string,
         owner?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -413,12 +428,13 @@ export type UpdateProjectMutation = {
       nextToken?: string | null,
       startedAt?: number | null,
     } | null,
-    TimeSpentWriting?:  {
+    timeSpentWriting?:  {
       __typename: "ModelTimeWritingConnection",
       items:  Array< {
         __typename: "TimeWriting",
         id: string,
         minutes: number,
+        date: string,
         owner?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -456,6 +472,7 @@ export type DeleteProjectMutation = {
         __typename: "WordCount",
         id: string,
         words: number,
+        date: string,
         owner?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -467,12 +484,13 @@ export type DeleteProjectMutation = {
       nextToken?: string | null,
       startedAt?: number | null,
     } | null,
-    TimeSpentWriting?:  {
+    timeSpentWriting?:  {
       __typename: "ModelTimeWritingConnection",
       items:  Array< {
         __typename: "TimeWriting",
         id: string,
         minutes: number,
+        date: string,
         owner?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -503,6 +521,7 @@ export type CreateWordCountMutation = {
     __typename: "WordCount",
     id: string,
     words: number,
+    date: string,
     project:  {
       __typename: "Project",
       id: string,
@@ -513,7 +532,7 @@ export type CreateWordCountMutation = {
         nextToken?: string | null,
         startedAt?: number | null,
       } | null,
-      TimeSpentWriting?:  {
+      timeSpentWriting?:  {
         __typename: "ModelTimeWritingConnection",
         nextToken?: string | null,
         startedAt?: number | null,
@@ -545,6 +564,7 @@ export type UpdateWordCountMutation = {
     __typename: "WordCount",
     id: string,
     words: number,
+    date: string,
     project:  {
       __typename: "Project",
       id: string,
@@ -555,7 +575,7 @@ export type UpdateWordCountMutation = {
         nextToken?: string | null,
         startedAt?: number | null,
       } | null,
-      TimeSpentWriting?:  {
+      timeSpentWriting?:  {
         __typename: "ModelTimeWritingConnection",
         nextToken?: string | null,
         startedAt?: number | null,
@@ -587,6 +607,7 @@ export type DeleteWordCountMutation = {
     __typename: "WordCount",
     id: string,
     words: number,
+    date: string,
     project:  {
       __typename: "Project",
       id: string,
@@ -597,7 +618,7 @@ export type DeleteWordCountMutation = {
         nextToken?: string | null,
         startedAt?: number | null,
       } | null,
-      TimeSpentWriting?:  {
+      timeSpentWriting?:  {
         __typename: "ModelTimeWritingConnection",
         nextToken?: string | null,
         startedAt?: number | null,
@@ -629,6 +650,7 @@ export type CreateTimeWritingMutation = {
     __typename: "TimeWriting",
     id: string,
     minutes: number,
+    date: string,
     project:  {
       __typename: "Project",
       id: string,
@@ -639,7 +661,7 @@ export type CreateTimeWritingMutation = {
         nextToken?: string | null,
         startedAt?: number | null,
       } | null,
-      TimeSpentWriting?:  {
+      timeSpentWriting?:  {
         __typename: "ModelTimeWritingConnection",
         nextToken?: string | null,
         startedAt?: number | null,
@@ -671,6 +693,7 @@ export type UpdateTimeWritingMutation = {
     __typename: "TimeWriting",
     id: string,
     minutes: number,
+    date: string,
     project:  {
       __typename: "Project",
       id: string,
@@ -681,7 +704,7 @@ export type UpdateTimeWritingMutation = {
         nextToken?: string | null,
         startedAt?: number | null,
       } | null,
-      TimeSpentWriting?:  {
+      timeSpentWriting?:  {
         __typename: "ModelTimeWritingConnection",
         nextToken?: string | null,
         startedAt?: number | null,
@@ -713,6 +736,7 @@ export type DeleteTimeWritingMutation = {
     __typename: "TimeWriting",
     id: string,
     minutes: number,
+    date: string,
     project:  {
       __typename: "Project",
       id: string,
@@ -723,7 +747,7 @@ export type DeleteTimeWritingMutation = {
         nextToken?: string | null,
         startedAt?: number | null,
       } | null,
-      TimeSpentWriting?:  {
+      timeSpentWriting?:  {
         __typename: "ModelTimeWritingConnection",
         nextToken?: string | null,
         startedAt?: number | null,
@@ -761,6 +785,7 @@ export type GetProjectQuery = {
         __typename: "WordCount",
         id: string,
         words: number,
+        date: string,
         owner?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -772,12 +797,13 @@ export type GetProjectQuery = {
       nextToken?: string | null,
       startedAt?: number | null,
     } | null,
-    TimeSpentWriting?:  {
+    timeSpentWriting?:  {
       __typename: "ModelTimeWritingConnection",
       items:  Array< {
         __typename: "TimeWriting",
         id: string,
         minutes: number,
+        date: string,
         owner?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -817,7 +843,7 @@ export type ListProjectsQuery = {
         nextToken?: string | null,
         startedAt?: number | null,
       } | null,
-      TimeSpentWriting?:  {
+      timeSpentWriting?:  {
         __typename: "ModelTimeWritingConnection",
         nextToken?: string | null,
         startedAt?: number | null,
@@ -854,7 +880,7 @@ export type SyncProjectsQuery = {
         nextToken?: string | null,
         startedAt?: number | null,
       } | null,
-      TimeSpentWriting?:  {
+      timeSpentWriting?:  {
         __typename: "ModelTimeWritingConnection",
         nextToken?: string | null,
         startedAt?: number | null,
@@ -880,6 +906,7 @@ export type GetWordCountQuery = {
     __typename: "WordCount",
     id: string,
     words: number,
+    date: string,
     project:  {
       __typename: "Project",
       id: string,
@@ -890,7 +917,7 @@ export type GetWordCountQuery = {
         nextToken?: string | null,
         startedAt?: number | null,
       } | null,
-      TimeSpentWriting?:  {
+      timeSpentWriting?:  {
         __typename: "ModelTimeWritingConnection",
         nextToken?: string | null,
         startedAt?: number | null,
@@ -925,6 +952,7 @@ export type ListWordCountsQuery = {
       __typename: "WordCount",
       id: string,
       words: number,
+      date: string,
       project:  {
         __typename: "Project",
         id: string,
@@ -964,6 +992,7 @@ export type SyncWordCountsQuery = {
       __typename: "WordCount",
       id: string,
       words: number,
+      date: string,
       project:  {
         __typename: "Project",
         id: string,
@@ -998,6 +1027,7 @@ export type GetTimeWritingQuery = {
     __typename: "TimeWriting",
     id: string,
     minutes: number,
+    date: string,
     project:  {
       __typename: "Project",
       id: string,
@@ -1008,7 +1038,7 @@ export type GetTimeWritingQuery = {
         nextToken?: string | null,
         startedAt?: number | null,
       } | null,
-      TimeSpentWriting?:  {
+      timeSpentWriting?:  {
         __typename: "ModelTimeWritingConnection",
         nextToken?: string | null,
         startedAt?: number | null,
@@ -1043,6 +1073,7 @@ export type ListTimeWritingsQuery = {
       __typename: "TimeWriting",
       id: string,
       minutes: number,
+      date: string,
       project:  {
         __typename: "Project",
         id: string,
@@ -1082,6 +1113,7 @@ export type SyncTimeWritingsQuery = {
       __typename: "TimeWriting",
       id: string,
       minutes: number,
+      date: string,
       project:  {
         __typename: "Project",
         id: string,
@@ -1124,6 +1156,7 @@ export type OnCreateProjectSubscription = {
         __typename: "WordCount",
         id: string,
         words: number,
+        date: string,
         owner?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -1135,12 +1168,13 @@ export type OnCreateProjectSubscription = {
       nextToken?: string | null,
       startedAt?: number | null,
     } | null,
-    TimeSpentWriting?:  {
+    timeSpentWriting?:  {
       __typename: "ModelTimeWritingConnection",
       items:  Array< {
         __typename: "TimeWriting",
         id: string,
         minutes: number,
+        date: string,
         owner?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -1178,6 +1212,7 @@ export type OnUpdateProjectSubscription = {
         __typename: "WordCount",
         id: string,
         words: number,
+        date: string,
         owner?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -1189,12 +1224,13 @@ export type OnUpdateProjectSubscription = {
       nextToken?: string | null,
       startedAt?: number | null,
     } | null,
-    TimeSpentWriting?:  {
+    timeSpentWriting?:  {
       __typename: "ModelTimeWritingConnection",
       items:  Array< {
         __typename: "TimeWriting",
         id: string,
         minutes: number,
+        date: string,
         owner?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -1232,6 +1268,7 @@ export type OnDeleteProjectSubscription = {
         __typename: "WordCount",
         id: string,
         words: number,
+        date: string,
         owner?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -1243,12 +1280,13 @@ export type OnDeleteProjectSubscription = {
       nextToken?: string | null,
       startedAt?: number | null,
     } | null,
-    TimeSpentWriting?:  {
+    timeSpentWriting?:  {
       __typename: "ModelTimeWritingConnection",
       items:  Array< {
         __typename: "TimeWriting",
         id: string,
         minutes: number,
+        date: string,
         owner?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -1279,6 +1317,7 @@ export type OnCreateWordCountSubscription = {
     __typename: "WordCount",
     id: string,
     words: number,
+    date: string,
     project:  {
       __typename: "Project",
       id: string,
@@ -1289,7 +1328,7 @@ export type OnCreateWordCountSubscription = {
         nextToken?: string | null,
         startedAt?: number | null,
       } | null,
-      TimeSpentWriting?:  {
+      timeSpentWriting?:  {
         __typename: "ModelTimeWritingConnection",
         nextToken?: string | null,
         startedAt?: number | null,
@@ -1321,6 +1360,7 @@ export type OnUpdateWordCountSubscription = {
     __typename: "WordCount",
     id: string,
     words: number,
+    date: string,
     project:  {
       __typename: "Project",
       id: string,
@@ -1331,7 +1371,7 @@ export type OnUpdateWordCountSubscription = {
         nextToken?: string | null,
         startedAt?: number | null,
       } | null,
-      TimeSpentWriting?:  {
+      timeSpentWriting?:  {
         __typename: "ModelTimeWritingConnection",
         nextToken?: string | null,
         startedAt?: number | null,
@@ -1363,6 +1403,7 @@ export type OnDeleteWordCountSubscription = {
     __typename: "WordCount",
     id: string,
     words: number,
+    date: string,
     project:  {
       __typename: "Project",
       id: string,
@@ -1373,7 +1414,7 @@ export type OnDeleteWordCountSubscription = {
         nextToken?: string | null,
         startedAt?: number | null,
       } | null,
-      TimeSpentWriting?:  {
+      timeSpentWriting?:  {
         __typename: "ModelTimeWritingConnection",
         nextToken?: string | null,
         startedAt?: number | null,
@@ -1405,6 +1446,7 @@ export type OnCreateTimeWritingSubscription = {
     __typename: "TimeWriting",
     id: string,
     minutes: number,
+    date: string,
     project:  {
       __typename: "Project",
       id: string,
@@ -1415,7 +1457,7 @@ export type OnCreateTimeWritingSubscription = {
         nextToken?: string | null,
         startedAt?: number | null,
       } | null,
-      TimeSpentWriting?:  {
+      timeSpentWriting?:  {
         __typename: "ModelTimeWritingConnection",
         nextToken?: string | null,
         startedAt?: number | null,
@@ -1447,6 +1489,7 @@ export type OnUpdateTimeWritingSubscription = {
     __typename: "TimeWriting",
     id: string,
     minutes: number,
+    date: string,
     project:  {
       __typename: "Project",
       id: string,
@@ -1457,7 +1500,7 @@ export type OnUpdateTimeWritingSubscription = {
         nextToken?: string | null,
         startedAt?: number | null,
       } | null,
-      TimeSpentWriting?:  {
+      timeSpentWriting?:  {
         __typename: "ModelTimeWritingConnection",
         nextToken?: string | null,
         startedAt?: number | null,
@@ -1489,6 +1532,7 @@ export type OnDeleteTimeWritingSubscription = {
     __typename: "TimeWriting",
     id: string,
     minutes: number,
+    date: string,
     project:  {
       __typename: "Project",
       id: string,
@@ -1499,7 +1543,7 @@ export type OnDeleteTimeWritingSubscription = {
         nextToken?: string | null,
         startedAt?: number | null,
       } | null,
-      TimeSpentWriting?:  {
+      timeSpentWriting?:  {
         __typename: "ModelTimeWritingConnection",
         nextToken?: string | null,
         startedAt?: number | null,

@@ -7,7 +7,7 @@ type Project @model @auth(rules: [{ allow: owner }]) {
   name: String!
   projectType: ProjectType!
   wordCounts: [WordCount] @hasMany
-  TimeSpentWriting: [TimeWriting] @hasMany
+  writingTimes: [TimeWriting] @hasMany
   owner: String @auth(rules: [{ allow: owner, operations: [read] }])
 }
 
@@ -21,6 +21,7 @@ enum ProjectType {
 type WordCount @model @auth(rules: [{ allow: owner }]) {
   id: ID!
   words: Int!
+  date: AWSDateTime!
   project: Project! @belongsTo
   owner: String @auth(rules: [{ allow: owner, operations: [read] }])
 }
@@ -28,6 +29,7 @@ type WordCount @model @auth(rules: [{ allow: owner }]) {
 type TimeWriting @model @auth(rules: [{ allow: owner }]) {
   id: ID!
   minutes: Int!
+  date: AWSDateTime!
   project: Project! @belongsTo
   owner: String @auth(rules: [{ allow: owner, operations: [read] }])
 }

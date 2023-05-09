@@ -26,7 +26,7 @@ type EagerProject = {
   readonly name: string;
   readonly projectType: ProjectType | keyof typeof ProjectType;
   readonly wordCounts?: (WordCount | null)[] | null;
-  readonly TimeSpentWriting?: (TimeWriting | null)[] | null;
+  readonly writingTimes?: (TimeWriting | null)[] | null;
   readonly owner?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
@@ -37,7 +37,7 @@ type LazyProject = {
   readonly name: string;
   readonly projectType: ProjectType | keyof typeof ProjectType;
   readonly wordCounts: AsyncCollection<WordCount>;
-  readonly TimeSpentWriting: AsyncCollection<TimeWriting>;
+  readonly writingTimes: AsyncCollection<TimeWriting>;
   readonly owner?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
@@ -52,6 +52,7 @@ export declare const Project: (new (init: ModelInit<Project, ProjectMetaData>) =
 type EagerWordCount = {
   readonly id: string;
   readonly words: number;
+  readonly date: string;
   readonly project: Project;
   readonly owner?: string | null;
   readonly createdAt?: string | null;
@@ -61,6 +62,7 @@ type EagerWordCount = {
 type LazyWordCount = {
   readonly id: string;
   readonly words: number;
+  readonly date: string;
   readonly project: AsyncItem<Project>;
   readonly owner?: string | null;
   readonly createdAt?: string | null;
@@ -76,6 +78,7 @@ export declare const WordCount: (new (init: ModelInit<WordCount, WordCountMetaDa
 type EagerTimeWriting = {
   readonly id: string;
   readonly minutes: number;
+  readonly date: string;
   readonly project: Project;
   readonly owner?: string | null;
   readonly createdAt?: string | null;
@@ -85,6 +88,7 @@ type EagerTimeWriting = {
 type LazyTimeWriting = {
   readonly id: string;
   readonly minutes: number;
+  readonly date: string;
   readonly project: AsyncItem<Project>;
   readonly owner?: string | null;
   readonly createdAt?: string | null;

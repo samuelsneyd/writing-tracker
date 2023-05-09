@@ -12,6 +12,7 @@ export const getProject = /* GraphQL */ `
         items {
           id
           words
+          date
           owner
           createdAt
           updatedAt
@@ -23,10 +24,11 @@ export const getProject = /* GraphQL */ `
         nextToken
         startedAt
       }
-      TimeSpentWriting {
+      timeSpentWriting {
         items {
           id
           minutes
+          date
           owner
           createdAt
           updatedAt
@@ -62,7 +64,7 @@ export const listProjects = /* GraphQL */ `
           nextToken
           startedAt
         }
-        TimeSpentWriting {
+        timeSpentWriting {
           nextToken
           startedAt
         }
@@ -99,7 +101,7 @@ export const syncProjects = /* GraphQL */ `
           nextToken
           startedAt
         }
-        TimeSpentWriting {
+        timeSpentWriting {
           nextToken
           startedAt
         }
@@ -120,6 +122,7 @@ export const getWordCount = /* GraphQL */ `
     getWordCount(id: $id) {
       id
       words
+      date
       project {
         id
         name
@@ -128,7 +131,7 @@ export const getWordCount = /* GraphQL */ `
           nextToken
           startedAt
         }
-        TimeSpentWriting {
+        timeSpentWriting {
           nextToken
           startedAt
         }
@@ -159,6 +162,7 @@ export const listWordCounts = /* GraphQL */ `
       items {
         id
         words
+        date
         project {
           id
           name
@@ -199,6 +203,7 @@ export const syncWordCounts = /* GraphQL */ `
       items {
         id
         words
+        date
         project {
           id
           name
@@ -228,6 +233,7 @@ export const getTimeWriting = /* GraphQL */ `
     getTimeWriting(id: $id) {
       id
       minutes
+      date
       project {
         id
         name
@@ -236,7 +242,7 @@ export const getTimeWriting = /* GraphQL */ `
           nextToken
           startedAt
         }
-        TimeSpentWriting {
+        timeSpentWriting {
           nextToken
           startedAt
         }
@@ -267,6 +273,7 @@ export const listTimeWritings = /* GraphQL */ `
       items {
         id
         minutes
+        date
         project {
           id
           name
@@ -307,6 +314,7 @@ export const syncTimeWritings = /* GraphQL */ `
       items {
         id
         minutes
+        date
         project {
           id
           name
