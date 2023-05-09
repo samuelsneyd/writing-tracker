@@ -24,7 +24,7 @@ const ProjectDetailsScreen = ({ route, navigation }: Props) => {
       result?.wordCounts.toArray().then(results => {
         setWordCounts(results);
       });
-      result?.timeSpentWriting.toArray().then(results => {
+      result?.writingTimes.toArray().then(results => {
         setWritingTimes(results);
       });
     });
