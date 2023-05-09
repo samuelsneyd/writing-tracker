@@ -27,7 +27,7 @@ export const createProject = /* GraphQL */ `
         nextToken
         startedAt
       }
-      timeSpentWriting {
+      writingTimes {
         items {
           id
           minutes
@@ -38,7 +38,7 @@ export const createProject = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
-          projectTimeSpentWritingId
+          projectWritingTimesId
         }
         nextToken
         startedAt
@@ -77,7 +77,7 @@ export const updateProject = /* GraphQL */ `
         nextToken
         startedAt
       }
-      timeSpentWriting {
+      writingTimes {
         items {
           id
           minutes
@@ -88,7 +88,7 @@ export const updateProject = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
-          projectTimeSpentWritingId
+          projectWritingTimesId
         }
         nextToken
         startedAt
@@ -127,7 +127,7 @@ export const deleteProject = /* GraphQL */ `
         nextToken
         startedAt
       }
-      timeSpentWriting {
+      writingTimes {
         items {
           id
           minutes
@@ -138,7 +138,7 @@ export const deleteProject = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
-          projectTimeSpentWritingId
+          projectWritingTimesId
         }
         nextToken
         startedAt
@@ -169,7 +169,7 @@ export const createWordCount = /* GraphQL */ `
           nextToken
           startedAt
         }
-        timeSpentWriting {
+        writingTimes {
           nextToken
           startedAt
         }
@@ -207,7 +207,7 @@ export const updateWordCount = /* GraphQL */ `
           nextToken
           startedAt
         }
-        timeSpentWriting {
+        writingTimes {
           nextToken
           startedAt
         }
@@ -245,7 +245,7 @@ export const deleteWordCount = /* GraphQL */ `
           nextToken
           startedAt
         }
-        timeSpentWriting {
+        writingTimes {
           nextToken
           startedAt
         }
@@ -283,7 +283,7 @@ export const createTimeWriting = /* GraphQL */ `
           nextToken
           startedAt
         }
-        timeSpentWriting {
+        writingTimes {
           nextToken
           startedAt
         }
@@ -300,7 +300,7 @@ export const createTimeWriting = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
-      projectTimeSpentWritingId
+      projectWritingTimesId
     }
   }
 `;
@@ -321,7 +321,7 @@ export const updateTimeWriting = /* GraphQL */ `
           nextToken
           startedAt
         }
-        timeSpentWriting {
+        writingTimes {
           nextToken
           startedAt
         }
@@ -338,7 +338,7 @@ export const updateTimeWriting = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
-      projectTimeSpentWritingId
+      projectWritingTimesId
     }
   }
 `;
@@ -359,7 +359,7 @@ export const deleteTimeWriting = /* GraphQL */ `
           nextToken
           startedAt
         }
-        timeSpentWriting {
+        writingTimes {
           nextToken
           startedAt
         }
@@ -376,7 +376,7 @@ export const deleteTimeWriting = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
-      projectTimeSpentWritingId
+      projectWritingTimesId
     }
   }
 `;

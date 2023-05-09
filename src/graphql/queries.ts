@@ -24,7 +24,7 @@ export const getProject = /* GraphQL */ `
         nextToken
         startedAt
       }
-      timeSpentWriting {
+      writingTimes {
         items {
           id
           minutes
@@ -35,7 +35,7 @@ export const getProject = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
-          projectTimeSpentWritingId
+          projectWritingTimesId
         }
         nextToken
         startedAt
@@ -64,7 +64,7 @@ export const listProjects = /* GraphQL */ `
           nextToken
           startedAt
         }
-        timeSpentWriting {
+        writingTimes {
           nextToken
           startedAt
         }
@@ -101,7 +101,7 @@ export const syncProjects = /* GraphQL */ `
           nextToken
           startedAt
         }
-        timeSpentWriting {
+        writingTimes {
           nextToken
           startedAt
         }
@@ -131,7 +131,7 @@ export const getWordCount = /* GraphQL */ `
           nextToken
           startedAt
         }
-        timeSpentWriting {
+        writingTimes {
           nextToken
           startedAt
         }
@@ -242,7 +242,7 @@ export const getTimeWriting = /* GraphQL */ `
           nextToken
           startedAt
         }
-        timeSpentWriting {
+        writingTimes {
           nextToken
           startedAt
         }
@@ -259,7 +259,7 @@ export const getTimeWriting = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
-      projectTimeSpentWritingId
+      projectWritingTimesId
     }
   }
 `;
@@ -291,7 +291,7 @@ export const listTimeWritings = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
-        projectTimeSpentWritingId
+        projectWritingTimesId
       }
       nextToken
       startedAt
@@ -332,7 +332,7 @@ export const syncTimeWritings = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
-        projectTimeSpentWritingId
+        projectWritingTimesId
       }
       nextToken
       startedAt
