@@ -1,4 +1,4 @@
-type RootTabParamList = {
+export type RootTabParamList = {
   // ScreenName: Props | undefined
   HomeStackNavigator: undefined;
   ProjectsStackNavigator: undefined;
@@ -7,24 +7,24 @@ type RootTabParamList = {
   MoreStackNavigator: undefined;
 };
 
-type HomeStackParamList = {
+export type HomeStackParamList = {
   Home: undefined;
 };
 
-type ProjectsStackParamList = {
+export type ProjectsStackParamList = {
   Projects: undefined;
   Details: Required<{ id: string, name: string }>;
 };
 
-type AddDataStackParamList = {
+export type AddDataStackParamList = {
   AddData: undefined;
 };
 
-type GoalsStackParamList = {
+export type GoalsStackParamList = {
   Goals: undefined;
 };
 
-type MoreStackParamList = {
+export type MoreStackParamList = {
   More: undefined;
   Awards: undefined;
   Themes: undefined;
@@ -33,31 +33,19 @@ type MoreStackParamList = {
   Settings: undefined;
 };
 
-type SettingsStackParamList = {
+export type SettingsStackParamList = {
   Settings: undefined;
 };
 
-type Quote = {
+export type Quote = {
   quote: string;
   author: string;
 };
 
-type DateStreakSummary = {
+export type DateStreakSummary = {
   currentStreak: number;
   longestStreak: number;
   streaks: number[];
   todayInStreak: boolean;
   withinCurrentStreak: boolean;
-};
-
-export type {
-  RootTabParamList,
-  HomeStackParamList,
-  ProjectsStackParamList,
-  AddDataStackParamList,
-  GoalsStackParamList,
-  MoreStackParamList,
-  SettingsStackParamList,
-  DateStreakSummary,
-  Quote,
 };
