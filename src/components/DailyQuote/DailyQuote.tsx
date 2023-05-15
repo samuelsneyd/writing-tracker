@@ -9,8 +9,8 @@ const DailyQuote = () => {
   return (
     <Card status="primary">
       <Text>
-        <Text style={styles.italic} appearance="hint">"{dailyQuote.quote}"</Text>
-        <Text style={styles.italic}> - {dailyQuote.author}</Text>
+        <Text style={styles.italic}>"{dailyQuote.quote}"</Text>
+        <Text style={styles.italic} status="primary"> - {dailyQuote.author}</Text>
       </Text>
     </Card>
   );
