@@ -8,7 +8,7 @@ import { DateStreakSummary } from '../../types/types';
 /**
  * Returns a summary of the signed-in user's daily login streak.
  */
-export const useLoginStreak = (): DateStreakSummary => {
+const useLoginStreak = (): DateStreakSummary => {
   const [loginSummary, setLoginSummary] = useState<DateStreakSummary>({
     currentStreak: 0,
     longestStreak: 0,
@@ -43,3 +43,5 @@ export const useLoginStreak = (): DateStreakSummary => {
 
   return loginSummary;
 };
+
+export default useLoginStreak;

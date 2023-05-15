@@ -8,12 +8,11 @@ import { ApplicationProvider, IconRegistry } from '@ui-kitten/components';
 import RootTabNavigator from './navigators/RootTabNavigator/RootTabNavigator';
 import { ThemeContext } from './themes/theme-context';
 import { steampunkTheme } from './themes';
-import { useLoginStreak } from './hooks/useLoginStreak/useLoginStreak';
+import useLoginStreak from './hooks/useLoginStreak/useLoginStreak';
 
 const App = () => {
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
   const loginStreak = useLoginStreak();
-  console.log(loginStreak);
 
   const toggleTheme = () => {
     const nextTheme = theme === 'light' ? 'dark' : 'light';
