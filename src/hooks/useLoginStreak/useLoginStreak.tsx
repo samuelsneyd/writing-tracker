@@ -4,6 +4,7 @@ import { DataStore } from 'aws-amplify';
 import { LoginDate } from '../../models';
 import { summary } from 'date-streaks';
 import { DateStreakSummary } from '../../types/types';
+import { format } from 'date-fns';
 
 /**
  * Returns a summary of the signed-in user's daily login streak.
@@ -18,21 +19,28 @@ const useLoginStreak = (): DateStreakSummary => {
   });
 
   useEffect(() => {
+    /**
+     * Updates the daily login streak as based on the device's timezone.
+     */
     const updateStreak = async () => {
-      const currentDate = new Date().toISOString();
-      const logins = await DataStore.query(LoginDate);
-      // Find match on YYYY-MM-DD
-      const hasSignedInToday = logins.some(login => login.date?.substring(0, 10) === currentDate.substring(0, 10));
+      const today = new Date();
+      const todayDate = format(today, 'YYYY-MM-DD');
+      const loginDates = await DataStore.query(LoginDate);
+      const dates = loginDates.map(login => format(login.date, 'YYYY-MM-DD'));
+      const hasSignedInToday = dates.some(date => date === todayDate);
 
       if (!hasSignedInToday) {
+        // Login dates are persisted in datastore as ISO string
         const todayLogin = new LoginDate({
-          date: currentDate,
+          date: today.toISOString(),
         });
         await DataStore.save(todayLogin);
-        logins.push(todayLogin);
+        loginDates.push(todayLogin);
+        dates.push(format(todayLogin.date, 'YYYY-MM-DD'));
       }
 
-      const loginStreakSummary = summary({ dates: logins.map(login => login.date) });
+      // Date streaks are summarized in local timezone via local YYYY-MM-DD
+      const loginStreakSummary = summary({ dates });
 
       setLoginSummary(loginStreakSummary);
     };
