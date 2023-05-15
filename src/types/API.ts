@@ -238,6 +238,45 @@ export type DeleteTimeWritingInput = {
   _version?: number | null,
 };
 
+export type CreateLoginDateInput = {
+  id?: string | null,
+  date: string,
+  owner?: string | null,
+  _version?: number | null,
+};
+
+export type ModelLoginDateConditionInput = {
+  date?: ModelStringInput | null,
+  owner?: ModelStringInput | null,
+  and?: Array< ModelLoginDateConditionInput | null > | null,
+  or?: Array< ModelLoginDateConditionInput | null > | null,
+  not?: ModelLoginDateConditionInput | null,
+};
+
+export type LoginDate = {
+  __typename: "LoginDate",
+  id: string,
+  date: string,
+  owner?: string | null,
+  createdAt: string,
+  updatedAt: string,
+  _version: number,
+  _deleted?: boolean | null,
+  _lastChangedAt: number,
+};
+
+export type UpdateLoginDateInput = {
+  id: string,
+  date?: string | null,
+  owner?: string | null,
+  _version?: number | null,
+};
+
+export type DeleteLoginDateInput = {
+  id: string,
+  _version?: number | null,
+};
+
 export type ModelProjectFilterInput = {
   id?: ModelIDInput | null,
   name?: ModelStringInput | null,
@@ -275,6 +314,22 @@ export type ModelTimeWritingFilterInput = {
   or?: Array< ModelTimeWritingFilterInput | null > | null,
   not?: ModelTimeWritingFilterInput | null,
   projectWritingTimesId?: ModelIDInput | null,
+};
+
+export type ModelLoginDateFilterInput = {
+  id?: ModelIDInput | null,
+  date?: ModelStringInput | null,
+  owner?: ModelStringInput | null,
+  and?: Array< ModelLoginDateFilterInput | null > | null,
+  or?: Array< ModelLoginDateFilterInput | null > | null,
+  not?: ModelLoginDateFilterInput | null,
+};
+
+export type ModelLoginDateConnection = {
+  __typename: "ModelLoginDateConnection",
+  items:  Array<LoginDate | null >,
+  nextToken?: string | null,
+  startedAt?: number | null,
 };
 
 export type ModelSubscriptionProjectFilterInput = {
@@ -341,6 +396,13 @@ export type ModelSubscriptionTimeWritingFilterInput = {
   date?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionTimeWritingFilterInput | null > | null,
   or?: Array< ModelSubscriptionTimeWritingFilterInput | null > | null,
+};
+
+export type ModelSubscriptionLoginDateFilterInput = {
+  id?: ModelSubscriptionIDInput | null,
+  date?: ModelSubscriptionStringInput | null,
+  and?: Array< ModelSubscriptionLoginDateFilterInput | null > | null,
+  or?: Array< ModelSubscriptionLoginDateFilterInput | null > | null,
 };
 
 export type CreateProjectMutationVariables = {
@@ -769,6 +831,63 @@ export type DeleteTimeWritingMutation = {
   } | null,
 };
 
+export type CreateLoginDateMutationVariables = {
+  input: CreateLoginDateInput,
+  condition?: ModelLoginDateConditionInput | null,
+};
+
+export type CreateLoginDateMutation = {
+  createLoginDate?:  {
+    __typename: "LoginDate",
+    id: string,
+    date: string,
+    owner?: string | null,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+  } | null,
+};
+
+export type UpdateLoginDateMutationVariables = {
+  input: UpdateLoginDateInput,
+  condition?: ModelLoginDateConditionInput | null,
+};
+
+export type UpdateLoginDateMutation = {
+  updateLoginDate?:  {
+    __typename: "LoginDate",
+    id: string,
+    date: string,
+    owner?: string | null,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+  } | null,
+};
+
+export type DeleteLoginDateMutationVariables = {
+  input: DeleteLoginDateInput,
+  condition?: ModelLoginDateConditionInput | null,
+};
+
+export type DeleteLoginDateMutation = {
+  deleteLoginDate?:  {
+    __typename: "LoginDate",
+    id: string,
+    date: string,
+    owner?: string | null,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+  } | null,
+};
+
 export type GetProjectQueryVariables = {
   id: string,
 };
@@ -1133,6 +1252,75 @@ export type SyncTimeWritingsQuery = {
       _deleted?: boolean | null,
       _lastChangedAt: number,
       projectWritingTimesId?: string | null,
+    } | null >,
+    nextToken?: string | null,
+    startedAt?: number | null,
+  } | null,
+};
+
+export type GetLoginDateQueryVariables = {
+  id: string,
+};
+
+export type GetLoginDateQuery = {
+  getLoginDate?:  {
+    __typename: "LoginDate",
+    id: string,
+    date: string,
+    owner?: string | null,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+  } | null,
+};
+
+export type ListLoginDatesQueryVariables = {
+  filter?: ModelLoginDateFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListLoginDatesQuery = {
+  listLoginDates?:  {
+    __typename: "ModelLoginDateConnection",
+    items:  Array< {
+      __typename: "LoginDate",
+      id: string,
+      date: string,
+      owner?: string | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+    } | null >,
+    nextToken?: string | null,
+    startedAt?: number | null,
+  } | null,
+};
+
+export type SyncLoginDatesQueryVariables = {
+  filter?: ModelLoginDateFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+  lastSync?: number | null,
+};
+
+export type SyncLoginDatesQuery = {
+  syncLoginDates?:  {
+    __typename: "ModelLoginDateConnection",
+    items:  Array< {
+      __typename: "LoginDate",
+      id: string,
+      date: string,
+      owner?: string | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
     } | null >,
     nextToken?: string | null,
     startedAt?: number | null,
@@ -1562,5 +1750,62 @@ export type OnDeleteTimeWritingSubscription = {
     _deleted?: boolean | null,
     _lastChangedAt: number,
     projectWritingTimesId?: string | null,
+  } | null,
+};
+
+export type OnCreateLoginDateSubscriptionVariables = {
+  filter?: ModelSubscriptionLoginDateFilterInput | null,
+  owner?: string | null,
+};
+
+export type OnCreateLoginDateSubscription = {
+  onCreateLoginDate?:  {
+    __typename: "LoginDate",
+    id: string,
+    date: string,
+    owner?: string | null,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+  } | null,
+};
+
+export type OnUpdateLoginDateSubscriptionVariables = {
+  filter?: ModelSubscriptionLoginDateFilterInput | null,
+  owner?: string | null,
+};
+
+export type OnUpdateLoginDateSubscription = {
+  onUpdateLoginDate?:  {
+    __typename: "LoginDate",
+    id: string,
+    date: string,
+    owner?: string | null,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+  } | null,
+};
+
+export type OnDeleteLoginDateSubscriptionVariables = {
+  filter?: ModelSubscriptionLoginDateFilterInput | null,
+  owner?: string | null,
+};
+
+export type OnDeleteLoginDateSubscription = {
+  onDeleteLoginDate?:  {
+    __typename: "LoginDate",
+    id: string,
+    date: string,
+    owner?: string | null,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
   } | null,
 };

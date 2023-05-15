@@ -380,3 +380,54 @@ export const onDeleteTimeWriting = /* GraphQL */ `
     }
   }
 `;
+export const onCreateLoginDate = /* GraphQL */ `
+  subscription OnCreateLoginDate(
+    $filter: ModelSubscriptionLoginDateFilterInput
+    $owner: String
+  ) {
+    onCreateLoginDate(filter: $filter, owner: $owner) {
+      id
+      date
+      owner
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const onUpdateLoginDate = /* GraphQL */ `
+  subscription OnUpdateLoginDate(
+    $filter: ModelSubscriptionLoginDateFilterInput
+    $owner: String
+  ) {
+    onUpdateLoginDate(filter: $filter, owner: $owner) {
+      id
+      date
+      owner
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const onDeleteLoginDate = /* GraphQL */ `
+  subscription OnDeleteLoginDate(
+    $filter: ModelSubscriptionLoginDateFilterInput
+    $owner: String
+  ) {
+    onDeleteLoginDate(filter: $filter, owner: $owner) {
+      id
+      date
+      owner
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;

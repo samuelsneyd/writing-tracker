@@ -9,11 +9,12 @@ const ProjectType = {
   "OTHER": "OTHER"
 };
 
-const { Project, WordCount, TimeWriting } = initSchema(schema);
+const { Project, WordCount, TimeWriting, LoginDate } = initSchema(schema);
 
 export {
   Project,
   WordCount,
   TimeWriting,
+  LoginDate,
   ProjectType
 };

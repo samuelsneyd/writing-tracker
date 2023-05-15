@@ -33,3 +33,9 @@ type TimeWriting @model @auth(rules: [{ allow: owner }]) {
   project: Project! @belongsTo
   owner: String @auth(rules: [{ allow: owner, operations: [read] }])
 }
+
+type LoginDate @model @auth(rules: [{ allow: owner }]) {
+  id: ID!
+  date: AWSDateTime!
+  owner: String @auth(rules: [{ allow: owner, operations: [read] }])
+}

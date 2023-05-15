@@ -21,6 +21,10 @@ type TimeWritingMetaData = {
   readOnlyFields: 'createdAt' | 'updatedAt';
 }
 
+type LoginDateMetaData = {
+  readOnlyFields: 'createdAt' | 'updatedAt';
+}
+
 type EagerProject = {
   readonly id: string;
   readonly name: string;
@@ -99,4 +103,26 @@ export declare type TimeWriting = LazyLoading extends LazyLoadingDisabled ? Eage
 
 export declare const TimeWriting: (new (init: ModelInit<TimeWriting, TimeWritingMetaData>) => TimeWriting) & {
   copyOf(source: TimeWriting, mutator: (draft: MutableModel<TimeWriting, TimeWritingMetaData>) => MutableModel<TimeWriting, TimeWritingMetaData> | void): TimeWriting;
+}
+
+type EagerLoginDate = {
+  readonly id: string;
+  readonly date: string;
+  readonly owner?: string | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+type LazyLoginDate = {
+  readonly id: string;
+  readonly date: string;
+  readonly owner?: string | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+export declare type LoginDate = LazyLoading extends LazyLoadingDisabled ? EagerLoginDate : LazyLoginDate
+
+export declare const LoginDate: (new (init: ModelInit<LoginDate, LoginDateMetaData>) => LoginDate) & {
+  copyOf(source: LoginDate, mutator: (draft: MutableModel<LoginDate, LoginDateMetaData>) => MutableModel<LoginDate, LoginDateMetaData> | void): LoginDate;
 }

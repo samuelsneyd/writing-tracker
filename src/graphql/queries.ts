@@ -339,3 +339,67 @@ export const syncTimeWritings = /* GraphQL */ `
     }
   }
 `;
+export const getLoginDate = /* GraphQL */ `
+  query GetLoginDate($id: ID!) {
+    getLoginDate(id: $id) {
+      id
+      date
+      owner
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const listLoginDates = /* GraphQL */ `
+  query ListLoginDates(
+    $filter: ModelLoginDateFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listLoginDates(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        date
+        owner
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const syncLoginDates = /* GraphQL */ `
+  query SyncLoginDates(
+    $filter: ModelLoginDateFilterInput
+    $limit: Int
+    $nextToken: String
+    $lastSync: AWSTimestamp
+  ) {
+    syncLoginDates(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
+    ) {
+      items {
+        id
+        date
+        owner
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;

@@ -380,3 +380,54 @@ export const deleteTimeWriting = /* GraphQL */ `
     }
   }
 `;
+export const createLoginDate = /* GraphQL */ `
+  mutation CreateLoginDate(
+    $input: CreateLoginDateInput!
+    $condition: ModelLoginDateConditionInput
+  ) {
+    createLoginDate(input: $input, condition: $condition) {
+      id
+      date
+      owner
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const updateLoginDate = /* GraphQL */ `
+  mutation UpdateLoginDate(
+    $input: UpdateLoginDateInput!
+    $condition: ModelLoginDateConditionInput
+  ) {
+    updateLoginDate(input: $input, condition: $condition) {
+      id
+      date
+      owner
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const deleteLoginDate = /* GraphQL */ `
+  mutation DeleteLoginDate(
+    $input: DeleteLoginDateInput!
+    $condition: ModelLoginDateConditionInput
+  ) {
+    deleteLoginDate(input: $input, condition: $condition) {
+      id
+      date
+      owner
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;

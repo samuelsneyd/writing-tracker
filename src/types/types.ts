@@ -42,6 +42,14 @@ type Quote = {
   author: string;
 };
 
+type DateStreakSummary = {
+  currentStreak: number;
+  longestStreak: number;
+  streaks: number[];
+  todayInStreak: boolean;
+  withinCurrentStreak: boolean;
+};
+
 export type {
   RootTabParamList,
   HomeStackParamList,
@@ -50,5 +58,6 @@ export type {
   GoalsStackParamList,
   MoreStackParamList,
   SettingsStackParamList,
+  DateStreakSummary,
   Quote,
 };
