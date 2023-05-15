@@ -2,9 +2,9 @@ import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { DataStore } from 'aws-amplify';
 import { LoginDate } from '../../models';
-import { summary } from 'date-streaks';
-import { DateStreakSummary } from '../../types/types';
 import { format } from 'date-fns';
+import { summary } from 'date-streaks';
+import type { DateStreakSummary } from '../../types/types';
 
 /**
  * Returns a summary of the signed-in user's daily login streak.
