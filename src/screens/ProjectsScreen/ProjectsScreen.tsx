@@ -108,7 +108,7 @@ const ProjectsScreen = ({ navigation }: Props) => {
     }
   };
 
-  const addTimeWritings = async () => {
+  const addWritingTimes = async () => {
     try {
       await Promise.all(projects.map(project => DataStore.save(new TimeWriting({
         project,
@@ -116,20 +116,29 @@ const ProjectsScreen = ({ navigation }: Props) => {
         date: new Date().toISOString(),
       }))));
       console.log('Writing Times saved successfully!', wordCounts);
-      await fetchTimeWritings();
+      await fetchWritingTimes();
     } catch (e) {
       console.log('Error adding writing times', e);
     }
   };
 
-  const fetchTimeWritings = async () => {
+  const fetchWritingTimes = async () => {
     try {
       const writingTimes = await DataStore.query(TimeWriting);
       setWritingTimes(writingTimes);
-      console.log('Time writings retrieved successfully!', JSON.stringify(writingTimes, null, 2));
+      console.log('Writing Times retrieved successfully!', JSON.stringify(writingTimes, null, 2));
     } catch (e) {
       console.log('Error retrieving writing times', e);
       setWritingTimes([]);
+    }
+  };
+
+  const wipeWritingTimes = async () => {
+    try {
+      await DataStore.delete(TimeWriting, Predicates.ALL);
+      setWritingTimes([]);
+    } catch (e) {
+      console.log('Error wiping writing times', e);
     }
   };
 
@@ -155,8 +164,9 @@ const ProjectsScreen = ({ navigation }: Props) => {
         {/*<Button size="small" onPress={addWordCounts}>Add Word Counts</Button>*/}
         <Button size="small" onPress={fetchWordCounts}>Fetch Word Counts</Button>
         {/*<Button size="small" onPress={wipeWordCounts}>Wipe Word Counts</Button>*/}
-        {/*<Button size="small" onPress={addTimeWritings}>Add Writing Times</Button>*/}
-        <Button size="small" onPress={fetchTimeWritings}>Fetch Writing Times</Button>
+        {/*<Button size="small" onPress={addWritingTimes}>Add Writing Times</Button>*/}
+        <Button size="small" onPress={fetchWritingTimes}>Fetch Writing Times</Button>
+        {/*<Button size="small" onPress={wipeWritingTimes}>Wipe Writing Times</Button>*/}
         <Divider />
       </Layout>
       <List
