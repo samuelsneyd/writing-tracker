@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { createBottomTabNavigator, BottomTabBarProps } from '@react-navigation/bottom-tabs';
-import { BottomNavigation, BottomNavigationTab, Icon } from '@ui-kitten/components';
+import { BottomNavigation, BottomNavigationTab, Divider, Icon } from '@ui-kitten/components';
 import type { RootTabParamList } from '../../types/types';
 import HomeStackNavigator from '../HomeStackNavigator/HomeStackNavigator';
 import ProjectsStackNavigator from '../ProjectsStackNavigator/ProjectsStackNavigator';
@@ -12,16 +12,20 @@ const Tab = createBottomTabNavigator<RootTabParamList>();
 
 const BottomTabBar = ({ navigation, state }: BottomTabBarProps) => {
   return (
-    <BottomNavigation
-      selectedIndex={state.index}
-      onSelect={index => navigation.navigate(state.routeNames[index])}
-    >
-      <BottomNavigationTab title="Home" icon={<Icon name="home-outline" />} />
-      <BottomNavigationTab title="Projects" icon={<Icon name="book-open-outline" />} />
-      <BottomNavigationTab title="Add" icon={<Icon name="plus-circle-outline" />} />
-      <BottomNavigationTab title="Goals" icon={<Icon name="edit-outline" />} />
-      <BottomNavigationTab title="More" icon={<Icon name="grid-outline" />} />
-    </BottomNavigation>
+    <>
+      <Divider />
+      <BottomNavigation
+        appearance="noIndicator"
+        selectedIndex={state.index}
+        onSelect={index => navigation.navigate(state.routeNames[index])}
+      >
+        <BottomNavigationTab title="Home" icon={<Icon name="home-outline" />} />
+        <BottomNavigationTab title="Projects" icon={<Icon name="book-open-outline" />} />
+        <BottomNavigationTab title="Add" icon={<Icon name="plus-circle-outline" />} />
+        <BottomNavigationTab title="Goals" icon={<Icon name="edit-outline" />} />
+        <BottomNavigationTab title="More" icon={<Icon name="grid-outline" />} />
+      </BottomNavigation>
+    </>
   );
 };
 
