@@ -8,25 +8,10 @@ export const getProject = /* GraphQL */ `
       id
       name
       projectType
-      wordCounts {
+      sessions {
         items {
           id
           words
-          date
-          owner
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          projectWordCountsId
-        }
-        nextToken
-        startedAt
-      }
-      writingTimes {
-        items {
-          id
           minutes
           date
           owner
@@ -35,7 +20,7 @@ export const getProject = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
-          projectWritingTimesId
+          projectSessionsId
         }
         nextToken
         startedAt
@@ -60,11 +45,7 @@ export const listProjects = /* GraphQL */ `
         id
         name
         projectType
-        wordCounts {
-          nextToken
-          startedAt
-        }
-        writingTimes {
+        sessions {
           nextToken
           startedAt
         }
@@ -97,11 +78,7 @@ export const syncProjects = /* GraphQL */ `
         id
         name
         projectType
-        wordCounts {
-          nextToken
-          startedAt
-        }
-        writingTimes {
+        sessions {
           nextToken
           startedAt
         }
@@ -117,132 +94,18 @@ export const syncProjects = /* GraphQL */ `
     }
   }
 `;
-export const getWordCount = /* GraphQL */ `
-  query GetWordCount($id: ID!) {
-    getWordCount(id: $id) {
+export const getSession = /* GraphQL */ `
+  query GetSession($id: ID!) {
+    getSession(id: $id) {
       id
       words
-      date
-      project {
-        id
-        name
-        projectType
-        wordCounts {
-          nextToken
-          startedAt
-        }
-        writingTimes {
-          nextToken
-          startedAt
-        }
-        owner
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      owner
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-      projectWordCountsId
-    }
-  }
-`;
-export const listWordCounts = /* GraphQL */ `
-  query ListWordCounts(
-    $filter: ModelWordCountFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listWordCounts(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        words
-        date
-        project {
-          id
-          name
-          projectType
-          owner
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        owner
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-        projectWordCountsId
-      }
-      nextToken
-      startedAt
-    }
-  }
-`;
-export const syncWordCounts = /* GraphQL */ `
-  query SyncWordCounts(
-    $filter: ModelWordCountFilterInput
-    $limit: Int
-    $nextToken: String
-    $lastSync: AWSTimestamp
-  ) {
-    syncWordCounts(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-      lastSync: $lastSync
-    ) {
-      items {
-        id
-        words
-        date
-        project {
-          id
-          name
-          projectType
-          owner
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        owner
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-        projectWordCountsId
-      }
-      nextToken
-      startedAt
-    }
-  }
-`;
-export const getTimeWriting = /* GraphQL */ `
-  query GetTimeWriting($id: ID!) {
-    getTimeWriting(id: $id) {
-      id
       minutes
       date
       project {
         id
         name
         projectType
-        wordCounts {
-          nextToken
-          startedAt
-        }
-        writingTimes {
+        sessions {
           nextToken
           startedAt
         }
@@ -259,19 +122,20 @@ export const getTimeWriting = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
-      projectWritingTimesId
+      projectSessionsId
     }
   }
 `;
-export const listTimeWritings = /* GraphQL */ `
-  query ListTimeWritings(
-    $filter: ModelTimeWritingFilterInput
+export const listSessions = /* GraphQL */ `
+  query ListSessions(
+    $filter: ModelSessionFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    listTimeWritings(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listSessions(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
+        words
         minutes
         date
         project {
@@ -291,21 +155,21 @@ export const listTimeWritings = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
-        projectWritingTimesId
+        projectSessionsId
       }
       nextToken
       startedAt
     }
   }
 `;
-export const syncTimeWritings = /* GraphQL */ `
-  query SyncTimeWritings(
-    $filter: ModelTimeWritingFilterInput
+export const syncSessions = /* GraphQL */ `
+  query SyncSessions(
+    $filter: ModelSessionFilterInput
     $limit: Int
     $nextToken: String
     $lastSync: AWSTimestamp
   ) {
-    syncTimeWritings(
+    syncSessions(
       filter: $filter
       limit: $limit
       nextToken: $nextToken
@@ -313,6 +177,7 @@ export const syncTimeWritings = /* GraphQL */ `
     ) {
       items {
         id
+        words
         minutes
         date
         project {
@@ -332,7 +197,7 @@ export const syncTimeWritings = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
-        projectWritingTimesId
+        projectSessionsId
       }
       nextToken
       startedAt

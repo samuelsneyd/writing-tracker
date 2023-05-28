@@ -16,6 +16,7 @@ const ProjectDetailsScreen = ({ route, navigation }: Props) => {
   const [project, setProject] = useState<Project>();
   const [sessions, setSessions] = useState<Session[]>([]);
   const { BackAction } = useBackNavigation(navigation);
+  const { id, name } = route.params;
 
   useEffect(() => {
     DataStore.query(Project, id).then(result => {
@@ -25,7 +26,6 @@ const ProjectDetailsScreen = ({ route, navigation }: Props) => {
       });
     });
   }, []);
-  const { id, name } = route.params;
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -39,6 +39,9 @@ const ProjectDetailsScreen = ({ route, navigation }: Props) => {
             {sessions.map((session, i) =>
               <Text key={session.id}>Session {i + 1}: {session.words} words, {session.minutes} minutes</Text>)
             }
+            <Text>Number of sessions: {sessions.length}</Text>
+            <Text>Total words: {sessions.reduce((prev, { words: next }) => prev + next, 0)}</Text>
+            <Text>Total minutes: {sessions.reduce((prev, { minutes: next }) => prev + next, 0)}</Text>
           </>
           : <Text>No project found!</Text>
         }

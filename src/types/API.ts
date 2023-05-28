@@ -77,8 +77,7 @@ export type Project = {
   id: string,
   name: string,
   projectType: ProjectType,
-  wordCounts?: ModelWordCountConnection | null,
-  writingTimes?: ModelTimeWritingConnection | null,
+  sessions?: ModelSessionConnection | null,
   owner?: string | null,
   createdAt: string,
   updatedAt: string,
@@ -87,38 +86,17 @@ export type Project = {
   _lastChangedAt: number,
 };
 
-export type ModelWordCountConnection = {
-  __typename: "ModelWordCountConnection",
-  items:  Array<WordCount | null >,
+export type ModelSessionConnection = {
+  __typename: "ModelSessionConnection",
+  items:  Array<Session | null >,
   nextToken?: string | null,
   startedAt?: number | null,
 };
 
-export type WordCount = {
-  __typename: "WordCount",
+export type Session = {
+  __typename: "Session",
   id: string,
   words: number,
-  date: string,
-  project: Project,
-  owner?: string | null,
-  createdAt: string,
-  updatedAt: string,
-  _version: number,
-  _deleted?: boolean | null,
-  _lastChangedAt: number,
-  projectWordCountsId?: string | null,
-};
-
-export type ModelTimeWritingConnection = {
-  __typename: "ModelTimeWritingConnection",
-  items:  Array<TimeWriting | null >,
-  nextToken?: string | null,
-  startedAt?: number | null,
-};
-
-export type TimeWriting = {
-  __typename: "TimeWriting",
-  id: string,
   minutes: number,
   date: string,
   project: Project,
@@ -128,7 +106,7 @@ export type TimeWriting = {
   _version: number,
   _deleted?: boolean | null,
   _lastChangedAt: number,
-  projectWritingTimesId?: string | null,
+  projectSessionsId?: string | null,
 };
 
 export type UpdateProjectInput = {
@@ -144,23 +122,25 @@ export type DeleteProjectInput = {
   _version?: number | null,
 };
 
-export type CreateWordCountInput = {
+export type CreateSessionInput = {
   id?: string | null,
   words: number,
+  minutes: number,
   date: string,
   owner?: string | null,
   _version?: number | null,
-  projectWordCountsId?: string | null,
+  projectSessionsId?: string | null,
 };
 
-export type ModelWordCountConditionInput = {
+export type ModelSessionConditionInput = {
   words?: ModelIntInput | null,
+  minutes?: ModelIntInput | null,
   date?: ModelStringInput | null,
   owner?: ModelStringInput | null,
-  and?: Array< ModelWordCountConditionInput | null > | null,
-  or?: Array< ModelWordCountConditionInput | null > | null,
-  not?: ModelWordCountConditionInput | null,
-  projectWordCountsId?: ModelIDInput | null,
+  and?: Array< ModelSessionConditionInput | null > | null,
+  or?: Array< ModelSessionConditionInput | null > | null,
+  not?: ModelSessionConditionInput | null,
+  projectSessionsId?: ModelIDInput | null,
 };
 
 export type ModelIntInput = {
@@ -191,49 +171,17 @@ export type ModelIDInput = {
   size?: ModelSizeInput | null,
 };
 
-export type UpdateWordCountInput = {
+export type UpdateSessionInput = {
   id: string,
   words?: number | null,
-  date?: string | null,
-  owner?: string | null,
-  _version?: number | null,
-  projectWordCountsId?: string | null,
-};
-
-export type DeleteWordCountInput = {
-  id: string,
-  _version?: number | null,
-};
-
-export type CreateTimeWritingInput = {
-  id?: string | null,
-  minutes: number,
-  date: string,
-  owner?: string | null,
-  _version?: number | null,
-  projectWritingTimesId?: string | null,
-};
-
-export type ModelTimeWritingConditionInput = {
-  minutes?: ModelIntInput | null,
-  date?: ModelStringInput | null,
-  owner?: ModelStringInput | null,
-  and?: Array< ModelTimeWritingConditionInput | null > | null,
-  or?: Array< ModelTimeWritingConditionInput | null > | null,
-  not?: ModelTimeWritingConditionInput | null,
-  projectWritingTimesId?: ModelIDInput | null,
-};
-
-export type UpdateTimeWritingInput = {
-  id: string,
   minutes?: number | null,
   date?: string | null,
   owner?: string | null,
   _version?: number | null,
-  projectWritingTimesId?: string | null,
+  projectSessionsId?: string | null,
 };
 
-export type DeleteTimeWritingInput = {
+export type DeleteSessionInput = {
   id: string,
   _version?: number | null,
 };
@@ -294,26 +242,16 @@ export type ModelProjectConnection = {
   startedAt?: number | null,
 };
 
-export type ModelWordCountFilterInput = {
+export type ModelSessionFilterInput = {
   id?: ModelIDInput | null,
   words?: ModelIntInput | null,
-  date?: ModelStringInput | null,
-  owner?: ModelStringInput | null,
-  and?: Array< ModelWordCountFilterInput | null > | null,
-  or?: Array< ModelWordCountFilterInput | null > | null,
-  not?: ModelWordCountFilterInput | null,
-  projectWordCountsId?: ModelIDInput | null,
-};
-
-export type ModelTimeWritingFilterInput = {
-  id?: ModelIDInput | null,
   minutes?: ModelIntInput | null,
   date?: ModelStringInput | null,
   owner?: ModelStringInput | null,
-  and?: Array< ModelTimeWritingFilterInput | null > | null,
-  or?: Array< ModelTimeWritingFilterInput | null > | null,
-  not?: ModelTimeWritingFilterInput | null,
-  projectWritingTimesId?: ModelIDInput | null,
+  and?: Array< ModelSessionFilterInput | null > | null,
+  or?: Array< ModelSessionFilterInput | null > | null,
+  not?: ModelSessionFilterInput | null,
+  projectSessionsId?: ModelIDInput | null,
 };
 
 export type ModelLoginDateFilterInput = {
@@ -370,12 +308,13 @@ export type ModelSubscriptionStringInput = {
   notIn?: Array< string | null > | null,
 };
 
-export type ModelSubscriptionWordCountFilterInput = {
+export type ModelSubscriptionSessionFilterInput = {
   id?: ModelSubscriptionIDInput | null,
   words?: ModelSubscriptionIntInput | null,
+  minutes?: ModelSubscriptionIntInput | null,
   date?: ModelSubscriptionStringInput | null,
-  and?: Array< ModelSubscriptionWordCountFilterInput | null > | null,
-  or?: Array< ModelSubscriptionWordCountFilterInput | null > | null,
+  and?: Array< ModelSubscriptionSessionFilterInput | null > | null,
+  or?: Array< ModelSubscriptionSessionFilterInput | null > | null,
 };
 
 export type ModelSubscriptionIntInput = {
@@ -388,14 +327,6 @@ export type ModelSubscriptionIntInput = {
   between?: Array< number | null > | null,
   in?: Array< number | null > | null,
   notIn?: Array< number | null > | null,
-};
-
-export type ModelSubscriptionTimeWritingFilterInput = {
-  id?: ModelSubscriptionIDInput | null,
-  minutes?: ModelSubscriptionIntInput | null,
-  date?: ModelSubscriptionStringInput | null,
-  and?: Array< ModelSubscriptionTimeWritingFilterInput | null > | null,
-  or?: Array< ModelSubscriptionTimeWritingFilterInput | null > | null,
 };
 
 export type ModelSubscriptionLoginDateFilterInput = {
@@ -416,29 +347,12 @@ export type CreateProjectMutation = {
     id: string,
     name: string,
     projectType: ProjectType,
-    wordCounts?:  {
-      __typename: "ModelWordCountConnection",
+    sessions?:  {
+      __typename: "ModelSessionConnection",
       items:  Array< {
-        __typename: "WordCount",
+        __typename: "Session",
         id: string,
         words: number,
-        date: string,
-        owner?: string | null,
-        createdAt: string,
-        updatedAt: string,
-        _version: number,
-        _deleted?: boolean | null,
-        _lastChangedAt: number,
-        projectWordCountsId?: string | null,
-      } | null >,
-      nextToken?: string | null,
-      startedAt?: number | null,
-    } | null,
-    writingTimes?:  {
-      __typename: "ModelTimeWritingConnection",
-      items:  Array< {
-        __typename: "TimeWriting",
-        id: string,
         minutes: number,
         date: string,
         owner?: string | null,
@@ -447,7 +361,7 @@ export type CreateProjectMutation = {
         _version: number,
         _deleted?: boolean | null,
         _lastChangedAt: number,
-        projectWritingTimesId?: string | null,
+        projectSessionsId?: string | null,
       } | null >,
       nextToken?: string | null,
       startedAt?: number | null,
@@ -472,29 +386,12 @@ export type UpdateProjectMutation = {
     id: string,
     name: string,
     projectType: ProjectType,
-    wordCounts?:  {
-      __typename: "ModelWordCountConnection",
+    sessions?:  {
+      __typename: "ModelSessionConnection",
       items:  Array< {
-        __typename: "WordCount",
+        __typename: "Session",
         id: string,
         words: number,
-        date: string,
-        owner?: string | null,
-        createdAt: string,
-        updatedAt: string,
-        _version: number,
-        _deleted?: boolean | null,
-        _lastChangedAt: number,
-        projectWordCountsId?: string | null,
-      } | null >,
-      nextToken?: string | null,
-      startedAt?: number | null,
-    } | null,
-    writingTimes?:  {
-      __typename: "ModelTimeWritingConnection",
-      items:  Array< {
-        __typename: "TimeWriting",
-        id: string,
         minutes: number,
         date: string,
         owner?: string | null,
@@ -503,7 +400,7 @@ export type UpdateProjectMutation = {
         _version: number,
         _deleted?: boolean | null,
         _lastChangedAt: number,
-        projectWritingTimesId?: string | null,
+        projectSessionsId?: string | null,
       } | null >,
       nextToken?: string | null,
       startedAt?: number | null,
@@ -528,29 +425,12 @@ export type DeleteProjectMutation = {
     id: string,
     name: string,
     projectType: ProjectType,
-    wordCounts?:  {
-      __typename: "ModelWordCountConnection",
+    sessions?:  {
+      __typename: "ModelSessionConnection",
       items:  Array< {
-        __typename: "WordCount",
+        __typename: "Session",
         id: string,
         words: number,
-        date: string,
-        owner?: string | null,
-        createdAt: string,
-        updatedAt: string,
-        _version: number,
-        _deleted?: boolean | null,
-        _lastChangedAt: number,
-        projectWordCountsId?: string | null,
-      } | null >,
-      nextToken?: string | null,
-      startedAt?: number | null,
-    } | null,
-    writingTimes?:  {
-      __typename: "ModelTimeWritingConnection",
-      items:  Array< {
-        __typename: "TimeWriting",
-        id: string,
         minutes: number,
         date: string,
         owner?: string | null,
@@ -559,7 +439,7 @@ export type DeleteProjectMutation = {
         _version: number,
         _deleted?: boolean | null,
         _lastChangedAt: number,
-        projectWritingTimesId?: string | null,
+        projectSessionsId?: string | null,
       } | null >,
       nextToken?: string | null,
       startedAt?: number | null,
@@ -573,144 +453,16 @@ export type DeleteProjectMutation = {
   } | null,
 };
 
-export type CreateWordCountMutationVariables = {
-  input: CreateWordCountInput,
-  condition?: ModelWordCountConditionInput | null,
+export type CreateSessionMutationVariables = {
+  input: CreateSessionInput,
+  condition?: ModelSessionConditionInput | null,
 };
 
-export type CreateWordCountMutation = {
-  createWordCount?:  {
-    __typename: "WordCount",
+export type CreateSessionMutation = {
+  createSession?:  {
+    __typename: "Session",
     id: string,
     words: number,
-    date: string,
-    project:  {
-      __typename: "Project",
-      id: string,
-      name: string,
-      projectType: ProjectType,
-      wordCounts?:  {
-        __typename: "ModelWordCountConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      writingTimes?:  {
-        __typename: "ModelTimeWritingConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      owner?: string | null,
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-    },
-    owner?: string | null,
-    createdAt: string,
-    updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
-    projectWordCountsId?: string | null,
-  } | null,
-};
-
-export type UpdateWordCountMutationVariables = {
-  input: UpdateWordCountInput,
-  condition?: ModelWordCountConditionInput | null,
-};
-
-export type UpdateWordCountMutation = {
-  updateWordCount?:  {
-    __typename: "WordCount",
-    id: string,
-    words: number,
-    date: string,
-    project:  {
-      __typename: "Project",
-      id: string,
-      name: string,
-      projectType: ProjectType,
-      wordCounts?:  {
-        __typename: "ModelWordCountConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      writingTimes?:  {
-        __typename: "ModelTimeWritingConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      owner?: string | null,
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-    },
-    owner?: string | null,
-    createdAt: string,
-    updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
-    projectWordCountsId?: string | null,
-  } | null,
-};
-
-export type DeleteWordCountMutationVariables = {
-  input: DeleteWordCountInput,
-  condition?: ModelWordCountConditionInput | null,
-};
-
-export type DeleteWordCountMutation = {
-  deleteWordCount?:  {
-    __typename: "WordCount",
-    id: string,
-    words: number,
-    date: string,
-    project:  {
-      __typename: "Project",
-      id: string,
-      name: string,
-      projectType: ProjectType,
-      wordCounts?:  {
-        __typename: "ModelWordCountConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      writingTimes?:  {
-        __typename: "ModelTimeWritingConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      owner?: string | null,
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-    },
-    owner?: string | null,
-    createdAt: string,
-    updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
-    projectWordCountsId?: string | null,
-  } | null,
-};
-
-export type CreateTimeWritingMutationVariables = {
-  input: CreateTimeWritingInput,
-  condition?: ModelTimeWritingConditionInput | null,
-};
-
-export type CreateTimeWritingMutation = {
-  createTimeWriting?:  {
-    __typename: "TimeWriting",
-    id: string,
     minutes: number,
     date: string,
     project:  {
@@ -718,13 +470,8 @@ export type CreateTimeWritingMutation = {
       id: string,
       name: string,
       projectType: ProjectType,
-      wordCounts?:  {
-        __typename: "ModelWordCountConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      writingTimes?:  {
-        __typename: "ModelTimeWritingConnection",
+      sessions?:  {
+        __typename: "ModelSessionConnection",
         nextToken?: string | null,
         startedAt?: number | null,
       } | null,
@@ -741,19 +488,20 @@ export type CreateTimeWritingMutation = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
-    projectWritingTimesId?: string | null,
+    projectSessionsId?: string | null,
   } | null,
 };
 
-export type UpdateTimeWritingMutationVariables = {
-  input: UpdateTimeWritingInput,
-  condition?: ModelTimeWritingConditionInput | null,
+export type UpdateSessionMutationVariables = {
+  input: UpdateSessionInput,
+  condition?: ModelSessionConditionInput | null,
 };
 
-export type UpdateTimeWritingMutation = {
-  updateTimeWriting?:  {
-    __typename: "TimeWriting",
+export type UpdateSessionMutation = {
+  updateSession?:  {
+    __typename: "Session",
     id: string,
+    words: number,
     minutes: number,
     date: string,
     project:  {
@@ -761,13 +509,8 @@ export type UpdateTimeWritingMutation = {
       id: string,
       name: string,
       projectType: ProjectType,
-      wordCounts?:  {
-        __typename: "ModelWordCountConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      writingTimes?:  {
-        __typename: "ModelTimeWritingConnection",
+      sessions?:  {
+        __typename: "ModelSessionConnection",
         nextToken?: string | null,
         startedAt?: number | null,
       } | null,
@@ -784,19 +527,20 @@ export type UpdateTimeWritingMutation = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
-    projectWritingTimesId?: string | null,
+    projectSessionsId?: string | null,
   } | null,
 };
 
-export type DeleteTimeWritingMutationVariables = {
-  input: DeleteTimeWritingInput,
-  condition?: ModelTimeWritingConditionInput | null,
+export type DeleteSessionMutationVariables = {
+  input: DeleteSessionInput,
+  condition?: ModelSessionConditionInput | null,
 };
 
-export type DeleteTimeWritingMutation = {
-  deleteTimeWriting?:  {
-    __typename: "TimeWriting",
+export type DeleteSessionMutation = {
+  deleteSession?:  {
+    __typename: "Session",
     id: string,
+    words: number,
     minutes: number,
     date: string,
     project:  {
@@ -804,13 +548,8 @@ export type DeleteTimeWritingMutation = {
       id: string,
       name: string,
       projectType: ProjectType,
-      wordCounts?:  {
-        __typename: "ModelWordCountConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      writingTimes?:  {
-        __typename: "ModelTimeWritingConnection",
+      sessions?:  {
+        __typename: "ModelSessionConnection",
         nextToken?: string | null,
         startedAt?: number | null,
       } | null,
@@ -827,7 +566,7 @@ export type DeleteTimeWritingMutation = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
-    projectWritingTimesId?: string | null,
+    projectSessionsId?: string | null,
   } | null,
 };
 
@@ -898,29 +637,12 @@ export type GetProjectQuery = {
     id: string,
     name: string,
     projectType: ProjectType,
-    wordCounts?:  {
-      __typename: "ModelWordCountConnection",
+    sessions?:  {
+      __typename: "ModelSessionConnection",
       items:  Array< {
-        __typename: "WordCount",
+        __typename: "Session",
         id: string,
         words: number,
-        date: string,
-        owner?: string | null,
-        createdAt: string,
-        updatedAt: string,
-        _version: number,
-        _deleted?: boolean | null,
-        _lastChangedAt: number,
-        projectWordCountsId?: string | null,
-      } | null >,
-      nextToken?: string | null,
-      startedAt?: number | null,
-    } | null,
-    writingTimes?:  {
-      __typename: "ModelTimeWritingConnection",
-      items:  Array< {
-        __typename: "TimeWriting",
-        id: string,
         minutes: number,
         date: string,
         owner?: string | null,
@@ -929,7 +651,7 @@ export type GetProjectQuery = {
         _version: number,
         _deleted?: boolean | null,
         _lastChangedAt: number,
-        projectWritingTimesId?: string | null,
+        projectSessionsId?: string | null,
       } | null >,
       nextToken?: string | null,
       startedAt?: number | null,
@@ -957,13 +679,8 @@ export type ListProjectsQuery = {
       id: string,
       name: string,
       projectType: ProjectType,
-      wordCounts?:  {
-        __typename: "ModelWordCountConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      writingTimes?:  {
-        __typename: "ModelTimeWritingConnection",
+      sessions?:  {
+        __typename: "ModelSessionConnection",
         nextToken?: string | null,
         startedAt?: number | null,
       } | null,
@@ -994,13 +711,8 @@ export type SyncProjectsQuery = {
       id: string,
       name: string,
       projectType: ProjectType,
-      wordCounts?:  {
-        __typename: "ModelWordCountConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      writingTimes?:  {
-        __typename: "ModelTimeWritingConnection",
+      sessions?:  {
+        __typename: "ModelSessionConnection",
         nextToken?: string | null,
         startedAt?: number | null,
       } | null,
@@ -1016,135 +728,15 @@ export type SyncProjectsQuery = {
   } | null,
 };
 
-export type GetWordCountQueryVariables = {
+export type GetSessionQueryVariables = {
   id: string,
 };
 
-export type GetWordCountQuery = {
-  getWordCount?:  {
-    __typename: "WordCount",
+export type GetSessionQuery = {
+  getSession?:  {
+    __typename: "Session",
     id: string,
     words: number,
-    date: string,
-    project:  {
-      __typename: "Project",
-      id: string,
-      name: string,
-      projectType: ProjectType,
-      wordCounts?:  {
-        __typename: "ModelWordCountConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      writingTimes?:  {
-        __typename: "ModelTimeWritingConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      owner?: string | null,
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-    },
-    owner?: string | null,
-    createdAt: string,
-    updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
-    projectWordCountsId?: string | null,
-  } | null,
-};
-
-export type ListWordCountsQueryVariables = {
-  filter?: ModelWordCountFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-};
-
-export type ListWordCountsQuery = {
-  listWordCounts?:  {
-    __typename: "ModelWordCountConnection",
-    items:  Array< {
-      __typename: "WordCount",
-      id: string,
-      words: number,
-      date: string,
-      project:  {
-        __typename: "Project",
-        id: string,
-        name: string,
-        projectType: ProjectType,
-        owner?: string | null,
-        createdAt: string,
-        updatedAt: string,
-        _version: number,
-        _deleted?: boolean | null,
-        _lastChangedAt: number,
-      },
-      owner?: string | null,
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-      projectWordCountsId?: string | null,
-    } | null >,
-    nextToken?: string | null,
-    startedAt?: number | null,
-  } | null,
-};
-
-export type SyncWordCountsQueryVariables = {
-  filter?: ModelWordCountFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-  lastSync?: number | null,
-};
-
-export type SyncWordCountsQuery = {
-  syncWordCounts?:  {
-    __typename: "ModelWordCountConnection",
-    items:  Array< {
-      __typename: "WordCount",
-      id: string,
-      words: number,
-      date: string,
-      project:  {
-        __typename: "Project",
-        id: string,
-        name: string,
-        projectType: ProjectType,
-        owner?: string | null,
-        createdAt: string,
-        updatedAt: string,
-        _version: number,
-        _deleted?: boolean | null,
-        _lastChangedAt: number,
-      },
-      owner?: string | null,
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-      projectWordCountsId?: string | null,
-    } | null >,
-    nextToken?: string | null,
-    startedAt?: number | null,
-  } | null,
-};
-
-export type GetTimeWritingQueryVariables = {
-  id: string,
-};
-
-export type GetTimeWritingQuery = {
-  getTimeWriting?:  {
-    __typename: "TimeWriting",
-    id: string,
     minutes: number,
     date: string,
     project:  {
@@ -1152,13 +744,8 @@ export type GetTimeWritingQuery = {
       id: string,
       name: string,
       projectType: ProjectType,
-      wordCounts?:  {
-        __typename: "ModelWordCountConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      writingTimes?:  {
-        __typename: "ModelTimeWritingConnection",
+      sessions?:  {
+        __typename: "ModelSessionConnection",
         nextToken?: string | null,
         startedAt?: number | null,
       } | null,
@@ -1175,22 +762,23 @@ export type GetTimeWritingQuery = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
-    projectWritingTimesId?: string | null,
+    projectSessionsId?: string | null,
   } | null,
 };
 
-export type ListTimeWritingsQueryVariables = {
-  filter?: ModelTimeWritingFilterInput | null,
+export type ListSessionsQueryVariables = {
+  filter?: ModelSessionFilterInput | null,
   limit?: number | null,
   nextToken?: string | null,
 };
 
-export type ListTimeWritingsQuery = {
-  listTimeWritings?:  {
-    __typename: "ModelTimeWritingConnection",
+export type ListSessionsQuery = {
+  listSessions?:  {
+    __typename: "ModelSessionConnection",
     items:  Array< {
-      __typename: "TimeWriting",
+      __typename: "Session",
       id: string,
+      words: number,
       minutes: number,
       date: string,
       project:  {
@@ -1211,26 +799,27 @@ export type ListTimeWritingsQuery = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
-      projectWritingTimesId?: string | null,
+      projectSessionsId?: string | null,
     } | null >,
     nextToken?: string | null,
     startedAt?: number | null,
   } | null,
 };
 
-export type SyncTimeWritingsQueryVariables = {
-  filter?: ModelTimeWritingFilterInput | null,
+export type SyncSessionsQueryVariables = {
+  filter?: ModelSessionFilterInput | null,
   limit?: number | null,
   nextToken?: string | null,
   lastSync?: number | null,
 };
 
-export type SyncTimeWritingsQuery = {
-  syncTimeWritings?:  {
-    __typename: "ModelTimeWritingConnection",
+export type SyncSessionsQuery = {
+  syncSessions?:  {
+    __typename: "ModelSessionConnection",
     items:  Array< {
-      __typename: "TimeWriting",
+      __typename: "Session",
       id: string,
+      words: number,
       minutes: number,
       date: string,
       project:  {
@@ -1251,7 +840,7 @@ export type SyncTimeWritingsQuery = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
-      projectWritingTimesId?: string | null,
+      projectSessionsId?: string | null,
     } | null >,
     nextToken?: string | null,
     startedAt?: number | null,
@@ -1338,29 +927,12 @@ export type OnCreateProjectSubscription = {
     id: string,
     name: string,
     projectType: ProjectType,
-    wordCounts?:  {
-      __typename: "ModelWordCountConnection",
+    sessions?:  {
+      __typename: "ModelSessionConnection",
       items:  Array< {
-        __typename: "WordCount",
+        __typename: "Session",
         id: string,
         words: number,
-        date: string,
-        owner?: string | null,
-        createdAt: string,
-        updatedAt: string,
-        _version: number,
-        _deleted?: boolean | null,
-        _lastChangedAt: number,
-        projectWordCountsId?: string | null,
-      } | null >,
-      nextToken?: string | null,
-      startedAt?: number | null,
-    } | null,
-    writingTimes?:  {
-      __typename: "ModelTimeWritingConnection",
-      items:  Array< {
-        __typename: "TimeWriting",
-        id: string,
         minutes: number,
         date: string,
         owner?: string | null,
@@ -1369,7 +941,7 @@ export type OnCreateProjectSubscription = {
         _version: number,
         _deleted?: boolean | null,
         _lastChangedAt: number,
-        projectWritingTimesId?: string | null,
+        projectSessionsId?: string | null,
       } | null >,
       nextToken?: string | null,
       startedAt?: number | null,
@@ -1394,29 +966,12 @@ export type OnUpdateProjectSubscription = {
     id: string,
     name: string,
     projectType: ProjectType,
-    wordCounts?:  {
-      __typename: "ModelWordCountConnection",
+    sessions?:  {
+      __typename: "ModelSessionConnection",
       items:  Array< {
-        __typename: "WordCount",
+        __typename: "Session",
         id: string,
         words: number,
-        date: string,
-        owner?: string | null,
-        createdAt: string,
-        updatedAt: string,
-        _version: number,
-        _deleted?: boolean | null,
-        _lastChangedAt: number,
-        projectWordCountsId?: string | null,
-      } | null >,
-      nextToken?: string | null,
-      startedAt?: number | null,
-    } | null,
-    writingTimes?:  {
-      __typename: "ModelTimeWritingConnection",
-      items:  Array< {
-        __typename: "TimeWriting",
-        id: string,
         minutes: number,
         date: string,
         owner?: string | null,
@@ -1425,7 +980,7 @@ export type OnUpdateProjectSubscription = {
         _version: number,
         _deleted?: boolean | null,
         _lastChangedAt: number,
-        projectWritingTimesId?: string | null,
+        projectSessionsId?: string | null,
       } | null >,
       nextToken?: string | null,
       startedAt?: number | null,
@@ -1450,29 +1005,12 @@ export type OnDeleteProjectSubscription = {
     id: string,
     name: string,
     projectType: ProjectType,
-    wordCounts?:  {
-      __typename: "ModelWordCountConnection",
+    sessions?:  {
+      __typename: "ModelSessionConnection",
       items:  Array< {
-        __typename: "WordCount",
+        __typename: "Session",
         id: string,
         words: number,
-        date: string,
-        owner?: string | null,
-        createdAt: string,
-        updatedAt: string,
-        _version: number,
-        _deleted?: boolean | null,
-        _lastChangedAt: number,
-        projectWordCountsId?: string | null,
-      } | null >,
-      nextToken?: string | null,
-      startedAt?: number | null,
-    } | null,
-    writingTimes?:  {
-      __typename: "ModelTimeWritingConnection",
-      items:  Array< {
-        __typename: "TimeWriting",
-        id: string,
         minutes: number,
         date: string,
         owner?: string | null,
@@ -1481,7 +1019,7 @@ export type OnDeleteProjectSubscription = {
         _version: number,
         _deleted?: boolean | null,
         _lastChangedAt: number,
-        projectWritingTimesId?: string | null,
+        projectSessionsId?: string | null,
       } | null >,
       nextToken?: string | null,
       startedAt?: number | null,
@@ -1495,144 +1033,16 @@ export type OnDeleteProjectSubscription = {
   } | null,
 };
 
-export type OnCreateWordCountSubscriptionVariables = {
-  filter?: ModelSubscriptionWordCountFilterInput | null,
+export type OnCreateSessionSubscriptionVariables = {
+  filter?: ModelSubscriptionSessionFilterInput | null,
   owner?: string | null,
 };
 
-export type OnCreateWordCountSubscription = {
-  onCreateWordCount?:  {
-    __typename: "WordCount",
+export type OnCreateSessionSubscription = {
+  onCreateSession?:  {
+    __typename: "Session",
     id: string,
     words: number,
-    date: string,
-    project:  {
-      __typename: "Project",
-      id: string,
-      name: string,
-      projectType: ProjectType,
-      wordCounts?:  {
-        __typename: "ModelWordCountConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      writingTimes?:  {
-        __typename: "ModelTimeWritingConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      owner?: string | null,
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-    },
-    owner?: string | null,
-    createdAt: string,
-    updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
-    projectWordCountsId?: string | null,
-  } | null,
-};
-
-export type OnUpdateWordCountSubscriptionVariables = {
-  filter?: ModelSubscriptionWordCountFilterInput | null,
-  owner?: string | null,
-};
-
-export type OnUpdateWordCountSubscription = {
-  onUpdateWordCount?:  {
-    __typename: "WordCount",
-    id: string,
-    words: number,
-    date: string,
-    project:  {
-      __typename: "Project",
-      id: string,
-      name: string,
-      projectType: ProjectType,
-      wordCounts?:  {
-        __typename: "ModelWordCountConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      writingTimes?:  {
-        __typename: "ModelTimeWritingConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      owner?: string | null,
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-    },
-    owner?: string | null,
-    createdAt: string,
-    updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
-    projectWordCountsId?: string | null,
-  } | null,
-};
-
-export type OnDeleteWordCountSubscriptionVariables = {
-  filter?: ModelSubscriptionWordCountFilterInput | null,
-  owner?: string | null,
-};
-
-export type OnDeleteWordCountSubscription = {
-  onDeleteWordCount?:  {
-    __typename: "WordCount",
-    id: string,
-    words: number,
-    date: string,
-    project:  {
-      __typename: "Project",
-      id: string,
-      name: string,
-      projectType: ProjectType,
-      wordCounts?:  {
-        __typename: "ModelWordCountConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      writingTimes?:  {
-        __typename: "ModelTimeWritingConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      owner?: string | null,
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-    },
-    owner?: string | null,
-    createdAt: string,
-    updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
-    projectWordCountsId?: string | null,
-  } | null,
-};
-
-export type OnCreateTimeWritingSubscriptionVariables = {
-  filter?: ModelSubscriptionTimeWritingFilterInput | null,
-  owner?: string | null,
-};
-
-export type OnCreateTimeWritingSubscription = {
-  onCreateTimeWriting?:  {
-    __typename: "TimeWriting",
-    id: string,
     minutes: number,
     date: string,
     project:  {
@@ -1640,13 +1050,8 @@ export type OnCreateTimeWritingSubscription = {
       id: string,
       name: string,
       projectType: ProjectType,
-      wordCounts?:  {
-        __typename: "ModelWordCountConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      writingTimes?:  {
-        __typename: "ModelTimeWritingConnection",
+      sessions?:  {
+        __typename: "ModelSessionConnection",
         nextToken?: string | null,
         startedAt?: number | null,
       } | null,
@@ -1663,19 +1068,20 @@ export type OnCreateTimeWritingSubscription = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
-    projectWritingTimesId?: string | null,
+    projectSessionsId?: string | null,
   } | null,
 };
 
-export type OnUpdateTimeWritingSubscriptionVariables = {
-  filter?: ModelSubscriptionTimeWritingFilterInput | null,
+export type OnUpdateSessionSubscriptionVariables = {
+  filter?: ModelSubscriptionSessionFilterInput | null,
   owner?: string | null,
 };
 
-export type OnUpdateTimeWritingSubscription = {
-  onUpdateTimeWriting?:  {
-    __typename: "TimeWriting",
+export type OnUpdateSessionSubscription = {
+  onUpdateSession?:  {
+    __typename: "Session",
     id: string,
+    words: number,
     minutes: number,
     date: string,
     project:  {
@@ -1683,13 +1089,8 @@ export type OnUpdateTimeWritingSubscription = {
       id: string,
       name: string,
       projectType: ProjectType,
-      wordCounts?:  {
-        __typename: "ModelWordCountConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      writingTimes?:  {
-        __typename: "ModelTimeWritingConnection",
+      sessions?:  {
+        __typename: "ModelSessionConnection",
         nextToken?: string | null,
         startedAt?: number | null,
       } | null,
@@ -1706,19 +1107,20 @@ export type OnUpdateTimeWritingSubscription = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
-    projectWritingTimesId?: string | null,
+    projectSessionsId?: string | null,
   } | null,
 };
 
-export type OnDeleteTimeWritingSubscriptionVariables = {
-  filter?: ModelSubscriptionTimeWritingFilterInput | null,
+export type OnDeleteSessionSubscriptionVariables = {
+  filter?: ModelSubscriptionSessionFilterInput | null,
   owner?: string | null,
 };
 
-export type OnDeleteTimeWritingSubscription = {
-  onDeleteTimeWriting?:  {
-    __typename: "TimeWriting",
+export type OnDeleteSessionSubscription = {
+  onDeleteSession?:  {
+    __typename: "Session",
     id: string,
+    words: number,
     minutes: number,
     date: string,
     project:  {
@@ -1726,13 +1128,8 @@ export type OnDeleteTimeWritingSubscription = {
       id: string,
       name: string,
       projectType: ProjectType,
-      wordCounts?:  {
-        __typename: "ModelWordCountConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      writingTimes?:  {
-        __typename: "ModelTimeWritingConnection",
+      sessions?:  {
+        __typename: "ModelSessionConnection",
         nextToken?: string | null,
         startedAt?: number | null,
       } | null,
@@ -1749,7 +1146,7 @@ export type OnDeleteTimeWritingSubscription = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
-    projectWritingTimesId?: string | null,
+    projectSessionsId?: string | null,
   } | null,
 };
 

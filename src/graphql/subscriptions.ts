@@ -11,25 +11,10 @@ export const onCreateProject = /* GraphQL */ `
       id
       name
       projectType
-      wordCounts {
+      sessions {
         items {
           id
           words
-          date
-          owner
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          projectWordCountsId
-        }
-        nextToken
-        startedAt
-      }
-      writingTimes {
-        items {
-          id
           minutes
           date
           owner
@@ -38,7 +23,7 @@ export const onCreateProject = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
-          projectWritingTimesId
+          projectSessionsId
         }
         nextToken
         startedAt
@@ -61,25 +46,10 @@ export const onUpdateProject = /* GraphQL */ `
       id
       name
       projectType
-      wordCounts {
+      sessions {
         items {
           id
           words
-          date
-          owner
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          projectWordCountsId
-        }
-        nextToken
-        startedAt
-      }
-      writingTimes {
-        items {
-          id
           minutes
           date
           owner
@@ -88,7 +58,7 @@ export const onUpdateProject = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
-          projectWritingTimesId
+          projectSessionsId
         }
         nextToken
         startedAt
@@ -111,25 +81,10 @@ export const onDeleteProject = /* GraphQL */ `
       id
       name
       projectType
-      wordCounts {
+      sessions {
         items {
           id
           words
-          date
-          owner
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          projectWordCountsId
-        }
-        nextToken
-        startedAt
-      }
-      writingTimes {
-        items {
-          id
           minutes
           date
           owner
@@ -138,7 +93,7 @@ export const onDeleteProject = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
-          projectWritingTimesId
+          projectSessionsId
         }
         nextToken
         startedAt
@@ -152,138 +107,21 @@ export const onDeleteProject = /* GraphQL */ `
     }
   }
 `;
-export const onCreateWordCount = /* GraphQL */ `
-  subscription OnCreateWordCount(
-    $filter: ModelSubscriptionWordCountFilterInput
+export const onCreateSession = /* GraphQL */ `
+  subscription OnCreateSession(
+    $filter: ModelSubscriptionSessionFilterInput
     $owner: String
   ) {
-    onCreateWordCount(filter: $filter, owner: $owner) {
+    onCreateSession(filter: $filter, owner: $owner) {
       id
       words
-      date
-      project {
-        id
-        name
-        projectType
-        wordCounts {
-          nextToken
-          startedAt
-        }
-        writingTimes {
-          nextToken
-          startedAt
-        }
-        owner
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      owner
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-      projectWordCountsId
-    }
-  }
-`;
-export const onUpdateWordCount = /* GraphQL */ `
-  subscription OnUpdateWordCount(
-    $filter: ModelSubscriptionWordCountFilterInput
-    $owner: String
-  ) {
-    onUpdateWordCount(filter: $filter, owner: $owner) {
-      id
-      words
-      date
-      project {
-        id
-        name
-        projectType
-        wordCounts {
-          nextToken
-          startedAt
-        }
-        writingTimes {
-          nextToken
-          startedAt
-        }
-        owner
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      owner
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-      projectWordCountsId
-    }
-  }
-`;
-export const onDeleteWordCount = /* GraphQL */ `
-  subscription OnDeleteWordCount(
-    $filter: ModelSubscriptionWordCountFilterInput
-    $owner: String
-  ) {
-    onDeleteWordCount(filter: $filter, owner: $owner) {
-      id
-      words
-      date
-      project {
-        id
-        name
-        projectType
-        wordCounts {
-          nextToken
-          startedAt
-        }
-        writingTimes {
-          nextToken
-          startedAt
-        }
-        owner
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      owner
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-      projectWordCountsId
-    }
-  }
-`;
-export const onCreateTimeWriting = /* GraphQL */ `
-  subscription OnCreateTimeWriting(
-    $filter: ModelSubscriptionTimeWritingFilterInput
-    $owner: String
-  ) {
-    onCreateTimeWriting(filter: $filter, owner: $owner) {
-      id
       minutes
       date
       project {
         id
         name
         projectType
-        wordCounts {
-          nextToken
-          startedAt
-        }
-        writingTimes {
+        sessions {
           nextToken
           startedAt
         }
@@ -300,28 +138,25 @@ export const onCreateTimeWriting = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
-      projectWritingTimesId
+      projectSessionsId
     }
   }
 `;
-export const onUpdateTimeWriting = /* GraphQL */ `
-  subscription OnUpdateTimeWriting(
-    $filter: ModelSubscriptionTimeWritingFilterInput
+export const onUpdateSession = /* GraphQL */ `
+  subscription OnUpdateSession(
+    $filter: ModelSubscriptionSessionFilterInput
     $owner: String
   ) {
-    onUpdateTimeWriting(filter: $filter, owner: $owner) {
+    onUpdateSession(filter: $filter, owner: $owner) {
       id
+      words
       minutes
       date
       project {
         id
         name
         projectType
-        wordCounts {
-          nextToken
-          startedAt
-        }
-        writingTimes {
+        sessions {
           nextToken
           startedAt
         }
@@ -338,28 +173,25 @@ export const onUpdateTimeWriting = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
-      projectWritingTimesId
+      projectSessionsId
     }
   }
 `;
-export const onDeleteTimeWriting = /* GraphQL */ `
-  subscription OnDeleteTimeWriting(
-    $filter: ModelSubscriptionTimeWritingFilterInput
+export const onDeleteSession = /* GraphQL */ `
+  subscription OnDeleteSession(
+    $filter: ModelSubscriptionSessionFilterInput
     $owner: String
   ) {
-    onDeleteTimeWriting(filter: $filter, owner: $owner) {
+    onDeleteSession(filter: $filter, owner: $owner) {
       id
+      words
       minutes
       date
       project {
         id
         name
         projectType
-        wordCounts {
-          nextToken
-          startedAt
-        }
-        writingTimes {
+        sessions {
           nextToken
           startedAt
         }
@@ -376,7 +208,7 @@ export const onDeleteTimeWriting = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
-      projectWritingTimesId
+      projectSessionsId
     }
   }
 `;
