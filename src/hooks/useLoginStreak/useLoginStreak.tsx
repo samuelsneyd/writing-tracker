@@ -7,8 +7,10 @@ import type { DateStreakSummary } from '../../types/types';
 
 /**
  * Returns a summary of the signed-in user's daily login streak.
+ * If not already signed-in today, updates the daily login streak.
  */
 const useLoginStreak = (): DateStreakSummary => {
+  const DATE_FORMAT = 'YYYY-MM-DD';
   const [loginSummary, setLoginSummary] = React.useState<DateStreakSummary>({
     currentStreak: 0,
     longestStreak: 0,
@@ -23,9 +25,9 @@ const useLoginStreak = (): DateStreakSummary => {
      */
     const updateStreak = async () => {
       const today = new Date();
-      const todayDate = format(today, 'YYYY-MM-DD');
+      const todayDate = format(today, DATE_FORMAT);
       const loginDates = await DataStore.query(LoginDate);
-      const dates = loginDates.map(login => format(login.date, 'YYYY-MM-DD'));
+      const dates = loginDates.map(login => format(login.date, DATE_FORMAT));
       const hasSignedInToday = dates.some(date => date === todayDate);
 
       if (!hasSignedInToday) {
@@ -35,7 +37,7 @@ const useLoginStreak = (): DateStreakSummary => {
         });
         await DataStore.save(todayLogin);
         loginDates.push(todayLogin);
-        dates.push(format(todayLogin.date, 'YYYY-MM-DD'));
+        dates.push(format(todayLogin.date, DATE_FORMAT));
       }
 
       // Date streaks are summarized in local timezone via local YYYY-MM-DD
@@ -44,8 +46,7 @@ const useLoginStreak = (): DateStreakSummary => {
       setLoginSummary(loginStreakSummary);
     };
 
-    updateStreak().then(() => {
-    });
+    updateStreak().then();
   }, []);
 
   return loginSummary;
