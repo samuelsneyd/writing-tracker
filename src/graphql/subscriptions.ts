@@ -10,6 +10,7 @@ export const onCreateProject = /* GraphQL */ `
     onCreateProject(filter: $filter, owner: $owner) {
       id
       name
+      description
       projectType
       wordTarget {
         mon {
@@ -76,6 +77,7 @@ export const onUpdateProject = /* GraphQL */ `
     onUpdateProject(filter: $filter, owner: $owner) {
       id
       name
+      description
       projectType
       wordTarget {
         mon {
@@ -142,6 +144,7 @@ export const onDeleteProject = /* GraphQL */ `
     onDeleteProject(filter: $filter, owner: $owner) {
       id
       name
+      description
       projectType
       wordTarget {
         mon {
@@ -213,6 +216,7 @@ export const onCreateSession = /* GraphQL */ `
       project {
         id
         name
+        description
         projectType
         wordsPerPage
         sessions {
@@ -249,6 +253,7 @@ export const onUpdateSession = /* GraphQL */ `
       project {
         id
         name
+        description
         projectType
         wordsPerPage
         sessions {
@@ -285,6 +290,7 @@ export const onDeleteSession = /* GraphQL */ `
       project {
         id
         name
+        description
         projectType
         wordsPerPage
         sessions {

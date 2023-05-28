@@ -26,8 +26,8 @@ const ProjectsScreen = ({ navigation }: Props) => {
         wed: { enabled: true, words: 500 },
         thu: { enabled: true, words: 500 },
         fri: { enabled: true, words: 500 },
-        sat: { enabled: false, words: 500 },
-        sun: { enabled: false, words: 500 },
+        sat: { enabled: false, words: 0 },
+        sun: { enabled: false, words: 0 },
       },
     };
     try {

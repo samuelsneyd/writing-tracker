@@ -10,6 +10,7 @@ export const createProject = /* GraphQL */ `
     createProject(input: $input, condition: $condition) {
       id
       name
+      description
       projectType
       wordTarget {
         mon {
@@ -76,6 +77,7 @@ export const updateProject = /* GraphQL */ `
     updateProject(input: $input, condition: $condition) {
       id
       name
+      description
       projectType
       wordTarget {
         mon {
@@ -142,6 +144,7 @@ export const deleteProject = /* GraphQL */ `
     deleteProject(input: $input, condition: $condition) {
       id
       name
+      description
       projectType
       wordTarget {
         mon {
@@ -213,6 +216,7 @@ export const createSession = /* GraphQL */ `
       project {
         id
         name
+        description
         projectType
         wordsPerPage
         sessions {
@@ -249,6 +253,7 @@ export const updateSession = /* GraphQL */ `
       project {
         id
         name
+        description
         projectType
         wordsPerPage
         sessions {
@@ -285,6 +290,7 @@ export const deleteSession = /* GraphQL */ `
       project {
         id
         name
+        description
         projectType
         wordsPerPage
         sessions {

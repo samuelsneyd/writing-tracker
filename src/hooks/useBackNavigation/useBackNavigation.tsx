@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Icon, IconProps, TopNavigationAction } from '@ui-kitten/components';
 
 /**
- * Returns a BackAction component that navigates to the previous stack screen
+ * Returns a BackAction component function that navigates to the previous stack screen
  * on press. For use with UI Kitten and React Navigation's top stack navigator.
  * @param navigation React Navigation prop
  */
