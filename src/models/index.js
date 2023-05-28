@@ -9,11 +9,13 @@ const ProjectType = {
   "OTHER": "OTHER"
 };
 
-const { Project, Session, LoginDate } = initSchema(schema);
+const { Project, Session, LoginDate, WeeklyTarget, TargetByDay } = initSchema(schema);
 
 export {
   Project,
   Session,
   LoginDate,
-  ProjectType
+  ProjectType,
+  WeeklyTarget,
+  TargetByDay
 };

@@ -34,13 +34,23 @@ const ProjectDetailsScreen = ({ route, navigation }: Props) => {
         {project
           ? <>
             <Text category="h1">{capitalCase(project.projectType)}</Text>
-            <Text>{titleCase(project.name)}</Text>
+            <Text>Title: {titleCase(project.name)}</Text>
+            <Text>Description: {project.description}</Text>
             {sessions.map((session, i) =>
               <Text key={session.id}>Session {i + 1}: {session.words} words, {session.minutes} minutes</Text>)
             }
             <Text>Number of sessions: {sessions.length}</Text>
             <Text>Total words: {sessions.reduce((prev, { words: next }) => prev + next, 0)}</Text>
             <Text>Total minutes: {sessions.reduce((prev, { minutes: next }) => prev + next, 0)}</Text>
+            <Text>Words per page: {project.wordsPerPage}</Text>
+            <Text>Daily word targets:</Text>
+            <Text>Mon: {project.wordTarget?.mon?.enabled ? project.wordTarget?.mon.words : 0}</Text>
+            <Text>Tue: {project.wordTarget?.tue?.enabled ? project.wordTarget?.tue.words : 0}</Text>
+            <Text>Wed: {project.wordTarget?.wed?.enabled ? project.wordTarget?.wed.words : 0}</Text>
+            <Text>Thu: {project.wordTarget?.thu?.enabled ? project.wordTarget?.thu.words : 0}</Text>
+            <Text>Fri: {project.wordTarget?.fri?.enabled ? project.wordTarget?.fri.words : 0}</Text>
+            <Text>Sat: {project.wordTarget?.sat?.enabled ? project.wordTarget?.sat.words : 0}</Text>
+            <Text>Sun: {project.wordTarget?.sun?.enabled ? project.wordTarget?.sun.words : 0}</Text>
           </>
           : <Text>No project found!</Text>
         }

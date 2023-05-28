@@ -17,12 +17,35 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
+                "description": {
+                    "name": "description",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
                 "projectType": {
                     "name": "projectType",
                     "isArray": false,
                     "type": {
                         "enum": "ProjectType"
                     },
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "wordTarget": {
+                    "name": "wordTarget",
+                    "isArray": false,
+                    "type": {
+                        "nonModel": "WeeklyTarget"
+                    },
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "wordsPerPage": {
+                    "name": "wordsPerPage",
+                    "isArray": false,
+                    "type": "Int",
                     "isRequired": true,
                     "attributes": []
                 },
@@ -269,7 +292,95 @@ export const schema = {
             ]
         }
     },
-    "nonModels": {},
+    "nonModels": {
+        "WeeklyTarget": {
+            "name": "WeeklyTarget",
+            "fields": {
+                "mon": {
+                    "name": "mon",
+                    "isArray": false,
+                    "type": {
+                        "nonModel": "TargetByDay"
+                    },
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "tue": {
+                    "name": "tue",
+                    "isArray": false,
+                    "type": {
+                        "nonModel": "TargetByDay"
+                    },
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "wed": {
+                    "name": "wed",
+                    "isArray": false,
+                    "type": {
+                        "nonModel": "TargetByDay"
+                    },
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "thu": {
+                    "name": "thu",
+                    "isArray": false,
+                    "type": {
+                        "nonModel": "TargetByDay"
+                    },
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "fri": {
+                    "name": "fri",
+                    "isArray": false,
+                    "type": {
+                        "nonModel": "TargetByDay"
+                    },
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "sat": {
+                    "name": "sat",
+                    "isArray": false,
+                    "type": {
+                        "nonModel": "TargetByDay"
+                    },
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "sun": {
+                    "name": "sun",
+                    "isArray": false,
+                    "type": {
+                        "nonModel": "TargetByDay"
+                    },
+                    "isRequired": true,
+                    "attributes": []
+                }
+            }
+        },
+        "TargetByDay": {
+            "name": "TargetByDay",
+            "fields": {
+                "enabled": {
+                    "name": "enabled",
+                    "isArray": false,
+                    "type": "Boolean",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "words": {
+                    "name": "words",
+                    "isArray": false,
+                    "type": "Int",
+                    "isRequired": true,
+                    "attributes": []
+                }
+            }
+        }
+    },
     "codegenVersion": "3.4.2",
-    "version": "a715d8dba9cbd184096d9ab69bf317d5"
+    "version": "90111b258019b13f547ce9502780d7e3"
 };

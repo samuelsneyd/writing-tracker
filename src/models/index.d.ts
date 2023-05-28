@@ -9,6 +9,44 @@ export enum ProjectType {
   OTHER = "OTHER"
 }
 
+type EagerWeeklyTarget = {
+  readonly mon: TargetByDay;
+  readonly tue: TargetByDay;
+  readonly wed: TargetByDay;
+  readonly thu: TargetByDay;
+  readonly fri: TargetByDay;
+  readonly sat: TargetByDay;
+  readonly sun: TargetByDay;
+}
+
+type LazyWeeklyTarget = {
+  readonly mon: TargetByDay;
+  readonly tue: TargetByDay;
+  readonly wed: TargetByDay;
+  readonly thu: TargetByDay;
+  readonly fri: TargetByDay;
+  readonly sat: TargetByDay;
+  readonly sun: TargetByDay;
+}
+
+export declare type WeeklyTarget = LazyLoading extends LazyLoadingDisabled ? EagerWeeklyTarget : LazyWeeklyTarget
+
+export declare const WeeklyTarget: (new (init: ModelInit<WeeklyTarget>) => WeeklyTarget)
+
+type EagerTargetByDay = {
+  readonly enabled: boolean;
+  readonly words: number;
+}
+
+type LazyTargetByDay = {
+  readonly enabled: boolean;
+  readonly words: number;
+}
+
+export declare type TargetByDay = LazyLoading extends LazyLoadingDisabled ? EagerTargetByDay : LazyTargetByDay
+
+export declare const TargetByDay: (new (init: ModelInit<TargetByDay>) => TargetByDay)
+
 type ProjectMetaData = {
   readOnlyFields: 'createdAt' | 'updatedAt';
 }
@@ -24,7 +62,10 @@ type LoginDateMetaData = {
 type EagerProject = {
   readonly id: string;
   readonly name: string;
+  readonly description: string;
   readonly projectType: ProjectType | keyof typeof ProjectType;
+  readonly wordTarget: WeeklyTarget;
+  readonly wordsPerPage: number;
   readonly sessions?: (Session | null)[] | null;
   readonly owner?: string | null;
   readonly createdAt?: string | null;
@@ -34,7 +75,10 @@ type EagerProject = {
 type LazyProject = {
   readonly id: string;
   readonly name: string;
+  readonly description: string;
   readonly projectType: ProjectType | keyof typeof ProjectType;
+  readonly wordTarget: WeeklyTarget;
+  readonly wordsPerPage: number;
   readonly sessions: AsyncCollection<Session>;
   readonly owner?: string | null;
   readonly createdAt?: string | null;

@@ -11,6 +11,37 @@ export const createProject = /* GraphQL */ `
       id
       name
       projectType
+      wordTarget {
+        mon {
+          enabled
+          words
+        }
+        tue {
+          enabled
+          words
+        }
+        wed {
+          enabled
+          words
+        }
+        thu {
+          enabled
+          words
+        }
+        fri {
+          enabled
+          words
+        }
+        sat {
+          enabled
+          words
+        }
+        sun {
+          enabled
+          words
+        }
+      }
+      wordsPerPage
       sessions {
         items {
           id
@@ -46,6 +77,37 @@ export const updateProject = /* GraphQL */ `
       id
       name
       projectType
+      wordTarget {
+        mon {
+          enabled
+          words
+        }
+        tue {
+          enabled
+          words
+        }
+        wed {
+          enabled
+          words
+        }
+        thu {
+          enabled
+          words
+        }
+        fri {
+          enabled
+          words
+        }
+        sat {
+          enabled
+          words
+        }
+        sun {
+          enabled
+          words
+        }
+      }
+      wordsPerPage
       sessions {
         items {
           id
@@ -81,6 +143,37 @@ export const deleteProject = /* GraphQL */ `
       id
       name
       projectType
+      wordTarget {
+        mon {
+          enabled
+          words
+        }
+        tue {
+          enabled
+          words
+        }
+        wed {
+          enabled
+          words
+        }
+        thu {
+          enabled
+          words
+        }
+        fri {
+          enabled
+          words
+        }
+        sat {
+          enabled
+          words
+        }
+        sun {
+          enabled
+          words
+        }
+      }
+      wordsPerPage
       sessions {
         items {
           id
@@ -121,6 +214,7 @@ export const createSession = /* GraphQL */ `
         id
         name
         projectType
+        wordsPerPage
         sessions {
           nextToken
           startedAt
@@ -156,6 +250,7 @@ export const updateSession = /* GraphQL */ `
         id
         name
         projectType
+        wordsPerPage
         sessions {
           nextToken
           startedAt
@@ -191,6 +286,7 @@ export const deleteSession = /* GraphQL */ `
         id
         name
         projectType
+        wordsPerPage
         sessions {
           nextToken
           startedAt

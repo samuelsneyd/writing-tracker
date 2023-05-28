@@ -8,6 +8,37 @@ export const getProject = /* GraphQL */ `
       id
       name
       projectType
+      wordTarget {
+        mon {
+          enabled
+          words
+        }
+        tue {
+          enabled
+          words
+        }
+        wed {
+          enabled
+          words
+        }
+        thu {
+          enabled
+          words
+        }
+        fri {
+          enabled
+          words
+        }
+        sat {
+          enabled
+          words
+        }
+        sun {
+          enabled
+          words
+        }
+      }
+      wordsPerPage
       sessions {
         items {
           id
@@ -45,6 +76,7 @@ export const listProjects = /* GraphQL */ `
         id
         name
         projectType
+        wordsPerPage
         sessions {
           nextToken
           startedAt
@@ -78,6 +110,7 @@ export const syncProjects = /* GraphQL */ `
         id
         name
         projectType
+        wordsPerPage
         sessions {
           nextToken
           startedAt
@@ -105,6 +138,7 @@ export const getSession = /* GraphQL */ `
         id
         name
         projectType
+        wordsPerPage
         sessions {
           nextToken
           startedAt
@@ -142,6 +176,7 @@ export const listSessions = /* GraphQL */ `
           id
           name
           projectType
+          wordsPerPage
           owner
           createdAt
           updatedAt
@@ -184,6 +219,7 @@ export const syncSessions = /* GraphQL */ `
           id
           name
           projectType
+          wordsPerPage
           owner
           createdAt
           updatedAt

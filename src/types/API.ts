@@ -6,6 +6,8 @@ export type CreateProjectInput = {
   id?: string | null,
   name: string,
   projectType: ProjectType,
+  wordTarget: WeeklyTargetInput,
+  wordsPerPage: number,
   owner?: string | null,
   _version?: number | null,
 };
@@ -18,9 +20,25 @@ export enum ProjectType {
 }
 
 
+export type WeeklyTargetInput = {
+  mon: TargetByDayInput,
+  tue: TargetByDayInput,
+  wed: TargetByDayInput,
+  thu: TargetByDayInput,
+  fri: TargetByDayInput,
+  sat: TargetByDayInput,
+  sun: TargetByDayInput,
+};
+
+export type TargetByDayInput = {
+  enabled: boolean,
+  words: number,
+};
+
 export type ModelProjectConditionInput = {
   name?: ModelStringInput | null,
   projectType?: ModelProjectTypeInput | null,
+  wordsPerPage?: ModelIntInput | null,
   owner?: ModelStringInput | null,
   and?: Array< ModelProjectConditionInput | null > | null,
   or?: Array< ModelProjectConditionInput | null > | null,
@@ -72,11 +90,25 @@ export type ModelProjectTypeInput = {
   ne?: ProjectType | null,
 };
 
+export type ModelIntInput = {
+  ne?: number | null,
+  eq?: number | null,
+  le?: number | null,
+  lt?: number | null,
+  ge?: number | null,
+  gt?: number | null,
+  between?: Array< number | null > | null,
+  attributeExists?: boolean | null,
+  attributeType?: ModelAttributeTypes | null,
+};
+
 export type Project = {
   __typename: "Project",
   id: string,
   name: string,
   projectType: ProjectType,
+  wordTarget: WeeklyTarget,
+  wordsPerPage: number,
   sessions?: ModelSessionConnection | null,
   owner?: string | null,
   createdAt: string,
@@ -84,6 +116,23 @@ export type Project = {
   _version: number,
   _deleted?: boolean | null,
   _lastChangedAt: number,
+};
+
+export type WeeklyTarget = {
+  __typename: "WeeklyTarget",
+  mon: TargetByDay,
+  tue: TargetByDay,
+  wed: TargetByDay,
+  thu: TargetByDay,
+  fri: TargetByDay,
+  sat: TargetByDay,
+  sun: TargetByDay,
+};
+
+export type TargetByDay = {
+  __typename: "TargetByDay",
+  enabled: boolean,
+  words: number,
 };
 
 export type ModelSessionConnection = {
@@ -113,6 +162,8 @@ export type UpdateProjectInput = {
   id: string,
   name?: string | null,
   projectType?: ProjectType | null,
+  wordTarget?: WeeklyTargetInput | null,
+  wordsPerPage?: number | null,
   owner?: string | null,
   _version?: number | null,
 };
@@ -141,18 +192,6 @@ export type ModelSessionConditionInput = {
   or?: Array< ModelSessionConditionInput | null > | null,
   not?: ModelSessionConditionInput | null,
   projectSessionsId?: ModelIDInput | null,
-};
-
-export type ModelIntInput = {
-  ne?: number | null,
-  eq?: number | null,
-  le?: number | null,
-  lt?: number | null,
-  ge?: number | null,
-  gt?: number | null,
-  between?: Array< number | null > | null,
-  attributeExists?: boolean | null,
-  attributeType?: ModelAttributeTypes | null,
 };
 
 export type ModelIDInput = {
@@ -229,6 +268,7 @@ export type ModelProjectFilterInput = {
   id?: ModelIDInput | null,
   name?: ModelStringInput | null,
   projectType?: ModelProjectTypeInput | null,
+  wordsPerPage?: ModelIntInput | null,
   owner?: ModelStringInput | null,
   and?: Array< ModelProjectFilterInput | null > | null,
   or?: Array< ModelProjectFilterInput | null > | null,
@@ -274,6 +314,7 @@ export type ModelSubscriptionProjectFilterInput = {
   id?: ModelSubscriptionIDInput | null,
   name?: ModelSubscriptionStringInput | null,
   projectType?: ModelSubscriptionStringInput | null,
+  wordsPerPage?: ModelSubscriptionIntInput | null,
   and?: Array< ModelSubscriptionProjectFilterInput | null > | null,
   or?: Array< ModelSubscriptionProjectFilterInput | null > | null,
 };
@@ -308,15 +349,6 @@ export type ModelSubscriptionStringInput = {
   notIn?: Array< string | null > | null,
 };
 
-export type ModelSubscriptionSessionFilterInput = {
-  id?: ModelSubscriptionIDInput | null,
-  words?: ModelSubscriptionIntInput | null,
-  minutes?: ModelSubscriptionIntInput | null,
-  date?: ModelSubscriptionStringInput | null,
-  and?: Array< ModelSubscriptionSessionFilterInput | null > | null,
-  or?: Array< ModelSubscriptionSessionFilterInput | null > | null,
-};
-
 export type ModelSubscriptionIntInput = {
   ne?: number | null,
   eq?: number | null,
@@ -327,6 +359,15 @@ export type ModelSubscriptionIntInput = {
   between?: Array< number | null > | null,
   in?: Array< number | null > | null,
   notIn?: Array< number | null > | null,
+};
+
+export type ModelSubscriptionSessionFilterInput = {
+  id?: ModelSubscriptionIDInput | null,
+  words?: ModelSubscriptionIntInput | null,
+  minutes?: ModelSubscriptionIntInput | null,
+  date?: ModelSubscriptionStringInput | null,
+  and?: Array< ModelSubscriptionSessionFilterInput | null > | null,
+  or?: Array< ModelSubscriptionSessionFilterInput | null > | null,
 };
 
 export type ModelSubscriptionLoginDateFilterInput = {
@@ -347,6 +388,45 @@ export type CreateProjectMutation = {
     id: string,
     name: string,
     projectType: ProjectType,
+    wordTarget:  {
+      __typename: "WeeklyTarget",
+      mon:  {
+        __typename: "TargetByDay",
+        enabled: boolean,
+        words: number,
+      },
+      tue:  {
+        __typename: "TargetByDay",
+        enabled: boolean,
+        words: number,
+      },
+      wed:  {
+        __typename: "TargetByDay",
+        enabled: boolean,
+        words: number,
+      },
+      thu:  {
+        __typename: "TargetByDay",
+        enabled: boolean,
+        words: number,
+      },
+      fri:  {
+        __typename: "TargetByDay",
+        enabled: boolean,
+        words: number,
+      },
+      sat:  {
+        __typename: "TargetByDay",
+        enabled: boolean,
+        words: number,
+      },
+      sun:  {
+        __typename: "TargetByDay",
+        enabled: boolean,
+        words: number,
+      },
+    },
+    wordsPerPage: number,
     sessions?:  {
       __typename: "ModelSessionConnection",
       items:  Array< {
@@ -386,6 +466,45 @@ export type UpdateProjectMutation = {
     id: string,
     name: string,
     projectType: ProjectType,
+    wordTarget:  {
+      __typename: "WeeklyTarget",
+      mon:  {
+        __typename: "TargetByDay",
+        enabled: boolean,
+        words: number,
+      },
+      tue:  {
+        __typename: "TargetByDay",
+        enabled: boolean,
+        words: number,
+      },
+      wed:  {
+        __typename: "TargetByDay",
+        enabled: boolean,
+        words: number,
+      },
+      thu:  {
+        __typename: "TargetByDay",
+        enabled: boolean,
+        words: number,
+      },
+      fri:  {
+        __typename: "TargetByDay",
+        enabled: boolean,
+        words: number,
+      },
+      sat:  {
+        __typename: "TargetByDay",
+        enabled: boolean,
+        words: number,
+      },
+      sun:  {
+        __typename: "TargetByDay",
+        enabled: boolean,
+        words: number,
+      },
+    },
+    wordsPerPage: number,
     sessions?:  {
       __typename: "ModelSessionConnection",
       items:  Array< {
@@ -425,6 +544,45 @@ export type DeleteProjectMutation = {
     id: string,
     name: string,
     projectType: ProjectType,
+    wordTarget:  {
+      __typename: "WeeklyTarget",
+      mon:  {
+        __typename: "TargetByDay",
+        enabled: boolean,
+        words: number,
+      },
+      tue:  {
+        __typename: "TargetByDay",
+        enabled: boolean,
+        words: number,
+      },
+      wed:  {
+        __typename: "TargetByDay",
+        enabled: boolean,
+        words: number,
+      },
+      thu:  {
+        __typename: "TargetByDay",
+        enabled: boolean,
+        words: number,
+      },
+      fri:  {
+        __typename: "TargetByDay",
+        enabled: boolean,
+        words: number,
+      },
+      sat:  {
+        __typename: "TargetByDay",
+        enabled: boolean,
+        words: number,
+      },
+      sun:  {
+        __typename: "TargetByDay",
+        enabled: boolean,
+        words: number,
+      },
+    },
+    wordsPerPage: number,
     sessions?:  {
       __typename: "ModelSessionConnection",
       items:  Array< {
@@ -470,6 +628,7 @@ export type CreateSessionMutation = {
       id: string,
       name: string,
       projectType: ProjectType,
+      wordsPerPage: number,
       sessions?:  {
         __typename: "ModelSessionConnection",
         nextToken?: string | null,
@@ -509,6 +668,7 @@ export type UpdateSessionMutation = {
       id: string,
       name: string,
       projectType: ProjectType,
+      wordsPerPage: number,
       sessions?:  {
         __typename: "ModelSessionConnection",
         nextToken?: string | null,
@@ -548,6 +708,7 @@ export type DeleteSessionMutation = {
       id: string,
       name: string,
       projectType: ProjectType,
+      wordsPerPage: number,
       sessions?:  {
         __typename: "ModelSessionConnection",
         nextToken?: string | null,
@@ -637,6 +798,45 @@ export type GetProjectQuery = {
     id: string,
     name: string,
     projectType: ProjectType,
+    wordTarget:  {
+      __typename: "WeeklyTarget",
+      mon:  {
+        __typename: "TargetByDay",
+        enabled: boolean,
+        words: number,
+      },
+      tue:  {
+        __typename: "TargetByDay",
+        enabled: boolean,
+        words: number,
+      },
+      wed:  {
+        __typename: "TargetByDay",
+        enabled: boolean,
+        words: number,
+      },
+      thu:  {
+        __typename: "TargetByDay",
+        enabled: boolean,
+        words: number,
+      },
+      fri:  {
+        __typename: "TargetByDay",
+        enabled: boolean,
+        words: number,
+      },
+      sat:  {
+        __typename: "TargetByDay",
+        enabled: boolean,
+        words: number,
+      },
+      sun:  {
+        __typename: "TargetByDay",
+        enabled: boolean,
+        words: number,
+      },
+    },
+    wordsPerPage: number,
     sessions?:  {
       __typename: "ModelSessionConnection",
       items:  Array< {
@@ -679,6 +879,7 @@ export type ListProjectsQuery = {
       id: string,
       name: string,
       projectType: ProjectType,
+      wordsPerPage: number,
       sessions?:  {
         __typename: "ModelSessionConnection",
         nextToken?: string | null,
@@ -711,6 +912,7 @@ export type SyncProjectsQuery = {
       id: string,
       name: string,
       projectType: ProjectType,
+      wordsPerPage: number,
       sessions?:  {
         __typename: "ModelSessionConnection",
         nextToken?: string | null,
@@ -744,6 +946,7 @@ export type GetSessionQuery = {
       id: string,
       name: string,
       projectType: ProjectType,
+      wordsPerPage: number,
       sessions?:  {
         __typename: "ModelSessionConnection",
         nextToken?: string | null,
@@ -786,6 +989,7 @@ export type ListSessionsQuery = {
         id: string,
         name: string,
         projectType: ProjectType,
+        wordsPerPage: number,
         owner?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -827,6 +1031,7 @@ export type SyncSessionsQuery = {
         id: string,
         name: string,
         projectType: ProjectType,
+        wordsPerPage: number,
         owner?: string | null,
         createdAt: string,
         updatedAt: string,
@@ -927,6 +1132,45 @@ export type OnCreateProjectSubscription = {
     id: string,
     name: string,
     projectType: ProjectType,
+    wordTarget:  {
+      __typename: "WeeklyTarget",
+      mon:  {
+        __typename: "TargetByDay",
+        enabled: boolean,
+        words: number,
+      },
+      tue:  {
+        __typename: "TargetByDay",
+        enabled: boolean,
+        words: number,
+      },
+      wed:  {
+        __typename: "TargetByDay",
+        enabled: boolean,
+        words: number,
+      },
+      thu:  {
+        __typename: "TargetByDay",
+        enabled: boolean,
+        words: number,
+      },
+      fri:  {
+        __typename: "TargetByDay",
+        enabled: boolean,
+        words: number,
+      },
+      sat:  {
+        __typename: "TargetByDay",
+        enabled: boolean,
+        words: number,
+      },
+      sun:  {
+        __typename: "TargetByDay",
+        enabled: boolean,
+        words: number,
+      },
+    },
+    wordsPerPage: number,
     sessions?:  {
       __typename: "ModelSessionConnection",
       items:  Array< {
@@ -966,6 +1210,45 @@ export type OnUpdateProjectSubscription = {
     id: string,
     name: string,
     projectType: ProjectType,
+    wordTarget:  {
+      __typename: "WeeklyTarget",
+      mon:  {
+        __typename: "TargetByDay",
+        enabled: boolean,
+        words: number,
+      },
+      tue:  {
+        __typename: "TargetByDay",
+        enabled: boolean,
+        words: number,
+      },
+      wed:  {
+        __typename: "TargetByDay",
+        enabled: boolean,
+        words: number,
+      },
+      thu:  {
+        __typename: "TargetByDay",
+        enabled: boolean,
+        words: number,
+      },
+      fri:  {
+        __typename: "TargetByDay",
+        enabled: boolean,
+        words: number,
+      },
+      sat:  {
+        __typename: "TargetByDay",
+        enabled: boolean,
+        words: number,
+      },
+      sun:  {
+        __typename: "TargetByDay",
+        enabled: boolean,
+        words: number,
+      },
+    },
+    wordsPerPage: number,
     sessions?:  {
       __typename: "ModelSessionConnection",
       items:  Array< {
@@ -1005,6 +1288,45 @@ export type OnDeleteProjectSubscription = {
     id: string,
     name: string,
     projectType: ProjectType,
+    wordTarget:  {
+      __typename: "WeeklyTarget",
+      mon:  {
+        __typename: "TargetByDay",
+        enabled: boolean,
+        words: number,
+      },
+      tue:  {
+        __typename: "TargetByDay",
+        enabled: boolean,
+        words: number,
+      },
+      wed:  {
+        __typename: "TargetByDay",
+        enabled: boolean,
+        words: number,
+      },
+      thu:  {
+        __typename: "TargetByDay",
+        enabled: boolean,
+        words: number,
+      },
+      fri:  {
+        __typename: "TargetByDay",
+        enabled: boolean,
+        words: number,
+      },
+      sat:  {
+        __typename: "TargetByDay",
+        enabled: boolean,
+        words: number,
+      },
+      sun:  {
+        __typename: "TargetByDay",
+        enabled: boolean,
+        words: number,
+      },
+    },
+    wordsPerPage: number,
     sessions?:  {
       __typename: "ModelSessionConnection",
       items:  Array< {
@@ -1050,6 +1372,7 @@ export type OnCreateSessionSubscription = {
       id: string,
       name: string,
       projectType: ProjectType,
+      wordsPerPage: number,
       sessions?:  {
         __typename: "ModelSessionConnection",
         nextToken?: string | null,
@@ -1089,6 +1412,7 @@ export type OnUpdateSessionSubscription = {
       id: string,
       name: string,
       projectType: ProjectType,
+      wordsPerPage: number,
       sessions?:  {
         __typename: "ModelSessionConnection",
         nextToken?: string | null,
@@ -1128,6 +1452,7 @@ export type OnDeleteSessionSubscription = {
       id: string,
       name: string,
       projectType: ProjectType,
+      wordsPerPage: number,
       sessions?:  {
         __typename: "ModelSessionConnection",
         nextToken?: string | null,

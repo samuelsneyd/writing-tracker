@@ -5,9 +5,27 @@
 type Project @model @auth(rules: [{ allow: owner }]) {
   id: ID!
   name: String!
+  description: String!
   projectType: ProjectType!
+  wordTarget: WeeklyTarget!
+  wordsPerPage: Int!
   sessions: [Session] @hasMany
   owner: String @auth(rules: [{ allow: owner, operations: [read] }])
+}
+
+type WeeklyTarget {
+  mon: TargetByDay!
+  tue: TargetByDay!
+  wed: TargetByDay!
+  thu: TargetByDay!
+  fri: TargetByDay!
+  sat: TargetByDay!
+  sun: TargetByDay!
+}
+
+type TargetByDay {
+  enabled: Boolean!
+  words: Int!
 }
 
 enum ProjectType {

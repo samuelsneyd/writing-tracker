@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { SafeAreaView, StyleSheet } from 'react-native';
-import { Project, Session } from '../../models';
+import { Project, ProjectType, Session } from '../../models';
 import { DataStore, Predicates } from 'aws-amplify';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { ProjectsStackParamList } from '../../types/types';
-import { Divider, Layout, TopNavigation, Text, Button, ListItem, List } from '@ui-kitten/components';
+import { Button, Divider, Layout, List, ListItem, Text, TopNavigation } from '@ui-kitten/components';
 import util from '../../utils/util';
 
 type Props = NativeStackScreenProps<ProjectsStackParamList, 'Projects'>
@@ -18,30 +18,50 @@ const ProjectsScreen = ({ navigation }: Props) => {
   }, []);
 
   const addProjects = async () => {
+    const defaultValues = {
+      wordsPerPage: 250,
+      wordTarget: {
+        mon: { enabled: true, words: 500 },
+        tue: { enabled: true, words: 500 },
+        wed: { enabled: true, words: 500 },
+        thu: { enabled: true, words: 500 },
+        fri: { enabled: true, words: 500 },
+        sat: { enabled: false, words: 500 },
+        sun: { enabled: false, words: 500 },
+      },
+    };
     try {
       const projects = await Promise.all([
         DataStore.save(
           new Project({
-            name: 'This is a Book',
-            projectType: 'BOOK',
+            ...defaultValues,
+            name: 'My Book',
+            description: 'This is a Book',
+            projectType: ProjectType.BOOK,
           }),
         ),
         DataStore.save(
           new Project({
-            name: 'This is a Journal',
-            projectType: 'JOURNAL',
+            ...defaultValues,
+            name: 'My Journal',
+            description: 'This is a Journal',
+            projectType: ProjectType.JOURNAL,
           }),
         ),
         DataStore.save(
           new Project({
-            name: 'This is a Blog',
-            projectType: 'BLOG',
+            ...defaultValues,
+            name: 'My Blog',
+            description: 'This is a Blog',
+            projectType: ProjectType.BLOG,
           }),
         ),
         DataStore.save(
           new Project({
-            name: 'This is another project',
-            projectType: 'OTHER',
+            ...defaultValues,
+            name: 'My Other Project',
+            description: 'This is another project',
+            projectType: ProjectType.OTHER,
           }),
         ),
       ]);
