@@ -65,6 +65,7 @@ Update and re-provision AWS backend services
 ### React Native
 
 React Native is the primary framework for creating native iOS and Android applications, with a TypeScript codebase.
+The app was initialized with the React Native CLI, and does not use Expo.
 
 ### AWS Amplify
 
