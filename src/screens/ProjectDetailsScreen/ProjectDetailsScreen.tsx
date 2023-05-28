@@ -4,7 +4,7 @@ import { SafeAreaView } from 'react-native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { ProjectsStackParamList } from '../../types/types';
 import { DataStore } from 'aws-amplify';
-import { Project, TimeWriting, WordCount } from '../../models';
+import { Project, Session } from '../../models';
 import { Layout, TopNavigation, Text, Divider } from '@ui-kitten/components';
 import useBackNavigation from '../../hooks/useBackNavigation/useBackNavigation';
 import { capitalCase } from 'change-case';
@@ -14,18 +14,14 @@ type Props = NativeStackScreenProps<ProjectsStackParamList, 'Details'>
 
 const ProjectDetailsScreen = ({ route, navigation }: Props) => {
   const [project, setProject] = useState<Project>();
-  const [wordCounts, setWordCounts] = useState<WordCount[]>([]);
-  const [writingTimes, setWritingTimes] = useState<TimeWriting[]>([]);
+  const [sessions, setSessions] = useState<Session[]>([]);
   const { BackAction } = useBackNavigation(navigation);
 
   useEffect(() => {
     DataStore.query(Project, id).then(result => {
       setProject(result);
-      result?.wordCounts.toArray().then(results => {
-        setWordCounts(results);
-      });
-      result?.writingTimes.toArray().then(results => {
-        setWritingTimes(results);
+      result?.sessions.toArray().then(results => {
+        setSessions(results);
       });
     });
   }, []);
@@ -40,8 +36,9 @@ const ProjectDetailsScreen = ({ route, navigation }: Props) => {
           ? <>
             <Text category="h1">{capitalCase(project.projectType)}</Text>
             <Text>{titleCase(project.name)}</Text>
-            {wordCounts.map(wordCount => <Text key={wordCount.id}>{wordCount.words} words</Text>)}
-            {writingTimes.map(writingTime => <Text key={writingTime.id}>{writingTime.minutes} minutes</Text>)}
+            {sessions.map((session, i) =>
+              <Text key={session.id}>Session {i + 1}: {session.words} words, {session.minutes} minutes</Text>)
+            }
           </>
           : <Text>No project found!</Text>
         }

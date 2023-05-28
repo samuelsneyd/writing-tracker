@@ -13,11 +13,7 @@ type ProjectMetaData = {
   readOnlyFields: 'createdAt' | 'updatedAt';
 }
 
-type WordCountMetaData = {
-  readOnlyFields: 'createdAt' | 'updatedAt';
-}
-
-type TimeWritingMetaData = {
+type SessionMetaData = {
   readOnlyFields: 'createdAt' | 'updatedAt';
 }
 
@@ -29,8 +25,7 @@ type EagerProject = {
   readonly id: string;
   readonly name: string;
   readonly projectType: ProjectType | keyof typeof ProjectType;
-  readonly wordCounts?: (WordCount | null)[] | null;
-  readonly writingTimes?: (TimeWriting | null)[] | null;
+  readonly sessions?: (Session | null)[] | null;
   readonly owner?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
@@ -40,8 +35,7 @@ type LazyProject = {
   readonly id: string;
   readonly name: string;
   readonly projectType: ProjectType | keyof typeof ProjectType;
-  readonly wordCounts: AsyncCollection<WordCount>;
-  readonly writingTimes: AsyncCollection<TimeWriting>;
+  readonly sessions: AsyncCollection<Session>;
   readonly owner?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
@@ -53,34 +47,9 @@ export declare const Project: (new (init: ModelInit<Project, ProjectMetaData>) =
   copyOf(source: Project, mutator: (draft: MutableModel<Project, ProjectMetaData>) => MutableModel<Project, ProjectMetaData> | void): Project;
 }
 
-type EagerWordCount = {
+type EagerSession = {
   readonly id: string;
   readonly words: number;
-  readonly date: string;
-  readonly project: Project;
-  readonly owner?: string | null;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
-}
-
-type LazyWordCount = {
-  readonly id: string;
-  readonly words: number;
-  readonly date: string;
-  readonly project: AsyncItem<Project>;
-  readonly owner?: string | null;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
-}
-
-export declare type WordCount = LazyLoading extends LazyLoadingDisabled ? EagerWordCount : LazyWordCount
-
-export declare const WordCount: (new (init: ModelInit<WordCount, WordCountMetaData>) => WordCount) & {
-  copyOf(source: WordCount, mutator: (draft: MutableModel<WordCount, WordCountMetaData>) => MutableModel<WordCount, WordCountMetaData> | void): WordCount;
-}
-
-type EagerTimeWriting = {
-  readonly id: string;
   readonly minutes: number;
   readonly date: string;
   readonly project: Project;
@@ -89,8 +58,9 @@ type EagerTimeWriting = {
   readonly updatedAt?: string | null;
 }
 
-type LazyTimeWriting = {
+type LazySession = {
   readonly id: string;
+  readonly words: number;
   readonly minutes: number;
   readonly date: string;
   readonly project: AsyncItem<Project>;
@@ -99,10 +69,10 @@ type LazyTimeWriting = {
   readonly updatedAt?: string | null;
 }
 
-export declare type TimeWriting = LazyLoading extends LazyLoadingDisabled ? EagerTimeWriting : LazyTimeWriting
+export declare type Session = LazyLoading extends LazyLoadingDisabled ? EagerSession : LazySession
 
-export declare const TimeWriting: (new (init: ModelInit<TimeWriting, TimeWritingMetaData>) => TimeWriting) & {
-  copyOf(source: TimeWriting, mutator: (draft: MutableModel<TimeWriting, TimeWritingMetaData>) => MutableModel<TimeWriting, TimeWritingMetaData> | void): TimeWriting;
+export declare const Session: (new (init: ModelInit<Session, SessionMetaData>) => Session) & {
+  copyOf(source: Session, mutator: (draft: MutableModel<Session, SessionMetaData>) => MutableModel<Session, SessionMetaData> | void): Session;
 }
 
 type EagerLoginDate = {

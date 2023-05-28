@@ -26,32 +26,18 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "wordCounts": {
-                    "name": "wordCounts",
+                "sessions": {
+                    "name": "sessions",
                     "isArray": true,
                     "type": {
-                        "model": "WordCount"
+                        "model": "Session"
                     },
                     "isRequired": false,
                     "attributes": [],
                     "isArrayNullable": true,
                     "association": {
                         "connectionType": "HAS_MANY",
-                        "associatedWith": "projectWordCountsId"
-                    }
-                },
-                "writingTimes": {
-                    "name": "writingTimes",
-                    "isArray": true,
-                    "type": {
-                        "model": "TimeWriting"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "isArrayNullable": true,
-                    "association": {
-                        "connectionType": "HAS_MANY",
-                        "associatedWith": "projectWritingTimesId"
+                        "associatedWith": "projectSessionsId"
                     }
                 },
                 "owner": {
@@ -106,8 +92,8 @@ export const schema = {
                 }
             ]
         },
-        "WordCount": {
-            "name": "WordCount",
+        "Session": {
+            "name": "Session",
             "fields": {
                 "id": {
                     "name": "id",
@@ -120,88 +106,6 @@ export const schema = {
                     "name": "words",
                     "isArray": false,
                     "type": "Int",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "date": {
-                    "name": "date",
-                    "isArray": false,
-                    "type": "AWSDateTime",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "project": {
-                    "name": "project",
-                    "isArray": false,
-                    "type": {
-                        "model": "Project"
-                    },
-                    "isRequired": true,
-                    "attributes": [],
-                    "association": {
-                        "connectionType": "BELONGS_TO",
-                        "targetName": "projectWordCountsId"
-                    }
-                },
-                "owner": {
-                    "name": "owner",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "createdAt": {
-                    "name": "createdAt",
-                    "isArray": false,
-                    "type": "AWSDateTime",
-                    "isRequired": false,
-                    "attributes": [],
-                    "isReadOnly": true
-                },
-                "updatedAt": {
-                    "name": "updatedAt",
-                    "isArray": false,
-                    "type": "AWSDateTime",
-                    "isRequired": false,
-                    "attributes": [],
-                    "isReadOnly": true
-                }
-            },
-            "syncable": true,
-            "pluralName": "WordCounts",
-            "attributes": [
-                {
-                    "type": "model",
-                    "properties": {}
-                },
-                {
-                    "type": "auth",
-                    "properties": {
-                        "rules": [
-                            {
-                                "provider": "userPools",
-                                "ownerField": "owner",
-                                "allow": "owner",
-                                "identityClaim": "cognito:username",
-                                "operations": [
-                                    "create",
-                                    "update",
-                                    "delete",
-                                    "read"
-                                ]
-                            }
-                        ]
-                    }
-                }
-            ]
-        },
-        "TimeWriting": {
-            "name": "TimeWriting",
-            "fields": {
-                "id": {
-                    "name": "id",
-                    "isArray": false,
-                    "type": "ID",
                     "isRequired": true,
                     "attributes": []
                 },
@@ -229,7 +133,7 @@ export const schema = {
                     "attributes": [],
                     "association": {
                         "connectionType": "BELONGS_TO",
-                        "targetName": "projectWritingTimesId"
+                        "targetName": "projectSessionsId"
                     }
                 },
                 "owner": {
@@ -257,7 +161,7 @@ export const schema = {
                 }
             },
             "syncable": true,
-            "pluralName": "TimeWritings",
+            "pluralName": "Sessions",
             "attributes": [
                 {
                     "type": "model",
@@ -367,5 +271,5 @@ export const schema = {
     },
     "nonModels": {},
     "codegenVersion": "3.4.2",
-    "version": "cd0d01eeb39eb8c403be71382c1d8e87"
+    "version": "a715d8dba9cbd184096d9ab69bf317d5"
 };

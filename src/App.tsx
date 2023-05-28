@@ -7,7 +7,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { ApplicationProvider, IconRegistry } from '@ui-kitten/components';
 import RootTabNavigator from './navigators/RootTabNavigator/RootTabNavigator';
 import { ThemeContext } from './themes/theme-context';
-import { steampunkTheme } from './themes';
+import { steampunkTheme, cyanTheme } from './themes';
 import useLoginStreak from './hooks/useLoginStreak/useLoginStreak';
 
 const App = () => {
@@ -23,7 +23,7 @@ const App = () => {
     <>
       <IconRegistry icons={EvaIconsPack} />
       <ThemeContext.Provider value={{ theme, toggleTheme }}>
-        <ApplicationProvider {...eva} theme={{ ...eva[theme], ...steampunkTheme }}>
+        <ApplicationProvider {...eva} theme={{ ...eva[theme], ...cyanTheme }}>
           <NavigationContainer>
             <RootTabNavigator />
           </NavigationContainer>

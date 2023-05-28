@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { SafeAreaView, StyleSheet } from 'react-native';
 import { useEffect, useState } from 'react';
-import { Project, TimeWriting, WordCount } from '../../models';
+import { Project, Session } from '../../models';
 import { DataStore, Predicates } from 'aws-amplify';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { ProjectsStackParamList } from '../../types/types';
@@ -12,8 +12,7 @@ type Props = NativeStackScreenProps<ProjectsStackParamList, 'Projects'>
 
 const ProjectsScreen = ({ navigation }: Props) => {
   const [projects, setProjects] = useState<Project[]>([]);
-  const [wordCounts, setWordCounts] = useState<WordCount[]>([]);
-  const [writingTimes, setWritingTimes] = useState<TimeWriting[]>([]);
+  const [sessions, setSessions] = useState<Session[]>([]);
 
   useEffect(() => {
     DataStore.query(Project).then(items => setProjects(items));
@@ -74,71 +73,38 @@ const ProjectsScreen = ({ navigation }: Props) => {
     }
   };
 
-  const addWordCounts = async () => {
+  const addSessions = async () => {
     try {
-      await Promise.all(projects.map(project => DataStore.save(new WordCount({
+      await Promise.all(projects.map(project => DataStore.save(new Session({
         project,
         words: util.getRandomInt(1000),
+        minutes: util.getRandomInt(1000),
         date: new Date().toISOString(),
       }))));
-      console.log('Word Counts saved successfully!', wordCounts);
-      await fetchWordCounts();
+      console.log('Sessions saved successfully!', sessions);
+      await fetchSessions();
     } catch (e) {
-      console.log('Error adding word counts', e);
+      console.log('Error adding sessions', e);
     }
   };
 
-  const fetchWordCounts = async () => {
+  const fetchSessions = async () => {
     try {
-      const wordCounts = await DataStore.query(WordCount);
-      setWordCounts(wordCounts);
-      console.log('Word counts retrieved successfully!', JSON.stringify(wordCounts, null, 2));
+      const sessions = await DataStore.query(Session);
+      setSessions(sessions);
+      console.log('Sessions retrieved successfully!', JSON.stringify(sessions, null, 2));
     } catch (e) {
-      console.log('Error retrieving word counts', e);
-      setWordCounts([]);
+      console.log('Error retrieving sessions', e);
+      setSessions([]);
     }
   };
 
-  const wipeWordCounts = async () => {
+  const wipeSessions = async () => {
     try {
-      await DataStore.delete(WordCount, Predicates.ALL);
-      setWordCounts([]);
+      await DataStore.delete(Session, Predicates.ALL);
+      setSessions([]);
     } catch (e) {
-      console.log('Error wiping word counts', e);
-    }
-  };
-
-  const addWritingTimes = async () => {
-    try {
-      await Promise.all(projects.map(project => DataStore.save(new TimeWriting({
-        project,
-        minutes: util.getRandomInt(360),
-        date: new Date().toISOString(),
-      }))));
-      console.log('Writing Times saved successfully!', wordCounts);
-      await fetchWritingTimes();
-    } catch (e) {
-      console.log('Error adding writing times', e);
-    }
-  };
-
-  const fetchWritingTimes = async () => {
-    try {
-      const writingTimes = await DataStore.query(TimeWriting);
-      setWritingTimes(writingTimes);
-      console.log('Writing Times retrieved successfully!', JSON.stringify(writingTimes, null, 2));
-    } catch (e) {
-      console.log('Error retrieving writing times', e);
-      setWritingTimes([]);
-    }
-  };
-
-  const wipeWritingTimes = async () => {
-    try {
-      await DataStore.delete(TimeWriting, Predicates.ALL);
-      setWritingTimes([]);
-    } catch (e) {
-      console.log('Error wiping writing times', e);
+      console.log('Error wiping sessions', e);
     }
   };
 
@@ -159,14 +125,11 @@ const ProjectsScreen = ({ navigation }: Props) => {
       <Layout style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <Text category="h1">Projects</Text>
         {/*<Button size="small" onPress={addProjects}>Add Projects</Button>*/}
-        <Button size="small" onPress={fetchProjects}>Fetch Projects</Button>
+        {/*<Button size="small" onPress={fetchProjects}>Fetch Projects</Button>*/}
         {/*<Button size="small" onPress={wipeProjects}>Wipe Projects</Button>*/}
-        {/*<Button size="small" onPress={addWordCounts}>Add Word Counts</Button>*/}
-        <Button size="small" onPress={fetchWordCounts}>Fetch Word Counts</Button>
-        {/*<Button size="small" onPress={wipeWordCounts}>Wipe Word Counts</Button>*/}
-        {/*<Button size="small" onPress={addWritingTimes}>Add Writing Times</Button>*/}
-        <Button size="small" onPress={fetchWritingTimes}>Fetch Writing Times</Button>
-        {/*<Button size="small" onPress={wipeWritingTimes}>Wipe Writing Times</Button>*/}
+        {/*<Button size="small" onPress={addSessions}>Add Sessions</Button>*/}
+        {/*<Button size="small" onPress={fetchSessions}>Fetch Sessions</Button>*/}
+        {/*<Button size="small" onPress={wipeSessions}>Wipe Sessions</Button>*/}
         <Divider />
       </Layout>
       <List
