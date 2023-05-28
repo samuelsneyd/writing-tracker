@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { useEffect, useState } from 'react';
 import { DataStore } from 'aws-amplify';
 import { LoginDate } from '../../models';
 import { format } from 'date-fns';
@@ -10,7 +9,7 @@ import type { DateStreakSummary } from '../../types/types';
  * Returns a summary of the signed-in user's daily login streak.
  */
 const useLoginStreak = (): DateStreakSummary => {
-  const [loginSummary, setLoginSummary] = useState<DateStreakSummary>({
+  const [loginSummary, setLoginSummary] = React.useState<DateStreakSummary>({
     currentStreak: 0,
     longestStreak: 0,
     streaks: [],
@@ -18,7 +17,7 @@ const useLoginStreak = (): DateStreakSummary => {
     withinCurrentStreak: false,
   });
 
-  useEffect(() => {
+  React.useEffect(() => {
     /**
      * Updates the daily login streak as based on the device's timezone.
      */

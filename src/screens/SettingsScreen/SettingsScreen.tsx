@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { SafeAreaView } from 'react-native';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { SettingsStackParamList } from '../../types/types';
+import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import type { SettingsStackParamList } from '../../types/types';
 import { Divider, Layout, TopNavigation, Text } from '@ui-kitten/components';
 import useBackNavigation from '../../hooks/useBackNavigation/useBackNavigation';
 

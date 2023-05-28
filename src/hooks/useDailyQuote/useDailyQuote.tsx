@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { useState, useEffect } from 'react';
 import type { Quote } from '../../types/types';
 import quotes from './quotes';
 
@@ -8,9 +7,9 @@ import quotes from './quotes';
  * based on the device's local timezone.
  */
 const useDailyQuote = (): Quote => {
-  const [dailyQuote, setDailyQuote] = useState<Quote>({ quote: '', author: '' });
+  const [dailyQuote, setDailyQuote] = React.useState<Quote>({ quote: '', author: '' });
 
-  useEffect(() => {
+  React.useEffect(() => {
     const now = new Date();
     // Convert to local timezone
     const timezoneOffsetMilliseconds = now.getTimezoneOffset() * 60 * 1000;

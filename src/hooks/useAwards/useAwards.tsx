@@ -1,11 +1,10 @@
 import * as React from 'react';
-import { useState, useEffect } from 'react';
 import { awards, AwardMap } from './awards';
 
 const useAward = () => {
-  const [availableAwards, setAvailableAwards] = useState<AwardMap>();
+  const [availableAwards, setAvailableAwards] = React.useState<AwardMap>();
 
-  useEffect(() => {
+  React.useEffect(() => {
     setAvailableAwards(awards);
   }, []);
 

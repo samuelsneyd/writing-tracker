@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { useState } from 'react';
 import * as eva from '@eva-design/eva';
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
 import { withAuthenticator } from 'aws-amplify-react-native';
@@ -7,11 +6,11 @@ import { NavigationContainer } from '@react-navigation/native';
 import { ApplicationProvider, IconRegistry } from '@ui-kitten/components';
 import RootTabNavigator from './navigators/RootTabNavigator/RootTabNavigator';
 import { ThemeContext } from './themes/theme-context';
-import { steampunkTheme, cyanTheme } from './themes';
+import { cyanTheme } from './themes';
 import useLoginStreak from './hooks/useLoginStreak/useLoginStreak';
 
 const App = () => {
-  const [theme, setTheme] = useState<'light' | 'dark'>('light');
+  const [theme, setTheme] = React.useState<'light' | 'dark'>('light');
   const loginStreak = useLoginStreak();
 
   const toggleTheme = () => {

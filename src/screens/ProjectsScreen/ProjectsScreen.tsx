@@ -1,20 +1,19 @@
 import * as React from 'react';
 import { SafeAreaView, StyleSheet } from 'react-native';
-import { useEffect, useState } from 'react';
 import { Project, Session } from '../../models';
 import { DataStore, Predicates } from 'aws-amplify';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { ProjectsStackParamList } from '../../types/types';
+import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import type { ProjectsStackParamList } from '../../types/types';
 import { Divider, Layout, TopNavigation, Text, Button, ListItem, List } from '@ui-kitten/components';
 import util from '../../utils/util';
 
 type Props = NativeStackScreenProps<ProjectsStackParamList, 'Projects'>
 
 const ProjectsScreen = ({ navigation }: Props) => {
-  const [projects, setProjects] = useState<Project[]>([]);
-  const [sessions, setSessions] = useState<Session[]>([]);
+  const [projects, setProjects] = React.useState<Project[]>([]);
+  const [sessions, setSessions] = React.useState<Session[]>([]);
 
-  useEffect(() => {
+  React.useEffect(() => {
     DataStore.query(Project).then(items => setProjects(items));
   }, []);
 

@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { useEffect, useState } from 'react';
 import { SafeAreaView } from 'react-native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { ProjectsStackParamList } from '../../types/types';
@@ -13,12 +12,12 @@ import { titleCase } from 'title-case';
 type Props = NativeStackScreenProps<ProjectsStackParamList, 'Details'>
 
 const ProjectDetailsScreen = ({ route, navigation }: Props) => {
-  const [project, setProject] = useState<Project>();
-  const [sessions, setSessions] = useState<Session[]>([]);
+  const [project, setProject] = React.useState<Project>();
+  const [sessions, setSessions] = React.useState<Session[]>([]);
   const { BackAction } = useBackNavigation(navigation);
   const { id, name } = route.params;
 
-  useEffect(() => {
+  React.useEffect(() => {
     DataStore.query(Project, id).then(result => {
       setProject(result);
       result?.sessions.toArray().then(results => {
