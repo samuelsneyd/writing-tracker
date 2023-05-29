@@ -9,6 +9,7 @@ export const getProject = /* GraphQL */ `
       name
       description
       projectType
+      status
       wordTarget {
         mon {
           enabled
@@ -78,6 +79,7 @@ export const listProjects = /* GraphQL */ `
         name
         description
         projectType
+        status
         wordsPerPage
         sessions {
           nextToken
@@ -113,6 +115,7 @@ export const syncProjects = /* GraphQL */ `
         name
         description
         projectType
+        status
         wordsPerPage
         sessions {
           nextToken
@@ -142,6 +145,7 @@ export const getSession = /* GraphQL */ `
         name
         description
         projectType
+        status
         wordsPerPage
         sessions {
           nextToken
@@ -181,6 +185,7 @@ export const listSessions = /* GraphQL */ `
           name
           description
           projectType
+          status
           wordsPerPage
           owner
           createdAt
@@ -225,6 +230,7 @@ export const syncSessions = /* GraphQL */ `
           name
           description
           projectType
+          status
           wordsPerPage
           owner
           createdAt

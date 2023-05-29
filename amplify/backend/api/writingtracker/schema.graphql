@@ -7,10 +7,29 @@ type Project @model @auth(rules: [{ allow: owner }]) {
   name: String!
   description: String!
   projectType: ProjectType!
+  status: ProjectStatus!
   wordTarget: WeeklyTarget!
   wordsPerPage: Int!
   sessions: [Session] @hasMany
   owner: String @auth(rules: [{ allow: owner, operations: [read] }])
+}
+
+enum ProjectType {
+  BOOK
+  JOURNAL
+  BLOG
+  OTHER
+}
+
+enum ProjectStatus {
+  IN_PROGRESS
+  ON_HOLD
+  COMPLETED
+}
+
+type TargetByDay {
+  enabled: Boolean!
+  words: Int!
 }
 
 type WeeklyTarget {
@@ -21,18 +40,6 @@ type WeeklyTarget {
   fri: TargetByDay!
   sat: TargetByDay!
   sun: TargetByDay!
-}
-
-type TargetByDay {
-  enabled: Boolean!
-  words: Int!
-}
-
-enum ProjectType {
-  BOOK
-  JOURNAL
-  BLOG
-  OTHER
 }
 
 type Session @model @auth(rules: [{ allow: owner}]) {

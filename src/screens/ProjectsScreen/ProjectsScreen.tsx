@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { SafeAreaView, StyleSheet } from 'react-native';
-import { Project, ProjectType, Session } from '../../models';
+import { Project, ProjectStatus, ProjectType, Session } from '../../models';
 import { DataStore, Predicates } from 'aws-amplify';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { ProjectsStackParamList } from '../../types/types';
@@ -38,6 +38,7 @@ const ProjectsScreen = ({ navigation }: Props) => {
             name: 'My Book',
             description: 'This is a Book',
             projectType: ProjectType.BOOK,
+            status: ProjectStatus.IN_PROGRESS
           }),
         ),
         DataStore.save(
@@ -46,6 +47,7 @@ const ProjectsScreen = ({ navigation }: Props) => {
             name: 'My Journal',
             description: 'This is a Journal',
             projectType: ProjectType.JOURNAL,
+            status: ProjectStatus.COMPLETED
           }),
         ),
         DataStore.save(
@@ -54,6 +56,7 @@ const ProjectsScreen = ({ navigation }: Props) => {
             name: 'My Blog',
             description: 'This is a Blog',
             projectType: ProjectType.BLOG,
+            status: ProjectStatus.ON_HOLD
           }),
         ),
         DataStore.save(
@@ -62,6 +65,7 @@ const ProjectsScreen = ({ navigation }: Props) => {
             name: 'My Other Project',
             description: 'This is another project',
             projectType: ProjectType.OTHER,
+            status: ProjectStatus.IN_PROGRESS
           }),
         ),
       ]);

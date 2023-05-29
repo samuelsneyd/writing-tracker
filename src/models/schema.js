@@ -33,6 +33,15 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
+                "status": {
+                    "name": "status",
+                    "isArray": false,
+                    "type": {
+                        "enum": "ProjectStatus"
+                    },
+                    "isRequired": true,
+                    "attributes": []
+                },
                 "wordTarget": {
                     "name": "wordTarget",
                     "isArray": false,
@@ -290,9 +299,36 @@ export const schema = {
                 "BLOG",
                 "OTHER"
             ]
+        },
+        "ProjectStatus": {
+            "name": "ProjectStatus",
+            "values": [
+                "IN_PROGRESS",
+                "ON_HOLD",
+                "COMPLETED"
+            ]
         }
     },
     "nonModels": {
+        "TargetByDay": {
+            "name": "TargetByDay",
+            "fields": {
+                "enabled": {
+                    "name": "enabled",
+                    "isArray": false,
+                    "type": "Boolean",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "words": {
+                    "name": "words",
+                    "isArray": false,
+                    "type": "Int",
+                    "isRequired": true,
+                    "attributes": []
+                }
+            }
+        },
         "WeeklyTarget": {
             "name": "WeeklyTarget",
             "fields": {
@@ -360,27 +396,8 @@ export const schema = {
                     "attributes": []
                 }
             }
-        },
-        "TargetByDay": {
-            "name": "TargetByDay",
-            "fields": {
-                "enabled": {
-                    "name": "enabled",
-                    "isArray": false,
-                    "type": "Boolean",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "words": {
-                    "name": "words",
-                    "isArray": false,
-                    "type": "Int",
-                    "isRequired": true,
-                    "attributes": []
-                }
-            }
         }
     },
     "codegenVersion": "3.4.2",
-    "version": "90111b258019b13f547ce9502780d7e3"
+    "version": "c8bc8385f54add7f3cf4e6165cb7abea"
 };

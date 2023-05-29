@@ -9,6 +9,26 @@ export enum ProjectType {
   OTHER = "OTHER"
 }
 
+export enum ProjectStatus {
+  IN_PROGRESS = "IN_PROGRESS",
+  ON_HOLD = "ON_HOLD",
+  COMPLETED = "COMPLETED"
+}
+
+type EagerTargetByDay = {
+  readonly enabled: boolean;
+  readonly words: number;
+}
+
+type LazyTargetByDay = {
+  readonly enabled: boolean;
+  readonly words: number;
+}
+
+export declare type TargetByDay = LazyLoading extends LazyLoadingDisabled ? EagerTargetByDay : LazyTargetByDay
+
+export declare const TargetByDay: (new (init: ModelInit<TargetByDay>) => TargetByDay)
+
 type EagerWeeklyTarget = {
   readonly mon: TargetByDay;
   readonly tue: TargetByDay;
@@ -33,20 +53,6 @@ export declare type WeeklyTarget = LazyLoading extends LazyLoadingDisabled ? Eag
 
 export declare const WeeklyTarget: (new (init: ModelInit<WeeklyTarget>) => WeeklyTarget)
 
-type EagerTargetByDay = {
-  readonly enabled: boolean;
-  readonly words: number;
-}
-
-type LazyTargetByDay = {
-  readonly enabled: boolean;
-  readonly words: number;
-}
-
-export declare type TargetByDay = LazyLoading extends LazyLoadingDisabled ? EagerTargetByDay : LazyTargetByDay
-
-export declare const TargetByDay: (new (init: ModelInit<TargetByDay>) => TargetByDay)
-
 type ProjectMetaData = {
   readOnlyFields: 'createdAt' | 'updatedAt';
 }
@@ -64,6 +70,7 @@ type EagerProject = {
   readonly name: string;
   readonly description: string;
   readonly projectType: ProjectType | keyof typeof ProjectType;
+  readonly status: ProjectStatus | keyof typeof ProjectStatus;
   readonly wordTarget: WeeklyTarget;
   readonly wordsPerPage: number;
   readonly sessions?: (Session | null)[] | null;
@@ -77,6 +84,7 @@ type LazyProject = {
   readonly name: string;
   readonly description: string;
   readonly projectType: ProjectType | keyof typeof ProjectType;
+  readonly status: ProjectStatus | keyof typeof ProjectStatus;
   readonly wordTarget: WeeklyTarget;
   readonly wordsPerPage: number;
   readonly sessions: AsyncCollection<Session>;

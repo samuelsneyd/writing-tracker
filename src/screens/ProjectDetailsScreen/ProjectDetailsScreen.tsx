@@ -6,7 +6,7 @@ import { DataStore } from 'aws-amplify';
 import { Project, Session } from '../../models';
 import { Layout, TopNavigation, Text, Divider } from '@ui-kitten/components';
 import useBackNavigation from '../../hooks/useBackNavigation/useBackNavigation';
-import { capitalCase } from 'change-case';
+import { capitalCase, noCase } from 'change-case';
 import { titleCase } from 'title-case';
 
 type Props = NativeStackScreenProps<ProjectsStackParamList, 'Details'>
@@ -18,10 +18,10 @@ const ProjectDetailsScreen = ({ route, navigation }: Props) => {
   const { id, name } = route.params;
 
   React.useEffect(() => {
-    DataStore.query(Project, id).then(result => {
-      setProject(result);
-      result?.sessions.toArray().then(results => {
-        setSessions(results);
+    DataStore.query(Project, id).then(foundProject => {
+      setProject(foundProject);
+      foundProject?.sessions.toArray().then(foundSessions => {
+        setSessions(foundSessions);
       });
     });
   }, []);
@@ -36,6 +36,7 @@ const ProjectDetailsScreen = ({ route, navigation }: Props) => {
             <Text category="h1">{capitalCase(project.projectType)}</Text>
             <Text>Title: {titleCase(project.name)}</Text>
             <Text>Description: {project.description}</Text>
+            <Text>Status: {titleCase(noCase(project.status))}</Text>
             {sessions.map((session, i) =>
               <Text key={session.id}>Session {i + 1}: {session.words} words, {session.minutes} minutes</Text>)
             }
@@ -44,13 +45,13 @@ const ProjectDetailsScreen = ({ route, navigation }: Props) => {
             <Text>Total minutes: {sessions.reduce((prev, { minutes: next }) => prev + next, 0)}</Text>
             <Text>Words per page: {project.wordsPerPage}</Text>
             <Text>Daily word targets:</Text>
-            <Text>Mon: {project.wordTarget?.mon?.enabled ? project.wordTarget?.mon.words : 0}</Text>
-            <Text>Tue: {project.wordTarget?.tue?.enabled ? project.wordTarget?.tue.words : 0}</Text>
-            <Text>Wed: {project.wordTarget?.wed?.enabled ? project.wordTarget?.wed.words : 0}</Text>
-            <Text>Thu: {project.wordTarget?.thu?.enabled ? project.wordTarget?.thu.words : 0}</Text>
-            <Text>Fri: {project.wordTarget?.fri?.enabled ? project.wordTarget?.fri.words : 0}</Text>
-            <Text>Sat: {project.wordTarget?.sat?.enabled ? project.wordTarget?.sat.words : 0}</Text>
-            <Text>Sun: {project.wordTarget?.sun?.enabled ? project.wordTarget?.sun.words : 0}</Text>
+            <Text>Mon: {project.wordTarget?.mon?.enabled ? project.wordTarget.mon.words : 0}</Text>
+            <Text>Tue: {project.wordTarget?.tue?.enabled ? project.wordTarget.tue.words : 0}</Text>
+            <Text>Wed: {project.wordTarget?.wed?.enabled ? project.wordTarget.wed.words : 0}</Text>
+            <Text>Thu: {project.wordTarget?.thu?.enabled ? project.wordTarget.thu.words : 0}</Text>
+            <Text>Fri: {project.wordTarget?.fri?.enabled ? project.wordTarget.fri.words : 0}</Text>
+            <Text>Sat: {project.wordTarget?.sat?.enabled ? project.wordTarget.sat.words : 0}</Text>
+            <Text>Sun: {project.wordTarget?.sun?.enabled ? project.wordTarget.sun.words : 0}</Text>
           </>
           : <Text>No project found!</Text>
         }

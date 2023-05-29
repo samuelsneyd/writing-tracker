@@ -7,6 +7,7 @@ export type CreateProjectInput = {
   name: string,
   description: string,
   projectType: ProjectType,
+  status: ProjectStatus,
   wordTarget: WeeklyTargetInput,
   wordsPerPage: number,
   owner?: string | null,
@@ -18,6 +19,13 @@ export enum ProjectType {
   JOURNAL = "JOURNAL",
   BLOG = "BLOG",
   OTHER = "OTHER",
+}
+
+
+export enum ProjectStatus {
+  IN_PROGRESS = "IN_PROGRESS",
+  ON_HOLD = "ON_HOLD",
+  COMPLETED = "COMPLETED",
 }
 
 
@@ -40,6 +48,7 @@ export type ModelProjectConditionInput = {
   name?: ModelStringInput | null,
   description?: ModelStringInput | null,
   projectType?: ModelProjectTypeInput | null,
+  status?: ModelProjectStatusInput | null,
   wordsPerPage?: ModelIntInput | null,
   owner?: ModelStringInput | null,
   and?: Array< ModelProjectConditionInput | null > | null,
@@ -92,6 +101,11 @@ export type ModelProjectTypeInput = {
   ne?: ProjectType | null,
 };
 
+export type ModelProjectStatusInput = {
+  eq?: ProjectStatus | null,
+  ne?: ProjectStatus | null,
+};
+
 export type ModelIntInput = {
   ne?: number | null,
   eq?: number | null,
@@ -110,6 +124,7 @@ export type Project = {
   name: string,
   description: string,
   projectType: ProjectType,
+  status: ProjectStatus,
   wordTarget: WeeklyTarget,
   wordsPerPage: number,
   sessions?: ModelSessionConnection | null,
@@ -166,6 +181,7 @@ export type UpdateProjectInput = {
   name?: string | null,
   description?: string | null,
   projectType?: ProjectType | null,
+  status?: ProjectStatus | null,
   wordTarget?: WeeklyTargetInput | null,
   wordsPerPage?: number | null,
   owner?: string | null,
@@ -273,6 +289,7 @@ export type ModelProjectFilterInput = {
   name?: ModelStringInput | null,
   description?: ModelStringInput | null,
   projectType?: ModelProjectTypeInput | null,
+  status?: ModelProjectStatusInput | null,
   wordsPerPage?: ModelIntInput | null,
   owner?: ModelStringInput | null,
   and?: Array< ModelProjectFilterInput | null > | null,
@@ -320,6 +337,7 @@ export type ModelSubscriptionProjectFilterInput = {
   name?: ModelSubscriptionStringInput | null,
   description?: ModelSubscriptionStringInput | null,
   projectType?: ModelSubscriptionStringInput | null,
+  status?: ModelSubscriptionStringInput | null,
   wordsPerPage?: ModelSubscriptionIntInput | null,
   and?: Array< ModelSubscriptionProjectFilterInput | null > | null,
   or?: Array< ModelSubscriptionProjectFilterInput | null > | null,
@@ -395,6 +413,7 @@ export type CreateProjectMutation = {
     name: string,
     description: string,
     projectType: ProjectType,
+    status: ProjectStatus,
     wordTarget:  {
       __typename: "WeeklyTarget",
       mon:  {
@@ -474,6 +493,7 @@ export type UpdateProjectMutation = {
     name: string,
     description: string,
     projectType: ProjectType,
+    status: ProjectStatus,
     wordTarget:  {
       __typename: "WeeklyTarget",
       mon:  {
@@ -553,6 +573,7 @@ export type DeleteProjectMutation = {
     name: string,
     description: string,
     projectType: ProjectType,
+    status: ProjectStatus,
     wordTarget:  {
       __typename: "WeeklyTarget",
       mon:  {
@@ -638,6 +659,7 @@ export type CreateSessionMutation = {
       name: string,
       description: string,
       projectType: ProjectType,
+      status: ProjectStatus,
       wordsPerPage: number,
       sessions?:  {
         __typename: "ModelSessionConnection",
@@ -679,6 +701,7 @@ export type UpdateSessionMutation = {
       name: string,
       description: string,
       projectType: ProjectType,
+      status: ProjectStatus,
       wordsPerPage: number,
       sessions?:  {
         __typename: "ModelSessionConnection",
@@ -720,6 +743,7 @@ export type DeleteSessionMutation = {
       name: string,
       description: string,
       projectType: ProjectType,
+      status: ProjectStatus,
       wordsPerPage: number,
       sessions?:  {
         __typename: "ModelSessionConnection",
@@ -811,6 +835,7 @@ export type GetProjectQuery = {
     name: string,
     description: string,
     projectType: ProjectType,
+    status: ProjectStatus,
     wordTarget:  {
       __typename: "WeeklyTarget",
       mon:  {
@@ -893,6 +918,7 @@ export type ListProjectsQuery = {
       name: string,
       description: string,
       projectType: ProjectType,
+      status: ProjectStatus,
       wordsPerPage: number,
       sessions?:  {
         __typename: "ModelSessionConnection",
@@ -927,6 +953,7 @@ export type SyncProjectsQuery = {
       name: string,
       description: string,
       projectType: ProjectType,
+      status: ProjectStatus,
       wordsPerPage: number,
       sessions?:  {
         __typename: "ModelSessionConnection",
@@ -962,6 +989,7 @@ export type GetSessionQuery = {
       name: string,
       description: string,
       projectType: ProjectType,
+      status: ProjectStatus,
       wordsPerPage: number,
       sessions?:  {
         __typename: "ModelSessionConnection",
@@ -1006,6 +1034,7 @@ export type ListSessionsQuery = {
         name: string,
         description: string,
         projectType: ProjectType,
+        status: ProjectStatus,
         wordsPerPage: number,
         owner?: string | null,
         createdAt: string,
@@ -1049,6 +1078,7 @@ export type SyncSessionsQuery = {
         name: string,
         description: string,
         projectType: ProjectType,
+        status: ProjectStatus,
         wordsPerPage: number,
         owner?: string | null,
         createdAt: string,
@@ -1151,6 +1181,7 @@ export type OnCreateProjectSubscription = {
     name: string,
     description: string,
     projectType: ProjectType,
+    status: ProjectStatus,
     wordTarget:  {
       __typename: "WeeklyTarget",
       mon:  {
@@ -1230,6 +1261,7 @@ export type OnUpdateProjectSubscription = {
     name: string,
     description: string,
     projectType: ProjectType,
+    status: ProjectStatus,
     wordTarget:  {
       __typename: "WeeklyTarget",
       mon:  {
@@ -1309,6 +1341,7 @@ export type OnDeleteProjectSubscription = {
     name: string,
     description: string,
     projectType: ProjectType,
+    status: ProjectStatus,
     wordTarget:  {
       __typename: "WeeklyTarget",
       mon:  {
@@ -1394,6 +1427,7 @@ export type OnCreateSessionSubscription = {
       name: string,
       description: string,
       projectType: ProjectType,
+      status: ProjectStatus,
       wordsPerPage: number,
       sessions?:  {
         __typename: "ModelSessionConnection",
@@ -1435,6 +1469,7 @@ export type OnUpdateSessionSubscription = {
       name: string,
       description: string,
       projectType: ProjectType,
+      status: ProjectStatus,
       wordsPerPage: number,
       sessions?:  {
         __typename: "ModelSessionConnection",
@@ -1476,6 +1511,7 @@ export type OnDeleteSessionSubscription = {
       name: string,
       description: string,
       projectType: ProjectType,
+      status: ProjectStatus,
       wordsPerPage: number,
       sessions?:  {
         __typename: "ModelSessionConnection",
