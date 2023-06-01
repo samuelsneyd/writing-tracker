@@ -35,5 +35,11 @@ export type AmplifyDependentResourcesAttributes = {
       "Name": "string",
       "Region": "string"
     }
+  },
+  "storage": {
+    "coverimages": {
+      "BucketName": "string",
+      "Region": "string"
+    }
   }
 }

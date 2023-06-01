@@ -31,6 +31,9 @@
       },
       "api": {
         "writingtracker": {}
+      },
+      "storage": {
+        "coverimages": {}
       }
     }
   }

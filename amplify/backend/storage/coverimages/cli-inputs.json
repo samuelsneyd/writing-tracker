@@ -1,0 +1,10 @@
+{
+  "resourceName": "coverimages",
+  "policyUUID": "abe58fb7",
+  "bucketName": "writingtrackerd79159c5c9c14145b86ec6f80d7c8a2d",
+  "storageAccess": "auth",
+  "guestAccess": [],
+  "authAccess": [
+    "READ"
+  ]
+}
