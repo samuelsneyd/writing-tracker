@@ -1,21 +1,63 @@
 import * as React from 'react';
-import { SafeAreaView, StyleSheet } from 'react-native';
+import { Image, SafeAreaView, StyleSheet, View } from 'react-native';
 import { Project, ProjectStatus, ProjectType, Session } from '../../models';
-import { DataStore, Predicates } from 'aws-amplify';
+import { DataStore, Predicates, Storage } from 'aws-amplify';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { ProjectsStackParamList } from '../../types/types';
-import { Button, Divider, Layout, List, ListItem, Text, TopNavigation } from '@ui-kitten/components';
+import {
+  Button,
+  Divider, Icon, IconProps,
+  Layout,
+  List,
+  ListItem,
+  Text,
+  TopNavigation,
+  TopNavigationAction,
+} from '@ui-kitten/components';
 import util from '../../utils/util';
 
 type Props = NativeStackScreenProps<ProjectsStackParamList, 'Projects'>
 
+type ImageUri = {
+  key: string,
+  uri: string
+};
+
 const ProjectsScreen = ({ navigation }: Props) => {
   const [projects, setProjects] = React.useState<Project[]>([]);
   const [sessions, setSessions] = React.useState<Session[]>([]);
+  const [imageUris, setImageUris] = React.useState<ImageUri[]>([]);
+
+  React.useEffect(() => {
+    const getImagesFromS3 = async () => {
+      try {
+        const keysToGet = [
+          'fantasy_witch.jfif',
+          'ink_city.jfif',
+        ];
+
+        const uris = await Promise.all(keysToGet.map(key => Storage.get(key)));
+        const images = keysToGet.map((key, i) => ({ key, uri: uris[i] }));
+
+        setImageUris(images);
+      } catch (e) {
+        console.error(e);
+      }
+    };
+    getImagesFromS3().then();
+  }, []);
 
   React.useEffect(() => {
     DataStore.query(Project).then(items => setProjects(items));
   }, []);
+
+  const AddIcon = (props: IconProps) => (
+    <Icon {...props} name="plus-outline" />
+  );
+
+  const addProjectButton = () => (
+    <TopNavigationAction icon={AddIcon} />
+  );
 
   const addProjects = async () => {
     const defaultValues = {
@@ -38,7 +80,7 @@ const ProjectsScreen = ({ navigation }: Props) => {
             name: 'My Book',
             description: 'This is a Book',
             projectType: ProjectType.BOOK,
-            status: ProjectStatus.IN_PROGRESS
+            status: ProjectStatus.IN_PROGRESS,
           }),
         ),
         DataStore.save(
@@ -47,7 +89,7 @@ const ProjectsScreen = ({ navigation }: Props) => {
             name: 'My Journal',
             description: 'This is a Journal',
             projectType: ProjectType.JOURNAL,
-            status: ProjectStatus.COMPLETED
+            status: ProjectStatus.COMPLETED,
           }),
         ),
         DataStore.save(
@@ -56,7 +98,7 @@ const ProjectsScreen = ({ navigation }: Props) => {
             name: 'My Blog',
             description: 'This is a Blog',
             projectType: ProjectType.BLOG,
-            status: ProjectStatus.ON_HOLD
+            status: ProjectStatus.ON_HOLD,
           }),
         ),
         DataStore.save(
@@ -65,7 +107,7 @@ const ProjectsScreen = ({ navigation }: Props) => {
             name: 'My Other Project',
             description: 'This is another project',
             projectType: ProjectType.OTHER,
-            status: ProjectStatus.IN_PROGRESS
+            status: ProjectStatus.IN_PROGRESS,
           }),
         ),
       ]);
@@ -143,16 +185,22 @@ const ProjectsScreen = ({ navigation }: Props) => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <TopNavigation title="Projects" alignment="center" />
+      <TopNavigation title="Projects" alignment="center" accessoryRight={addProjectButton} />
       <Divider />
       <Layout style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <Text category="h1">Projects</Text>
-        <Button size="small" onPress={addProjects}>Add Projects</Button>
+        <Layout style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+          {imageUris.map(({ key, uri }) =>
+            <Image key={key} source={{ uri }} style={styles.bookCover} />,
+          )}
+        </Layout>
+
+        {/*<Button size="small" onPress={addProjects}>Add Projects</Button>*/}
         {/*<Button size="small" onPress={fetchProjects}>Fetch Projects</Button>*/}
-        <Button size="small" onPress={wipeProjects}>Wipe Projects</Button>
-        <Button size="small" onPress={addSessions}>Add Sessions</Button>
+        {/*<Button size="small" onPress={wipeProjects}>Wipe Projects</Button>*/}
+        {/*<Button size="small" onPress={addSessions}>Add Sessions</Button>*/}
         {/*<Button size="small" onPress={fetchSessions}>Fetch Sessions</Button>*/}
-        <Button size="small" onPress={wipeSessions}>Wipe Sessions</Button>
+        {/*<Button size="small" onPress={wipeSessions}>Wipe Sessions</Button>*/}
         <Divider />
       </Layout>
       <List
@@ -167,6 +215,12 @@ const ProjectsScreen = ({ navigation }: Props) => {
 
 const styles = StyleSheet.create({
   container: { flex: 1 },
+  bookCover: {
+    width: 100,
+    height: 150,
+    resizeMode: 'cover',
+    borderRadius: 1,
+  },
 });
 
 export default ProjectsScreen;
