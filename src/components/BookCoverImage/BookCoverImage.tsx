@@ -1,7 +1,7 @@
 import * as React from 'react';
+import { StyleSheet, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import FastImage, { FastImageProps } from 'react-native-fast-image';
-import { StyleSheet, View } from 'react-native';
 
 export type BookCoverImageProps = FastImageProps & {};
 
