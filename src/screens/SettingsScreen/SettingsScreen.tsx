@@ -7,7 +7,7 @@ import useBackNavigation from '../../hooks/useBackNavigation/useBackNavigation';
 
 type Props = NativeStackScreenProps<SettingsStackParamList, 'Settings'>
 
-const SettingsScreen = ({ navigation }: Props) => {
+const SettingsScreen = ({ navigation }: Props): React.ReactElement => {
   const { BackAction } = useBackNavigation(navigation);
 
   return (

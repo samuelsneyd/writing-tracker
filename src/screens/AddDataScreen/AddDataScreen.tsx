@@ -6,7 +6,7 @@ import { Divider, Layout, TopNavigation, Text } from '@ui-kitten/components';
 
 type Props = NativeStackScreenProps<AddDataStackParamList, 'AddData'>
 
-const AddDataScreen = ({ navigation }: Props) => {
+const AddDataScreen = ({ navigation }: Props): React.ReactElement => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <TopNavigation title="Add Words" alignment="center" />

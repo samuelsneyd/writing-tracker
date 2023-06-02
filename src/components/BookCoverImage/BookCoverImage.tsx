@@ -8,7 +8,7 @@ export type BookCoverImageProps = FastImageProps & {};
 /**
  * Wraps a FastImage component with an overlay to emulate a book cover's creases.
  */
-const BookCoverImage = (props: BookCoverImageProps) => (
+const BookCoverImage = (props: BookCoverImageProps): React.ReactElement => (
   <View style={styles.cover}>
     <LinearGradient
       colors={[

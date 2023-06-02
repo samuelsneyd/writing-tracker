@@ -6,7 +6,7 @@ import { Divider, Layout, TopNavigation, Text } from '@ui-kitten/components';
 
 type Props = NativeStackScreenProps<GoalsStackParamList, 'Goals'>
 
-const GoalsScreen = ({ navigation }: Props) => {
+const GoalsScreen = ({ navigation }: Props): React.ReactElement => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <TopNavigation title="Goals" alignment="center" />

@@ -10,7 +10,7 @@ import GoalsStackNavigator from '../GoalsStackNavigator/GoalsStackNavigator';
 
 const Tab = createBottomTabNavigator<RootTabParamList>();
 
-const BottomTabBar = ({ navigation, state }: BottomTabBarProps) => {
+const BottomTabBar = ({ navigation, state }: BottomTabBarProps): React.ReactElement => {
   return (
     <>
       <Divider />
@@ -29,7 +29,7 @@ const BottomTabBar = ({ navigation, state }: BottomTabBarProps) => {
   );
 };
 
-const RootTabNavigator = () => {
+const RootTabNavigator = (): React.ReactElement => {
   return (
     <Tab.Navigator
       id="RootTabNavigator"

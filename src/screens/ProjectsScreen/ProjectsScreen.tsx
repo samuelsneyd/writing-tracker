@@ -59,11 +59,11 @@ const ProjectsScreen = ({ navigation }: Props): React.ReactElement => {
     getCredentials().then();
   }, []);
 
-  const AddIcon = (props: IconProps) => (
+  const AddIcon = (props: IconProps): React.ReactElement => (
     <Icon {...props} name="plus-outline" />
   );
 
-  const addProjectButton = () => (
+  const addProjectButton = (): React.ReactElement => (
     <TopNavigationAction icon={AddIcon} />
   );
 

@@ -7,7 +7,7 @@ import useBackNavigation from '../../hooks/useBackNavigation/useBackNavigation';
 
 type Props = NativeStackScreenProps<MoreStackParamList, 'Awards'>
 
-const AwardsScreen = ({ navigation }: Props) => {
+const AwardsScreen = ({ navigation }: Props): React.ReactElement => {
   const { BackAction } = useBackNavigation(navigation);
 
   return (

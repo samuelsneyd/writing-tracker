@@ -10,7 +10,7 @@ import SettingsScreen from '../../screens/SettingsScreen/SettingsScreen';
 
 const Stack = createNativeStackNavigator<MoreStackParamList>();
 
-const MoreStackNavigator = () => {
+const MoreStackNavigator = (): React.ReactElement => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="More" options={{ title: 'More' }} component={MoreScreen} />

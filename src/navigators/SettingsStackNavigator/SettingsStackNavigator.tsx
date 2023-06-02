@@ -5,7 +5,7 @@ import SettingsScreen from '../../screens/SettingsScreen/SettingsScreen';
 
 const Stack = createNativeStackNavigator<SettingsStackParamList>();
 
-const SettingsStackNavigator = () => {
+const SettingsStackNavigator = (): React.ReactElement => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Settings" component={SettingsScreen} />

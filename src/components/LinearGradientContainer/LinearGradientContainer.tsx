@@ -6,7 +6,7 @@ type LinearGradientContainerProps = {
   children?: JSX.Element;
 }
 
-const LinearGradientContainer = ({ children }: LinearGradientContainerProps) => {
+const LinearGradientContainer = ({ children }: LinearGradientContainerProps): React.ReactElement => {
   return (
     <LinearGradient
       colors={['#E40303', '#FF8C00', '#FFED00', '#008026', '#24408E', '#732982']}

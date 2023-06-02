@@ -9,7 +9,7 @@ import { data } from './data';
 
 type Props = NativeStackScreenProps<MoreStackParamList, 'More'>
 
-const MoreScreen = ({ navigation }: Props) => {
+const MoreScreen = ({ navigation }: Props): React.ReactElement => {
   const onItemPress = (index: number): void => {
     // Parent allows navigation to a different tab from inside nested stack
     navigation.getParent()!.navigate(data[index].route);

@@ -8,7 +8,7 @@ import { ThemeContext } from '../../themes/theme-context';
 
 type Props = NativeStackScreenProps<MoreStackParamList, 'Themes'>
 
-const ThemesScreen = ({ navigation }: Props) => {
+const ThemesScreen = ({ navigation }: Props): React.ReactElement => {
   const { BackAction } = useBackNavigation(navigation);
   const themeContext = React.useContext(ThemeContext);
 

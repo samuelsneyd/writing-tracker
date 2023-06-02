@@ -5,7 +5,7 @@ import GoalsScreen from '../../screens/GoalsScreen/GoalsScreen';
 
 const Stack = createNativeStackNavigator<GoalsStackParamList>();
 
-const GoalsStackNavigator = () => {
+const GoalsStackNavigator = (): React.ReactElement => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Goals" component={GoalsScreen} />

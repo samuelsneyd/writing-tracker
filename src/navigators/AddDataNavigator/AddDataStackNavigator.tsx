@@ -5,7 +5,7 @@ import AddDataScreen from '../../screens/AddDataScreen/AddDataScreen';
 
 const Stack = createNativeStackNavigator<AddDataStackParamList>();
 
-const AddDataStackNavigator = () => {
+const AddDataStackNavigator = (): React.ReactElement => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="AddData" options={{ title: 'Add Words' }} component={AddDataScreen} />

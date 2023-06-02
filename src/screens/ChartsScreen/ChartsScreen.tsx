@@ -7,7 +7,7 @@ import useBackNavigation from '../../hooks/useBackNavigation/useBackNavigation';
 
 type Props = NativeStackScreenProps<MoreStackParamList, 'Charts'>
 
-const ChartsScreen = ({ navigation }: Props) => {
+const ChartsScreen = ({ navigation }: Props): React.ReactElement => {
   const { BackAction } = useBackNavigation(navigation);
 
   return (

@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 import { Card, Text } from '@ui-kitten/components';
 import useDailyQuote from '../../hooks/useDailyQuote/useDailyQuote';
 
-const DailyQuote = () => {
+const DailyQuote = (): React.ReactElement => {
   const dailyQuote = useDailyQuote();
 
   return (

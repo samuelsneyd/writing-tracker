@@ -6,7 +6,7 @@ import ProjectsScreen from '../../screens/ProjectsScreen/ProjectsScreen';
 
 const Stack = createNativeStackNavigator<ProjectsStackParamList>();
 
-const ProjectsStackNavigator = () => {
+const ProjectsStackNavigator = (): React.ReactElement => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Projects" component={ProjectsScreen} />

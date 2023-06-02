@@ -8,7 +8,7 @@ import LoginStreak from '../../components/LoginStreak/LoginStreak';
 
 type Props = NativeStackScreenProps<HomeStackParamList, 'Home'>
 
-const HomeScreen = ({ navigation }: Props) => {
+const HomeScreen = ({ navigation }: Props): React.ReactElement => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <TopNavigation title="Home" alignment="center" />

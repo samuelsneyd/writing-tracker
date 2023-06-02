@@ -11,7 +11,7 @@ import { titleCase } from 'title-case';
 
 type Props = NativeStackScreenProps<ProjectsStackParamList, 'Details'>
 
-const ProjectDetailsScreen = ({ route, navigation }: Props) => {
+const ProjectDetailsScreen = ({ route, navigation }: Props): React.ReactElement => {
   const [project, setProject] = React.useState<Project>();
   const [sessions, setSessions] = React.useState<Session[]>([]);
   const { BackAction } = useBackNavigation(navigation);

@@ -14,7 +14,7 @@ export type SafeAreaLayoutProps = StyledComponentProps & LayoutProps & {
   children?: React.ReactNode;
 };
 
-export const SafeAreaLayout: React.FC<SafeAreaLayoutProps> = ({ insets, ...props }) => {
+export const SafeAreaLayout: React.FC<SafeAreaLayoutProps> = ({ insets, ...props }): React.ReactElement => {
   const theme = useTheme();
   const insetsConfig = useSafeAreaInsets();
   const backgroundColor: string = theme[`background-basic-color-${props.level}`];

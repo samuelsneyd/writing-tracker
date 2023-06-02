@@ -5,7 +5,7 @@ import HomeScreen from '../../screens/HomeScreen/HomeScreen';
 
 const Stack = createNativeStackNavigator<HomeStackParamList>();
 
-const HomeStackNavigator = () => {
+const HomeStackNavigator = (): React.ReactElement => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Home" component={HomeScreen} />
