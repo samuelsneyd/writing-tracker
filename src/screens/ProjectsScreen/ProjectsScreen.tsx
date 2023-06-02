@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { SafeAreaView, StyleSheet, View } from 'react-native';
+import { SafeAreaView, StyleSheet } from 'react-native';
 import { Project, ProjectStatus, ProjectType, Session } from '../../models';
 import { Auth, DataStore, Predicates } from 'aws-amplify';
 import type { ICredentials } from '@aws-amplify/core';
