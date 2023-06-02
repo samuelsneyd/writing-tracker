@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { SafeAreaView, StyleSheet } from 'react-native';
+import { SafeAreaView, StyleSheet, View } from 'react-native';
 import { Project, ProjectStatus, ProjectType, Session } from '../../models';
 import { Auth, DataStore, Predicates } from 'aws-amplify';
 import type { ICredentials } from '@aws-amplify/core';
@@ -12,11 +12,10 @@ import {
   Layout,
   List,
   ListItem,
-  Text,
   TopNavigation,
   TopNavigationAction,
 } from '@ui-kitten/components';
-import FastImage from 'react-native-fast-image';
+import BookCoverImage from '../../components/BookCoverImage/BookCoverImage';
 import util from '../../utils/util';
 
 type Props = NativeStackScreenProps<ProjectsStackParamList, 'Projects'>
@@ -196,16 +195,14 @@ const ProjectsScreen = ({ navigation }: Props) => {
       <TopNavigation title="Projects" alignment="center" accessoryRight={addProjectButton} />
       <Divider />
       <Layout style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text category="h1">Projects</Text>
         <Layout style={{ flexDirection: 'row' }}>
           {imageUris.map(({ key, uri }) =>
-            <FastImage
+            <BookCoverImage
               key={key}
               source={{
                 uri,
                 headers: credentials && util.getS3SignedHeaders(uri, credentials),
               }}
-              style={styles.bookCover}
             />,
           )}
         </Layout>
@@ -234,6 +231,31 @@ const styles = StyleSheet.create({
     height: 150,
     resizeMode: 'cover',
     borderRadius: 1,
+  },
+  cover: {
+    position: 'relative',
+    borderRadius: 2,
+    width: 150,
+    height: 225,
+    overflow: 'hidden',
+    margin: 'auto',
+    shadowColor: 'black',
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 1,
+    shadowRadius: 5,
+    elevation: 5,
+  },
+  gradientOverlay: {
+    position: 'absolute',
+    left: 0,
+    top: 0,
+    right: 0,
+    bottom: 0,
+    zIndex: 1,
+  },
+  image: {
+    width: '100%',
+    height: '100%',
   },
 });
 
