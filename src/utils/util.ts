@@ -18,10 +18,10 @@ type S3SignedHeaders = {
  * Instead of using S3 signed URLs, using signed headers by passing them into
  * <FastImage> headers allowing caching images by URL.
  * See https://github.com/aws-amplify/amplify-js/issues/5296
- * @param path the path or URI, with no query strings
- * @param credentials from AWS Auth
+ * @param path the path or URI, with no query strings.
+ * @param credentials from AWS Auth.
  */
-const getS3SignedHeaders = (path: string, credentials: ICredentials): S3SignedHeaders => {
+export const getS3SignedHeaders = (path: string, credentials: ICredentials): S3SignedHeaders => {
   const url = URLParse(path);
   const opts = {
     region: awsmobile.aws_user_files_s3_bucket_region,
@@ -34,9 +34,29 @@ const getS3SignedHeaders = (path: string, credentials: ICredentials): S3SignedHe
   return aws4.sign(opts, credentials).headers;
 };
 
-const getRandomInt = (max: number): number => Math.floor(Math.random() * max);
+/**
+ * Gets an S3 object URI without making any network requests to AWS.
+ * @param folder the S3 folder the object is in.
+ * @param key the object key.
+ */
+export const getS3ObjectURI = (folder: string, key: string): string => {
+  const protocol = 'https';
+  const {
+    aws_user_files_s3_bucket: bucketName,
+    aws_user_files_s3_bucket_region: region,
+  } = awsmobile;
+  // Remove leading or trailing slashes from folder
+  const formattedFolder = folder.replace(/^\/|\/$/g, '');
+  const baseURL = `${protocol}://${bucketName}.s3.${region}.amazonaws.com/${formattedFolder}`;
+  return `${baseURL}/${key}`;
+};
 
-export default {
+export const getRandomInt = (max: number): number => Math.floor(Math.random() * max);
+
+const util = {
   getRandomInt,
   getS3SignedHeaders,
+  getS3ObjectURI,
 };
+
+export default util;

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { SafeAreaView, StyleSheet } from 'react-native';
 import { Project, ProjectStatus, ProjectType, Session } from '../../models';
-import { Auth, DataStore, Predicates, Storage } from 'aws-amplify';
+import { Auth, DataStore, Predicates } from 'aws-amplify';
 import type { ICredentials } from '@aws-amplify/core';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { ProjectsStackParamList } from '../../types/types';
@@ -33,27 +33,17 @@ const ProjectsScreen = ({ navigation }: Props) => {
   const [credentials, setCredentials] = React.useState<ICredentials>();
 
   React.useEffect(() => {
-    const getImageURIsFromS3 = async () => {
-      try {
-        const keysToGet = [
-          'fantasy_witch.jfif',
-          'ink_city.jfif',
-        ];
+    const keys = [
+      'fantasy_witch.jfif',
+      'ink_city.jfif',
+    ];
 
-        const uris = await Promise.all(keysToGet.map(async key => {
-          const uri = await Storage.get(key);
-          // Remove sign
-          return uri.split('?')[0];
-        }));
-        const images = keysToGet.map((key, i) => ({ key, uri: uris[i] }));
+    const images = keys.map(key => ({
+      key,
+      uri: util.getS3ObjectURI('/public/', key),
+    }));
 
-        setImageUris(images);
-      } catch (e) {
-        console.error(e);
-      }
-    };
-
-    getImageURIsFromS3().then();
+    setImageUris(images);
   }, []);
 
   React.useEffect(() => {
@@ -208,16 +198,16 @@ const ProjectsScreen = ({ navigation }: Props) => {
       <Layout style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <Text category="h1">Projects</Text>
         <Layout style={{ flexDirection: 'row' }}>
-          {imageUris && credentials
-            ? imageUris.map(({ key, uri }) =>
-              <FastImage
-                key={key}
-                source={{ uri, headers: util.getS3SignedHeaders(uri, credentials) }}
-                style={styles.bookCover}
-              />,
-            )
-            : null
-          }
+          {imageUris.map(({ key, uri }) =>
+            <FastImage
+              key={key}
+              source={{
+                uri,
+                headers: credentials && util.getS3SignedHeaders(uri, credentials),
+              }}
+              style={styles.bookCover}
+            />,
+          )}
         </Layout>
         {/*<Button size="small" onPress={addProjects}>Add Projects</Button>*/}
         {/*<Button size="small" onPress={fetchProjects}>Fetch Projects</Button>*/}
