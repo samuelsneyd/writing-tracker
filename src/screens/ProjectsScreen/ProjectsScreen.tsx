@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { SafeAreaView, StyleSheet } from 'react-native';
+import { ListRenderItemInfo, SafeAreaView, StyleSheet, View } from 'react-native';
 import { Project, ProjectStatus, ProjectType, Session } from '../../models';
 import { Auth, DataStore, Predicates } from 'aws-amplify';
 import type { ICredentials } from '@aws-amplify/core';
@@ -9,7 +9,6 @@ import {
   Divider,
   Icon,
   IconProps,
-  Layout,
   List,
   ListItem,
   TopNavigation,
@@ -25,7 +24,7 @@ type ImageUri = {
   uri: string
 };
 
-const ProjectsScreen = ({ navigation }: Props) => {
+const ProjectsScreen = ({ navigation }: Props): React.ReactElement => {
   const [projects, setProjects] = React.useState<Project[]>([]);
   const [sessions, setSessions] = React.useState<Session[]>([]);
   const [imageUris, setImageUris] = React.useState<ImageUri[]>([]);
@@ -35,6 +34,8 @@ const ProjectsScreen = ({ navigation }: Props) => {
     const keys = [
       'fantasy_witch.jfif',
       'ink_city.jfif',
+      'rainforest_van_gogh.jfif',
+      'cyberpunk_cube_2.jfif',
     ];
 
     const images = keys.map(key => ({
@@ -149,8 +150,8 @@ const ProjectsScreen = ({ navigation }: Props) => {
     try {
       await Promise.all(projects.map(project => DataStore.save(new Session({
         project,
-        words: util.getRandomInt(1000),
-        minutes: util.getRandomInt(1000),
+        words: util.getRandomInt(0, 1000),
+        minutes: util.getRandomInt(0, 1000),
         date: new Date().toISOString(),
       }))));
       console.log('Sessions saved successfully!', sessions);
@@ -180,7 +181,8 @@ const ProjectsScreen = ({ navigation }: Props) => {
     }
   };
 
-  const renderItem = ({ item }: { item: Project }) => {
+  const renderVerticalItem = (info: ListRenderItemInfo<Project>): React.ReactElement => {
+    const { item } = info;
     return (
       <ListItem
         title={item.projectType}
@@ -190,72 +192,59 @@ const ProjectsScreen = ({ navigation }: Props) => {
     );
   };
 
+  const renderHorizontalItem = (info: ListRenderItemInfo<Project>): React.ReactElement => {
+    // TODO - use image URIs from project data
+    const { uri } = imageUris[info.index % imageUris.length];
+    return (
+      <View style={styles.horizontalItem}>
+        <BookCoverImage
+          source={{
+            uri,
+            headers: credentials && util.getS3SignedHeaders(uri, credentials),
+          }}
+        />
+      </View>
+    );
+  };
+
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={styles.container}>
       <TopNavigation title="Projects" alignment="center" accessoryRight={addProjectButton} />
       <Divider />
-      <Layout style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Layout style={{ flexDirection: 'row' }}>
-          {imageUris.map(({ key, uri }) =>
-            <BookCoverImage
-              key={key}
-              source={{
-                uri,
-                headers: credentials && util.getS3SignedHeaders(uri, credentials),
-              }}
-            />,
-          )}
-        </Layout>
-        {/*<Button size="small" onPress={addProjects}>Add Projects</Button>*/}
-        {/*<Button size="small" onPress={fetchProjects}>Fetch Projects</Button>*/}
-        {/*<Button size="small" onPress={wipeProjects}>Wipe Projects</Button>*/}
-        {/*<Button size="small" onPress={addSessions}>Add Sessions</Button>*/}
-        {/*<Button size="small" onPress={fetchSessions}>Fetch Sessions</Button>*/}
-        {/*<Button size="small" onPress={wipeSessions}>Wipe Sessions</Button>*/}
-        <Divider />
-      </Layout>
       <List
-        style={styles.container}
+        contentContainerStyle={styles.horizontalList}
+        horizontal={true}
+        showsHorizontalScrollIndicator={true}
+        data={projects}
+        renderItem={renderHorizontalItem}
+      />
+      {/*<Button size="small" onPress={addProjects}>Add Projects</Button>*/}
+      {/*<Button size="small" onPress={fetchProjects}>Fetch Projects</Button>*/}
+      {/*<Button size="small" onPress={wipeProjects}>Wipe Projects</Button>*/}
+      {/*<Button size="small" onPress={addSessions}>Add Sessions</Button>*/}
+      {/*<Button size="small" onPress={fetchSessions}>Fetch Sessions</Button>*/}
+      {/*<Button size="small" onPress={wipeSessions}>Wipe Sessions</Button>*/}
+      {/*</Layout>*/}
+      <Divider />
+      <List
         data={projects}
         ItemSeparatorComponent={Divider}
-        renderItem={renderItem}
+        renderItem={renderVerticalItem}
       />
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1 },
-  bookCover: {
-    width: 100,
-    height: 150,
-    resizeMode: 'cover',
-    borderRadius: 1,
+  container: {
+    flex: 1,
   },
-  cover: {
-    position: 'relative',
-    borderRadius: 2,
-    width: 150,
-    height: 225,
-    overflow: 'hidden',
-    margin: 'auto',
-    shadowColor: 'black',
-    shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 1,
-    shadowRadius: 5,
-    elevation: 5,
+  horizontalList: {
+    marginVertical: 16,
+    paddingHorizontal: 16,
   },
-  gradientOverlay: {
-    position: 'absolute',
-    left: 0,
-    top: 0,
-    right: 0,
-    bottom: 0,
-    zIndex: 1,
-  },
-  image: {
-    width: '100%',
-    height: '100%',
+  horizontalItem: {
+    marginHorizontal: 8,
   },
 });
 
