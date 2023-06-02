@@ -1,12 +1,14 @@
 import * as React from 'react';
-import { Image, SafeAreaView, StyleSheet, View } from 'react-native';
+import { SafeAreaView, StyleSheet } from 'react-native';
 import { Project, ProjectStatus, ProjectType, Session } from '../../models';
-import { DataStore, Predicates, Storage } from 'aws-amplify';
+import { Auth, DataStore, Predicates, Storage } from 'aws-amplify';
+import type { ICredentials } from '@aws-amplify/core';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { ProjectsStackParamList } from '../../types/types';
 import {
-  Button,
-  Divider, Icon, IconProps,
+  Divider,
+  Icon,
+  IconProps,
   Layout,
   List,
   ListItem,
@@ -14,6 +16,7 @@ import {
   TopNavigation,
   TopNavigationAction,
 } from '@ui-kitten/components';
+import FastImage from 'react-native-fast-image';
 import util from '../../utils/util';
 
 type Props = NativeStackScreenProps<ProjectsStackParamList, 'Projects'>
@@ -27,16 +30,21 @@ const ProjectsScreen = ({ navigation }: Props) => {
   const [projects, setProjects] = React.useState<Project[]>([]);
   const [sessions, setSessions] = React.useState<Session[]>([]);
   const [imageUris, setImageUris] = React.useState<ImageUri[]>([]);
+  const [credentials, setCredentials] = React.useState<ICredentials>();
 
   React.useEffect(() => {
-    const getImagesFromS3 = async () => {
+    const getImageURIsFromS3 = async () => {
       try {
         const keysToGet = [
           'fantasy_witch.jfif',
           'ink_city.jfif',
         ];
 
-        const uris = await Promise.all(keysToGet.map(key => Storage.get(key)));
+        const uris = await Promise.all(keysToGet.map(async key => {
+          const uri = await Storage.get(key);
+          // Remove sign
+          return uri.split('?')[0];
+        }));
         const images = keysToGet.map((key, i) => ({ key, uri: uris[i] }));
 
         setImageUris(images);
@@ -44,11 +52,21 @@ const ProjectsScreen = ({ navigation }: Props) => {
         console.error(e);
       }
     };
-    getImagesFromS3().then();
+
+    getImageURIsFromS3().then();
   }, []);
 
   React.useEffect(() => {
     DataStore.query(Project).then(items => setProjects(items));
+  }, []);
+
+  React.useEffect(() => {
+    const getCredentials = async () => {
+      const creds = Auth.essentialCredentials(await Auth.currentCredentials());
+      setCredentials(creds);
+    };
+
+    getCredentials().then();
   }, []);
 
   const AddIcon = (props: IconProps) => (
@@ -189,12 +207,18 @@ const ProjectsScreen = ({ navigation }: Props) => {
       <Divider />
       <Layout style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <Text category="h1">Projects</Text>
-        <Layout style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-          {imageUris.map(({ key, uri }) =>
-            <Image key={key} source={{ uri }} style={styles.bookCover} />,
-          )}
+        <Layout style={{ flexDirection: 'row' }}>
+          {imageUris && credentials
+            ? imageUris.map(({ key, uri }) =>
+              <FastImage
+                key={key}
+                source={{ uri, headers: util.getS3SignedHeaders(uri, credentials) }}
+                style={styles.bookCover}
+              />,
+            )
+            : null
+          }
         </Layout>
-
         {/*<Button size="small" onPress={addProjects}>Add Projects</Button>*/}
         {/*<Button size="small" onPress={fetchProjects}>Fetch Projects</Button>*/}
         {/*<Button size="small" onPress={wipeProjects}>Wipe Projects</Button>*/}
