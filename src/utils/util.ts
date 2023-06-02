@@ -51,7 +51,14 @@ export const getS3ObjectURI = (folder: string, key: string): string => {
   return `${baseURL}/${key}`;
 };
 
-export const getRandomInt = (max: number): number => Math.floor(Math.random() * max);
+/**
+ * The min is inclusive and the max is exclusive.
+ */
+export const getRandomInt = (min: number, max: number): number => {
+  const mini = Math.ceil(min);
+  const maxi = Math.floor(max);
+  return Math.floor(Math.random() * (maxi - mini) + mini);
+};
 
 const util = {
   getRandomInt,
