@@ -7,14 +7,13 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { ProjectsStackParamList } from '../../types/types';
 import {
   Divider,
-  Icon,
-  IconProps,
   List,
   ListItem,
   TopNavigation,
-  TopNavigationAction,
+  TopNavigationAction, TopNavigationActionElement,
 } from '@ui-kitten/components';
 import BookCoverImage from '../../components/BookCoverImage/BookCoverImage';
+import { MenuIcon, PlusIcon } from '../../components/Icons/Icons';
 import util from '../../utils/util';
 
 type Props = NativeStackScreenProps<ProjectsStackParamList, 'Projects'>
@@ -59,13 +58,22 @@ const ProjectsScreen = ({ navigation }: Props): React.ReactElement => {
     getCredentials().then();
   }, []);
 
-  const AddIcon = (props: IconProps): React.ReactElement => (
-    <Icon {...props} name="plus-outline" />
+  const addProjectAction = (): TopNavigationActionElement => (
+    <TopNavigationAction
+      icon={PlusIcon}
+      onPress={() => {
+      }}
+    />
   );
 
-  const addProjectButton = (): React.ReactElement => (
-    <TopNavigationAction icon={AddIcon} />
+  const renderDrawerAction = (): TopNavigationActionElement => (
+    <TopNavigationAction
+      icon={MenuIcon}
+      onPress={() => {
+      }}
+    />
   );
+
 
   const addProjects = async () => {
     const defaultValues = {
@@ -209,7 +217,12 @@ const ProjectsScreen = ({ navigation }: Props): React.ReactElement => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <TopNavigation title="Projects" alignment="center" accessoryRight={addProjectButton} />
+      <TopNavigation
+        title="Projects"
+        alignment="center"
+        accessoryLeft={renderDrawerAction}
+        accessoryRight={addProjectAction}
+      />
       <Divider />
       <List
         contentContainerStyle={styles.horizontalList}

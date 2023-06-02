@@ -1,8 +1,15 @@
 import React from 'react';
-import { ImageStyle } from 'react-native';
 import { MenuItem } from '../../components/MenuGridList/MenuGridList';
-import { Icon } from '@ui-kitten/components';
 import type { MoreStackParamList, RootTabParamList } from '../../types/types';
+import {
+  AwardIcon,
+  BarChartIcon,
+  BookIcon,
+  ColorPaletteIcon,
+  EditIcon,
+  FlagIcon,
+  SettingsIcon,
+} from '../../components/Icons/Icons';
 
 export type LayoutData = MenuItem & {
   route: keyof MoreStackParamList | keyof RootTabParamList;
@@ -12,36 +19,36 @@ export const data: LayoutData[] = [
   {
     title: 'Awards',
     route: 'Awards',
-    icon: (style: ImageStyle) => <Icon {...style} name="award-outline" />,
+    icon: AwardIcon,
   },
   {
     title: 'Themes',
     route: 'Themes',
-    icon: (style: ImageStyle) => <Icon {...style} name="color-palette-outline" />,
+    icon: ColorPaletteIcon,
   },
   {
     title: 'Challenges',
     route: 'Challenges',
-    icon: (style: ImageStyle) => <Icon {...style} name="flag-outline" />,
+    icon: FlagIcon,
   },
   {
     title: 'Charts',
     route: 'Charts',
-    icon: (style: ImageStyle) => <Icon {...style} name="bar-chart-outline" />,
+    icon: BarChartIcon,
   },
   {
     title: 'Projects',
     route: 'ProjectsStackNavigator',
-    icon: (style: ImageStyle) => <Icon {...style} name="book-open-outline" />,
+    icon: BookIcon,
   },
   {
     title: 'Goals',
     route: 'GoalsStackNavigator',
-    icon: (style: ImageStyle) => <Icon {...style} name="edit-outline" />,
+    icon: EditIcon,
   },
   {
     title: 'Settings',
     route: 'Settings',
-    icon: (style: ImageStyle) => <Icon {...style} name="settings-outline" />,
+    icon: SettingsIcon,
   },
 ];
