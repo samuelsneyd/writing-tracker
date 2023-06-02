@@ -11,12 +11,13 @@ import useLoginStreak from './hooks/useLoginStreak/useLoginStreak';
 
 const App = () => {
   const [theme, setTheme] = React.useState<'light' | 'dark'>('light');
-  useLoginStreak();
 
   const toggleTheme = () => {
     const nextTheme = theme === 'light' ? 'dark' : 'light';
     setTheme(nextTheme);
   };
+
+  useLoginStreak();
 
   return (
     <>
