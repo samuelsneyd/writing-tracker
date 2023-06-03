@@ -9,6 +9,14 @@ export const ArrowIosForwardIcon = (props: IconProps): IconElement => (
   <Icon {...props} name="arrow-ios-forward" />
 );
 
+export const AwardIcon = (props: IconProps): IconElement => (
+  <Icon {...props} name="award-outline" />
+);
+
+export const BarChartIcon = (props: IconProps): IconElement => (
+  <Icon {...props} name="bar-chart-outline" />
+);
+
 export const BookIcon = (props: IconProps): IconElement => (
   <Icon {...props} name="book-outline" />
 );
@@ -21,26 +29,6 @@ export const CloseIcon = (props: IconProps): IconElement => (
   <Icon {...props} name="close" />
 );
 
-export const GridIcon = (props: IconProps): IconElement => (
-  <Icon {...props} name="grid-outline" />
-);
-
-export const MenuIcon = (props: IconProps): IconElement => (
-  <Icon {...props} name="menu" />
-);
-
-export const SettingsIcon = (props: IconProps): IconElement => (
-  <Icon {...props} name="settings-outline" />
-);
-
-export const PlusIcon = (props: IconProps): IconElement => (
-  <Icon {...props} name="plus-outline" />
-);
-
-export const HomeIcon = (props: IconProps): IconElement => (
-  <Icon {...props} name="home-outline" />
-);
-
 export const EditIcon = (props: IconProps): IconElement => (
   <Icon {...props} name="edit-outline" />
 );
@@ -49,10 +37,22 @@ export const FlagIcon = (props: IconProps): IconElement => (
   <Icon {...props} name="flag-outline" />
 );
 
-export const AwardIcon = (props: IconProps): IconElement => (
-  <Icon {...props} name="award-outline" />
+export const GridIcon = (props: IconProps): IconElement => (
+  <Icon {...props} name="grid-outline" />
 );
 
-export const BarChartIcon = (props: IconProps): IconElement => (
-  <Icon {...props} name="bar-chart-outline" />
+export const HomeIcon = (props: IconProps): IconElement => (
+  <Icon {...props} name="home-outline" />
+);
+
+export const MenuIcon = (props: IconProps): IconElement => (
+  <Icon {...props} name="menu" />
+);
+
+export const PlusIcon = (props: IconProps): IconElement => (
+  <Icon {...props} name="plus-outline" />
+);
+
+export const SettingsIcon = (props: IconProps): IconElement => (
+  <Icon {...props} name="settings-outline" />
 );
