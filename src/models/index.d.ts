@@ -69,7 +69,7 @@ type EagerProject = {
   readonly id: string;
   readonly name: string;
   readonly description: string;
-  readonly projectType: ProjectType | keyof typeof ProjectType;
+  readonly type: ProjectType | keyof typeof ProjectType;
   readonly status: ProjectStatus | keyof typeof ProjectStatus;
   readonly wordTarget: WeeklyTarget;
   readonly wordsPerPage: number;
@@ -83,7 +83,7 @@ type LazyProject = {
   readonly id: string;
   readonly name: string;
   readonly description: string;
-  readonly projectType: ProjectType | keyof typeof ProjectType;
+  readonly type: ProjectType | keyof typeof ProjectType;
   readonly status: ProjectStatus | keyof typeof ProjectStatus;
   readonly wordTarget: WeeklyTarget;
   readonly wordsPerPage: number;

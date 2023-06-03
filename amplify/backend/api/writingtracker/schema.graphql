@@ -6,7 +6,7 @@ type Project @model @auth(rules: [{ allow: owner }]) {
   id: ID!
   name: String!
   description: String!
-  projectType: ProjectType!
+  type: ProjectType!
   status: ProjectStatus!
   wordTarget: WeeklyTarget!
   wordsPerPage: Int!

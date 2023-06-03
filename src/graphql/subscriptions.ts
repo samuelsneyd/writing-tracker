@@ -11,7 +11,7 @@ export const onCreateProject = /* GraphQL */ `
       id
       name
       description
-      projectType
+      type
       status
       wordTarget {
         mon {
@@ -79,7 +79,7 @@ export const onUpdateProject = /* GraphQL */ `
       id
       name
       description
-      projectType
+      type
       status
       wordTarget {
         mon {
@@ -147,7 +147,7 @@ export const onDeleteProject = /* GraphQL */ `
       id
       name
       description
-      projectType
+      type
       status
       wordTarget {
         mon {
@@ -220,7 +220,7 @@ export const onCreateSession = /* GraphQL */ `
         id
         name
         description
-        projectType
+        type
         status
         wordsPerPage
         sessions {
@@ -258,7 +258,7 @@ export const onUpdateSession = /* GraphQL */ `
         id
         name
         description
-        projectType
+        type
         status
         wordsPerPage
         sessions {
@@ -296,7 +296,7 @@ export const onDeleteSession = /* GraphQL */ `
         id
         name
         description
-        projectType
+        type
         status
         wordsPerPage
         sessions {

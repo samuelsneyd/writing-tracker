@@ -8,7 +8,7 @@ export const getProject = /* GraphQL */ `
       id
       name
       description
-      projectType
+      type
       status
       wordTarget {
         mon {
@@ -78,7 +78,7 @@ export const listProjects = /* GraphQL */ `
         id
         name
         description
-        projectType
+        type
         status
         wordsPerPage
         sessions {
@@ -114,7 +114,7 @@ export const syncProjects = /* GraphQL */ `
         id
         name
         description
-        projectType
+        type
         status
         wordsPerPage
         sessions {
@@ -144,7 +144,7 @@ export const getSession = /* GraphQL */ `
         id
         name
         description
-        projectType
+        type
         status
         wordsPerPage
         sessions {
@@ -184,7 +184,7 @@ export const listSessions = /* GraphQL */ `
           id
           name
           description
-          projectType
+          type
           status
           wordsPerPage
           owner
@@ -229,7 +229,7 @@ export const syncSessions = /* GraphQL */ `
           id
           name
           description
-          projectType
+          type
           status
           wordsPerPage
           owner

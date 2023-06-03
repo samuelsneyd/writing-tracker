@@ -24,8 +24,8 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "projectType": {
-                    "name": "projectType",
+                "type": {
+                    "name": "type",
                     "isArray": false,
                     "type": {
                         "enum": "ProjectType"
@@ -399,5 +399,5 @@ export const schema = {
         }
     },
     "codegenVersion": "3.4.3",
-    "version": "c8bc8385f54add7f3cf4e6165cb7abea"
+    "version": "d197db5680aa7faffcb4c282ae5b63b9"
 };

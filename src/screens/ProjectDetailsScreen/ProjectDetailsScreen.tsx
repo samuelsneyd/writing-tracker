@@ -50,7 +50,7 @@ const ProjectDetailsScreen = ({ route, navigation }: Props): React.ReactElement 
       <Layout style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         {project
           ? <>
-            <Text category="h1">{capitalCase(project.projectType)}</Text>
+            <Text category="h1">{capitalCase(project.type)}</Text>
             <Text>Title: {titleCase(project.name)}</Text>
             <Text>Description: {project.description}</Text>
             <Text>Status: {titleCase(noCase(project.status))}</Text>
