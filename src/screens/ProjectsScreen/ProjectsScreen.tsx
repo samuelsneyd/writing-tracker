@@ -97,7 +97,7 @@ const ProjectsScreen = ({ navigation }: Props): React.ReactElement => {
             ...defaultValues,
             name: 'My Book',
             description: 'This is a Book',
-            projectType: ProjectType.BOOK,
+            type: ProjectType.BOOK,
             status: ProjectStatus.IN_PROGRESS,
           }),
         ),
@@ -106,7 +106,7 @@ const ProjectsScreen = ({ navigation }: Props): React.ReactElement => {
             ...defaultValues,
             name: 'My Journal',
             description: 'This is a Journal',
-            projectType: ProjectType.JOURNAL,
+            type: ProjectType.JOURNAL,
             status: ProjectStatus.COMPLETED,
           }),
         ),
@@ -115,7 +115,7 @@ const ProjectsScreen = ({ navigation }: Props): React.ReactElement => {
             ...defaultValues,
             name: 'My Blog',
             description: 'This is a Blog',
-            projectType: ProjectType.BLOG,
+            type: ProjectType.BLOG,
             status: ProjectStatus.ON_HOLD,
           }),
         ),
@@ -124,7 +124,7 @@ const ProjectsScreen = ({ navigation }: Props): React.ReactElement => {
             ...defaultValues,
             name: 'My Other Project',
             description: 'This is another project',
-            projectType: ProjectType.OTHER,
+            type: ProjectType.OTHER,
             status: ProjectStatus.IN_PROGRESS,
           }),
         ),
@@ -191,11 +191,15 @@ const ProjectsScreen = ({ navigation }: Props): React.ReactElement => {
     }
   };
 
+  const wipeLocal = async () => {
+    await DataStore.clear();
+  };
+
   const renderVerticalItem = (info: ListRenderItemInfo<Project>): React.ReactElement => {
     const { item } = info;
     return (
       <ListItem
-        title={item.projectType}
+        title={item.type}
         description={item.name}
         onPress={() => navigation.navigate('Details', { id: item.id, name: item.name })}
       />
@@ -241,6 +245,7 @@ const ProjectsScreen = ({ navigation }: Props): React.ReactElement => {
           <Button size="small" onPress={addSessions}>Add Sessions</Button>
           <Button size="small" onPress={fetchSessions}>Fetch Sessions</Button>
           <Button size="small" onPress={wipeSessions}>Wipe Sessions</Button>
+          <Button size="small" onPress={wipeLocal}>Wipe Local</Button>
         </>
       }
       <Divider />
