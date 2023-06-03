@@ -14,6 +14,7 @@ export type HomeStackParamList = {
 export type ProjectsStackParamList = {
   Projects: undefined;
   Details: Required<{ id: string, name: string }>;
+  New: undefined;
 };
 
 export type AddDataStackParamList = {

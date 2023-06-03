@@ -6,6 +6,7 @@ import type { ICredentials } from '@aws-amplify/core';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { ProjectsStackParamList } from '../../types/types';
 import {
+  Button,
   Divider,
   List,
   ListItem,
@@ -61,8 +62,7 @@ const ProjectsScreen = ({ navigation }: Props): React.ReactElement => {
   const addProjectAction = (): TopNavigationActionElement => (
     <TopNavigationAction
       icon={PlusIcon}
-      onPress={() => {
-      }}
+      onPress={() => navigation.navigate('New')}
     />
   );
 
