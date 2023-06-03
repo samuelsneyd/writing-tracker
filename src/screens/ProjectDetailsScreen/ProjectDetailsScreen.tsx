@@ -4,7 +4,7 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { ProjectsStackParamList } from '../../types/types';
 import { DataStore } from 'aws-amplify';
 import { Project, Session } from '../../models';
-import { Layout, TopNavigation, Text, Divider } from '@ui-kitten/components';
+import { Divider, Layout, Text, TopNavigation } from '@ui-kitten/components';
 import useBackNavigation from '../../hooks/useBackNavigation/useBackNavigation';
 import { capitalCase, noCase } from 'change-case';
 import { titleCase } from 'title-case';
@@ -18,13 +18,30 @@ const ProjectDetailsScreen = ({ route, navigation }: Props): React.ReactElement 
   const { id, name } = route.params;
 
   React.useEffect(() => {
-    DataStore.query(Project, id).then(foundProject => {
-      setProject(foundProject);
-      foundProject?.sessions.toArray().then(foundSessions => {
-        setSessions(foundSessions);
-      });
-    });
+    const getProject = async () => {
+      try {
+        const foundProject = await DataStore.query(Project, id);
+        setProject(foundProject);
+      } catch (e) {
+        console.error('Error while reading project', e);
+      }
+    };
+
+    getProject().then();
   }, []);
+
+  React.useEffect(() => {
+    const getSessions = async () => {
+      try {
+        const foundSessions = await DataStore.query(Session, c => c.project.id.eq(id));
+        setSessions(foundSessions);
+      } catch (e) {
+        console.error('Error while getting sessions', e);
+      }
+    };
+
+    getSessions().then();
+  }, [project]);
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
