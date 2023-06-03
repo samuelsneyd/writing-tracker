@@ -6,6 +6,9 @@ import awsmobile from './src/aws-exports'; // Amplify CLI
 import { SQLiteAdapter } from '@aws-amplify/datastore-storage-adapter';
 import 'core-js/full/symbol/async-iterator';
 
+// DEBUG, INFO, WARN, ERROR, VERBOSE
+// window.LOG_LEVEL = '';
+
 Amplify.configure({
   ...awsmobile,
   Analytics: {
