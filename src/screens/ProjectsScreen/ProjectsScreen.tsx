@@ -11,7 +11,8 @@ import {
   List,
   ListItem,
   TopNavigation,
-  TopNavigationAction, TopNavigationActionElement,
+  TopNavigationAction,
+  TopNavigationActionElement,
 } from '@ui-kitten/components';
 import BookCoverImage from '../../components/BookCoverImage/BookCoverImage';
 import { MenuIcon, PlusIcon } from '../../components/Icons/Icons';
