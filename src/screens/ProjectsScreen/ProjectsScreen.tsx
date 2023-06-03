@@ -25,6 +25,7 @@ type ImageUri = {
 };
 
 const ProjectsScreen = ({ navigation }: Props): React.ReactElement => {
+  const [showButtons, setShowButtons] = React.useState<boolean>(false);
   const [projects, setProjects] = React.useState<Project[]>([]);
   const [sessions, setSessions] = React.useState<Session[]>([]);
   const [imageUris, setImageUris] = React.useState<ImageUri[]>([]);
@@ -165,7 +166,7 @@ const ProjectsScreen = ({ navigation }: Props): React.ReactElement => {
       console.log('Sessions saved successfully!', sessions);
       await fetchSessions();
     } catch (e) {
-      console.log('Error adding sessions', e);
+      console.error('Error adding sessions', e);
     }
   };
 
@@ -231,19 +232,23 @@ const ProjectsScreen = ({ navigation }: Props): React.ReactElement => {
         data={projects}
         renderItem={renderHorizontalItem}
       />
-      {/*<Button size="small" onPress={addProjects}>Add Projects</Button>*/}
-      {/*<Button size="small" onPress={fetchProjects}>Fetch Projects</Button>*/}
-      {/*<Button size="small" onPress={wipeProjects}>Wipe Projects</Button>*/}
-      {/*<Button size="small" onPress={addSessions}>Add Sessions</Button>*/}
-      {/*<Button size="small" onPress={fetchSessions}>Fetch Sessions</Button>*/}
-      {/*<Button size="small" onPress={wipeSessions}>Wipe Sessions</Button>*/}
-      {/*</Layout>*/}
+      {showButtons &&
+        <>
+          <Button size="small" onPress={addProjects}>Add Projects</Button>
+          <Button size="small" onPress={fetchProjects}>Fetch Projects</Button>
+          <Button size="small" onPress={wipeProjects}>Wipe Projects</Button>
+          <Button size="small" onPress={addSessions}>Add Sessions</Button>
+          <Button size="small" onPress={fetchSessions}>Fetch Sessions</Button>
+          <Button size="small" onPress={wipeSessions}>Wipe Sessions</Button>
+        </>
+      }
       <Divider />
       <List
         data={projects}
         ItemSeparatorComponent={Divider}
         renderItem={renderVerticalItem}
       />
+      <Button size="small" onPress={() => setShowButtons(!showButtons)}>Toggle dev buttons</Button>
     </SafeAreaView>
   );
 };
