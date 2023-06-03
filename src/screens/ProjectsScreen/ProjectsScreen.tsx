@@ -37,6 +37,10 @@ const ProjectsScreen = ({ navigation }: Props): React.ReactElement => {
       'fantasy_witch.jfif',
       'ink_city.jfif',
       'rainforest_van_gogh.jfif',
+      'old_leather_book_1.jfif',
+      'newspaper_roll.jfif',
+      '18th_century_room.jfif',
+      'da_vinci_quill.jfif',
       'cyberpunk_cube_2.jfif',
     ];
 
@@ -250,6 +254,7 @@ const ProjectsScreen = ({ navigation }: Props): React.ReactElement => {
       }
       <Divider />
       <List
+        style={styles.verticalList}
         data={projects}
         ItemSeparatorComponent={Divider}
         renderItem={renderVerticalItem}
@@ -269,6 +274,9 @@ const styles = StyleSheet.create({
   },
   horizontalItem: {
     marginHorizontal: 8,
+  },
+  verticalList: {
+    maxHeight: 270,
   },
 });
 
