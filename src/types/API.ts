@@ -54,6 +54,7 @@ export type ModelProjectConditionInput = {
   and?: Array< ModelProjectConditionInput | null > | null,
   or?: Array< ModelProjectConditionInput | null > | null,
   not?: ModelProjectConditionInput | null,
+  _deleted?: ModelBooleanInput | null,
 };
 
 export type ModelStringInput = {
@@ -114,6 +115,13 @@ export type ModelIntInput = {
   ge?: number | null,
   gt?: number | null,
   between?: Array< number | null > | null,
+  attributeExists?: boolean | null,
+  attributeType?: ModelAttributeTypes | null,
+};
+
+export type ModelBooleanInput = {
+  ne?: boolean | null,
+  eq?: boolean | null,
   attributeExists?: boolean | null,
   attributeType?: ModelAttributeTypes | null,
 };
@@ -211,6 +219,7 @@ export type ModelSessionConditionInput = {
   and?: Array< ModelSessionConditionInput | null > | null,
   or?: Array< ModelSessionConditionInput | null > | null,
   not?: ModelSessionConditionInput | null,
+  _deleted?: ModelBooleanInput | null,
   projectSessionsId?: ModelIDInput | null,
 };
 
@@ -258,6 +267,7 @@ export type ModelLoginDateConditionInput = {
   and?: Array< ModelLoginDateConditionInput | null > | null,
   or?: Array< ModelLoginDateConditionInput | null > | null,
   not?: ModelLoginDateConditionInput | null,
+  _deleted?: ModelBooleanInput | null,
 };
 
 export type LoginDate = {
@@ -295,6 +305,7 @@ export type ModelProjectFilterInput = {
   and?: Array< ModelProjectFilterInput | null > | null,
   or?: Array< ModelProjectFilterInput | null > | null,
   not?: ModelProjectFilterInput | null,
+  _deleted?: ModelBooleanInput | null,
 };
 
 export type ModelProjectConnection = {
@@ -313,6 +324,7 @@ export type ModelSessionFilterInput = {
   and?: Array< ModelSessionFilterInput | null > | null,
   or?: Array< ModelSessionFilterInput | null > | null,
   not?: ModelSessionFilterInput | null,
+  _deleted?: ModelBooleanInput | null,
   projectSessionsId?: ModelIDInput | null,
 };
 
@@ -323,6 +335,7 @@ export type ModelLoginDateFilterInput = {
   and?: Array< ModelLoginDateFilterInput | null > | null,
   or?: Array< ModelLoginDateFilterInput | null > | null,
   not?: ModelLoginDateFilterInput | null,
+  _deleted?: ModelBooleanInput | null,
 };
 
 export type ModelLoginDateConnection = {
@@ -341,6 +354,7 @@ export type ModelSubscriptionProjectFilterInput = {
   wordsPerPage?: ModelSubscriptionIntInput | null,
   and?: Array< ModelSubscriptionProjectFilterInput | null > | null,
   or?: Array< ModelSubscriptionProjectFilterInput | null > | null,
+  _deleted?: ModelBooleanInput | null,
 };
 
 export type ModelSubscriptionIDInput = {
@@ -392,6 +406,7 @@ export type ModelSubscriptionSessionFilterInput = {
   date?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionSessionFilterInput | null > | null,
   or?: Array< ModelSubscriptionSessionFilterInput | null > | null,
+  _deleted?: ModelBooleanInput | null,
 };
 
 export type ModelSubscriptionLoginDateFilterInput = {
@@ -399,6 +414,7 @@ export type ModelSubscriptionLoginDateFilterInput = {
   date?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionLoginDateFilterInput | null > | null,
   or?: Array< ModelSubscriptionLoginDateFilterInput | null > | null,
+  _deleted?: ModelBooleanInput | null,
 };
 
 export type CreateProjectMutationVariables = {
