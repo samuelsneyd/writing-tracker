@@ -4,7 +4,7 @@ import awsmobile from '../aws-exports';
 import { ICredentials } from '@aws-amplify/core';
 import URLParse from 'url-parse';
 
-type S3SignedHeaders = {
+export type S3SignedHeaders = {
   'Authorization': string,
   'Host': string,
   'X-Amz-Content-Sha256': string,
@@ -15,8 +15,8 @@ type S3SignedHeaders = {
 /**
  * Gets S3 signed headers, which have a similar use-case to S3 signed URLs.
  * S3 signed headers can be used with react-native-fast-image to cache images.
- * Instead of using S3 signed URLs, using signed headers by passing them into
- * <FastImage> headers allowing caching images by URL.
+ * Instead of using Amplify Storage's default S3 signed URLs, signed headers
+ * allowing caching images by URL as the URL remains static.
  * See https://github.com/aws-amplify/amplify-js/issues/5296
  * @param path the path or URI, with no query strings.
  * @param credentials from AWS Auth.
