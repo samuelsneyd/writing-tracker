@@ -64,6 +64,13 @@ const ProjectsScreen = ({ navigation }: Props): React.ReactElement => {
   }, []);
 
   React.useEffect(() => {
+    setAggregateStats(sessions.reduce((prev, { words, minutes }) => ({
+      words: prev.words + words,
+      minutes: prev.minutes + minutes,
+    }), { words: 0, minutes: 0 }));
+  }, [sessions]);
+
+  React.useEffect(() => {
     const getCredentials = async () => {
       const creds = Auth.essentialCredentials(await Auth.currentCredentials());
       setCredentials(creds);
@@ -197,7 +204,7 @@ const ProjectsScreen = ({ navigation }: Props): React.ReactElement => {
       await Promise.all(projects.map(project => DataStore.save(new Session({
         project,
         words: util.getRandomInt(0, 1000),
-        minutes: util.getRandomInt(0, 1000),
+        minutes: util.getRandomInt(0, 60),
         date: new Date().toISOString(),
       }))));
       console.log('Sessions saved successfully!');
