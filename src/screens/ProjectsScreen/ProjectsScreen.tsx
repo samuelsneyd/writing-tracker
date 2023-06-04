@@ -42,6 +42,7 @@ const ProjectsScreen = ({ navigation }: Props): React.ReactElement => {
       '18th_century_room.jfif',
       'da_vinci_quill.jfif',
       'cyberpunk_cube_2.jfif',
+      'da_vinci_feather.jfif'
     ];
 
     const images = keys.map(key => ({

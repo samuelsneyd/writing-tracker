@@ -12,15 +12,14 @@ const BookCoverImage = (props: BookCoverImageProps): React.ReactElement => (
   <View style={styles.cover}>
     <LinearGradient
       colors={[
-        'rgba(255, 255, 255, 0.3)',
-        'rgba(255, 255, 255, 0.4)',
-        'rgba(255, 255, 255, 0.2)',
-        'transparent',
-        'transparent',
-        'rgba(255, 255, 255, 0.2)',
+        'rgba(255, 255, 255, 0.25)',
+        'rgba(255, 255, 255, 0.35)',
+        'rgba(255, 255, 255, 0.15)',
+        'rgba(64, 64, 64, 0.15)',
+        'rgba(255, 255, 255, 0.15)',
         'transparent',
       ]}
-      locations={[0, 0.03, 0.07, 0.09, 0.10, 0.12, 0.20]}
+      locations={[0, 0.03, 0.06, 0.08, 0.09, 0.25]}
       start={{ x: 0, y: 0.5 }}
       end={{ x: 1, y: 0.5 }}
       style={styles.gradientOverlay}
