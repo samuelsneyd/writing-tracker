@@ -270,9 +270,11 @@ const ProjectsScreen = ({ navigation }: Props): React.ReactElement => {
       />
       <Divider />
       <Layout style={styles.aggregateText} level="1">
-        <Text>Total words: {aggregateStats.words}</Text>
-        <Text>Total minutes: {aggregateStats.minutes}</Text>
+        <Text>{projects.length} project{projects.length === 1 ? '' : 's'}</Text>
+        <Text>{aggregateStats.words} word{aggregateStats.words === 1 ? '' : 's'}</Text>
+        <Text>{Math.floor(aggregateStats.minutes / 60)} hour{Math.floor(aggregateStats.minutes / 60) === 1 ? '' : 's'}, {aggregateStats.minutes % 60} minute{aggregateStats.minutes % 60 === 1 ? '' : 's'}</Text>
       </Layout>
+      <Divider />
       <List
         style={styles.verticalList}
         data={projects}
@@ -302,6 +304,7 @@ const styles = StyleSheet.create({
   horizontalList: {
     marginVertical: 16,
     paddingHorizontal: 16,
+    height: 250,
   },
   horizontalItem: {
     marginHorizontal: 8,
