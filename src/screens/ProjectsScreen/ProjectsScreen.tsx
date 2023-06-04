@@ -8,21 +8,29 @@ import type { ProjectsStackParamList } from '../../types/types';
 import {
   Button,
   Divider,
+  Layout,
   List,
   ListItem,
+  Text,
   TopNavigation,
   TopNavigationAction,
   TopNavigationActionElement,
 } from '@ui-kitten/components';
 import BookCoverImage from '../../components/BookCoverImage/BookCoverImage';
 import { MenuIcon, PlusIcon } from '../../components/Icons/Icons';
-import util from '../../utils/util';
+import util, { S3SignedHeaders } from '../../utils/util';
 
 type Props = NativeStackScreenProps<ProjectsStackParamList, 'Projects'>
 
 type ImageUri = {
   key: string,
-  uri: string
+  uri: string,
+  headers: S3SignedHeaders,
+};
+
+type ProjectAggregateStats = {
+  words: number,
+  minutes: number,
 };
 
 const ProjectsScreen = ({ navigation }: Props): React.ReactElement => {
@@ -31,30 +39,28 @@ const ProjectsScreen = ({ navigation }: Props): React.ReactElement => {
   const [sessions, setSessions] = React.useState<Session[]>([]);
   const [imageUris, setImageUris] = React.useState<ImageUri[]>([]);
   const [credentials, setCredentials] = React.useState<ICredentials>();
+  const [aggregateStats, setAggregateStats] = React.useState<ProjectAggregateStats>({ words: 0, minutes: 0 });
 
   React.useEffect(() => {
-    const keys = [
-      'fantasy_witch.jfif',
-      'ink_city.jfif',
-      'rainforest_van_gogh.jfif',
-      'old_leather_book_1.jfif',
-      'newspaper_roll.jfif',
-      '18th_century_room.jfif',
-      'da_vinci_quill.jfif',
-      'cyberpunk_cube_2.jfif',
-      'da_vinci_feather.jfif'
-    ];
+    const getProjects = async () => {
+      const projects = await DataStore.query(Project);
+      setProjects(projects);
+    };
 
-    const images = keys.map(key => ({
-      key,
-      uri: util.getS3ObjectURI('/public/', key),
-    }));
-
-    setImageUris(images);
+    getProjects().then();
   }, []);
 
   React.useEffect(() => {
-    DataStore.query(Project).then(items => setProjects(items));
+    const getSessions = async () => {
+      const sessions = await DataStore.query(Session);
+      setSessions(sessions);
+      setAggregateStats(sessions.reduce((prev, { words, minutes }) => ({
+        words: prev.words + words,
+        minutes: prev.minutes + minutes,
+      }), { words: 0, minutes: 0 }));
+    };
+
+    getSessions().then();
   }, []);
 
   React.useEffect(() => {
@@ -65,6 +71,32 @@ const ProjectsScreen = ({ navigation }: Props): React.ReactElement => {
 
     getCredentials().then();
   }, []);
+
+  React.useEffect(() => {
+    if (!credentials) {
+      return;
+    }
+
+    const keys = [
+      'fantasy_witch.jfif',
+      'ink_city.jfif',
+      'rainforest_van_gogh.jfif',
+      'old_leather_book_1.jfif',
+      'newspaper_roll.jfif',
+      '18th_century_room.jfif',
+      'da_vinci_quill.jfif',
+      'cyberpunk_cube_2.jfif',
+      'da_vinci_feather.jfif',
+    ];
+
+    const images = keys.map(key => {
+      const uri = util.getS3ObjectURI('/public/', key);
+      const headers = util.getS3SignedHeaders(uri, credentials);
+      return { key, uri, headers };
+    });
+
+    setImageUris(images);
+  }, [credentials]);
 
   const addProjectAction = (): TopNavigationActionElement => (
     <TopNavigationAction
@@ -80,7 +112,6 @@ const ProjectsScreen = ({ navigation }: Props): React.ReactElement => {
       }}
     />
   );
-
 
   const addProjects = async () => {
     const defaultValues = {
@@ -169,7 +200,7 @@ const ProjectsScreen = ({ navigation }: Props): React.ReactElement => {
         minutes: util.getRandomInt(0, 1000),
         date: new Date().toISOString(),
       }))));
-      console.log('Sessions saved successfully!', sessions);
+      console.log('Sessions saved successfully!');
       await fetchSessions();
     } catch (e) {
       console.error('Error adding sessions', e);
@@ -213,15 +244,10 @@ const ProjectsScreen = ({ navigation }: Props): React.ReactElement => {
 
   const renderHorizontalItem = (info: ListRenderItemInfo<Project>): React.ReactElement => {
     // TODO - use image URIs from project data
-    const { uri } = imageUris[info.index % imageUris.length];
+    const { uri, headers } = imageUris[info.index % imageUris.length];
     return (
       <View style={styles.horizontalItem}>
-        <BookCoverImage
-          source={{
-            uri,
-            headers: credentials && util.getS3SignedHeaders(uri, credentials),
-          }}
-        />
+        <BookCoverImage source={{ uri, headers }} />
       </View>
     );
   };
@@ -242,6 +268,17 @@ const ProjectsScreen = ({ navigation }: Props): React.ReactElement => {
         data={projects}
         renderItem={renderHorizontalItem}
       />
+      <Divider />
+      <Layout style={styles.aggregateText} level="1">
+        <Text>Total words: {aggregateStats.words}</Text>
+        <Text>Total minutes: {aggregateStats.minutes}</Text>
+      </Layout>
+      <List
+        style={styles.verticalList}
+        data={projects}
+        ItemSeparatorComponent={Divider}
+        renderItem={renderVerticalItem}
+      />
       {showButtons &&
         <>
           <Button size="small" onPress={addProjects}>Add Projects</Button>
@@ -253,13 +290,6 @@ const ProjectsScreen = ({ navigation }: Props): React.ReactElement => {
           <Button size="small" onPress={wipeLocal}>Wipe Local</Button>
         </>
       }
-      <Divider />
-      <List
-        style={styles.verticalList}
-        data={projects}
-        ItemSeparatorComponent={Divider}
-        renderItem={renderVerticalItem}
-      />
       <Button size="small" onPress={() => setShowButtons(!showButtons)}>Toggle dev buttons</Button>
     </SafeAreaView>
   );
@@ -277,7 +307,11 @@ const styles = StyleSheet.create({
     marginHorizontal: 8,
   },
   verticalList: {
-    maxHeight: 270,
+    maxHeight: 215,
+  },
+  aggregateText: {
+    alignItems: 'center',
+    paddingVertical: 8,
   },
 });
 
