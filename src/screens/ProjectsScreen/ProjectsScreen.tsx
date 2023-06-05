@@ -54,10 +54,6 @@ const ProjectsScreen = ({ navigation }: Props): React.ReactElement => {
     const getSessions = async () => {
       const sessions = await DataStore.query(Session);
       setSessions(sessions);
-      setAggregateStats(sessions.reduce((prev, { words, minutes }) => ({
-        words: prev.words + words,
-        minutes: prev.minutes + minutes,
-      }), { words: 0, minutes: 0 }));
     };
 
     getSessions().then();
@@ -278,6 +274,7 @@ const ProjectsScreen = ({ navigation }: Props): React.ReactElement => {
       <Divider />
       <Layout style={styles.aggregateText} level="1">
         <Text>{projects.length} project{projects.length === 1 ? '' : 's'}</Text>
+        <Text>{sessions.length} session{sessions.length === 1 ? '' : 's'}</Text>
         <Text>{aggregateStats.words} word{aggregateStats.words === 1 ? '' : 's'}</Text>
         <Text>{Math.floor(aggregateStats.minutes / 60)} hour{Math.floor(aggregateStats.minutes / 60) === 1 ? '' : 's'}, {aggregateStats.minutes % 60} minute{aggregateStats.minutes % 60 === 1 ? '' : 's'}</Text>
       </Layout>
@@ -317,7 +314,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 8,
   },
   verticalList: {
-    maxHeight: 215,
+    maxHeight: 200,
   },
   aggregateText: {
     alignItems: 'center',
