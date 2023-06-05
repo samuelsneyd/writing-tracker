@@ -4,16 +4,26 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { ProjectsStackParamList } from '../../types/types';
 import { DataStore } from 'aws-amplify';
 import { Project, Session } from '../../models';
-import { Divider, Layout, Text, TopNavigation } from '@ui-kitten/components';
+import {
+  CircularProgressBar,
+  Divider,
+  Layout,
+  Text,
+  TopNavigation,
+  TopNavigationAction,
+  TopNavigationActionElement,
+} from '@ui-kitten/components';
 import useBackNavigation from '../../hooks/useBackNavigation/useBackNavigation';
 import { capitalCase, noCase } from 'change-case';
 import { titleCase } from 'title-case';
+import { EditIcon } from '../../components/Icons/Icons';
 
 type Props = NativeStackScreenProps<ProjectsStackParamList, 'Details'>
 
 const ProjectDetailsScreen = ({ route, navigation }: Props): React.ReactElement => {
   const [project, setProject] = React.useState<Project>();
   const [sessions, setSessions] = React.useState<Session[]>([]);
+  const [progress, setProgress] = React.useState<number>(0);
   const { BackAction } = useBackNavigation(navigation);
   const { id, name } = route.params;
 
@@ -43,9 +53,34 @@ const ProjectDetailsScreen = ({ route, navigation }: Props): React.ReactElement 
     getSessions().then();
   }, [project]);
 
+  React.useEffect(() => {
+    if (!project || sessions.length === 0) {
+      setProgress(0);
+      return;
+    }
+    const totalSessionWords = sessions.reduce((prev, { words: next }) => prev + next, 0);
+    const totalWords = totalSessionWords + project.initialWords;
+    const calculatedProgress = totalWords / project.overallWordTarget;
+
+    setProgress(calculatedProgress);
+  }, [project, sessions]);
+
+  const editProjectAction = (): TopNavigationActionElement => (
+    <TopNavigationAction
+      icon={EditIcon}
+      // TODO - pass project id into edit screen as prop
+      onPress={() => navigation.navigate('New')}
+    />
+  );
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <TopNavigation title={name} alignment="center" accessoryLeft={BackAction} />
+      <TopNavigation
+        title={name}
+        alignment="center"
+        accessoryLeft={BackAction}
+        accessoryRight={editProjectAction}
+      />
       <Divider />
       <Layout style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         {project
@@ -55,12 +90,14 @@ const ProjectDetailsScreen = ({ route, navigation }: Props): React.ReactElement 
             <Text>Description: {project.description}</Text>
             <Text>Status: {titleCase(noCase(project.status))}</Text>
             {sessions.map((session, i) =>
-              <Text key={session.id}>Session {i + 1}: {session.words} words, {session.minutes} minutes</Text>)
-            }
+              <Text key={session.id}>Session {i + 1}: {session.words} words, {session.minutes} minutes</Text>,
+            )}
             <Text>Number of sessions: {sessions.length}</Text>
             <Text>Total words: {sessions.reduce((prev, { words: next }) => prev + next, 0)}</Text>
             <Text>Total minutes: {sessions.reduce((prev, { minutes: next }) => prev + next, 0)}</Text>
             <Text>Words per page: {project.wordsPerPage}</Text>
+            <Text>Initial words: {project.initialWords}</Text>
+            <Text>Word target: {project.overallWordTarget}</Text>
             <Text>Daily word targets:</Text>
             <Text>Mon: {project.wordTarget?.mon?.enabled ? project.wordTarget.mon.words : 0}</Text>
             <Text>Tue: {project.wordTarget?.tue?.enabled ? project.wordTarget.tue.words : 0}</Text>
@@ -69,6 +106,11 @@ const ProjectDetailsScreen = ({ route, navigation }: Props): React.ReactElement 
             <Text>Fri: {project.wordTarget?.fri?.enabled ? project.wordTarget.fri.words : 0}</Text>
             <Text>Sat: {project.wordTarget?.sat?.enabled ? project.wordTarget.sat.words : 0}</Text>
             <Text>Sun: {project.wordTarget?.sun?.enabled ? project.wordTarget.sun.words : 0}</Text>
+            <Text>Progress: {Math.round(progress * 100)}%</Text>
+            <CircularProgressBar
+              progress={progress}
+              size="giant"
+            />
           </>
           : <Text>No project found!</Text>
         }
