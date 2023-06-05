@@ -138,6 +138,8 @@ const ProjectsScreen = ({ navigation }: Props): React.ReactElement => {
             description: 'This is a Book',
             type: ProjectType.BOOK,
             status: ProjectStatus.IN_PROGRESS,
+            initialWords: util.getRandomInt(0, 10000),
+            overallWordTarget: util.getRandomInt(10000, 200000),
           }),
         ),
         DataStore.save(
@@ -147,6 +149,8 @@ const ProjectsScreen = ({ navigation }: Props): React.ReactElement => {
             description: 'This is a Journal',
             type: ProjectType.JOURNAL,
             status: ProjectStatus.COMPLETED,
+            initialWords: util.getRandomInt(0, 10000),
+            overallWordTarget: util.getRandomInt(10000, 200000),
           }),
         ),
         DataStore.save(
@@ -156,6 +160,8 @@ const ProjectsScreen = ({ navigation }: Props): React.ReactElement => {
             description: 'This is a Blog',
             type: ProjectType.BLOG,
             status: ProjectStatus.ON_HOLD,
+            initialWords: util.getRandomInt(0, 10000),
+            overallWordTarget: util.getRandomInt(10000, 200000),
           }),
         ),
         DataStore.save(
@@ -165,6 +171,8 @@ const ProjectsScreen = ({ navigation }: Props): React.ReactElement => {
             description: 'This is another project',
             type: ProjectType.OTHER,
             status: ProjectStatus.IN_PROGRESS,
+            initialWords: util.getRandomInt(0, 10000),
+            overallWordTarget: util.getRandomInt(10000, 200000),
           }),
         ),
       ]);
