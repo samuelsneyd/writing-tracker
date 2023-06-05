@@ -13,10 +13,9 @@ import {
   TopNavigationAction,
   TopNavigationActionElement,
 } from '@ui-kitten/components';
-import useBackNavigation from '../../hooks/useBackNavigation/useBackNavigation';
 import { capitalCase, noCase } from 'change-case';
 import { titleCase } from 'title-case';
-import { EditIcon } from '../../components/Icons/Icons';
+import { ArrowIosBackIcon, EditIcon } from '../../components/Icons/Icons';
 
 type Props = NativeStackScreenProps<ProjectsStackParamList, 'Details'>
 
@@ -24,7 +23,6 @@ const ProjectDetailsScreen = ({ route, navigation }: Props): React.ReactElement 
   const [project, setProject] = React.useState<Project>();
   const [sessions, setSessions] = React.useState<Session[]>([]);
   const [progress, setProgress] = React.useState<number>(0);
-  const { BackAction } = useBackNavigation(navigation);
   const { id, name } = route.params;
 
   React.useEffect(() => {
@@ -65,11 +63,15 @@ const ProjectDetailsScreen = ({ route, navigation }: Props): React.ReactElement 
     setProgress(calculatedProgress);
   }, [project, sessions]);
 
+  const BackAction = () => (
+    <TopNavigationAction icon={ArrowIosBackIcon} onPress={() => navigation.goBack()} />
+  );
+
   const editProjectAction = (): TopNavigationActionElement => (
     <TopNavigationAction
       icon={EditIcon}
       // TODO - pass project id into edit screen as prop
-      onPress={() => navigation.navigate('New')}
+      // onPress={() => navigation.navigate('New')}
     />
   );
 

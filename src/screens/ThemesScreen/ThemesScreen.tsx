@@ -2,15 +2,18 @@ import * as React from 'react';
 import { SafeAreaView } from 'react-native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { MoreStackParamList } from '../../types/types';
-import { Divider, Layout, TopNavigation, Text, Button } from '@ui-kitten/components';
-import useBackNavigation from '../../hooks/useBackNavigation/useBackNavigation';
+import { Divider, Layout, TopNavigation, Text, Button, TopNavigationAction } from '@ui-kitten/components';
 import { ThemeContext } from '../../themes/theme-context';
+import { ArrowIosBackIcon } from '../../components/Icons/Icons';
 
 type Props = NativeStackScreenProps<MoreStackParamList, 'Themes'>
 
 const ThemesScreen = ({ navigation }: Props): React.ReactElement => {
-  const { BackAction } = useBackNavigation(navigation);
   const themeContext = React.useContext(ThemeContext);
+
+  const BackAction = () => (
+    <TopNavigationAction icon={ArrowIosBackIcon} onPress={() => navigation.goBack()} />
+  );
 
   return (
     <SafeAreaView style={{ flex: 1 }}>

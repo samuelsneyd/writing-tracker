@@ -13,9 +13,10 @@ import {
   Text,
   Toggle,
   TopNavigation,
+  TopNavigationAction,
 } from '@ui-kitten/components';
 import { capitalCase } from 'change-case';
-import useBackNavigation from '../../hooks/useBackNavigation/useBackNavigation';
+import { ArrowIosBackIcon } from '../../components/Icons/Icons';
 
 const PROJECT_TYPE_DATA = Object.keys(ProjectType).map(type => ({
   type,
@@ -69,7 +70,9 @@ const ProjectNewScreen = ({ navigation }: Props): React.ReactElement => {
     wordsPerPage: 300,
   }));
 
-  const { BackAction } = useBackNavigation(navigation);
+  const BackAction = () => (
+    <TopNavigationAction icon={ArrowIosBackIcon} onPress={() => navigation.goBack()} />
+  );
 
   const renderOption = (title: string): React.ReactElement => (
     <SelectItem key={title} title={title} />
