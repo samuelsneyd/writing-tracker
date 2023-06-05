@@ -42,6 +42,20 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
+                "initialWords": {
+                    "name": "initialWords",
+                    "isArray": false,
+                    "type": "Int",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "overallWordTarget": {
+                    "name": "overallWordTarget",
+                    "isArray": false,
+                    "type": "Int",
+                    "isRequired": true,
+                    "attributes": []
+                },
                 "wordTarget": {
                     "name": "wordTarget",
                     "isArray": false,
@@ -399,5 +413,5 @@ export const schema = {
         }
     },
     "codegenVersion": "3.4.3",
-    "version": "d197db5680aa7faffcb4c282ae5b63b9"
+    "version": "ef4a3833c170d278bf97a73966d013ee"
 };

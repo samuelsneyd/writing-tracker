@@ -71,6 +71,8 @@ type EagerProject = {
   readonly description: string;
   readonly type: ProjectType | keyof typeof ProjectType;
   readonly status: ProjectStatus | keyof typeof ProjectStatus;
+  readonly initialWords: number;
+  readonly overallWordTarget: number;
   readonly wordTarget: WeeklyTarget;
   readonly wordsPerPage: number;
   readonly sessions?: (Session | null)[] | null;
@@ -85,6 +87,8 @@ type LazyProject = {
   readonly description: string;
   readonly type: ProjectType | keyof typeof ProjectType;
   readonly status: ProjectStatus | keyof typeof ProjectStatus;
+  readonly initialWords: number;
+  readonly overallWordTarget: number;
   readonly wordTarget: WeeklyTarget;
   readonly wordsPerPage: number;
   readonly sessions: AsyncCollection<Session>;

@@ -8,6 +8,8 @@ type Project @model @auth(rules: [{ allow: owner }]) {
   description: String!
   type: ProjectType!
   status: ProjectStatus!
+  initialWords: Int!
+  overallWordTarget: Int!
   wordTarget: WeeklyTarget!
   wordsPerPage: Int!
   sessions: [Session] @hasMany

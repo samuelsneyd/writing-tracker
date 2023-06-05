@@ -13,6 +13,8 @@ export const onCreateProject = /* GraphQL */ `
       description
       type
       status
+      initialWords
+      overallWordTarget
       wordTarget {
         mon {
           enabled
@@ -81,6 +83,8 @@ export const onUpdateProject = /* GraphQL */ `
       description
       type
       status
+      initialWords
+      overallWordTarget
       wordTarget {
         mon {
           enabled
@@ -149,6 +153,8 @@ export const onDeleteProject = /* GraphQL */ `
       description
       type
       status
+      initialWords
+      overallWordTarget
       wordTarget {
         mon {
           enabled
@@ -222,6 +228,8 @@ export const onCreateSession = /* GraphQL */ `
         description
         type
         status
+        initialWords
+        overallWordTarget
         wordsPerPage
         sessions {
           nextToken
@@ -260,6 +268,8 @@ export const onUpdateSession = /* GraphQL */ `
         description
         type
         status
+        initialWords
+        overallWordTarget
         wordsPerPage
         sessions {
           nextToken
@@ -298,6 +308,8 @@ export const onDeleteSession = /* GraphQL */ `
         description
         type
         status
+        initialWords
+        overallWordTarget
         wordsPerPage
         sessions {
           nextToken
