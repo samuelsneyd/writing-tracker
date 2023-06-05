@@ -11,7 +11,7 @@ type Project @model @auth(rules: [{ allow: owner }]) {
   wordTarget: WeeklyTarget!
   wordsPerPage: Int!
   sessions: [Session] @hasMany
-  owner: String @auth(rules: [{ allow: owner, operations: [read] }])
+  owner: String @auth(rules: [{ allow: owner, operations: [read, delete] }])
 }
 
 enum ProjectType {
@@ -48,11 +48,11 @@ type Session @model @auth(rules: [{ allow: owner}]) {
   minutes: Int!
   date: AWSDateTime!
   project: Project! @belongsTo
-  owner: String @auth(rules: [{ allow: owner, operations: [read] }])
+  owner: String @auth(rules: [{ allow: owner, operations: [read, delete] }])
 }
 
 type LoginDate @model @auth(rules: [{ allow: owner }]) {
   id: ID!
   date: AWSDateTime!
-  owner: String @auth(rules: [{ allow: owner, operations: [read] }])
+  owner: String @auth(rules: [{ allow: owner, operations: [read, delete] }])
 }
