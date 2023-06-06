@@ -35,7 +35,7 @@ const HomeScreen = ({ navigation }: Props): React.ReactElement => {
       <Layout style={{ flex: 1, justifyContent: 'space-around', alignItems: 'center' }}>
         <Text category="h1">Home</Text>
         <DailyQuote isFocused={isFocused} />
-        <LoginStreak />
+        <LoginStreak isFocused={isFocused} />
       </Layout>
     </SafeAreaView>
   );

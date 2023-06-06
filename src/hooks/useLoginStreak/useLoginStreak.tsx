@@ -9,7 +9,7 @@ import type { DateStreakSummary } from '../../types/types';
  * Returns a summary of the signed-in user's daily login streak.
  * If not already signed-in today, updates the daily login streak.
  */
-const useLoginStreak = (): DateStreakSummary => {
+const useLoginStreak = (isFocused: boolean): DateStreakSummary => {
   const DATE_FORMAT = 'YYYY-MM-DD';
   const [loginSummary, setLoginSummary] = React.useState<DateStreakSummary>({
     currentStreak: 0,
