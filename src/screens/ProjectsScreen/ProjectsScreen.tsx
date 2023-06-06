@@ -3,6 +3,7 @@ import { ListRenderItemInfo, SafeAreaView, StyleSheet, View } from 'react-native
 import { Project, ProjectStatus, ProjectType, Session } from '../../models';
 import { Auth, DataStore, Predicates } from 'aws-amplify';
 import type { ICredentials } from '@aws-amplify/core';
+import { useIsFocused } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { ProjectsStackParamList } from '../../types/types';
 import {
@@ -41,6 +42,8 @@ const ProjectsScreen = ({ navigation }: Props): React.ReactElement => {
   const [credentials, setCredentials] = React.useState<ICredentials>();
   const [aggregateStats, setAggregateStats] = React.useState<ProjectAggregateStats>({ words: 0, minutes: 0 });
 
+  const isFocused = useIsFocused();
+
   React.useEffect(() => {
     const getProjects = async () => {
       const projects = await DataStore.query(Project);
@@ -48,7 +51,7 @@ const ProjectsScreen = ({ navigation }: Props): React.ReactElement => {
     };
 
     getProjects().then();
-  }, []);
+  }, [isFocused]);
 
   React.useEffect(() => {
     const getSessions = async () => {
@@ -57,14 +60,14 @@ const ProjectsScreen = ({ navigation }: Props): React.ReactElement => {
     };
 
     getSessions().then();
-  }, []);
+  }, [isFocused]);
 
   React.useEffect(() => {
     setAggregateStats(sessions.reduce((prev, { words, minutes }) => ({
       words: prev.words + words,
       minutes: prev.minutes + minutes,
     }), { words: 0, minutes: 0 }));
-  }, [sessions]);
+  }, [projects, sessions]);
 
   React.useEffect(() => {
     const getCredentials = async () => {
