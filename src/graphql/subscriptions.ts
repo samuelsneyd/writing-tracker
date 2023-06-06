@@ -9,7 +9,7 @@ export const onCreateProject = /* GraphQL */ `
   ) {
     onCreateProject(filter: $filter, owner: $owner) {
       id
-      name
+      title
       description
       type
       status
@@ -79,7 +79,7 @@ export const onUpdateProject = /* GraphQL */ `
   ) {
     onUpdateProject(filter: $filter, owner: $owner) {
       id
-      name
+      title
       description
       type
       status
@@ -149,7 +149,7 @@ export const onDeleteProject = /* GraphQL */ `
   ) {
     onDeleteProject(filter: $filter, owner: $owner) {
       id
-      name
+      title
       description
       type
       status
@@ -224,7 +224,7 @@ export const onCreateSession = /* GraphQL */ `
       date
       project {
         id
-        name
+        title
         description
         type
         status
@@ -264,7 +264,7 @@ export const onUpdateSession = /* GraphQL */ `
       date
       project {
         id
-        name
+        title
         description
         type
         status
@@ -304,7 +304,7 @@ export const onDeleteSession = /* GraphQL */ `
       date
       project {
         id
-        name
+        title
         description
         type
         status

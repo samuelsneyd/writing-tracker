@@ -67,7 +67,7 @@ type LoginDateMetaData = {
 
 type EagerProject = {
   readonly id: string;
-  readonly name: string;
+  readonly title: string;
   readonly description: string;
   readonly type: ProjectType | keyof typeof ProjectType;
   readonly status: ProjectStatus | keyof typeof ProjectStatus;
@@ -83,7 +83,7 @@ type EagerProject = {
 
 type LazyProject = {
   readonly id: string;
-  readonly name: string;
+  readonly title: string;
   readonly description: string;
   readonly type: ProjectType | keyof typeof ProjectType;
   readonly status: ProjectStatus | keyof typeof ProjectStatus;

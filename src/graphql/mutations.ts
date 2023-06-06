@@ -9,7 +9,7 @@ export const createProject = /* GraphQL */ `
   ) {
     createProject(input: $input, condition: $condition) {
       id
-      name
+      title
       description
       type
       status
@@ -79,7 +79,7 @@ export const updateProject = /* GraphQL */ `
   ) {
     updateProject(input: $input, condition: $condition) {
       id
-      name
+      title
       description
       type
       status
@@ -149,7 +149,7 @@ export const deleteProject = /* GraphQL */ `
   ) {
     deleteProject(input: $input, condition: $condition) {
       id
-      name
+      title
       description
       type
       status
@@ -224,7 +224,7 @@ export const createSession = /* GraphQL */ `
       date
       project {
         id
-        name
+        title
         description
         type
         status
@@ -264,7 +264,7 @@ export const updateSession = /* GraphQL */ `
       date
       project {
         id
-        name
+        title
         description
         type
         status
@@ -304,7 +304,7 @@ export const deleteSession = /* GraphQL */ `
       date
       project {
         id
-        name
+        title
         description
         type
         status

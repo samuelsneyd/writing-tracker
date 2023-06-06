@@ -4,7 +4,7 @@
 
 export type CreateProjectInput = {
   id?: string | null,
-  name: string,
+  title: string,
   description: string,
   type: ProjectType,
   status: ProjectStatus,
@@ -47,7 +47,7 @@ export type TargetByDayInput = {
 };
 
 export type ModelProjectConditionInput = {
-  name?: ModelStringInput | null,
+  title?: ModelStringInput | null,
   description?: ModelStringInput | null,
   type?: ModelProjectTypeInput | null,
   status?: ModelProjectStatusInput | null,
@@ -133,7 +133,7 @@ export type ModelBooleanInput = {
 export type Project = {
   __typename: "Project",
   id: string,
-  name: string,
+  title: string,
   description: string,
   type: ProjectType,
   status: ProjectStatus,
@@ -192,7 +192,7 @@ export type Session = {
 
 export type UpdateProjectInput = {
   id: string,
-  name?: string | null,
+  title?: string | null,
   description?: string | null,
   type?: ProjectType | null,
   status?: ProjectStatus | null,
@@ -304,7 +304,7 @@ export type DeleteLoginDateInput = {
 
 export type ModelProjectFilterInput = {
   id?: ModelIDInput | null,
-  name?: ModelStringInput | null,
+  title?: ModelStringInput | null,
   description?: ModelStringInput | null,
   type?: ModelProjectTypeInput | null,
   status?: ModelProjectStatusInput | null,
@@ -357,7 +357,7 @@ export type ModelLoginDateConnection = {
 
 export type ModelSubscriptionProjectFilterInput = {
   id?: ModelSubscriptionIDInput | null,
-  name?: ModelSubscriptionStringInput | null,
+  title?: ModelSubscriptionStringInput | null,
   description?: ModelSubscriptionStringInput | null,
   type?: ModelSubscriptionStringInput | null,
   status?: ModelSubscriptionStringInput | null,
@@ -438,7 +438,7 @@ export type CreateProjectMutation = {
   createProject?:  {
     __typename: "Project",
     id: string,
-    name: string,
+    title: string,
     description: string,
     type: ProjectType,
     status: ProjectStatus,
@@ -520,7 +520,7 @@ export type UpdateProjectMutation = {
   updateProject?:  {
     __typename: "Project",
     id: string,
-    name: string,
+    title: string,
     description: string,
     type: ProjectType,
     status: ProjectStatus,
@@ -602,7 +602,7 @@ export type DeleteProjectMutation = {
   deleteProject?:  {
     __typename: "Project",
     id: string,
-    name: string,
+    title: string,
     description: string,
     type: ProjectType,
     status: ProjectStatus,
@@ -690,7 +690,7 @@ export type CreateSessionMutation = {
     project:  {
       __typename: "Project",
       id: string,
-      name: string,
+      title: string,
       description: string,
       type: ProjectType,
       status: ProjectStatus,
@@ -734,7 +734,7 @@ export type UpdateSessionMutation = {
     project:  {
       __typename: "Project",
       id: string,
-      name: string,
+      title: string,
       description: string,
       type: ProjectType,
       status: ProjectStatus,
@@ -778,7 +778,7 @@ export type DeleteSessionMutation = {
     project:  {
       __typename: "Project",
       id: string,
-      name: string,
+      title: string,
       description: string,
       type: ProjectType,
       status: ProjectStatus,
@@ -872,7 +872,7 @@ export type GetProjectQuery = {
   getProject?:  {
     __typename: "Project",
     id: string,
-    name: string,
+    title: string,
     description: string,
     type: ProjectType,
     status: ProjectStatus,
@@ -957,7 +957,7 @@ export type ListProjectsQuery = {
     items:  Array< {
       __typename: "Project",
       id: string,
-      name: string,
+      title: string,
       description: string,
       type: ProjectType,
       status: ProjectStatus,
@@ -994,7 +994,7 @@ export type SyncProjectsQuery = {
     items:  Array< {
       __typename: "Project",
       id: string,
-      name: string,
+      title: string,
       description: string,
       type: ProjectType,
       status: ProjectStatus,
@@ -1032,7 +1032,7 @@ export type GetSessionQuery = {
     project:  {
       __typename: "Project",
       id: string,
-      name: string,
+      title: string,
       description: string,
       type: ProjectType,
       status: ProjectStatus,
@@ -1079,7 +1079,7 @@ export type ListSessionsQuery = {
       project:  {
         __typename: "Project",
         id: string,
-        name: string,
+        title: string,
         description: string,
         type: ProjectType,
         status: ProjectStatus,
@@ -1125,7 +1125,7 @@ export type SyncSessionsQuery = {
       project:  {
         __typename: "Project",
         id: string,
-        name: string,
+        title: string,
         description: string,
         type: ProjectType,
         status: ProjectStatus,
@@ -1230,7 +1230,7 @@ export type OnCreateProjectSubscription = {
   onCreateProject?:  {
     __typename: "Project",
     id: string,
-    name: string,
+    title: string,
     description: string,
     type: ProjectType,
     status: ProjectStatus,
@@ -1312,7 +1312,7 @@ export type OnUpdateProjectSubscription = {
   onUpdateProject?:  {
     __typename: "Project",
     id: string,
-    name: string,
+    title: string,
     description: string,
     type: ProjectType,
     status: ProjectStatus,
@@ -1394,7 +1394,7 @@ export type OnDeleteProjectSubscription = {
   onDeleteProject?:  {
     __typename: "Project",
     id: string,
-    name: string,
+    title: string,
     description: string,
     type: ProjectType,
     status: ProjectStatus,
@@ -1482,7 +1482,7 @@ export type OnCreateSessionSubscription = {
     project:  {
       __typename: "Project",
       id: string,
-      name: string,
+      title: string,
       description: string,
       type: ProjectType,
       status: ProjectStatus,
@@ -1526,7 +1526,7 @@ export type OnUpdateSessionSubscription = {
     project:  {
       __typename: "Project",
       id: string,
-      name: string,
+      title: string,
       description: string,
       type: ProjectType,
       status: ProjectStatus,
@@ -1570,7 +1570,7 @@ export type OnDeleteSessionSubscription = {
     project:  {
       __typename: "Project",
       id: string,
-      name: string,
+      title: string,
       description: string,
       type: ProjectType,
       status: ProjectStatus,

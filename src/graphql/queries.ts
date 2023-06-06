@@ -6,7 +6,7 @@ export const getProject = /* GraphQL */ `
   query GetProject($id: ID!) {
     getProject(id: $id) {
       id
-      name
+      title
       description
       type
       status
@@ -78,7 +78,7 @@ export const listProjects = /* GraphQL */ `
     listProjects(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        name
+        title
         description
         type
         status
@@ -116,7 +116,7 @@ export const syncProjects = /* GraphQL */ `
     ) {
       items {
         id
-        name
+        title
         description
         type
         status
@@ -148,7 +148,7 @@ export const getSession = /* GraphQL */ `
       date
       project {
         id
-        name
+        title
         description
         type
         status
@@ -190,7 +190,7 @@ export const listSessions = /* GraphQL */ `
         date
         project {
           id
-          name
+          title
           description
           type
           status
@@ -237,7 +237,7 @@ export const syncSessions = /* GraphQL */ `
         date
         project {
           id
-          name
+          title
           description
           type
           status
