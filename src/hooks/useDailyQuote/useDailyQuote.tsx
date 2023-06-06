@@ -2,11 +2,15 @@ import * as React from 'react';
 import type { Quote } from '../../types/types';
 import quotes from './quotes';
 
+type UseDailyQuoteParams = {
+  isFocused: boolean,
+}
+
 /**
  * Returns the daily quote. The quote updates daily, sequentially,
  * based on the device's local timezone.
  */
-const useDailyQuote = (isFocused: boolean): Quote => {
+const useDailyQuote = ({ isFocused = false }: UseDailyQuoteParams): Quote => {
   const [dailyQuote, setDailyQuote] = React.useState<Quote>({ quote: '', author: '' });
 
   React.useEffect(() => {

@@ -17,7 +17,7 @@ const App = () => {
     setTheme(nextTheme);
   };
 
-  useLoginStreak();
+  useLoginStreak({});
 
   return (
     <>

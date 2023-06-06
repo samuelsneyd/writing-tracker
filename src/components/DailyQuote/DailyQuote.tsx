@@ -8,7 +8,7 @@ type DailyQuoteProps = {
 };
 
 const DailyQuote = ({ isFocused }: DailyQuoteProps): React.ReactElement => {
-  const dailyQuote = useDailyQuote(isFocused);
+  const dailyQuote = useDailyQuote({ isFocused });
 
   return (
     <Card status="primary">

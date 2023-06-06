@@ -7,7 +7,7 @@ type LoginStreakProps = {
 };
 
 const LoginStreak = ({ isFocused }: LoginStreakProps): React.ReactElement => {
-  const { currentStreak, longestStreak } = useLoginStreak(isFocused);
+  const { currentStreak, longestStreak } = useLoginStreak({ isFocused });
 
   return (
     <Card status="primary">
