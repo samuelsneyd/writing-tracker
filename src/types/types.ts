@@ -13,7 +13,7 @@ export type HomeStackParamList = {
 
 export type ProjectsStackParamList = {
   Projects: undefined;
-  Details: Required<{ id: string, name: string }>;
+  Details: Required<{ id: string, title: string }>;
   New: undefined;
 };
 
