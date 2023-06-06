@@ -6,7 +6,7 @@ import quotes from './quotes';
  * Returns the daily quote. The quote updates daily, sequentially,
  * based on the device's local timezone.
  */
-const useDailyQuote = (): Quote => {
+const useDailyQuote = (isFocused: boolean): Quote => {
   const [dailyQuote, setDailyQuote] = React.useState<Quote>({ quote: '', author: '' });
 
   React.useEffect(() => {
@@ -18,7 +18,7 @@ const useDailyQuote = (): Quote => {
     const dailyQuoteIndex = daysSinceEpoch % quotes.length;
 
     setDailyQuote(quotes[dailyQuoteIndex]);
-  }, []);
+  }, [isFocused]);
 
   return dailyQuote;
 };

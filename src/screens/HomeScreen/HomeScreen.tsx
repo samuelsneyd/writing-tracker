@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { SafeAreaView } from 'react-native';
+import { useIsFocused } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { HomeStackParamList } from '../../types/types';
 import {
@@ -17,6 +18,8 @@ import { MenuIcon } from '../../components/Icons/Icons';
 type Props = NativeStackScreenProps<HomeStackParamList, 'Home'>
 
 const HomeScreen = ({ navigation }: Props): React.ReactElement => {
+  const isFocused = useIsFocused();
+
   const renderDrawerAction = (): TopNavigationActionElement => (
     <TopNavigationAction
       icon={MenuIcon}
@@ -31,7 +34,7 @@ const HomeScreen = ({ navigation }: Props): React.ReactElement => {
       <Divider />
       <Layout style={{ flex: 1, justifyContent: 'space-around', alignItems: 'center' }}>
         <Text category="h1">Home</Text>
-        <DailyQuote />
+        <DailyQuote isFocused={isFocused} />
         <LoginStreak />
       </Layout>
     </SafeAreaView>
