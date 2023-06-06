@@ -6,18 +6,22 @@ type DailyWordRowProps = {
   day: string,
   targetState: number,
   setTargetState: React.Dispatch<number>,
-  checkedState: boolean,
-  setCheckedState: React.Dispatch<boolean>,
+  enabledState: boolean,
+  setEnabledState: React.Dispatch<boolean>,
 };
 
+/**
+ * A component that renders a toggle and connected input for daily word targets.
+ * The input is enabled/disabled by the toggle.
+ */
 const DailyWordRow = (props: DailyWordRowProps) => (
   <Layout style={styles.dailyTargetRow}>
     <Toggle
       style={styles.dailyTargetRowItem}
-      checked={props.checkedState}
+      checked={props.enabledState}
       onChange={() => {
         props.setTargetState(0);
-        props.setCheckedState(!props.checkedState);
+        props.setEnabledState(!props.enabledState);
       }}
     >{props.day}</Toggle>
     <Input
@@ -28,7 +32,7 @@ const DailyWordRow = (props: DailyWordRowProps) => (
         // Limit input to integers
         props.setTargetState(parseInt(nextValue.replace(/\D/g, '')) || 0);
       }}
-      disabled={!props.checkedState}
+      disabled={!props.enabledState}
       keyboardType="number-pad"
     ></Input>
   </Layout>
