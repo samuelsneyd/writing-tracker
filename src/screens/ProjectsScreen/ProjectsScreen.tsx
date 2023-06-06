@@ -134,7 +134,7 @@ const ProjectsScreen = ({ navigation }: Props): React.ReactElement => {
         DataStore.save(
           new Project({
             ...defaultValues,
-            name: 'My Book',
+            title: 'My Book',
             description: 'This is a Book',
             type: ProjectType.BOOK,
             status: ProjectStatus.IN_PROGRESS,
@@ -145,7 +145,7 @@ const ProjectsScreen = ({ navigation }: Props): React.ReactElement => {
         DataStore.save(
           new Project({
             ...defaultValues,
-            name: 'My Journal',
+            title: 'My Journal',
             description: 'This is a Journal',
             type: ProjectType.JOURNAL,
             status: ProjectStatus.COMPLETED,
@@ -156,7 +156,7 @@ const ProjectsScreen = ({ navigation }: Props): React.ReactElement => {
         DataStore.save(
           new Project({
             ...defaultValues,
-            name: 'My Blog',
+            title: 'My Blog',
             description: 'This is a Blog',
             type: ProjectType.BLOG,
             status: ProjectStatus.ON_HOLD,
@@ -167,7 +167,7 @@ const ProjectsScreen = ({ navigation }: Props): React.ReactElement => {
         DataStore.save(
           new Project({
             ...defaultValues,
-            name: 'My Other Project',
+            title: 'My Other Project',
             description: 'This is another project',
             type: ProjectType.OTHER,
             status: ProjectStatus.IN_PROGRESS,
@@ -246,9 +246,9 @@ const ProjectsScreen = ({ navigation }: Props): React.ReactElement => {
     const { item } = info;
     return (
       <ListItem
-        title={item.type}
-        description={item.name}
-        onPress={() => navigation.navigate('Details', { id: item.id, name: item.name })}
+        title={item.title}
+        description={item.title}
+        onPress={() => navigation.navigate('Details', { id: item.id, title: item.title })}
       />
     );
   };
