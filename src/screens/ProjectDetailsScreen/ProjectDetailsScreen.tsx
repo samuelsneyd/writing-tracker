@@ -23,7 +23,7 @@ const ProjectDetailsScreen = ({ route, navigation }: Props): React.ReactElement 
   const [project, setProject] = React.useState<Project>();
   const [sessions, setSessions] = React.useState<Session[]>([]);
   const [progress, setProgress] = React.useState<number>(0);
-  const { id, name } = route.params;
+  const { id, title } = route.params;
 
   React.useEffect(() => {
     const getProject = async () => {
@@ -78,7 +78,7 @@ const ProjectDetailsScreen = ({ route, navigation }: Props): React.ReactElement 
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <TopNavigation
-        title={name}
+        title={title}
         alignment="center"
         accessoryLeft={BackAction}
         accessoryRight={editProjectAction}
@@ -88,7 +88,7 @@ const ProjectDetailsScreen = ({ route, navigation }: Props): React.ReactElement 
         {project
           ? <>
             <Text category="h1">{capitalCase(project.type)}</Text>
-            <Text>Title: {titleCase(project.name)}</Text>
+            <Text>Title: {titleCase(project.title)}</Text>
             <Text>Description: {project.description}</Text>
             <Text>Status: {titleCase(noCase(project.status))}</Text>
             {sessions.map((session, i) =>
