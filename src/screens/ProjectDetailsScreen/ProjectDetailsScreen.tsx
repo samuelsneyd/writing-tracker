@@ -70,8 +70,7 @@ const ProjectDetailsScreen = ({ route, navigation }: Props): React.ReactElement 
   const editProjectAction = (): TopNavigationActionElement => (
     <TopNavigationAction
       icon={EditIcon}
-      // TODO - pass project id into edit screen as prop
-      // onPress={() => navigation.navigate('New')}
+      onPress={() => navigation.navigate('Edit', { id, title })}
     />
   );
 
