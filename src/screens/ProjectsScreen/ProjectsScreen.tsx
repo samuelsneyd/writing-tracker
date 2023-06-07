@@ -249,8 +249,8 @@ const ProjectsScreen = ({ navigation }: Props): React.ReactElement => {
     const { item } = info;
     return (
       <ListItem
-        title={item.title}
-        description={item.title}
+        title={item.title || 'New Project'}
+        description={item.description}
         onPress={() => navigation.navigate('Details', { id: item.id, title: item.title })}
       />
     );
