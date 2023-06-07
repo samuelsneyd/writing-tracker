@@ -20,22 +20,28 @@ import DailyWordRow from '../../components/DailyWordRow/DailyWordRow';
 import { capitalCase } from 'change-case';
 import { ArrowIosBackIcon } from '../../components/Icons/Icons';
 
-// TODO - refactor enum selects
-const PROJECT_TYPE_DATA = Object.keys(ProjectType).map(type => ({
-  type,
-  display: capitalCase(type),
-}));
-const PROJECT_STATUS_DATA = Object.keys(ProjectStatus).map(status => ({
-  status,
-  display: capitalCase(status),
-}));
+type EnumObject<T> = {
+  enumVal: T,
+  display: string,
+};
+
+const enumToSelectData = <T extends string>(enumObj: Record<string, T>): EnumObject<T>[] => {
+  return Object.keys(enumObj).map((key) => ({
+    enumVal: enumObj[key as keyof typeof enumObj],
+    display: capitalCase(enumObj[key as keyof typeof enumObj] as string),
+  }));
+};
+
+const PROJECT_TYPE_DATA: EnumObject<ProjectType>[] = enumToSelectData(ProjectType);
+
+const PROJECT_STATUS_DATA: EnumObject<ProjectStatus>[] = enumToSelectData(ProjectStatus);
 
 type Props = NativeStackScreenProps<ProjectsStackParamList, 'New'>
 
 const ProjectNewScreen = ({ navigation }: Props): React.ReactElement => {
   const [title, setTitle] = React.useState<string>('');
   const [description, setDescription] = React.useState<string>('');
-  const [projectType, setProjectType] = React.useState<ProjectType>(ProjectType.BOOK);
+  const [type, setType] = React.useState<ProjectType>(ProjectType.BOOK);
   const [selectedTypeIndex, setSelectedTypeIndex] = React.useState<IndexPath>(new IndexPath(0));
   const [status, setStatus] = React.useState<ProjectStatus>(ProjectStatus.IN_PROGRESS);
   const [selectedStatusIndex, setSelectedStatusIndex] = React.useState<IndexPath>(new IndexPath(0));
@@ -71,8 +77,8 @@ const ProjectNewScreen = ({ navigation }: Props): React.ReactElement => {
       new Project({
         title,
         description,
-        type: ProjectType.BOOK, // TODO - link field to UI
-        status: ProjectStatus.IN_PROGRESS, // TODO - link field to UI
+        type,
+        status,
         initialWords, // TODO - link field to UI
         overallWordTarget, // TODO - link field to UI
         wordTarget: {
@@ -121,7 +127,11 @@ const ProjectNewScreen = ({ navigation }: Props): React.ReactElement => {
             value={PROJECT_TYPE_DATA[selectedTypeIndex.row].display}
             style={{ width: '100%' }}
             selectedIndex={selectedTypeIndex}
-            onSelect={index => index instanceof IndexPath && setSelectedTypeIndex(index)}
+            onSelect={index => {
+              const indexPath = index as IndexPath;
+              setSelectedTypeIndex(indexPath);
+              setType(PROJECT_TYPE_DATA[selectedTypeIndex.row].enumVal);
+            }}
           >
             {PROJECT_TYPE_DATA.map(type => renderOption(type.display))}
           </Select>
@@ -130,7 +140,11 @@ const ProjectNewScreen = ({ navigation }: Props): React.ReactElement => {
             value={PROJECT_STATUS_DATA[selectedStatusIndex.row].display}
             style={{ width: '100%' }}
             selectedIndex={selectedStatusIndex}
-            onSelect={index => index instanceof IndexPath && setSelectedStatusIndex(index)}
+            onSelect={index => {
+              const indexPath = index as IndexPath;
+              setSelectedStatusIndex(indexPath);
+              setStatus(PROJECT_STATUS_DATA[selectedTypeIndex.row].enumVal);
+            }}
           >
             {PROJECT_STATUS_DATA.map(status => renderOption(status.display))}
           </Select>
