@@ -84,7 +84,7 @@ const ProjectNewScreen = ({ navigation }: Props): React.ReactElement => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <ScrollView>
-        <TopNavigation title={'Edit Project'} alignment="center" accessoryLeft={BackAction} />
+        <TopNavigation title={'New Project'} alignment="center" accessoryLeft={BackAction} />
         <Divider />
         <Layout style={{ flex: 1, justifyContent: 'center', alignItems: 'center', paddingHorizontal: 16 }}>
           {project
