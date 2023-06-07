@@ -1,42 +1,53 @@
 import * as React from 'react';
 import { StyleSheet } from 'react-native';
 import { Input, Layout, Toggle } from '@ui-kitten/components';
+import { Project } from '../../models';
+
 
 type DailyWordRowProps = {
-  day: string,
-  targetState: number,
-  setTargetState: React.Dispatch<number>,
-  enabledState: boolean,
-  setEnabledState: React.Dispatch<boolean>,
-};
+  project: Project;
+  setProjectState: React.Dispatch<Project>;
+  dayName: string;
+  dayKey: 'mon' | 'tue' | 'wed' | 'thu' | 'fri' | 'sat' | 'sun';
+}
 
 /**
  * A component that renders a toggle and connected input for daily word targets.
  * The input is enabled/disabled by the toggle.
  */
-const DailyWordRow = (props: DailyWordRowProps) => (
-  <Layout style={styles.dailyTargetRow}>
-    <Toggle
-      style={styles.dailyTargetRowItem}
-      checked={props.enabledState}
-      onChange={() => {
-        props.setTargetState(0);
-        props.setEnabledState(!props.enabledState);
-      }}
-    >{props.day}</Toggle>
-    <Input
-      style={styles.dailyTargetRowItem}
-      placeholder="0"
-      value={props.targetState ? props.targetState.toString() : ''}
-      onChangeText={nextValue => {
-        // Limit input to integers
-        props.setTargetState(parseInt(nextValue.replace(/\D/g, '')) || 0);
-      }}
-      disabled={!props.enabledState}
-      keyboardType="number-pad"
-    ></Input>
-  </Layout>
-);
+const DailyWordRow = (props: DailyWordRowProps) => {
+  const { project, setProjectState, dayName, dayKey } = props;
+  return (
+    <Layout style={styles.dailyTargetRow}>
+      <Toggle
+        style={styles.dailyTargetRowItem}
+        checked={project.wordTarget[dayKey].enabled}
+        onChange={() => {
+          setProjectState(Project.copyOf(project, draft => {
+            draft.wordTarget[dayKey] = {
+              enabled: !project.wordTarget[dayKey].enabled,
+              words: 0,
+            };
+          }));
+        }}
+      >{dayName}</Toggle>
+      <Input
+        style={styles.dailyTargetRowItem}
+        placeholder="0"
+        value={project.wordTarget[dayKey].words ? project.wordTarget[dayKey].words.toString() : ''}
+        onChangeText={nextValue => {
+          // Limit input to integers
+          const nextIntValue = parseInt(nextValue.replace(/\D/g, '')) || 0;
+          setProjectState(Project.copyOf(project, draft => {
+            draft.wordTarget[dayKey].words = nextIntValue;
+          }));
+        }}
+        disabled={!project.wordTarget[dayKey].enabled}
+        keyboardType="number-pad"
+      ></Input>
+    </Layout>
+  );
+};
 
 const styles = StyleSheet.create({
   dailyTargetRow: {

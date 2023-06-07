@@ -39,29 +39,26 @@ const PROJECT_STATUS_DATA: EnumObject<ProjectStatus>[] = enumToSelectData(Projec
 type Props = NativeStackScreenProps<ProjectsStackParamList, 'New'>
 
 const ProjectNewScreen = ({ navigation }: Props): React.ReactElement => {
-  const [title, setTitle] = React.useState<string>('');
-  const [description, setDescription] = React.useState<string>('');
-  const [type, setType] = React.useState<ProjectType>(ProjectType.BOOK);
+  const [project, setProject] = React.useState<Project>(new Project({
+    title: '',
+    description: '',
+    type: ProjectType.BOOK,
+    status: ProjectStatus.IN_PROGRESS,
+    initialWords: 0,
+    overallWordTarget: 0,
+    wordTarget: {
+      mon: { enabled: true, words: 500 },
+      tue: { enabled: true, words: 500 },
+      wed: { enabled: true, words: 500 },
+      thu: { enabled: true, words: 500 },
+      fri: { enabled: true, words: 500 },
+      sat: { enabled: false, words: 0 },
+      sun: { enabled: false, words: 0 },
+    },
+    wordsPerPage: 0,
+  }));
   const [selectedTypeIndex, setSelectedTypeIndex] = React.useState<IndexPath>(new IndexPath(0));
-  const [status, setStatus] = React.useState<ProjectStatus>(ProjectStatus.IN_PROGRESS);
   const [selectedStatusIndex, setSelectedStatusIndex] = React.useState<IndexPath>(new IndexPath(0));
-  const [initialWords, setInitialWords] = React.useState<number>(0);
-  const [overallWordTarget, setOverallWordTarget] = React.useState<number>(120000);
-  const [wordsPerPage, setWordsPerPage] = React.useState<number>(300);
-  const [monTarget, setMonTarget] = React.useState<number>(500);
-  const [tueTarget, setTueTarget] = React.useState<number>(500);
-  const [wedTarget, setWedTarget] = React.useState<number>(500);
-  const [thuTarget, setThuTarget] = React.useState<number>(500);
-  const [friTarget, setFriTarget] = React.useState<number>(500);
-  const [satTarget, setSatTarget] = React.useState<number>(0);
-  const [sunTarget, setSunTarget] = React.useState<number>(0);
-  const [monTargetEnabled, setMonTargetEnabled] = React.useState<boolean>(true);
-  const [tueTargetEnabled, setTueTargetEnabled] = React.useState<boolean>(true);
-  const [wedTargetEnabled, setWedTargetEnabled] = React.useState<boolean>(true);
-  const [thuTargetEnabled, setThuTargetEnabled] = React.useState<boolean>(true);
-  const [friTargetEnabled, setFriTargetEnabled] = React.useState<boolean>(true);
-  const [satTargetEnabled, setSatTargetEnabled] = React.useState<boolean>(false);
-  const [sunTargetEnabled, setSunTargetEnabled] = React.useState<boolean>(false);
 
   const BackAction = () => (
     <TopNavigationAction icon={ArrowIosBackIcon} onPress={() => navigation.goBack()} />
@@ -73,28 +70,12 @@ const ProjectNewScreen = ({ navigation }: Props): React.ReactElement => {
 
   const handleSave = async () => {
     // TODO - add input validation and error handling
-    const project = await DataStore.save(
-      new Project({
-        title,
-        description,
-        type,
-        status,
-        initialWords, // TODO - link field to UI
-        overallWordTarget, // TODO - link field to UI
-        wordTarget: {
-          mon: { enabled: monTargetEnabled, words: monTarget || 0 },
-          tue: { enabled: tueTargetEnabled, words: tueTarget || 0 },
-          wed: { enabled: wedTargetEnabled, words: wedTarget || 0 },
-          thu: { enabled: thuTargetEnabled, words: thuTarget || 0 },
-          fri: { enabled: friTargetEnabled, words: friTarget || 0 },
-          sat: { enabled: satTargetEnabled, words: satTarget || 0 },
-          sun: { enabled: sunTargetEnabled, words: sunTarget || 0 },
-        },
-        wordsPerPage,
-      }),
-    );
-
-    const { id } = project;
+    if (!project) {
+      console.log('No project to save!');
+      return;
+    }
+    await DataStore.save(project);
+    const { id, title } = project;
 
     navigation.popToTop();
     navigation.navigate('Details', { id, title });
@@ -103,102 +84,73 @@ const ProjectNewScreen = ({ navigation }: Props): React.ReactElement => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <ScrollView>
-        <TopNavigation title={'New Project'} alignment="center" accessoryLeft={BackAction} />
+        <TopNavigation title={'Edit Project'} alignment="center" accessoryLeft={BackAction} />
         <Divider />
         <Layout style={{ flex: 1, justifyContent: 'center', alignItems: 'center', paddingHorizontal: 16 }}>
-          <Input
-            placeholder="Title"
-            label="Title"
-            value={title}
-            onChangeText={nextValue => setTitle(nextValue)}
-            size="large"
-          />
-          <Input
-            placeholder="Description"
-            label="Description"
-            value={description}
-            onChangeText={nextValue => setDescription(nextValue)}
-            size="large"
-            multiline={true}
-            maxLength={300}
-          />
-          <Select
-            label="Type"
-            value={PROJECT_TYPE_DATA[selectedTypeIndex.row].display}
-            style={{ width: '100%' }}
-            selectedIndex={selectedTypeIndex}
-            onSelect={index => {
-              const indexPath = index as IndexPath;
-              setSelectedTypeIndex(indexPath);
-              setType(PROJECT_TYPE_DATA[selectedTypeIndex.row].enumVal);
-            }}
-          >
-            {PROJECT_TYPE_DATA.map(type => renderOption(type.display))}
-          </Select>
-          <Select
-            label="Status"
-            value={PROJECT_STATUS_DATA[selectedStatusIndex.row].display}
-            style={{ width: '100%' }}
-            selectedIndex={selectedStatusIndex}
-            onSelect={index => {
-              const indexPath = index as IndexPath;
-              setSelectedStatusIndex(indexPath);
-              setStatus(PROJECT_STATUS_DATA[selectedTypeIndex.row].enumVal);
-            }}
-          >
-            {PROJECT_STATUS_DATA.map(status => renderOption(status.display))}
-          </Select>
-          <Text appearance="hint">Daily targets</Text>
-          <DailyWordRow
-            day="Monday"
-            targetState={monTarget}
-            setTargetState={setMonTarget}
-            enabledState={monTargetEnabled}
-            setEnabledState={setMonTargetEnabled}
-          />
-          <DailyWordRow
-            day="Tuesday"
-            targetState={tueTarget}
-            setTargetState={setTueTarget}
-            enabledState={tueTargetEnabled}
-            setEnabledState={setTueTargetEnabled}
-          />
-          <DailyWordRow
-            day="Wednesday"
-            targetState={wedTarget}
-            setTargetState={setWedTarget}
-            enabledState={wedTargetEnabled}
-            setEnabledState={setWedTargetEnabled}
-          />
-          <DailyWordRow
-            day="Thursday"
-            targetState={thuTarget}
-            setTargetState={setThuTarget}
-            enabledState={thuTargetEnabled}
-            setEnabledState={setThuTargetEnabled}
-          />
-          <DailyWordRow
-            day="Friday"
-            targetState={friTarget}
-            setTargetState={setFriTarget}
-            enabledState={friTargetEnabled}
-            setEnabledState={setFriTargetEnabled}
-          />
-          <DailyWordRow
-            day="Saturday"
-            targetState={satTarget}
-            setTargetState={setSatTarget}
-            enabledState={satTargetEnabled}
-            setEnabledState={setSatTargetEnabled}
-          />
-          <DailyWordRow
-            day="Sunday"
-            targetState={sunTarget}
-            setTargetState={setSunTarget}
-            enabledState={sunTargetEnabled}
-            setEnabledState={setSunTargetEnabled}
-          />
-          <Button onPress={handleSave}>Save Project</Button>
+          {project
+            ? <>
+              <Input
+                placeholder="Title"
+                label="Title"
+                value={project.title}
+                onChangeText={nextValue => setProject(Project.copyOf(project, draft => {
+                  draft.title = nextValue;
+                }))}
+                size="large"
+              />
+              <Input
+                placeholder="Description"
+                label="Description"
+                value={project.description}
+                onChangeText={nextValue => setProject(Project.copyOf(project, draft => {
+                  draft.description = nextValue;
+                }))}
+                size="large"
+                multiline={true}
+                maxLength={300}
+              />
+              <Select
+                label="Type"
+                value={PROJECT_TYPE_DATA[selectedTypeIndex.row].display}
+                style={{ width: '100%' }}
+                selectedIndex={selectedTypeIndex}
+                onSelect={index => {
+                  const indexPath = index as IndexPath;
+                  setSelectedTypeIndex(indexPath);
+                  setProject(Project.copyOf(project, draft => {
+                    draft.type = PROJECT_TYPE_DATA[indexPath.row].enumVal;
+                  }));
+                }}
+              >
+                {PROJECT_TYPE_DATA.map(type => renderOption(type.display))}
+              </Select>
+              <Select
+                label="Status"
+                value={PROJECT_STATUS_DATA[selectedStatusIndex.row].display}
+                style={{ width: '100%' }}
+                selectedIndex={selectedStatusIndex}
+                onSelect={index => {
+                  const indexPath = index as IndexPath;
+                  setSelectedStatusIndex(indexPath);
+                  setProject(Project.copyOf(project, draft => {
+                    draft.status = PROJECT_STATUS_DATA[selectedTypeIndex.row].enumVal;
+                  }));
+                }}
+              >
+                {PROJECT_STATUS_DATA.map(status => renderOption(status.display))}
+              </Select>
+              <Text appearance="hint">Daily targets</Text>
+              <DailyWordRow project={project} setProjectState={setProject} dayName="Monday" dayKey="mon" />
+              <DailyWordRow project={project} setProjectState={setProject} dayName="Tuesday" dayKey="tue" />
+              <DailyWordRow project={project} setProjectState={setProject} dayName="Wednesday" dayKey="wed" />
+              <DailyWordRow project={project} setProjectState={setProject} dayName="Thursday" dayKey="thu" />
+              <DailyWordRow project={project} setProjectState={setProject} dayName="Friday" dayKey="fri" />
+              <DailyWordRow project={project} setProjectState={setProject} dayName="Saturday" dayKey="sat" />
+              <DailyWordRow project={project} setProjectState={setProject} dayName="Sunday" dayKey="sun" />
+              <Button onPress={handleSave}>Save Project</Button>
+            </>
+            : <Text>Loading...</Text>
+          }
         </Layout>
       </ScrollView>
     </SafeAreaView>
