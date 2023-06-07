@@ -12,6 +12,7 @@ import {
   Layout,
   Select,
   SelectItem,
+  Spinner,
   Text,
   TopNavigation,
   TopNavigationAction,
@@ -149,7 +150,7 @@ const ProjectNewScreen = ({ navigation }: Props): React.ReactElement => {
               <DailyWordRow project={project} setProjectState={setProject} dayName="Sunday" dayKey="sun" />
               <Button onPress={handleSave}>Save Project</Button>
             </>
-            : <Text>Loading...</Text>
+            : <Spinner />
           }
         </Layout>
       </ScrollView>
