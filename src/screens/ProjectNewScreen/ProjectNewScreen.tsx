@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { SafeAreaView, ScrollView } from 'react-native';
+import { SafeAreaView, ScrollView, StyleSheet } from 'react-native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { ProjectsStackParamList } from '../../types/types';
 import { Project, ProjectStatus, ProjectType } from '../../models';
@@ -61,7 +61,7 @@ const ProjectNewScreen = ({ navigation }: Props): React.ReactElement => {
   const [selectedTypeIndex, setSelectedTypeIndex] = React.useState<IndexPath>(new IndexPath(0));
   const [selectedStatusIndex, setSelectedStatusIndex] = React.useState<IndexPath>(new IndexPath(0));
 
-  const BackAction = () => (
+  const backAction = () => (
     <TopNavigationAction icon={ArrowIosBackIcon} onPress={() => navigation.goBack()} />
   );
 
@@ -83,11 +83,11 @@ const ProjectNewScreen = ({ navigation }: Props): React.ReactElement => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={styles.safeAreaView}>
       <ScrollView>
-        <TopNavigation title={'New Project'} alignment="center" accessoryLeft={BackAction} />
+        <TopNavigation title={'New Project'} alignment="center" accessoryLeft={backAction} />
         <Divider />
-        <Layout style={{ flex: 1, justifyContent: 'center', alignItems: 'center', paddingHorizontal: 16 }}>
+        <Layout style={styles.body}>
           {project
             ? <>
               <Input
@@ -113,7 +113,7 @@ const ProjectNewScreen = ({ navigation }: Props): React.ReactElement => {
               <Select
                 label="Type"
                 value={PROJECT_TYPE_DATA[selectedTypeIndex.row].display}
-                style={{ width: '100%' }}
+                style={styles.select}
                 selectedIndex={selectedTypeIndex}
                 onSelect={index => {
                   const indexPath = index as IndexPath;
@@ -128,7 +128,7 @@ const ProjectNewScreen = ({ navigation }: Props): React.ReactElement => {
               <Select
                 label="Status"
                 value={PROJECT_STATUS_DATA[selectedStatusIndex.row].display}
-                style={{ width: '100%' }}
+                style={styles.select}
                 selectedIndex={selectedStatusIndex}
                 onSelect={index => {
                   const indexPath = index as IndexPath;
@@ -157,5 +157,20 @@ const ProjectNewScreen = ({ navigation }: Props): React.ReactElement => {
     </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  safeAreaView: {
+    flex: 1,
+  },
+  body: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 16,
+  },
+  select: {
+    width: '100%',
+  },
+});
 
 export default ProjectNewScreen;

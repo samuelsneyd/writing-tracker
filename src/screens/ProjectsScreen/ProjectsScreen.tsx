@@ -46,8 +46,8 @@ const ProjectsScreen = ({ navigation }: Props): React.ReactElement => {
 
   React.useEffect(() => {
     const getProjects = async () => {
-      const projects = await DataStore.query(Project);
-      setProjects(projects);
+      const foundProjects = await DataStore.query(Project);
+      setProjects(foundProjects);
     };
 
     getProjects().then();
@@ -55,8 +55,8 @@ const ProjectsScreen = ({ navigation }: Props): React.ReactElement => {
 
   React.useEffect(() => {
     const getSessions = async () => {
-      const sessions = await DataStore.query(Session);
-      setSessions(sessions);
+      const foundSessions = await DataStore.query(Session);
+      setSessions(foundSessions);
     };
 
     getSessions().then();
@@ -114,8 +114,7 @@ const ProjectsScreen = ({ navigation }: Props): React.ReactElement => {
   const renderDrawerAction = (): TopNavigationActionElement => (
     <TopNavigationAction
       icon={MenuIcon}
-      onPress={() => {
-      }}
+      onPress={() => undefined}
     />
   );
 
@@ -133,7 +132,7 @@ const ProjectsScreen = ({ navigation }: Props): React.ReactElement => {
       },
     };
     try {
-      const projects = await Promise.all([
+      const newProjects = await Promise.all([
         DataStore.save(
           new Project({
             ...defaultValues,
@@ -179,7 +178,7 @@ const ProjectsScreen = ({ navigation }: Props): React.ReactElement => {
           }),
         ),
       ]);
-      console.log('Projects saved successfully!', projects);
+      console.log('Projects saved successfully!', newProjects);
       await fetchProjects();
     } catch (e) {
       console.log('Error saving book', e);
@@ -188,9 +187,9 @@ const ProjectsScreen = ({ navigation }: Props): React.ReactElement => {
 
   const fetchProjects = async () => {
     try {
-      const projects = await DataStore.query(Project);
-      setProjects(projects);
-      console.log('Projects retrieved successfully!', JSON.stringify(projects, null, 2));
+      const foundProjects = await DataStore.query(Project);
+      setProjects(foundProjects);
+      console.log('Projects retrieved successfully!', JSON.stringify(foundProjects, null, 2));
     } catch (e) {
       console.log('Error retrieving projects', e);
       setProjects([]);
@@ -223,9 +222,9 @@ const ProjectsScreen = ({ navigation }: Props): React.ReactElement => {
 
   const fetchSessions = async () => {
     try {
-      const sessions = await DataStore.query(Session);
-      setSessions(sessions);
-      console.log('Sessions retrieved successfully!', JSON.stringify(sessions, null, 2));
+      const foundSessions = await DataStore.query(Session);
+      setSessions(foundSessions);
+      console.log('Sessions retrieved successfully!', JSON.stringify(foundSessions, null, 2));
     } catch (e) {
       console.log('Error retrieving sessions', e);
       setSessions([]);
@@ -287,7 +286,10 @@ const ProjectsScreen = ({ navigation }: Props): React.ReactElement => {
         <Text>{projects.length} project{projects.length === 1 ? '' : 's'}</Text>
         <Text>{sessions.length} session{sessions.length === 1 ? '' : 's'}</Text>
         <Text>{aggregateStats.words} word{aggregateStats.words === 1 ? '' : 's'}</Text>
-        <Text>{Math.floor(aggregateStats.minutes / 60)} hour{Math.floor(aggregateStats.minutes / 60) === 1 ? '' : 's'}, {aggregateStats.minutes % 60} minute{aggregateStats.minutes % 60 === 1 ? '' : 's'}</Text>
+        <Text>
+          {Math.floor(aggregateStats.minutes / 60)} hour{Math.floor(aggregateStats.minutes / 60) === 1 ? '' : 's'},
+          {' '}{aggregateStats.minutes % 60} minute{aggregateStats.minutes % 60 === 1 ? '' : 's'}
+        </Text>
       </Layout>
       <Divider />
       <List

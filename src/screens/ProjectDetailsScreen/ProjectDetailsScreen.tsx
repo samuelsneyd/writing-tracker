@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { SafeAreaView } from 'react-native';
+import { SafeAreaView, StyleSheet } from 'react-native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { ProjectsStackParamList } from '../../types/types';
 import { DataStore } from 'aws-amplify';
@@ -36,7 +36,7 @@ const ProjectDetailsScreen = ({ route, navigation }: Props): React.ReactElement 
     };
 
     getProject().then();
-  }, []);
+  }, [id]);
 
   React.useEffect(() => {
     const getSessions = async () => {
@@ -49,7 +49,7 @@ const ProjectDetailsScreen = ({ route, navigation }: Props): React.ReactElement 
     };
 
     getSessions().then();
-  }, [project]);
+  }, [id, project]);
 
   React.useEffect(() => {
     if (!project || sessions.length === 0) {
@@ -63,7 +63,7 @@ const ProjectDetailsScreen = ({ route, navigation }: Props): React.ReactElement 
     setProgress(calculatedProgress);
   }, [project, sessions]);
 
-  const BackAction = () => (
+  const backAction = () => (
     <TopNavigationAction icon={ArrowIosBackIcon} onPress={() => navigation.goBack()} />
   );
 
@@ -75,15 +75,15 @@ const ProjectDetailsScreen = ({ route, navigation }: Props): React.ReactElement 
   );
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={styles.safeAreaView}>
       <TopNavigation
         title={title}
         alignment="center"
-        accessoryLeft={BackAction}
+        accessoryLeft={backAction}
         accessoryRight={editProjectAction}
       />
       <Divider />
-      <Layout style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Layout style={styles.body}>
         {project
           ? <>
             <Text category="h1">{capitalCase(project.type)}</Text>
@@ -119,5 +119,16 @@ const ProjectDetailsScreen = ({ route, navigation }: Props): React.ReactElement 
     </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  safeAreaView: {
+    flex: 1,
+  },
+  body: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
 
 export default ProjectDetailsScreen;
