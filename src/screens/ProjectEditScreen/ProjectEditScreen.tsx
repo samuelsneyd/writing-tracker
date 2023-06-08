@@ -43,6 +43,7 @@ const ProjectNewScreen = ({ route, navigation }: Props): React.ReactElement => {
   const [project, setProject] = React.useState<Project>();
   const [selectedTypeIndex, setSelectedTypeIndex] = React.useState<IndexPath>(new IndexPath(0));
   const [selectedStatusIndex, setSelectedStatusIndex] = React.useState<IndexPath>(new IndexPath(0));
+  const [weeklyTarget, setWeeklyTarget] = React.useState<number>(0);
   const { id } = route.params;
 
   React.useEffect(() => {
@@ -64,6 +65,17 @@ const ProjectNewScreen = ({ route, navigation }: Props): React.ReactElement => {
 
     getProject().then();
   }, [id]);
+
+  React.useEffect(() => {
+    // Update weekly target as sum of daily targets
+    if (!project) {
+      return;
+    }
+    const { mon, tue, wed, thu, fri, sat, sun } = project.wordTarget;
+    const sumWeeklyTarget = mon.words + tue.words + wed.words + thu.words + fri.words + sat.words + sun.words;
+
+    setWeeklyTarget(sumWeeklyTarget);
+  }, [project]);
 
   const backAction = () => (
     <TopNavigationAction icon={ArrowIosBackIcon} onPress={() => navigation.goBack()} />
@@ -144,6 +156,7 @@ const ProjectNewScreen = ({ route, navigation }: Props): React.ReactElement => {
               >
                 {PROJECT_STATUS_DATA.map(status => renderOption(status.display))}
               </Select>
+              <Text appearance="hint">Weekly target: {weeklyTarget}</Text>
               <Text appearance="hint">Daily targets</Text>
               <DailyWordRow project={project} setProjectState={setProject} dayName="Monday" dayKey="mon" />
               <DailyWordRow project={project} setProjectState={setProject} dayName="Tuesday" dayKey="tue" />
