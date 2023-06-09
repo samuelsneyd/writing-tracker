@@ -39,6 +39,7 @@
     "react-native-sqlite-storage": "^6.0.1",
     "react-native-svg": "^13.9.0",
     "react-native-vector-icons": "^9.2.0",
+    "react-redux": "^8.0.7",
     "redux": "^4.2.1",
     "title-case": "^3.0.3",
     "url-parse": "^1.5.10"
