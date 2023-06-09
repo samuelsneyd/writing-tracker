@@ -7,6 +7,8 @@ import { ApplicationProvider, IconRegistry } from '@ui-kitten/components';
 import RootTabNavigator from './navigators/RootTabNavigator/RootTabNavigator';
 import { ThemeContext } from './themes/theme-context';
 import { cyanTheme } from './themes';
+import { Provider } from 'react-redux';
+import { store } from './store/store';
 import useLoginStreak from './hooks/useLoginStreak/useLoginStreak';
 
 const App = () => {
@@ -20,7 +22,7 @@ const App = () => {
   useLoginStreak({});
 
   return (
-    <>
+    <Provider store={store}>
       <IconRegistry icons={EvaIconsPack} />
       <ThemeContext.Provider value={{ theme, toggleTheme }}>
         <ApplicationProvider {...eva} theme={{ ...eva[theme], ...cyanTheme }}>
@@ -29,7 +31,7 @@ const App = () => {
           </NavigationContainer>
         </ApplicationProvider>
       </ThemeContext.Provider>
-    </>
+    </Provider>
   );
 };
 
