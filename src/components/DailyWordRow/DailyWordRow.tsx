@@ -2,7 +2,7 @@ import * as React from 'react';
 import { StyleSheet } from 'react-native';
 import { Input, Layout, Toggle } from '@ui-kitten/components';
 import { Project } from '../../models';
-import { CreateProjectInput } from '../../types/API';
+import { CreateProjectInput, WeeklyTargetInput } from '../../types/API';
 
 type DailyWordRowProps = {
   form?: CreateProjectInput;
@@ -10,7 +10,7 @@ type DailyWordRowProps = {
   project?: Project;
   setProject?: React.Dispatch<Project>;
   dayName: string;
-  dayKey: 'mon' | 'tue' | 'wed' | 'thu' | 'fri' | 'sat' | 'sun';
+  dayKey: keyof WeeklyTargetInput;
 };
 
 /**
