@@ -19,18 +19,20 @@ const DailyWordRow = (props: DailyWordRowProps) => {
   const { project, setProjectState, dayName, dayKey } = props;
   return (
     <Layout style={styles.dailyTargetRow}>
-      <Toggle
-        style={styles.dailyTargetRowItem}
-        checked={project.wordTarget[dayKey].enabled}
-        onChange={() => {
-          setProjectState(Project.copyOf(project, draft => {
-            draft.wordTarget[dayKey] = {
-              enabled: !project.wordTarget[dayKey].enabled,
-              words: 0,
-            };
-          }));
-        }}
-      >{dayName}</Toggle>
+      <Layout style={styles.toggleContainer}>
+        <Toggle
+          style={styles.dailyTargetRowItem}
+          checked={project.wordTarget[dayKey].enabled}
+          onChange={() => {
+            setProjectState(Project.copyOf(project, draft => {
+              draft.wordTarget[dayKey] = {
+                enabled: !project.wordTarget[dayKey].enabled,
+                words: 0,
+              };
+            }));
+          }}
+        >{dayName}</Toggle>
+      </Layout>
       <Input
         style={styles.dailyTargetRowItem}
         placeholder="0"
@@ -52,6 +54,10 @@ const DailyWordRow = (props: DailyWordRowProps) => {
 const styles = StyleSheet.create({
   dailyTargetRow: {
     flexDirection: 'row',
+  },
+  toggleContainer: {
+    flex: 1,
+    alignItems: 'flex-start',
   },
   dailyTargetRowItem: {
     flex: 1,

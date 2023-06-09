@@ -92,8 +92,8 @@ const ProjectNewScreen = ({ navigation }: Props): React.ReactElement => {
   };
 
   return (
-    <SafeAreaView style={styles.safeAreaView}>
-      <ScrollView>
+    <SafeAreaView style={styles.container}>
+      <ScrollView style={styles.container} contentContainerStyle={{ flexGrow: 1 }}>
         <TopNavigation title={'New Project'} alignment="center" accessoryLeft={backAction} />
         <Divider />
         <Layout style={styles.body}>
@@ -149,7 +149,6 @@ const ProjectNewScreen = ({ navigation }: Props): React.ReactElement => {
               >
                 {PROJECT_STATUS_DATA.map(status => renderOption(status.display))}
               </Select>
-              <Text appearance="hint">Weekly target: {weeklyTarget}</Text>
               <Text appearance="hint">Daily targets</Text>
               <DailyWordRow project={project} setProjectState={setProject} dayName="Monday" dayKey="mon" />
               <DailyWordRow project={project} setProjectState={setProject} dayName="Tuesday" dayKey="tue" />
@@ -158,6 +157,7 @@ const ProjectNewScreen = ({ navigation }: Props): React.ReactElement => {
               <DailyWordRow project={project} setProjectState={setProject} dayName="Friday" dayKey="fri" />
               <DailyWordRow project={project} setProjectState={setProject} dayName="Saturday" dayKey="sat" />
               <DailyWordRow project={project} setProjectState={setProject} dayName="Sunday" dayKey="sun" />
+              <Text appearance="hint">Weekly target: {weeklyTarget}</Text>
               <Button onPress={handleSave}>Save Project</Button>
             </>
             : <Spinner />
@@ -169,7 +169,7 @@ const ProjectNewScreen = ({ navigation }: Props): React.ReactElement => {
 };
 
 const styles = StyleSheet.create({
-  safeAreaView: {
+  container: {
     flex: 1,
   },
   body: {
