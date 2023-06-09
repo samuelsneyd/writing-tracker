@@ -98,14 +98,12 @@ const ProjectDetailsScreen = ({ route, navigation }: Props): React.ReactElement 
         <Layout style={styles.body}>
           {project
             ? <>
-              <Text category="h1">{capitalCase(project.title)}</Text>
+              <Text style={styles.title} category="h1">{project.title || 'My Project'}</Text>
               <Text>Description: {project.description}</Text>
               <Text>Type: {capitalCase(project.type)}</Text>
+              <Text>Progress: {Math.round(progress * 100) || '-'}%</Text>
+              <CircularProgressBar progress={progress} size="giant" />
               <Text>Status: {capitalCase(noCase(project.status))}</Text>
-              {sessions.map((session, i) =>
-                <Text key={session.id}>Session {i + 1}: {session.words} words, {session.minutes} minutes</Text>,
-              )}
-              <Text>Number of sessions: {sessions.length}</Text>
               <Text>Total words: {sessions.reduce((prev, { words: next }) => prev + next, 0)}</Text>
               <Text>Total minutes: {sessions.reduce((prev, { minutes: next }) => prev + next, 0)}</Text>
               <Text>Words per page: {project.wordsPerPage}</Text>
@@ -120,11 +118,10 @@ const ProjectDetailsScreen = ({ route, navigation }: Props): React.ReactElement 
               <Text>Fri: {project.wordTarget?.fri?.enabled ? project.wordTarget.fri.words : 0}</Text>
               <Text>Sat: {project.wordTarget?.sat?.enabled ? project.wordTarget.sat.words : 0}</Text>
               <Text>Sun: {project.wordTarget?.sun?.enabled ? project.wordTarget.sun.words : 0}</Text>
-              <Text>Progress: {Math.round(progress * 100)}%</Text>
-              <CircularProgressBar
-                progress={progress}
-                size="giant"
-              />
+              <Text>Number of sessions: {sessions.length}</Text>
+              {sessions.map((session, i) =>
+                <Text key={session.id}>Session {i + 1}: {session.words} words, {session.minutes} minutes</Text>,
+              )}
             </>
             : <Text>No project found!</Text>
           }
@@ -142,6 +139,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    padding: 16,
+    gap: 10,
+  },
+  title: {
+    textAlign: 'center',
   },
 });
 

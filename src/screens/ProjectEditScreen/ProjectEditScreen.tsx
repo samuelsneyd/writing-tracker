@@ -183,7 +183,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: 16,
+    padding: 16,
+    gap: 10,
   },
   select: {
     width: '100%',
