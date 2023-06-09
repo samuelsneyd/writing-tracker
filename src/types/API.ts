@@ -187,7 +187,7 @@ export type Session = {
   _version: number,
   _deleted?: boolean | null,
   _lastChangedAt: number,
-  projectSessionsId?: string | null,
+  projectSessionsId: string,
 };
 
 export type UpdateProjectInput = {
@@ -216,7 +216,7 @@ export type CreateSessionInput = {
   date: string,
   owner?: string | null,
   _version?: number | null,
-  projectSessionsId?: string | null,
+  projectSessionsId: string,
 };
 
 export type ModelSessionConditionInput = {
@@ -497,7 +497,7 @@ export type CreateProjectMutation = {
         _version: number,
         _deleted?: boolean | null,
         _lastChangedAt: number,
-        projectSessionsId?: string | null,
+        projectSessionsId: string,
       } | null >,
       nextToken?: string | null,
       startedAt?: number | null,
@@ -579,7 +579,7 @@ export type UpdateProjectMutation = {
         _version: number,
         _deleted?: boolean | null,
         _lastChangedAt: number,
-        projectSessionsId?: string | null,
+        projectSessionsId: string,
       } | null >,
       nextToken?: string | null,
       startedAt?: number | null,
@@ -661,7 +661,7 @@ export type DeleteProjectMutation = {
         _version: number,
         _deleted?: boolean | null,
         _lastChangedAt: number,
-        projectSessionsId?: string | null,
+        projectSessionsId: string,
       } | null >,
       nextToken?: string | null,
       startedAt?: number | null,
@@ -715,7 +715,7 @@ export type CreateSessionMutation = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
-    projectSessionsId?: string | null,
+    projectSessionsId: string,
   } | null,
 };
 
@@ -759,7 +759,7 @@ export type UpdateSessionMutation = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
-    projectSessionsId?: string | null,
+    projectSessionsId: string,
   } | null,
 };
 
@@ -803,7 +803,7 @@ export type DeleteSessionMutation = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
-    projectSessionsId?: string | null,
+    projectSessionsId: string,
   } | null,
 };
 
@@ -931,7 +931,7 @@ export type GetProjectQuery = {
         _version: number,
         _deleted?: boolean | null,
         _lastChangedAt: number,
-        projectSessionsId?: string | null,
+        projectSessionsId: string,
       } | null >,
       nextToken?: string | null,
       startedAt?: number | null,
@@ -1057,7 +1057,7 @@ export type GetSessionQuery = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
-    projectSessionsId?: string | null,
+    projectSessionsId: string,
   } | null,
 };
 
@@ -1099,7 +1099,7 @@ export type ListSessionsQuery = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
-      projectSessionsId?: string | null,
+      projectSessionsId: string,
     } | null >,
     nextToken?: string | null,
     startedAt?: number | null,
@@ -1145,7 +1145,7 @@ export type SyncSessionsQuery = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
-      projectSessionsId?: string | null,
+      projectSessionsId: string,
     } | null >,
     nextToken?: string | null,
     startedAt?: number | null,
@@ -1289,7 +1289,7 @@ export type OnCreateProjectSubscription = {
         _version: number,
         _deleted?: boolean | null,
         _lastChangedAt: number,
-        projectSessionsId?: string | null,
+        projectSessionsId: string,
       } | null >,
       nextToken?: string | null,
       startedAt?: number | null,
@@ -1371,7 +1371,7 @@ export type OnUpdateProjectSubscription = {
         _version: number,
         _deleted?: boolean | null,
         _lastChangedAt: number,
-        projectSessionsId?: string | null,
+        projectSessionsId: string,
       } | null >,
       nextToken?: string | null,
       startedAt?: number | null,
@@ -1453,7 +1453,7 @@ export type OnDeleteProjectSubscription = {
         _version: number,
         _deleted?: boolean | null,
         _lastChangedAt: number,
-        projectSessionsId?: string | null,
+        projectSessionsId: string,
       } | null >,
       nextToken?: string | null,
       startedAt?: number | null,
@@ -1507,7 +1507,7 @@ export type OnCreateSessionSubscription = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
-    projectSessionsId?: string | null,
+    projectSessionsId: string,
   } | null,
 };
 
@@ -1551,7 +1551,7 @@ export type OnUpdateSessionSubscription = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
-    projectSessionsId?: string | null,
+    projectSessionsId: string,
   } | null,
 };
 
@@ -1595,7 +1595,7 @@ export type OnDeleteSessionSubscription = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
-    projectSessionsId?: string | null,
+    projectSessionsId: string,
   } | null,
 };
 

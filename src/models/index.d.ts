@@ -75,7 +75,7 @@ type EagerProject = {
   readonly overallWordTarget: number;
   readonly wordTarget: WeeklyTarget;
   readonly wordsPerPage: number;
-  readonly sessions?: (Session | null)[] | null;
+  readonly sessions: (Session | null)[];
   readonly owner?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;

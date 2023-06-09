@@ -12,7 +12,7 @@ type Project @model @auth(rules: [{ allow: owner }]) {
   overallWordTarget: Int!
   wordTarget: WeeklyTarget!
   wordsPerPage: Int!
-  sessions: [Session] @hasMany
+  sessions: [Session]! @hasMany
   owner: String @auth(rules: [{ allow: owner, operations: [read, delete] }])
 }
 

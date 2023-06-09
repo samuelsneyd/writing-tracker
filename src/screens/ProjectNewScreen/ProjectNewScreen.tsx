@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { SafeAreaView, ScrollView, StyleSheet } from 'react-native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { CreateProjectInput } from '../../types/API';
 import type { ProjectsStackParamList } from '../../types/types';
 import { Project, ProjectStatus, ProjectType } from '../../models';
 import { DataStore } from 'aws-amplify';
@@ -37,38 +38,40 @@ const PROJECT_TYPE_DATA: EnumObject<ProjectType>[] = enumToSelectData(ProjectTyp
 
 const PROJECT_STATUS_DATA: EnumObject<ProjectStatus>[] = enumToSelectData(ProjectStatus);
 
+const initialProjectValues: CreateProjectInput = {
+  title: '',
+  description: '',
+  type: ProjectType.BOOK,
+  status: ProjectStatus.IN_PROGRESS,
+  initialWords: 0,
+  overallWordTarget: 120000,
+  wordTarget: {
+    mon: { enabled: true, words: 500 },
+    tue: { enabled: true, words: 500 },
+    wed: { enabled: true, words: 500 },
+    thu: { enabled: true, words: 500 },
+    fri: { enabled: true, words: 500 },
+    sat: { enabled: false, words: 0 },
+    sun: { enabled: false, words: 0 },
+  },
+  wordsPerPage: 300,
+};
+
 type Props = NativeStackScreenProps<ProjectsStackParamList, 'New'>
 
 const ProjectNewScreen = ({ navigation }: Props): React.ReactElement => {
-  const [project, setProject] = React.useState<Project>(new Project({
-    title: '',
-    description: '',
-    type: ProjectType.BOOK,
-    status: ProjectStatus.IN_PROGRESS,
-    initialWords: 0,
-    overallWordTarget: 120000,
-    wordTarget: {
-      mon: { enabled: true, words: 500 },
-      tue: { enabled: true, words: 500 },
-      wed: { enabled: true, words: 500 },
-      thu: { enabled: true, words: 500 },
-      fri: { enabled: true, words: 500 },
-      sat: { enabled: false, words: 0 },
-      sun: { enabled: false, words: 0 },
-    },
-    wordsPerPage: 300,
-  }));
+  const [projectForm, setProjectForm] = React.useState<CreateProjectInput>(initialProjectValues);
   const [selectedTypeIndex, setSelectedTypeIndex] = React.useState<IndexPath>(new IndexPath(0));
   const [selectedStatusIndex, setSelectedStatusIndex] = React.useState<IndexPath>(new IndexPath(0));
   const [weeklyTarget, setWeeklyTarget] = React.useState<number>(0);
 
   React.useEffect(() => {
     // Update weekly target as sum of daily targets
-    const { mon, tue, wed, thu, fri, sat, sun } = project.wordTarget;
+    const { mon, tue, wed, thu, fri, sat, sun } = projectForm.wordTarget;
     const sumWeeklyTarget = mon.words + tue.words + wed.words + thu.words + fri.words + sat.words + sun.words;
 
     setWeeklyTarget(sumWeeklyTarget);
-  }, [project]);
+  }, [projectForm]);
 
   const backAction = () => (
     <TopNavigationAction icon={ArrowIosBackIcon} onPress={() => navigation.goBack()} />
@@ -80,12 +83,12 @@ const ProjectNewScreen = ({ navigation }: Props): React.ReactElement => {
 
   const handleSave = async () => {
     // TODO - add input validation and error handling
-    if (!project) {
+    if (!projectForm) {
       console.log('No project to save!');
       return;
     }
-    await DataStore.save(project);
-    const { id, title } = project;
+    const savedProject = await DataStore.save(new Project(projectForm));
+    const { id, title } = savedProject;
 
     navigation.popToTop();
     navigation.navigate('Details', { id, title });
@@ -97,24 +100,20 @@ const ProjectNewScreen = ({ navigation }: Props): React.ReactElement => {
         <TopNavigation title={'New Project'} alignment="center" accessoryLeft={backAction} />
         <Divider />
         <Layout style={styles.body}>
-          {project
+          {projectForm
             ? <>
               <Input
                 placeholder="Title"
                 label="Title"
-                value={project.title}
-                onChangeText={nextValue => setProject(Project.copyOf(project, draft => {
-                  draft.title = nextValue;
-                }))}
+                value={projectForm.title}
+                onChangeText={nextValue => setProjectForm({ ...projectForm, title: nextValue })}
                 size="large"
               />
               <Input
                 placeholder="Description"
                 label="Description"
-                value={project.description}
-                onChangeText={nextValue => setProject(Project.copyOf(project, draft => {
-                  draft.description = nextValue;
-                }))}
+                value={projectForm.description}
+                onChangeText={nextValue => setProjectForm({ ...projectForm, description: nextValue })}
                 size="large"
                 multiline={true}
                 maxLength={300}
@@ -127,9 +126,7 @@ const ProjectNewScreen = ({ navigation }: Props): React.ReactElement => {
                 onSelect={index => {
                   const indexPath = index as IndexPath;
                   setSelectedTypeIndex(indexPath);
-                  setProject(Project.copyOf(project, draft => {
-                    draft.type = PROJECT_TYPE_DATA[indexPath.row].enumVal;
-                  }));
+                  setProjectForm({ ...projectForm, type: PROJECT_TYPE_DATA[indexPath.row].enumVal });
                 }}
               >
                 {PROJECT_TYPE_DATA.map(type => renderOption(type.display))}
@@ -142,21 +139,19 @@ const ProjectNewScreen = ({ navigation }: Props): React.ReactElement => {
                 onSelect={index => {
                   const indexPath = index as IndexPath;
                   setSelectedStatusIndex(indexPath);
-                  setProject(Project.copyOf(project, draft => {
-                    draft.status = PROJECT_STATUS_DATA[selectedTypeIndex.row].enumVal;
-                  }));
+                  setProjectForm({ ...projectForm, status: PROJECT_STATUS_DATA[selectedTypeIndex.row].enumVal });
                 }}
               >
                 {PROJECT_STATUS_DATA.map(status => renderOption(status.display))}
               </Select>
               <Text appearance="hint">Daily targets</Text>
-              <DailyWordRow project={project} setProjectState={setProject} dayName="Monday" dayKey="mon" />
-              <DailyWordRow project={project} setProjectState={setProject} dayName="Tuesday" dayKey="tue" />
-              <DailyWordRow project={project} setProjectState={setProject} dayName="Wednesday" dayKey="wed" />
-              <DailyWordRow project={project} setProjectState={setProject} dayName="Thursday" dayKey="thu" />
-              <DailyWordRow project={project} setProjectState={setProject} dayName="Friday" dayKey="fri" />
-              <DailyWordRow project={project} setProjectState={setProject} dayName="Saturday" dayKey="sat" />
-              <DailyWordRow project={project} setProjectState={setProject} dayName="Sunday" dayKey="sun" />
+              <DailyWordRow form={projectForm} setForm={setProjectForm} dayName="Monday" dayKey="mon" />
+              <DailyWordRow form={projectForm} setForm={setProjectForm} dayName="Tuesday" dayKey="tue" />
+              <DailyWordRow form={projectForm} setForm={setProjectForm} dayName="Wednesday" dayKey="wed" />
+              <DailyWordRow form={projectForm} setForm={setProjectForm} dayName="Thursday" dayKey="thu" />
+              <DailyWordRow form={projectForm} setForm={setProjectForm} dayName="Friday" dayKey="fri" />
+              <DailyWordRow form={projectForm} setForm={setProjectForm} dayName="Saturday" dayKey="sat" />
+              <DailyWordRow form={projectForm} setForm={setProjectForm} dayName="Sunday" dayKey="sun" />
               <Text appearance="hint">Weekly target: {weeklyTarget}</Text>
               <Button onPress={handleSave}>Save Project</Button>
             </>

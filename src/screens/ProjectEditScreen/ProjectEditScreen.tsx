@@ -57,6 +57,12 @@ const ProjectNewScreen = ({ route, navigation }: Props): React.ReactElement => {
         if (foundProject) {
           setIsLoaded(true);
           setProject(foundProject);
+          setSelectedTypeIndex(new IndexPath(
+            PROJECT_TYPE_DATA.findIndex(({ enumVal }) => enumVal === foundProject.type),
+          ));
+          setSelectedStatusIndex(new IndexPath(
+            PROJECT_STATUS_DATA.findIndex(({ enumVal }) => enumVal === foundProject.status),
+          ));
         }
       } catch (e) {
         console.error('Error while reading project', e);
@@ -91,7 +97,7 @@ const ProjectNewScreen = ({ route, navigation }: Props): React.ReactElement => {
       console.log('No project to save!');
       return;
     }
-    await DataStore.save(project);
+    await DataStore.save(Project.copyOf(project, () => undefined));
     const { title } = project;
 
     navigation.popToTop();
@@ -157,13 +163,13 @@ const ProjectNewScreen = ({ route, navigation }: Props): React.ReactElement => {
                 {PROJECT_STATUS_DATA.map(status => renderOption(status.display))}
               </Select>
               <Text appearance="hint">Daily targets</Text>
-              <DailyWordRow project={project} setProjectState={setProject} dayName="Monday" dayKey="mon" />
-              <DailyWordRow project={project} setProjectState={setProject} dayName="Tuesday" dayKey="tue" />
-              <DailyWordRow project={project} setProjectState={setProject} dayName="Wednesday" dayKey="wed" />
-              <DailyWordRow project={project} setProjectState={setProject} dayName="Thursday" dayKey="thu" />
-              <DailyWordRow project={project} setProjectState={setProject} dayName="Friday" dayKey="fri" />
-              <DailyWordRow project={project} setProjectState={setProject} dayName="Saturday" dayKey="sat" />
-              <DailyWordRow project={project} setProjectState={setProject} dayName="Sunday" dayKey="sun" />
+              <DailyWordRow project={project} setProject={setProject} dayName="Monday" dayKey="mon" />
+              <DailyWordRow project={project} setProject={setProject} dayName="Tuesday" dayKey="tue" />
+              <DailyWordRow project={project} setProject={setProject} dayName="Wednesday" dayKey="wed" />
+              <DailyWordRow project={project} setProject={setProject} dayName="Thursday" dayKey="thu" />
+              <DailyWordRow project={project} setProject={setProject} dayName="Friday" dayKey="fri" />
+              <DailyWordRow project={project} setProject={setProject} dayName="Saturday" dayKey="sat" />
+              <DailyWordRow project={project} setProject={setProject} dayName="Sunday" dayKey="sun" />
               <Text appearance="hint">Weekly target: {weeklyTarget}</Text>
               <Button onPress={handleSave}>Save Project</Button>
             </>

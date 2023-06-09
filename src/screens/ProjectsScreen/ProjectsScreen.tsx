@@ -130,6 +130,7 @@ const ProjectsScreen = ({ navigation }: Props): React.ReactElement => {
         sat: { enabled: false, words: 0 },
         sun: { enabled: false, words: 0 },
       },
+      sessions: [],
     };
     try {
       const newProjects = await Promise.all([

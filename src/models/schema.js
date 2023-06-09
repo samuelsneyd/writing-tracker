@@ -80,7 +80,7 @@ export const schema = {
                     },
                     "isRequired": false,
                     "attributes": [],
-                    "isArrayNullable": true,
+                    "isArrayNullable": false,
                     "association": {
                         "connectionType": "HAS_MANY",
                         "associatedWith": "projectSessionsId"
@@ -413,5 +413,5 @@ export const schema = {
         }
     },
     "codegenVersion": "3.4.3",
-    "version": "717506025c47b7c6da0505a3feb3d83c"
+    "version": "9f3d930d7bb2ef62a10c9976ed1f3b0a"
 };
