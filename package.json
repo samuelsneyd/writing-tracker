@@ -19,6 +19,7 @@
     "@react-navigation/bottom-tabs": "^6.5.7",
     "@react-navigation/native": "^6.1.6",
     "@react-navigation/native-stack": "^6.9.12",
+    "@reduxjs/toolkit": "^1.9.5",
     "@ui-kitten/components": "^5.3.1",
     "@ui-kitten/eva-icons": "^5.3.1",
     "amazon-cognito-identity-js": "^6.2.0",
@@ -38,6 +39,7 @@
     "react-native-sqlite-storage": "^6.0.1",
     "react-native-svg": "^13.9.0",
     "react-native-vector-icons": "^9.2.0",
+    "redux": "^4.2.1",
     "title-case": "^3.0.3",
     "url-parse": "^1.5.10"
   },
