@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { SafeAreaView, StyleSheet } from 'react-native';
+import { ColorValue, SafeAreaView, ScrollView, StyleSheet, View } from 'react-native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { useIsFocused } from '@react-navigation/native';
 import { DataStore, Predicates } from 'aws-amplify';
 import _ from 'lodash';
 import { Session } from '../../models';
@@ -9,9 +10,26 @@ import { Divider, Layout, TopNavigation, Text, TopNavigationAction, useTheme } f
 import { ArrowIosBackIcon } from '../../components/Icons/Icons';
 import { BarChart } from 'react-native-gifted-charts';
 
-type BarData = {
-  value: number;
-  label: string;
+type BarDataItemType = {
+  value?: number;
+  onPress?: any;
+  frontColor?: ColorValue;
+  sideColor?: ColorValue;
+  topColor?: ColorValue;
+  showGradient?: Boolean;
+  gradientColor?: any;
+  label?: String;
+  barWidth?: number;
+  sideWidth?: number;
+  labelTextStyle?: any;
+  topLabelComponent?: Function;
+  topLabelContainerStyle?: any;
+  disablePress?: any;
+  labelComponent?: View | Function;
+  spacing?: number;
+  barBackgroundPattern?: Function;
+  patternId?: String;
+  barStyle?: object;
 };
 
 const DAYS_OF_WEEK = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
@@ -19,7 +37,8 @@ const DAYS_OF_WEEK = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 type Props = NativeStackScreenProps<MoreStackParamList, 'Charts'>
 
 const ChartsScreen = ({ navigation }: Props): React.ReactElement => {
-  const [sessionData, setSessionData] = React.useState<BarData[]>([]);
+  const [sessionData, setSessionData] = React.useState<BarDataItemType[]>([]);
+  const focused = useIsFocused();
   const theme = useTheme();
 
   React.useEffect(() => {
@@ -37,14 +56,17 @@ const ChartsScreen = ({ navigation }: Props): React.ReactElement => {
         .defaults(_.zipObject(DAYS_OF_WEEK, Array(DAYS_OF_WEEK.length).fill(0)))
         .map((value, label) => ({ value, label }))
         .sortBy([item => _.indexOf(DAYS_OF_WEEK, item.label)])
-        // .map(item => ({ ...item })) // Optional, add props for each bar separately
+        .map((item): BarDataItemType => ({
+          ...item,
+          labelComponent: () => <Text style={styles.toolTip} appearance="hint">{item.label}</Text>,
+        }))
         .value();
 
       setSessionData(sortedResult);
     };
 
     fetchSessions().then();
-  }, []);
+  }, [focused]);
 
   const backAction = () => (
     <TopNavigationAction icon={ArrowIosBackIcon} onPress={() => navigation.goBack()} />
@@ -54,26 +76,32 @@ const ChartsScreen = ({ navigation }: Props): React.ReactElement => {
     <SafeAreaView style={styles.container}>
       <TopNavigation title="Charts" alignment="center" accessoryLeft={backAction} />
       <Divider />
-      <Layout style={styles.body}>
-        <Text category="h1">Charts</Text>
-        <Text appearance="hint">Total words written by day</Text>
-        <BarChart
-          data={sessionData}
-          frontColor={theme['color-primary-500']}
-          gradientColor={theme['color-primary-300']}
-          showGradient
-          barBorderRadius={4}
-          isAnimated
-          hideRules
-          spacing={15}
-          initialSpacing={20}
-          maxValue={(Math.ceil(_.max(sessionData.map(d => d.value / 1000)) || 0) * 1000) || 1000}
-          noOfSections={4}
-          renderTooltip={(item: BarData) => <Text appearance="hint" style={styles.toolTip}>{item.value}</Text>}
-          leftShiftForTooltip={2}
-          leftShiftForLastIndexTooltip={2}
-        />
-      </Layout>
+      <ScrollView style={styles.container} contentContainerStyle={styles.container}>
+        <Layout style={styles.body}>
+          <Text category="h1">Charts</Text>
+          <Text appearance="hint">Total words written by day</Text>
+          <BarChart
+            data={sessionData}
+            frontColor={theme['color-primary-500']}
+            gradientColor={theme['color-primary-300']}
+            showGradient
+            barBorderRadius={4}
+            isAnimated
+            hideRules
+            spacing={15}
+            initialSpacing={20}
+            maxValue={(Math.ceil(_.max(sessionData.map(d => (d.value || 0) / 1000)) || 0) * 1000) || 1000}
+            noOfSections={4}
+            renderTooltip={(item: BarDataItemType) => <Text appearance="hint" style={styles.barLabel}>{item.value}</Text>}
+            leftShiftForTooltip={2}
+            leftShiftForLastIndexTooltip={2}
+            yAxisLabelWidth={50}
+            yAxisTextStyle={{color: theme['text-hint-color']}}
+            yAxisColor={theme['text-hint-color']}
+            xAxisColor={theme['text-hint-color']}
+          />
+        </Layout>
+      </ScrollView>
     </SafeAreaView>
   );
 };
@@ -90,6 +118,9 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   toolTip: {
+    textAlign: 'center',
+  },
+  barLabel: {
     textAlign: 'center',
   },
 });
