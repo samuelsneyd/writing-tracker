@@ -1,10 +1,20 @@
 import React from 'react';
-import { Dimensions, ListRenderItemInfo, ImageStyle, StyleSheet } from 'react-native';
-import { Card, List, ListElement, ListItemElement, ListProps, Text } from '@ui-kitten/components';
+import { Dimensions, ListRenderItemInfo, StyleSheet } from 'react-native';
+import {
+  Card,
+  IconElement,
+  IconProps,
+  List,
+  ListElement,
+  ListItemElement,
+  ListProps,
+  Text,
+  useTheme,
+} from '@ui-kitten/components';
 
 export type MenuItem = {
   title: string;
-  icon: (style: ImageStyle) => React.ReactElement;
+  icon: (props: IconProps) => IconElement;
 };
 
 export type MenuGridListProps = Omit<ListProps, 'renderItem'> & {
@@ -14,13 +24,14 @@ export type MenuGridListProps = Omit<ListProps, 'renderItem'> & {
 
 export const MenuGridList = (props: MenuGridListProps): ListElement => {
   const { contentContainerStyle, onItemPress, ...listProps } = props;
+  const theme = useTheme();
 
   const renderItem = (info: ListRenderItemInfo<MenuItem>): ListItemElement => (
     <Card
       style={styles.item}
       onPress={() => props.onItemPress(info.index)}
     >
-      {info.item.icon({ width: 64, height: 64, alignSelf: 'center' })}
+      {info.item.icon({ ...styles.itemIcon, fill: theme['color-primary-500'] })}
       <Text
         style={styles.itemTitle}
         category="s2"
@@ -51,7 +62,7 @@ const styles = StyleSheet.create({
     margin: 8,
     maxWidth: Dimensions.get('window').width / 2 - 24,
   },
-  itemImage: {
+  itemIcon: {
     alignSelf: 'center',
     width: 64,
     height: 64,
