@@ -2,11 +2,7 @@ import * as React from 'react';
 import { ColorValue, StyleSheet, View } from 'react-native';
 import _ from 'lodash';
 import { Session } from '../../models';
-import {
-  Text,
-  useTheme,
-  TextElement,
-} from '@ui-kitten/components';
+import { Text, TextElement, useTheme } from '@ui-kitten/components';
 import { BarChart } from 'react-native-gifted-charts';
 
 type BarDataItemType = {
@@ -34,14 +30,13 @@ type BarDataItemType = {
 const DAYS_OF_WEEK = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
 type Props = {
-  sessions: Session[],
+  sessions: Session[];
 };
 
 const TotalWordsByDayChart = ({ sessions }: Props): React.ReactElement => {
   const theme = useTheme();
 
-  // Total words written across all sessions, grouped by day of the week
-  const sessionData = _(sessions)
+  const barData = _(sessions)
     .map(session => ({
       value: session.words,
       label: DAYS_OF_WEEK[(new Date(session.date).getDay() + 6) % 7], // 0: Mon, 6: Sun
@@ -53,18 +48,18 @@ const TotalWordsByDayChart = ({ sessions }: Props): React.ReactElement => {
     .sortBy([item => _.indexOf(DAYS_OF_WEEK, item.label)])
     .map((item): BarDataItemType => ({
       ...item,
-      labelComponent: () => <Text style={styles.toolTip} appearance="hint">{item.label}</Text>,
+      labelComponent: () => <Text style={styles.barLabel} appearance="hint">{item.label}</Text>,
     }))
     .value();
 
   const renderTooltip = (item: BarDataItemType): TextElement => (
-    <Text appearance="hint" style={styles.barLabel}>{item.value?.toLocaleString()}</Text>
+    <Text appearance="hint" style={styles.toolTip}>{item.value?.toLocaleString()}</Text>
   );
 
   const getMaxYAxisValue = (): number => {
     const defaultMax = 1000;
     const step = 1000;
-    const dataCeiling = Math.ceil(_.max(sessionData.map(d => (d.value ?? 0) / step)) || 0) * step;
+    const dataCeiling = Math.ceil(_.max(barData.map(d => (d.value ?? 0) / step)) || 0) * step;
     return dataCeiling || defaultMax;
   };
 
@@ -87,22 +82,21 @@ const TotalWordsByDayChart = ({ sessions }: Props): React.ReactElement => {
 
   return (
     <>
-      <Text appearance="hint">Total words written by day</Text>
+      <Text category="h6" appearance="hint">Total words by day</Text>
       <BarChart
-        data={sessionData}
+        data={barData}
         frontColor={theme['color-primary-500']}
         gradientColor={theme['color-primary-300']}
         showGradient
         barBorderRadius={4}
-        isAnimated
         hideRules
         spacing={15}
         initialSpacing={20}
         maxValue={getMaxYAxisValue()}
         noOfSections={4}
         renderTooltip={renderTooltip}
-        leftShiftForTooltip={2}
-        leftShiftForLastIndexTooltip={2}
+        leftShiftForTooltip={3}
+        leftShiftForLastIndexTooltip={3}
         yAxisLabelWidth={50}
         yAxisLabelTexts={getYAxisLabels()}
         yAxisTextStyle={{ color: theme['text-hint-color'] }}
