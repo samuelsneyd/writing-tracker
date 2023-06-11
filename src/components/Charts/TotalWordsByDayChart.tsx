@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { ColorValue, StyleSheet, View } from 'react-native';
-import { useIsFocused } from '@react-navigation/native';
 import _ from 'lodash';
 import { Session } from '../../models';
 import {
@@ -39,30 +38,24 @@ type Props = {
 };
 
 const TotalWordsByDayChart = ({ sessions }: Props): React.ReactElement => {
-  const [sessionData, setSessionData] = React.useState<BarDataItemType[]>([]);
-  const focused = useIsFocused();
   const theme = useTheme();
 
-  React.useEffect(() => {
-    // Total words written across all sessions, grouped by day of the week
-    const sortedResult = _(sessions)
-      .map(session => ({
-        value: session.words,
-        label: DAYS_OF_WEEK[(new Date(session.date).getDay() + 6) % 7], // 0: Mon, 6: Sun
-      }))
-      .groupBy('label')
-      .mapValues(group => _.sumBy(group, 'value'))
-      .defaults(_.zipObject(DAYS_OF_WEEK, Array(DAYS_OF_WEEK.length).fill(0)))
-      .map((value, label) => ({ value, label }))
-      .sortBy([item => _.indexOf(DAYS_OF_WEEK, item.label)])
-      .map((item): BarDataItemType => ({
-        ...item,
-        labelComponent: () => <Text style={styles.toolTip} appearance="hint">{item.label}</Text>,
-      }))
-      .value();
-
-    setSessionData(sortedResult);
-  }, [focused, sessions]);
+  // Total words written across all sessions, grouped by day of the week
+  const sessionData = _(sessions)
+    .map(session => ({
+      value: session.words,
+      label: DAYS_OF_WEEK[(new Date(session.date).getDay() + 6) % 7], // 0: Mon, 6: Sun
+    }))
+    .groupBy('label')
+    .mapValues(group => _.sumBy(group, 'value'))
+    .defaults(_.zipObject(DAYS_OF_WEEK, Array(DAYS_OF_WEEK.length).fill(0)))
+    .map((value, label) => ({ value, label }))
+    .sortBy([item => _.indexOf(DAYS_OF_WEEK, item.label)])
+    .map((item): BarDataItemType => ({
+      ...item,
+      labelComponent: () => <Text style={styles.toolTip} appearance="hint">{item.label}</Text>,
+    }))
+    .value();
 
   const renderTooltip = (item: BarDataItemType): TextElement => (
     <Text appearance="hint" style={styles.barLabel}>{item.value?.toLocaleString()}</Text>
@@ -110,7 +103,7 @@ const TotalWordsByDayChart = ({ sessions }: Props): React.ReactElement => {
         renderTooltip={renderTooltip}
         leftShiftForTooltip={2}
         leftShiftForLastIndexTooltip={2}
-        yAxisLabelWidth={55}
+        yAxisLabelWidth={50}
         yAxisLabelTexts={getYAxisLabels()}
         yAxisTextStyle={{ color: theme['text-hint-color'] }}
         yAxisColor={theme['text-hint-color']}
