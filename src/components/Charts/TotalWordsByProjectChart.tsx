@@ -1,52 +1,31 @@
-import { DataStore } from 'aws-amplify';
 import * as React from 'react';
 import _ from 'lodash';
-import { Project, Session } from '../../models';
+import { EagerProject } from '../../models';
 import { Text, useTheme } from '@ui-kitten/components';
 import { BarChart } from 'react-native-gifted-charts';
 import { BarDataItemType } from './chart-types';
 import { getMaxYAxisValue, getYAxisLabelTexts, renderLabel, renderTooltip } from './chart-utils';
 
 type Props = {
-  sessions: Session[];
-  projects: Project[];
+  eagerProjects: EagerProject[];
 };
 
-const TotalWordsByProjectChart = ({ projects }: Props): React.ReactElement => {
-  const [barData, setBarData] = React.useState<BarDataItemType[]>([]);
-  const theme = useTheme();
+const TotalWordsByProjectChart = ({ eagerProjects }: Props): React.ReactElement => {
+  // Sum words of all sessions, grouped by project
+  const barData: BarDataItemType[] = _(eagerProjects)
+    .map((item): BarDataItemType => ({
+      label: item.title,
+      value: _.sumBy(item.sessions, 'words'),
+      labelComponent: () => renderLabel(item.title),
+    }))
+    // Sort descending
+    .sortBy('value')
+    .reverse()
+    .value();
+
   const maxValue = getMaxYAxisValue(barData);
   const yAxisLabelTexts = getYAxisLabelTexts(maxValue);
-
-  React.useEffect(() => {
-    const getBarData = async () => {
-      // Hydrate projects with session data
-      const hydratedProjects = await Promise.all(projects.map(async project => ({
-        id: project.id,
-        title: project.title,
-        sessions: await DataStore.query(Session, c => c.project.id.eq(project.id))
-          // Pull words from sessions
-          .then(sessions => sessions.map(session => ({ words: session.words }))),
-      })));
-
-      // Data is grouped by projects, sum words by project
-      const result = _(hydratedProjects)
-        .map((item): BarDataItemType => ({
-          label: item.title,
-          value: _.sumBy(item.sessions, 'words'),
-          labelComponent: () => renderLabel(item.title),
-        }))
-        // Sort descending
-        .sortBy('value')
-        .reverse()
-        .value();
-
-      setBarData(result);
-    };
-
-    getBarData().then();
-
-  }, [projects]);
+  const theme = useTheme();
 
   return (
     <>

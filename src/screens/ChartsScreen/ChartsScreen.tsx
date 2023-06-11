@@ -5,7 +5,7 @@ import { useIsFocused } from '@react-navigation/native';
 import { DataStore, Predicates } from 'aws-amplify';
 import TotalWordsByDayChart from '../../components/Charts/TotalWordsByDayChart';
 import TotalWordsByProjectChart from '../../components/Charts/TotalWordsByProjectChart';
-import { Project, Session } from '../../models';
+import { EagerProject, EagerSession, Project, Session } from '../../models';
 import type { MoreStackParamList } from '../../types/types';
 import {
   Divider,
@@ -19,26 +19,39 @@ import { ArrowIosBackIcon } from '../../components/Icons/Icons';
 type Props = NativeStackScreenProps<MoreStackParamList, 'Charts'>
 
 const ChartsScreen = ({ navigation }: Props): React.ReactElement => {
-  const [projects, setProjects] = React.useState<Project[]>([]);
-  const [sessions, setSessions] = React.useState<Session[]>([]);
+  // TODO - load eager models from redux
+  const [eagerProjects, setEagerProjects] = React.useState<EagerProject[]>([]);
+  const [eagerSessions, setEagerSessions] = React.useState<EagerSession[]>([]);
   const isFocused = useIsFocused();
 
   React.useEffect(() => {
-    const fetchProjects = async () => {
-      const foundProjects = await DataStore.query(Project, Predicates.ALL);
-      setProjects(foundProjects);
+    const hydrateProjects = async () => {
+      const projects = await DataStore.query(Project, Predicates.ALL);
+      // Hydrate projects with sessions
+      const hydratedProjects: EagerProject[] = await Promise.all(projects.map(async project => ({
+        ...project,
+        sessions: await DataStore.query(Session, c => c.project.id.eq(project.id)),
+      })));
+
+      setEagerProjects(hydratedProjects);
     };
 
-    fetchProjects().then();
+    hydrateProjects().then();
   }, [isFocused]);
 
   React.useEffect(() => {
-    const fetchSessions = async () => {
-      const foundSessions = await DataStore.query(Session, Predicates.ALL);
-      setSessions(foundSessions);
+    const hydrateSessions = async () => {
+      const sessions = await DataStore.query(Session, Predicates.ALL);
+      // Hydrate sessions with projects
+      const hydratedSessions: EagerSession[] = await Promise.all(sessions.map(async session => ({
+        ...session,
+        project: await session.project,
+      })));
+
+      setEagerSessions(hydratedSessions);
     };
 
-    fetchSessions().then();
+    hydrateSessions().then();
   }, [isFocused]);
 
   const backAction = () => (
@@ -52,9 +65,9 @@ const ChartsScreen = ({ navigation }: Props): React.ReactElement => {
       <ScrollView style={styles.container}>
         <Layout style={styles.body}>
           <Text category="h1">Charts</Text>
-          <TotalWordsByProjectChart sessions={sessions} projects={projects} />
+          <TotalWordsByProjectChart eagerProjects={eagerProjects} />
           <Divider style={styles.divider} />
-          <TotalWordsByDayChart sessions={sessions} />
+          <TotalWordsByDayChart eagerSessions={eagerSessions} />
         </Layout>
       </ScrollView>
     </SafeAreaView>

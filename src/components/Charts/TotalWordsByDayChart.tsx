@@ -1,6 +1,6 @@
 import * as React from 'react';
 import _ from 'lodash';
-import { Session } from '../../models';
+import { EagerSession } from '../../models';
 import { Text, useTheme } from '@ui-kitten/components';
 import { BarChart } from 'react-native-gifted-charts';
 import { BarDataItemType } from './chart-types';
@@ -9,13 +9,12 @@ import { getMaxYAxisValue, getYAxisLabelTexts, renderLabel, renderTooltip } from
 const DAYS_OF_WEEK = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
 type Props = {
-  sessions: Session[];
+  eagerSessions: EagerSession[];
 };
 
-const TotalWordsByDayChart = ({ sessions }: Props): React.ReactElement => {
-  const theme = useTheme();
-
-  const barData = _(sessions)
+const TotalWordsByDayChart = ({ eagerSessions }: Props): React.ReactElement => {
+  // Sum words of all projects, grouped by day of the week
+  const barData = _(eagerSessions)
     .map(session => ({
       value: session.words,
       label: DAYS_OF_WEEK[(new Date(session.date).getDay() + 6) % 7], // 0: Mon, 6: Sun
@@ -23,16 +22,18 @@ const TotalWordsByDayChart = ({ sessions }: Props): React.ReactElement => {
     .groupBy('label')
     .mapValues(group => _.sumBy(group, 'value'))
     .defaults(_.zipObject(DAYS_OF_WEEK, Array(DAYS_OF_WEEK.length).fill(0)))
-    .map((value, label) => ({ value, label }))
-    .sortBy([item => _.indexOf(DAYS_OF_WEEK, item.label)])
-    .map((item): BarDataItemType => ({
-      ...item,
-      labelComponent: () => renderLabel(item.label),
+    .map((value, label): BarDataItemType => ({
+      value,
+      label,
+      labelComponent: () => renderLabel(label),
     }))
+    // Sort Mon -> Sun
+    .sortBy(item => _.indexOf(DAYS_OF_WEEK, item.label))
     .value();
 
   const maxValue = getMaxYAxisValue(barData);
   const yAxisLabelTexts = getYAxisLabelTexts(maxValue);
+  const theme = useTheme();
 
   return (
     <>
