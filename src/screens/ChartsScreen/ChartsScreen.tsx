@@ -110,6 +110,7 @@ const ChartsScreen = ({ navigation }: Props): React.ReactElement => {
             yAxisTextStyle={{ color: theme['text-hint-color'] }}
             yAxisColor={theme['text-hint-color']}
             xAxisColor={theme['text-hint-color']}
+            disableScroll
           />
         </Layout>
       </ScrollView>
