@@ -267,7 +267,7 @@ const ProjectsScreen = ({ navigation }: Props): React.ReactElement => {
         </View>
       );
     }
-    const { uri, headers } = imageUris[info.index % imageUris.length + 1000];
+    const { uri, headers } = imageUris[info.index % imageUris.length];
     return (
       <View style={styles.horizontalItem}>
         <BookCoverImage source={{ uri, headers }} />
