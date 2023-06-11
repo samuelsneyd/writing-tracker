@@ -284,12 +284,12 @@ const ProjectsScreen = ({ navigation }: Props): React.ReactElement => {
       />
       <Divider />
       <Layout style={styles.aggregateText} level="1">
-        <Text>{projects.length} project{projects.length === 1 ? '' : 's'}</Text>
-        <Text>{sessions.length} session{sessions.length === 1 ? '' : 's'}</Text>
-        <Text>{aggregateStats.words} word{aggregateStats.words === 1 ? '' : 's'}</Text>
+        <Text>{projects.length.toLocaleString()} project{projects.length === 1 ? '' : 's'}</Text>
+        <Text>{sessions.length.toLocaleString()} session{sessions.length === 1 ? '' : 's'}</Text>
+        <Text>{aggregateStats.words.toLocaleString()} word{aggregateStats.words === 1 ? '' : 's'}</Text>
         <Text>
-          {Math.floor(aggregateStats.minutes / 60)} hour{Math.floor(aggregateStats.minutes / 60) === 1 ? '' : 's'},
-          {' '}{aggregateStats.minutes % 60} minute{aggregateStats.minutes % 60 === 1 ? '' : 's'}
+          {Math.floor(aggregateStats.minutes / 60).toLocaleString()} hour{Math.floor(aggregateStats.minutes / 60) === 1 ? '' : 's'},
+          {' '}{(aggregateStats.minutes % 60).toLocaleString()} minute{aggregateStats.minutes % 60 === 1 ? '' : 's'}
         </Text>
       </Layout>
       <Divider />
