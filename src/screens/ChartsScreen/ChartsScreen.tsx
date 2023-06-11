@@ -19,7 +19,7 @@ type Props = NativeStackScreenProps<MoreStackParamList, 'Charts'>
 
 const ChartsScreen = ({ navigation }: Props): React.ReactElement => {
   const [sessions, setSessions] = React.useState<Session[]>([]);
-  const focused = useIsFocused();
+  const isFocused = useIsFocused();
 
   React.useEffect(() => {
     const fetchSessions = async () => {
@@ -28,7 +28,7 @@ const ChartsScreen = ({ navigation }: Props): React.ReactElement => {
     };
 
     fetchSessions().then();
-  }, [focused]);
+  }, [isFocused]);
 
   const backAction = () => (
     <TopNavigationAction icon={ArrowIosBackIcon} onPress={() => navigation.goBack()} />
