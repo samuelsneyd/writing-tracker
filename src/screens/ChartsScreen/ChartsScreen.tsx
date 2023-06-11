@@ -72,6 +72,17 @@ const ChartsScreen = ({ navigation }: Props): React.ReactElement => {
     <TopNavigationAction icon={ArrowIosBackIcon} onPress={() => navigation.goBack()} />
   );
 
+  const renderTooltip = (item: BarDataItemType) => (
+    <Text appearance="hint" style={styles.barLabel}>{item.value?.toLocaleString()}</Text>
+  );
+
+  const getMaxYAxisValue = () => {
+    const defaultMax = 1000;
+    const step = 1000;
+    const dataCeiling = Math.ceil(_.max(sessionData.map(d => (d.value ?? 0) / step)) || 0) * step;
+    return dataCeiling || defaultMax;
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <TopNavigation title="Charts" alignment="center" accessoryLeft={backAction} />
@@ -90,13 +101,13 @@ const ChartsScreen = ({ navigation }: Props): React.ReactElement => {
             hideRules
             spacing={15}
             initialSpacing={20}
-            maxValue={(Math.ceil(_.max(sessionData.map(d => (d.value || 0) / 1000)) || 0) * 1000) || 1000}
+            maxValue={getMaxYAxisValue()}
             noOfSections={4}
-            renderTooltip={(item: BarDataItemType) => <Text appearance="hint" style={styles.barLabel}>{item.value}</Text>}
+            renderTooltip={renderTooltip}
             leftShiftForTooltip={2}
             leftShiftForLastIndexTooltip={2}
-            yAxisLabelWidth={50}
-            yAxisTextStyle={{color: theme['text-hint-color']}}
+            yAxisLabelWidth={55}
+            yAxisTextStyle={{ color: theme['text-hint-color'] }}
             yAxisColor={theme['text-hint-color']}
             xAxisColor={theme['text-hint-color']}
           />
