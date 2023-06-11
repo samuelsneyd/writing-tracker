@@ -1,32 +1,11 @@
 import { DataStore } from 'aws-amplify';
 import * as React from 'react';
-import { ColorValue, StyleSheet, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import _ from 'lodash';
 import { Project, Session } from '../../models';
 import { Text, TextElement, useTheme } from '@ui-kitten/components';
 import { BarChart } from 'react-native-gifted-charts';
-
-type BarDataItemType = {
-  value?: number;
-  onPress?: any;
-  frontColor?: ColorValue;
-  sideColor?: ColorValue;
-  topColor?: ColorValue;
-  showGradient?: Boolean;
-  gradientColor?: any;
-  label?: String;
-  barWidth?: number;
-  sideWidth?: number;
-  labelTextStyle?: any;
-  topLabelComponent?: Function;
-  topLabelContainerStyle?: any;
-  disablePress?: any;
-  labelComponent?: View | Function;
-  spacing?: number;
-  barBackgroundPattern?: Function;
-  patternId?: String;
-  barStyle?: object;
-};
+import { BarDataItemType } from './chart-types';
 
 type Props = {
   sessions: Session[];
