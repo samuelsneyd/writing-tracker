@@ -1,7 +1,7 @@
 import { default as defaultTheme } from '@eva-design/eva';
-import { customTheme } from './themes';
+import { CustomTheme } from './themes';
 
-const overrideTheme: customTheme = {
+const overrideTheme: CustomTheme = {
   'color-primary-100': '#FAF5DA',
   'color-primary-200': '#F6EAB8',
   'color-primary-300': '#E6D28E',

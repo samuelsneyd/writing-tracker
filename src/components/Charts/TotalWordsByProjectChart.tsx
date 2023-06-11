@@ -11,6 +11,7 @@ type Props = {
 };
 
 const TotalWordsByProjectChart = ({ eagerProjects }: Props): React.ReactElement => {
+  const theme = useTheme();
   // Sum words of all sessions, grouped by project
   const barData: BarDataItemType[] = _(eagerProjects)
     .map((item): BarDataItemType => ({
@@ -21,11 +22,20 @@ const TotalWordsByProjectChart = ({ eagerProjects }: Props): React.ReactElement 
     // Sort descending
     .sortBy('value')
     .reverse()
+    .map((item, i): BarDataItemType => (
+      theme.useRainbow
+        ? {
+          ...item,
+          frontColor: theme[`color-rainbow-${i % Number.parseInt(theme.rainbowLength)}-500`],
+          gradientColor: theme[`color-rainbow-${i % Number.parseInt(theme.rainbowLength)}-500`],
+          showGradient: true,
+        }
+        : item
+    ))
     .value();
 
   const maxValue = getMaxYAxisValue(barData);
   const yAxisLabelTexts = getYAxisLabelTexts(maxValue);
-  const theme = useTheme();
 
   return (
     <>

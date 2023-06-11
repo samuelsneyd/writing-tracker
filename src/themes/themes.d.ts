@@ -2,7 +2,7 @@
  * Defines the required schema for a custom theme, overriding the
  * default UI Kitten themes.
  */
-export type customTheme = {
+export type CustomTheme = {
   // Primary & Semantics - 9 levels - hex
 
   'color-primary-100': string;
@@ -85,6 +85,11 @@ export type customTheme = {
   'color-basic-transparent-400'?: string;
   'color-basic-transparent-500'?: string;
   'color-basic-transparent-600'?: string;
+
+  // Rainbow
+
+  useRainbow?: boolean;
+  rainbowLength?: number;
 
   // Any
 

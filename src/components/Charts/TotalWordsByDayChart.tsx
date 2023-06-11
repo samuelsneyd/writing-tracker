@@ -13,6 +13,7 @@ type Props = {
 };
 
 const TotalWordsByDayChart = ({ eagerSessions }: Props): React.ReactElement => {
+  const theme = useTheme();
   // Sum words of all projects, grouped by day of the week
   const barData = _(eagerSessions)
     .map(session => ({
@@ -29,11 +30,20 @@ const TotalWordsByDayChart = ({ eagerSessions }: Props): React.ReactElement => {
     }))
     // Sort Mon -> Sun
     .sortBy(item => _.indexOf(DAYS_OF_WEEK, item.label))
+    .map((item, i): BarDataItemType => (
+      theme.useRainbow
+        ? {
+          ...item,
+          frontColor: theme[`color-rainbow-${i % Number.parseInt(theme.rainbowLength)}-500`],
+          gradientColor: theme[`color-rainbow-${i % Number.parseInt(theme.rainbowLength)}-500`],
+          showGradient: true,
+        }
+        : item
+    ))
     .value();
 
   const maxValue = getMaxYAxisValue(barData);
   const yAxisLabelTexts = getYAxisLabelTexts(maxValue);
-  const theme = useTheme();
 
   return (
     <>
