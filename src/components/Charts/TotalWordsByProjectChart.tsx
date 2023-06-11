@@ -5,7 +5,7 @@ import { Project, Session } from '../../models';
 import { Text, useTheme } from '@ui-kitten/components';
 import { BarChart } from 'react-native-gifted-charts';
 import { BarDataItemType } from './chart-types';
-import { renderLabel, renderTooltip } from './chart-utils';
+import { getMaxYAxisValue, getYAxisLabelTexts, renderLabel, renderTooltip } from './chart-utils';
 
 type Props = {
   sessions: Session[];
@@ -15,6 +15,8 @@ type Props = {
 const TotalWordsByProjectChart = ({ projects }: Props): React.ReactElement => {
   const [barData, setBarData] = React.useState<BarDataItemType[]>([]);
   const theme = useTheme();
+  const maxValue = getMaxYAxisValue(barData);
+  const yAxisLabelTexts = getYAxisLabelTexts(maxValue);
 
   React.useEffect(() => {
     const getBarData = async () => {
@@ -32,7 +34,7 @@ const TotalWordsByProjectChart = ({ projects }: Props): React.ReactElement => {
         .map((item): BarDataItemType => ({
           label: item.title,
           value: _.sumBy(item.sessions, 'words'),
-          labelComponent: () => renderLabel(item.title)
+          labelComponent: () => renderLabel(item.title),
         }))
         // Sort descending
         .sortBy('value')
@@ -45,30 +47,6 @@ const TotalWordsByProjectChart = ({ projects }: Props): React.ReactElement => {
     getBarData().then();
 
   }, [projects]);
-
-  const getMaxYAxisValue = (): number => {
-    const defaultMax = 1000;
-    const step = 1000;
-    const dataCeiling = Math.ceil(_.max(barData.map(d => (d.value ?? 0) / step)) || 0) * step;
-    return dataCeiling || defaultMax;
-  };
-
-  const getYAxisLabels = (): string[] => {
-    const maxYAxisValue = getMaxYAxisValue();
-    const kLimit = 10000;
-    return [
-      0,
-      maxYAxisValue / 4,
-      maxYAxisValue / 2,
-      (maxYAxisValue / 4) * 3,
-      maxYAxisValue,
-    ].map(n => {
-      if (n === 0 || maxYAxisValue < kLimit) {
-        return n.toLocaleString();
-      }
-      return `${n / 1000}K`;
-    });
-  };
 
   return (
     <>
@@ -83,11 +61,11 @@ const TotalWordsByProjectChart = ({ projects }: Props): React.ReactElement => {
         barWidth={80}
         spacing={15}
         initialSpacing={20}
-        maxValue={getMaxYAxisValue()}
+        maxValue={maxValue}
         noOfSections={4}
         renderTooltip={renderTooltip}
         yAxisLabelWidth={50}
-        yAxisLabelTexts={getYAxisLabels()}
+        yAxisLabelTexts={yAxisLabelTexts}
         yAxisTextStyle={{ color: theme['text-hint-color'] }}
         yAxisColor={theme['text-hint-color']}
         xAxisColor={theme['text-hint-color']}
