@@ -6,17 +6,17 @@ import { DataStore, Predicates } from 'aws-amplify';
 import TotalWordsByDayChart from '../../components/Charts/TotalWordsByDayChart';
 import TotalWordsByProjectChart from '../../components/Charts/TotalWordsByProjectChart';
 import { EagerProject, EagerSession, Project, Session } from '../../models';
-import type { MoreStackParamList } from '../../types/types';
+import type { ChartsStackParamList } from '../../types/types';
 import {
   Divider,
   Layout,
   TopNavigation,
   Text,
-  TopNavigationAction,
+  TopNavigationAction, TopNavigationActionElement,
 } from '@ui-kitten/components';
-import { ArrowIosBackIcon } from '../../components/Icons/Icons';
+import { MenuIcon } from '../../components/Icons/Icons';
 
-type Props = NativeStackScreenProps<MoreStackParamList, 'Charts'>
+type Props = NativeStackScreenProps<ChartsStackParamList, 'Charts'>
 
 const ChartsScreen = ({ navigation }: Props): React.ReactElement => {
   // TODO - load eager models from redux
@@ -54,13 +54,16 @@ const ChartsScreen = ({ navigation }: Props): React.ReactElement => {
     hydrateSessions().then();
   }, [isFocused]);
 
-  const backAction = () => (
-    <TopNavigationAction icon={ArrowIosBackIcon} onPress={() => navigation.goBack()} />
+  const renderDrawerAction = (): TopNavigationActionElement => (
+    <TopNavigationAction
+      icon={MenuIcon}
+      onPress={() => undefined}
+    />
   );
 
   return (
     <SafeAreaView style={styles.container}>
-      <TopNavigation title="Charts" alignment="center" accessoryLeft={backAction} />
+      <TopNavigation title="Charts" alignment="center" accessoryLeft={renderDrawerAction} />
       <Divider />
       <ScrollView style={styles.container}>
         <Layout style={styles.body}>

@@ -33,7 +33,7 @@ export const data: LayoutData[] = [
   },
   {
     title: 'Charts',
-    route: 'Charts',
+    route: 'ChartsStackNavigator',
     icon: BarChartIcon,
   },
   {
@@ -43,7 +43,7 @@ export const data: LayoutData[] = [
   },
   {
     title: 'Goals',
-    route: 'GoalsStackNavigator',
+    route: 'Goals',
     icon: EditIcon,
   },
   {

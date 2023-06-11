@@ -2,7 +2,7 @@ export type RootTabParamList = {
   // ScreenName: Props | undefined
   HomeStackNavigator: undefined;
   ProjectsStackNavigator: undefined;
-  AddDataStackNavigator: undefined;
+  ChartsStackNavigator: undefined;
   GoalsStackNavigator: undefined;
   MoreStackNavigator: undefined;
 };
@@ -22,6 +22,10 @@ export type AddDataStackParamList = {
   AddData: undefined;
 };
 
+export type ChartsStackParamList = {
+  Charts: undefined;
+};
+
 export type GoalsStackParamList = {
   Goals: undefined;
 };
@@ -31,7 +35,7 @@ export type MoreStackParamList = {
   Awards: undefined;
   Themes: undefined;
   Challenges: undefined;
-  Charts: undefined;
+  Goals: undefined;
   Settings: undefined;
 };
 
