@@ -1,11 +1,11 @@
 import { DataStore } from 'aws-amplify';
 import * as React from 'react';
-import { StyleSheet } from 'react-native';
 import _ from 'lodash';
 import { Project, Session } from '../../models';
-import { Text, TextElement, useTheme } from '@ui-kitten/components';
+import { Text, useTheme } from '@ui-kitten/components';
 import { BarChart } from 'react-native-gifted-charts';
 import { BarDataItemType } from './chart-types';
+import { renderLabel, renderTooltip } from './chart-utils';
 
 type Props = {
   sessions: Session[];
@@ -32,13 +32,7 @@ const TotalWordsByProjectChart = ({ projects }: Props): React.ReactElement => {
         .map((item): BarDataItemType => ({
           label: item.title,
           value: _.sumBy(item.sessions, 'words'),
-          labelComponent: () => (
-            <Text
-              style={styles.barLabel}
-              appearance="hint"
-              numberOfLines={1}
-            >{item.title}</Text>
-          ),
+          labelComponent: () => renderLabel(item.title)
         }))
         // Sort descending
         .sortBy('value')
@@ -51,11 +45,6 @@ const TotalWordsByProjectChart = ({ projects }: Props): React.ReactElement => {
     getBarData().then();
 
   }, [projects]);
-
-
-  const renderTooltip = (item: BarDataItemType): TextElement => (
-    <Text appearance="hint" style={styles.toolTip}>{item.value?.toLocaleString()}</Text>
-  );
 
   const getMaxYAxisValue = (): number => {
     const defaultMax = 1000;
@@ -107,14 +96,5 @@ const TotalWordsByProjectChart = ({ projects }: Props): React.ReactElement => {
     </>
   );
 };
-
-const styles = StyleSheet.create({
-  toolTip: {
-    textAlign: 'center',
-  },
-  barLabel: {
-    textAlign: 'center',
-  },
-});
 
 export default TotalWordsByProjectChart;

@@ -8,7 +8,7 @@ export type BarDataItemType = {
   topColor?: ColorValue;
   showGradient?: Boolean;
   gradientColor?: any;
-  label?: String;
+  label?: string;
   barWidth?: number;
   sideWidth?: number;
   labelTextStyle?: any;
@@ -18,6 +18,6 @@ export type BarDataItemType = {
   labelComponent?: View | Function;
   spacing?: number;
   barBackgroundPattern?: Function;
-  patternId?: String;
+  patternId?: string;
   barStyle?: object;
 };
