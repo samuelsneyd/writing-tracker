@@ -6,7 +6,15 @@ import { DataStore, Predicates } from 'aws-amplify';
 import _ from 'lodash';
 import { Session } from '../../models';
 import type { MoreStackParamList } from '../../types/types';
-import { Divider, Layout, TopNavigation, Text, TopNavigationAction, useTheme } from '@ui-kitten/components';
+import {
+  Divider,
+  Layout,
+  TopNavigation,
+  Text,
+  TopNavigationAction,
+  useTheme,
+  TextElement,
+} from '@ui-kitten/components';
 import { ArrowIosBackIcon } from '../../components/Icons/Icons';
 import { BarChart } from 'react-native-gifted-charts';
 
@@ -72,15 +80,32 @@ const ChartsScreen = ({ navigation }: Props): React.ReactElement => {
     <TopNavigationAction icon={ArrowIosBackIcon} onPress={() => navigation.goBack()} />
   );
 
-  const renderTooltip = (item: BarDataItemType) => (
+  const renderTooltip = (item: BarDataItemType): TextElement => (
     <Text appearance="hint" style={styles.barLabel}>{item.value?.toLocaleString()}</Text>
   );
 
-  const getMaxYAxisValue = () => {
+  const getMaxYAxisValue = (): number => {
     const defaultMax = 1000;
     const step = 1000;
     const dataCeiling = Math.ceil(_.max(sessionData.map(d => (d.value ?? 0) / step)) || 0) * step;
     return dataCeiling || defaultMax;
+  };
+
+  const getYAxisLabels = (): string[] => {
+    const maxYAxisValue = getMaxYAxisValue();
+    const kLimit = 10000;
+    return [
+      0,
+      maxYAxisValue / 4,
+      maxYAxisValue / 2,
+      (maxYAxisValue / 4) * 3,
+      maxYAxisValue
+    ].map(n => {
+      if (n === 0 || maxYAxisValue < kLimit) {
+        return n.toLocaleString();
+      }
+      return `${n / 1000}K`;
+    });
   };
 
   return (
@@ -107,6 +132,7 @@ const ChartsScreen = ({ navigation }: Props): React.ReactElement => {
             leftShiftForTooltip={2}
             leftShiftForLastIndexTooltip={2}
             yAxisLabelWidth={55}
+            yAxisLabelTexts={getYAxisLabels()}
             yAxisTextStyle={{ color: theme['text-hint-color'] }}
             yAxisColor={theme['text-hint-color']}
             xAxisColor={theme['text-hint-color']}
