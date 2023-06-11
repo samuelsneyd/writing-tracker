@@ -258,7 +258,16 @@ const ProjectsScreen = ({ navigation }: Props): React.ReactElement => {
 
   const renderHorizontalItem = (info: ListRenderItemInfo<Project>): React.ReactElement => {
     // TODO - use image URIs from project data
-    const { uri, headers } = imageUris[info.index % imageUris.length];
+    if (imageUris.length === 0) {
+      // Temporary measure to avoid type error on reading URI
+      // Should be redundant when pulling URIs form project data
+      return (
+        <View style={styles.horizontalItem}>
+          <BookCoverImage />
+        </View>
+      );
+    }
+    const { uri, headers } = imageUris[info.index % imageUris.length + 1000];
     return (
       <View style={styles.horizontalItem}>
         <BookCoverImage source={{ uri, headers }} />
