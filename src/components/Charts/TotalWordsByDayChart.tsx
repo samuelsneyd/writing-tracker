@@ -35,7 +35,7 @@ const TotalWordsByDayChart = ({ eagerSessions }: Props): React.ReactElement => {
         ? {
           ...item,
           frontColor: theme[`color-rainbow-${i % Number.parseInt(theme.rainbowLength)}-500`],
-          gradientColor: theme[`color-rainbow-${i % Number.parseInt(theme.rainbowLength)}-500`],
+          gradientColor: theme[`color-rainbow-${i % Number.parseInt(theme.rainbowLength)}-300`],
           showGradient: true,
         }
         : item
