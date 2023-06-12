@@ -6,7 +6,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { ApplicationProvider, IconRegistry } from '@ui-kitten/components';
 import RootTabNavigator from './navigators/RootTabNavigator/RootTabNavigator';
 import { ThemeContext } from './themes/theme-context';
-import { cyanTheme } from './themes';
+import { cyanTheme, rainbowTheme } from './themes';
 import { Provider } from 'react-redux';
 import { store } from './store/store';
 import useLoginStreak from './hooks/useLoginStreak/useLoginStreak';
@@ -25,7 +25,7 @@ const App = () => {
     <Provider store={store}>
       <IconRegistry icons={EvaIconsPack} />
       <ThemeContext.Provider value={{ theme, toggleTheme }}>
-        <ApplicationProvider {...eva} theme={{ ...eva[theme], ...cyanTheme }}>
+        <ApplicationProvider {...eva} theme={{ ...eva[theme], ...rainbowTheme }}>
           <NavigationContainer>
             <RootTabNavigator />
           </NavigationContainer>
