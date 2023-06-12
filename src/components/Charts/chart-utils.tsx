@@ -34,11 +34,7 @@ export const renderTooltip = (
  * @param label the text to render for the label.
  */
 export const renderLabel = (label: string | undefined): TextElement => (
-  <Text
-    style={styles.barLabel}
-    appearance="hint"
-    numberOfLines={1}
-  >{label}</Text>
+  <Text style={styles.barLabel} appearance="hint" numberOfLines={2}>{label}</Text>
 );
 
 /**
@@ -125,6 +121,9 @@ const styles = StyleSheet.create({
   },
   barLabel: {
     textAlign: 'center',
+    position: 'absolute',
+    top: -20,
+    width: '100%',
   },
 });
 
