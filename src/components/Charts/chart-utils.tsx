@@ -91,7 +91,7 @@ export const getYAxisLabelTexts = (maxYAxisValue: number, prefix: string = '', s
  */
 export const getSteppedColors = (item: BarDataItemType, theme: ThemeType, maxValue: number = 100) => {
   let colorStyle: 'primary' | 'success' | 'info' | 'warning' | 'danger';
-  if (item.value === undefined) {
+  if (item.value === undefined || item.value === null) {
     colorStyle = 'primary';
   } else if (item.value >= maxValue) {
     colorStyle = 'success';

@@ -13,29 +13,6 @@ type Props = {
 const ProgressPercentageByProjectChart = ({ eagerProjects }: Props): React.ReactElement => {
   const theme = useTheme();
 
-  // const getSteppedColors = (item: BarDataItemType, maxValue: number = 100) => {
-  //   let colorStyle: 'primary' | 'success' | 'info' | 'warning' | 'danger';
-  //   if (item.value === undefined) {
-  //     colorStyle = 'primary';
-  //   } else if (item.value >= maxValue) {
-  //     colorStyle = 'success';
-  //   } else if (item.value >= (maxValue / 4) * 3) {
-  //     colorStyle = 'primary';
-  //   } else if (item.value >= maxValue / 2) {
-  //     colorStyle = 'info';
-  //   } else if (item.value >= maxValue / 4) {
-  //     colorStyle = 'warning';
-  //   } else {
-  //     colorStyle = 'danger';
-  //   }
-  //
-  //   return {
-  //     frontColor: theme[`color-${colorStyle}-500`],
-  //     gradientColor: theme[`color-${colorStyle}-300`],
-  //     showGradient: true,
-  //   };
-  // };
-
   // Sum words of all sessions, grouped by project
   const barData: BarDataItemType[] = _(eagerProjects)
     .map((item): BarDataItemType => ({
