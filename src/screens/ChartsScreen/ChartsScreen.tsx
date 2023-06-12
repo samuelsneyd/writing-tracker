@@ -12,7 +12,8 @@ import {
   Divider,
   Layout,
   TopNavigation,
-  TopNavigationAction, TopNavigationActionElement,
+  TopNavigationAction,
+  TopNavigationActionElement,
 } from '@ui-kitten/components';
 import { MenuIcon } from '../../components/Icons/Icons';
 
