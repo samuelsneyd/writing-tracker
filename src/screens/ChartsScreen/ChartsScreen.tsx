@@ -25,6 +25,10 @@ const ChartsScreen = ({ navigation }: Props): React.ReactElement => {
   const isFocused = useIsFocused();
 
   React.useEffect(() => {
+    if (!isFocused) {
+      return;
+    }
+
     const hydrateProjects = async () => {
       const projects = await DataStore.query(Project, Predicates.ALL);
       // Hydrate projects with sessions
@@ -40,6 +44,10 @@ const ChartsScreen = ({ navigation }: Props): React.ReactElement => {
   }, [isFocused]);
 
   React.useEffect(() => {
+    if (!isFocused) {
+      return;
+    }
+
     const hydrateSessions = async () => {
       const sessions = await DataStore.query(Session, Predicates.ALL);
       // Hydrate sessions with projects
