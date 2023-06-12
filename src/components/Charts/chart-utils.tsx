@@ -1,6 +1,6 @@
 import * as React from 'react';
 import _ from 'lodash';
-import { Text, TextElement } from '@ui-kitten/components';
+import { Text, TextElement, ThemeType } from '@ui-kitten/components';
 import { StyleSheet } from 'react-native';
 import { BarDataItemType } from './chart-types';
 
@@ -75,6 +75,41 @@ export const getYAxisLabelTexts = (maxYAxisValue: number, prefix: string = '', s
     }
     return `${prefix}${n / 1000}K${suffix}`;
   });
+};
+
+/**
+ * Gets stepped colors based on the item's value's percentage of the max value.
+ * >= 100%: success.
+ * 75-100%: primary.
+ * 50-75%: info.
+ * 25-50%: warning.
+ * 0-25%: danger.
+ * No value: primary.
+ * @param item the bar data item type.
+ * @param theme the current Eva theme.
+ * @param maxValue the default max value.
+ */
+export const getSteppedColors = (item: BarDataItemType, theme: ThemeType, maxValue: number = 100) => {
+  let colorStyle: 'primary' | 'success' | 'info' | 'warning' | 'danger';
+  if (item.value === undefined) {
+    colorStyle = 'primary';
+  } else if (item.value >= maxValue) {
+    colorStyle = 'success';
+  } else if (item.value >= (maxValue / 4) * 3) {
+    colorStyle = 'primary';
+  } else if (item.value >= maxValue / 2) {
+    colorStyle = 'info';
+  } else if (item.value >= maxValue / 4) {
+    colorStyle = 'warning';
+  } else {
+    colorStyle = 'danger';
+  }
+
+  return {
+    frontColor: theme[`color-${colorStyle}-500`],
+    gradientColor: theme[`color-${colorStyle}-300`],
+    showGradient: true,
+  };
 };
 
 const chartUtil = {
