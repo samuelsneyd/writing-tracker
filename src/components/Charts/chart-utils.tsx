@@ -1,16 +1,33 @@
-import { Text, TextElement } from '@ui-kitten/components';
-import _ from 'lodash';
 import * as React from 'react';
+import _ from 'lodash';
+import { Text, TextElement } from '@ui-kitten/components';
 import { StyleSheet } from 'react-native';
 import { BarDataItemType } from './chart-types';
 
 /**
  * Returns a text component for rendering a chart tooltip.
  * @param item the bar data item.
+ * @param prefix an optional prefix.
+ * @param suffix an optional suffix.
+ * @param fractionDigits limit decimal places for floating-point numbers.
  */
-export const renderTooltip = (item: BarDataItemType): TextElement => (
-  <Text appearance="hint" style={styles.toolTip}>{item.value?.toLocaleString()}</Text>
-);
+export const renderTooltip = (
+  item: BarDataItemType,
+  prefix: string = '',
+  suffix: string = '',
+  fractionDigits: number | undefined = undefined,
+): TextElement => {
+  let value = '';
+  if (fractionDigits !== undefined && item.value !== undefined) {
+    value = item.value.toFixed(fractionDigits);
+  } else if (item.value !== undefined) {
+    value = item.value.toLocaleString();
+  }
+
+  return (
+    <Text appearance="hint" style={styles.toolTip}>{prefix}{value}{suffix}</Text>
+  );
+};
 
 /**
  * Returns a text component for rendering bar charts' x-axis labels.
@@ -40,9 +57,11 @@ export const getMaxYAxisValue = (barData: BarDataItemType[], defaultMax = 1000, 
 /**
  * Returns an array of 4 text values to use as the Y axis label texts
  * TODO - make the step count dynamic (e.g., 4 labels, 10 labels, etc).
- * @param maxYAxisValue
+ * @param maxYAxisValue the maximum value in the y-axis.
+ * @param prefix an optional prefix.
+ * @param suffix an optional suffix.
  */
-export const getYAxisLabelTexts = (maxYAxisValue: number): string[] => {
+export const getYAxisLabelTexts = (maxYAxisValue: number, prefix: string = '', suffix: string = ''): string[] => {
   const kLimit = 10000;
   return [
     0,
@@ -52,9 +71,9 @@ export const getYAxisLabelTexts = (maxYAxisValue: number): string[] => {
     maxYAxisValue,
   ].map(n => {
     if (n === 0 || maxYAxisValue < kLimit) {
-      return n.toLocaleString();
+      return `${prefix}${n.toLocaleString()}${suffix}`;
     }
-    return `${n / 1000}K`;
+    return `${prefix}${n / 1000}K${suffix}`;
   });
 };
 
