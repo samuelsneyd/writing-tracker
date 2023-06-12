@@ -59,7 +59,7 @@ const TotalWordsByDayChart = ({ eagerSessions }: Props): React.ReactElement => {
         initialSpacing={20}
         maxValue={maxValue}
         noOfSections={4}
-        renderTooltip={renderTooltip}
+        renderTooltip={(item: BarDataItemType) => renderTooltip(item)}
         leftShiftForTooltip={3}
         leftShiftForLastIndexTooltip={3}
         yAxisLabelWidth={50}

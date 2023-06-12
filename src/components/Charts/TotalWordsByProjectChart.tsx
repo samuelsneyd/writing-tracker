@@ -52,7 +52,7 @@ const TotalWordsByProjectChart = ({ eagerProjects }: Props): React.ReactElement 
         initialSpacing={20}
         maxValue={maxValue}
         noOfSections={4}
-        renderTooltip={renderTooltip}
+        renderTooltip={(item: BarDataItemType) => renderTooltip(item)}
         yAxisLabelWidth={50}
         yAxisLabelTexts={yAxisLabelTexts}
         yAxisTextStyle={{ color: theme['text-hint-color'] }}
