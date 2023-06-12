@@ -67,7 +67,6 @@ const ChartsScreen = ({ navigation }: Props): React.ReactElement => {
       <Divider />
       <ScrollView style={styles.container}>
         <Layout style={styles.body}>
-          <Text category="h1">Charts</Text>
           <TotalWordsByProjectChart eagerProjects={eagerProjects} />
           <Divider style={styles.divider} />
           <TotalWordsByDayChart eagerSessions={eagerSessions} />

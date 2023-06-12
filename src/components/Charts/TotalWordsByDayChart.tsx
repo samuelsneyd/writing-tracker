@@ -47,7 +47,7 @@ const TotalWordsByDayChart = ({ eagerSessions }: Props): React.ReactElement => {
 
   return (
     <>
-      <Text category="h6" appearance="hint">Total words by day</Text>
+      <Text category="h6" appearance="hint">Total words by week day</Text>
       <BarChart
         data={barData}
         frontColor={theme['color-primary-500']}
