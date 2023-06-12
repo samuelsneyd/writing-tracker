@@ -3,6 +3,7 @@ import { SafeAreaView, ScrollView, StyleSheet } from 'react-native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useIsFocused } from '@react-navigation/native';
 import { DataStore, Predicates } from 'aws-amplify';
+import ProgressPercentageByProjectChart from '../../components/Charts/ProgressPercentageByProjectChart';
 import TotalWordsByDayChart from '../../components/Charts/TotalWordsByDayChart';
 import TotalWordsByProjectChart from '../../components/Charts/TotalWordsByProjectChart';
 import { EagerProject, EagerSession, Project, Session } from '../../models';
@@ -11,7 +12,6 @@ import {
   Divider,
   Layout,
   TopNavigation,
-  Text,
   TopNavigationAction, TopNavigationActionElement,
 } from '@ui-kitten/components';
 import { MenuIcon } from '../../components/Icons/Icons';
@@ -67,6 +67,8 @@ const ChartsScreen = ({ navigation }: Props): React.ReactElement => {
       <Divider />
       <ScrollView style={styles.container}>
         <Layout style={styles.body}>
+          <ProgressPercentageByProjectChart eagerProjects={eagerProjects} />
+          <Divider style={styles.divider} />
           <TotalWordsByProjectChart eagerProjects={eagerProjects} />
           <Divider style={styles.divider} />
           <TotalWordsByDayChart eagerSessions={eagerSessions} />
