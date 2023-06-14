@@ -1,10 +1,14 @@
 import * as React from 'react';
 import { ListRenderItemInfo, SafeAreaView, StyleSheet, View } from 'react-native';
-import { Project, ProjectStatus, ProjectType, Session } from '../../models';
 import { Auth, DataStore, Predicates } from 'aws-amplify';
+import { Project, ProjectStatus, ProjectType, Session } from '../../models';
+import { deserializeModel, serializeModel } from '@aws-amplify/datastore/ssr';
 import type { ICredentials } from '@aws-amplify/core';
 import { useIsFocused } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { projectsSet } from '../../store/projects/projectsSlice';
+import { sessionsSet } from '../../store/sessions/sessionsSlice';
 import type { ProjectsStackParamList } from '../../types/types';
 import {
   Button,
@@ -35,9 +39,29 @@ type ProjectAggregateStats = {
 };
 
 const ProjectsScreen = ({ navigation }: Props): React.ReactElement => {
+  const dispatch = useAppDispatch();
+  const reduxProjects = useAppSelector(state => state.projects);
+  const reduxSessions = useAppSelector(state => state.sessions);
+
+  // Try read from redux first
+  let foundReduxProjects: Project[];
+  try {
+    foundReduxProjects = deserializeModel(Project, reduxProjects);
+  } catch (e) {
+    foundReduxProjects = [];
+  }
+
+  // Try read from redux first
+  let foundReduxSessions: Session[];
+  try {
+    foundReduxSessions = deserializeModel(Session, reduxSessions);
+  } catch (e) {
+    foundReduxSessions = [];
+  }
+
   const [showButtons, setShowButtons] = React.useState<boolean>(false);
-  const [projects, setProjects] = React.useState<Project[]>([]);
-  const [sessions, setSessions] = React.useState<Session[]>([]);
+  const [projects, setProjects] = React.useState<Project[]>(foundReduxProjects);
+  const [sessions, setSessions] = React.useState<Session[]>(foundReduxSessions);
   const [imageUris, setImageUris] = React.useState<ImageUri[]>([]);
   const [credentials, setCredentials] = React.useState<ICredentials>();
   const [aggregateStats, setAggregateStats] = React.useState<ProjectAggregateStats>({ words: 0, minutes: 0 });
@@ -45,18 +69,30 @@ const ProjectsScreen = ({ navigation }: Props): React.ReactElement => {
   const isFocused = useIsFocused();
 
   React.useEffect(() => {
+    if (reduxProjects.length > 0 || !isFocused) {
+      return;
+    }
+
+    // Load from DataStore and update Redux
     const getProjects = async () => {
       const foundProjects = await DataStore.query(Project);
       setProjects(foundProjects);
+      dispatch(projectsSet(serializeModel(foundProjects)));
     };
 
     getProjects().then();
   }, [isFocused]);
 
   React.useEffect(() => {
+    if (reduxSessions.length > 0 || !isFocused) {
+      return;
+    }
+
+    // Load from DataStore and update Redux
     const getSessions = async () => {
       const foundSessions = await DataStore.query(Session);
       setSessions(foundSessions);
+      dispatch(sessionsSet(serializeModel(foundSessions)));
     };
 
     getSessions().then();
