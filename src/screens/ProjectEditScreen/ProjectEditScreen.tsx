@@ -1,8 +1,11 @@
 import * as React from 'react';
 import { SafeAreaView, ScrollView, StyleSheet } from 'react-native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { projectAdded } from '../../store/projects/projectsSlice';
 import type { ProjectsStackParamList } from '../../types/types';
 import { Project, ProjectStatus, ProjectType } from '../../models';
+import { deserializeModel, serializeModel } from '@aws-amplify/datastore/ssr';
 import { DataStore } from 'aws-amplify';
 import {
   Button,
@@ -39,12 +42,31 @@ const PROJECT_STATUS_DATA: EnumObject<ProjectStatus>[] = enumToSelectData(Projec
 type Props = NativeStackScreenProps<ProjectsStackParamList, 'Edit'>
 
 const ProjectNewScreen = ({ route, navigation }: Props): React.ReactElement => {
-  const [isLoaded, setIsLoaded] = React.useState<boolean>(false);
-  const [project, setProject] = React.useState<Project>();
-  const [selectedTypeIndex, setSelectedTypeIndex] = React.useState<IndexPath>(new IndexPath(0));
-  const [selectedStatusIndex, setSelectedStatusIndex] = React.useState<IndexPath>(new IndexPath(0));
-  const [weeklyTarget, setWeeklyTarget] = React.useState<number>(0);
   const { id } = route.params;
+  const dispatch = useAppDispatch();
+  const reduxProjects = useAppSelector(state => state.projects);
+
+  // Try read from redux first
+  let foundReduxProject: Project | undefined;
+  try {
+    foundReduxProject = deserializeModel(Project, reduxProjects.find(project => project.id === id));
+  } catch (e) {
+    foundReduxProject = undefined;
+  }
+
+  const [isLoaded, setIsLoaded] = React.useState<boolean>(!!foundReduxProject);
+  const [project, setProject] = React.useState<Project | undefined>(foundReduxProject);
+  const [selectedTypeIndex, setSelectedTypeIndex] = React.useState<IndexPath>(new IndexPath(
+    foundReduxProject
+      ? PROJECT_TYPE_DATA.findIndex(({ enumVal }) => enumVal === foundReduxProject?.type)
+      : 0,
+  ));
+  const [selectedStatusIndex, setSelectedStatusIndex] = React.useState<IndexPath>(new IndexPath(
+    foundReduxProject
+      ? PROJECT_STATUS_DATA.findIndex(({ enumVal }) => enumVal === foundReduxProject?.status)
+      : 0,
+  ));
+  const [weeklyTarget, setWeeklyTarget] = React.useState<number>(0);
 
   React.useEffect(() => {
     if (!id) {
@@ -97,7 +119,8 @@ const ProjectNewScreen = ({ route, navigation }: Props): React.ReactElement => {
       console.log('No project to save!');
       return;
     }
-    await DataStore.save(Project.copyOf(project, () => undefined));
+    const savedProject = await DataStore.save(Project.copyOf(project, () => undefined));
+    dispatch(projectAdded(serializeModel(savedProject)));
     const { title } = project;
 
     navigation.popToTop();
