@@ -1,9 +1,12 @@
 import * as React from 'react';
 import { SafeAreaView, ScrollView, StyleSheet } from 'react-native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { useAppDispatch } from '../../store/hooks';
+import { projectAdded } from '../../store/projects/projectsSlice';
 import { CreateProjectInput } from '../../types/API';
 import type { ProjectsStackParamList } from '../../types/types';
 import { Project, ProjectStatus, ProjectType } from '../../models';
+import { serializeModel } from '@aws-amplify/datastore/ssr';
 import { DataStore } from 'aws-amplify';
 import {
   Button,
@@ -60,6 +63,7 @@ const initialProjectValues: CreateProjectInput = {
 type Props = NativeStackScreenProps<ProjectsStackParamList, 'New'>
 
 const ProjectNewScreen = ({ navigation }: Props): React.ReactElement => {
+  const dispatch = useAppDispatch();
   const [projectForm, setProjectForm] = React.useState<CreateProjectInput>(initialProjectValues);
   const [selectedTypeIndex, setSelectedTypeIndex] = React.useState<IndexPath>(new IndexPath(0));
   const [selectedStatusIndex, setSelectedStatusIndex] = React.useState<IndexPath>(new IndexPath(0));
@@ -88,6 +92,7 @@ const ProjectNewScreen = ({ navigation }: Props): React.ReactElement => {
       return;
     }
     const savedProject = await DataStore.save(new Project(projectForm));
+    dispatch(projectAdded(serializeModel(savedProject)));
     const { id, title } = savedProject;
 
     navigation.popToTop();
