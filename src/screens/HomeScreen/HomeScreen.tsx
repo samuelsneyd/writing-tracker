@@ -1,7 +1,13 @@
+import { serializeModel } from '@aws-amplify/datastore/ssr';
+import { DataStore } from 'aws-amplify';
 import * as React from 'react';
 import { SafeAreaView, StyleSheet } from 'react-native';
 import { useIsFocused } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { Project, Session } from '../../models';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { projectsSet } from '../../store/projects/projectsSlice';
+import { sessionsSet } from '../../store/sessions/sessionsSlice';
 import type { HomeStackParamList } from '../../types/types';
 import {
   Divider,
@@ -19,6 +25,39 @@ type Props = NativeStackScreenProps<HomeStackParamList, 'Home'>
 
 const HomeScreen = ({ navigation }: Props): React.ReactElement => {
   const isFocused = useIsFocused();
+  const dispatch = useAppDispatch();
+  const reduxProjects = useAppSelector(state => state.projects);
+  const reduxSessions = useAppSelector(state => state.sessions);
+
+  // Prefetch projects
+  React.useEffect(() => {
+    if (reduxProjects.length > 0 || !isFocused) {
+      return;
+    }
+
+    // Load from DataStore and update Redux
+    const getProjects = async () => {
+      const foundProjects = await DataStore.query(Project);
+      dispatch(projectsSet(serializeModel(foundProjects)));
+    };
+
+    getProjects().then();
+  }, [isFocused]);
+
+  // Prefetch sessions
+  React.useEffect(() => {
+    if (reduxSessions.length > 0 || !isFocused) {
+      return;
+    }
+
+    // Load from DataStore and update Redux
+    const getSessions = async () => {
+      const foundSessions = await DataStore.query(Session);
+      dispatch(sessionsSet(serializeModel(foundSessions)));
+    };
+
+    getSessions().then();
+  }, [isFocused]);
 
   const renderDrawerAction = (): TopNavigationActionElement => (
     <TopNavigationAction
