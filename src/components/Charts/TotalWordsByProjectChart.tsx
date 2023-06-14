@@ -16,7 +16,7 @@ const TotalWordsByProjectChart = ({ eagerProjects }: Props): React.ReactElement 
   const barData: BarDataItemType[] = _(eagerProjects)
     .map((item): BarDataItemType => ({
       label: item.title,
-      value: _.sumBy(item.sessions, 'words'),
+      value: _.sumBy(item.sessions, 'words') + item.initialWords,
       labelComponent: () => renderLabel(item.title),
     }))
     // Sort descending
