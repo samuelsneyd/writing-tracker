@@ -1,9 +1,11 @@
 import * as React from 'react';
 import { SafeAreaView, ScrollView, StyleSheet } from 'react-native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { useAppSelector } from '../../store/hooks';
 import type { ProjectsStackParamList } from '../../types/types';
 import { DataStore } from 'aws-amplify';
 import { Project, Session } from '../../models';
+import { deserializeModel } from '@aws-amplify/datastore/ssr';
 import {
   CircularProgressBar,
   Divider,
@@ -19,13 +21,33 @@ import { ArrowIosBackIcon, EditIcon } from '../../components/Icons/Icons';
 type Props = NativeStackScreenProps<ProjectsStackParamList, 'Details'>
 
 const ProjectDetailsScreen = ({ route, navigation }: Props): React.ReactElement => {
-  const [project, setProject] = React.useState<Project>();
-  const [sessions, setSessions] = React.useState<Session[]>([]);
+  const { id, title } = route.params;
+  const reduxProjects = useAppSelector(state => state.projects);
+  const reduxSessions = useAppSelector(state => state.sessions);
+
+  // Try read from redux first
+  let foundReduxProject: Project | undefined;
+  try {
+    foundReduxProject = deserializeModel(Project, reduxProjects.find(project => project.id === id));
+  } catch (e) {
+    foundReduxProject = undefined;
+  }
+
+  // Try read from redux first
+  let foundReduxSessions: Session[];
+  try {
+    foundReduxSessions = deserializeModel(Session, reduxSessions.filter(session => session.projectSessionsId === id));
+  } catch (e) {
+    foundReduxSessions = [];
+  }
+
+  const [project, setProject] = React.useState<Project | undefined>(foundReduxProject);
+  const [sessions, setSessions] = React.useState<Session[]>(foundReduxSessions);
   const [progress, setProgress] = React.useState<number>(0);
   const [weeklyTarget, setWeeklyTarget] = React.useState<number>(0);
-  const { id, title } = route.params;
 
   React.useEffect(() => {
+    // Fetch from DataStore as backup
     const getProject = async () => {
       try {
         const foundProject = await DataStore.query(Project, id);
@@ -39,6 +61,7 @@ const ProjectDetailsScreen = ({ route, navigation }: Props): React.ReactElement 
   }, [id]);
 
   React.useEffect(() => {
+    // Fetch from DataStore as backup
     const getSessions = async () => {
       try {
         const foundSessions = await DataStore.query(Session, c => c.project.id.eq(id));
