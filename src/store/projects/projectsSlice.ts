@@ -1,22 +1,34 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Project } from '../../models';
 
-const initialState: Project[] = [];
+const initialState: any[] = [];
+
+// TODO - add typescript types
 
 export const projectsSlice = createSlice({
   name: 'projects',
   initialState,
   reducers: {
-    projectAdded: (state, action: PayloadAction<Project>) => {
+    projectAdded: (state, action: PayloadAction<any>) => {
       state.push(action.payload);
     },
 
-    projectsAdded: (state, action: PayloadAction<Project[]>) => {
-      state.push(...action.payload);
+    projectsAdded: (state, action: PayloadAction<any>) => {
+      if (Array.isArray(action.payload)) {
+        return state.concat(action.payload);
+      }
     },
 
-    projectRemoved: (state, action) => {
-      // TODO
+    projectsSet: (state, action: PayloadAction<any>) => {
+      if (Array.isArray(action.payload)) {
+        return action.payload;
+      }
+    },
+
+    projectRemoved: (state, action: PayloadAction<any>) => {
+      const indexToDelete = state.findIndex(project => project.id === action.payload.id);
+      if (indexToDelete !== -1) {
+        state.splice(indexToDelete, 1);
+      }
     },
 
     projectsRemoved: (state, action) => {
@@ -25,7 +37,7 @@ export const projectsSlice = createSlice({
   },
 });
 
-export const { projectAdded, projectsAdded, projectRemoved, projectsRemoved } = projectsSlice.actions;
+export const { projectAdded, projectsAdded, projectsSet, projectRemoved, projectsRemoved } = projectsSlice.actions;
 
 const projectsReducer = projectsSlice.reducer;
 
