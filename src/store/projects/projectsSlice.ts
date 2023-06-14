@@ -9,7 +9,13 @@ export const projectsSlice = createSlice({
   initialState,
   reducers: {
     projectAdded: (state, action: PayloadAction<any>) => {
-      state.push(action.payload);
+      const foundIndex = state.findIndex(project => project.id === action.payload.id);
+
+      if (foundIndex === -1) {
+        state.push(action.payload);
+      } else {
+        state.splice(foundIndex, 1, action.payload);
+      }
     },
 
     projectsAdded: (state, action: PayloadAction<any>) => {
@@ -26,6 +32,7 @@ export const projectsSlice = createSlice({
 
     projectRemoved: (state, action: PayloadAction<any>) => {
       const indexToDelete = state.findIndex(project => project.id === action.payload.id);
+
       if (indexToDelete !== -1) {
         state.splice(indexToDelete, 1);
       }
