@@ -41,6 +41,7 @@ export const renderLabel = (label: string | undefined): TextElement => (
 
 /**
  * Returns the maximum value to display on the top of the y-axis, based on the bar data.
+ * Force the default max to be used by setting step = 0.
  * @param barData the bar chart data array, used to calculate the max value.
  * @param defaultMax if the chart has no data, or if the data isn't loaded yet,
  * the default max is used for the top y-axis label.
@@ -54,6 +55,10 @@ export const getMaxYAxisValue = (
   step: number = 1000,
   offset: number = 1,
 ): number => {
+  // Forces no steps above the default max, so default max is returned.
+  if (step === 0) {
+    return defaultMax;
+  }
   const dataValues = barData.map(d => (d.value ?? 0) * offset / step);
   const dataCeiling = Math.ceil(_.max(dataValues) || 0) * step;
   return Math.max(dataCeiling, defaultMax);

@@ -79,12 +79,12 @@ const ChartsScreen = ({ navigation }: Props): React.ReactElement => {
       <ScrollView style={styles.container}>
         <Layout style={styles.body}>
           <ProgressPercentageByProjectChart />
-          <Divider style={styles.divider} />
-          <TotalWordsByProjectChart />
-          <Divider style={styles.divider} />
-          <TotalTimeByProjectChart />
-          <Divider style={styles.divider} />
-          <TotalWordsByDayChart />
+          {/*<Divider style={styles.divider} />*/}
+          {/*<TotalWordsByProjectChart />*/}
+          {/*<Divider style={styles.divider} />*/}
+          {/*<TotalTimeByProjectChart />*/}
+          {/*<Divider style={styles.divider} />*/}
+          {/*<TotalWordsByDayChart />*/}
         </Layout>
       </ScrollView>
     </SafeAreaView>
