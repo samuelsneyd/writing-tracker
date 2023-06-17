@@ -99,7 +99,7 @@ const ChartsScreen = ({ navigation }: Props): React.ReactElement => {
           <Divider style={styles.divider} />
           <TotalWordsByProjectChart eagerProjects={eagerProjects} />
           <Divider style={styles.divider} />
-          <TotalWordsByDayChart eagerSessions={eagerSessions} />
+          <TotalWordsByDayChart />
         </Layout>
       </ScrollView>
     </SafeAreaView>

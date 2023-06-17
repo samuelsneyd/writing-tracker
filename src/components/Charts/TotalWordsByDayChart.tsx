@@ -1,21 +1,19 @@
 import * as React from 'react';
 import _ from 'lodash';
-import { EagerSession } from '../../models';
 import { Text, useTheme } from '@ui-kitten/components';
 import { BarChart } from 'react-native-gifted-charts';
+import { useAppSelector } from '../../store/hooks';
 import { BarDataItemType } from './chart-types';
 import { getMaxYAxisValue, getYAxisLabelTexts, renderLabel, renderTooltip } from './chart-utils';
 
 const DAYS_OF_WEEK = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
-type Props = {
-  eagerSessions: EagerSession[];
-};
-
-const TotalWordsByDayChart = ({ eagerSessions }: Props): React.ReactElement => {
+const TotalWordsByDayChart = (): React.ReactElement => {
   const theme = useTheme();
+  const reduxSessions = useAppSelector(state => state.sessions);
+
   // Sum words of all projects, grouped by day of the week
-  const barData = _(eagerSessions)
+  const barData = _(reduxSessions)
     .map(session => ({
       value: session.words,
       label: DAYS_OF_WEEK[(new Date(session.date).getDay() + 6) % 7], // 0: Mon, 6: Sun
