@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { SafeAreaView, ScrollView, StyleSheet } from 'react-native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { SerializedProject } from '../../models/serialized';
 import { useAppDispatch } from '../../store/hooks';
 import { projectAdded } from '../../store/projects/projectsSlice';
 import { CreateProjectInput } from '../../types/API';
@@ -92,7 +93,7 @@ const ProjectNewScreen = ({ navigation }: Props): React.ReactElement => {
       return;
     }
     const savedProject = await DataStore.save(new Project(projectForm));
-    dispatch(projectAdded(serializeModel(savedProject)));
+    dispatch(projectAdded(serializeModel(savedProject) as unknown as SerializedProject));
     const { id, title } = savedProject;
 
     navigation.popToTop();
