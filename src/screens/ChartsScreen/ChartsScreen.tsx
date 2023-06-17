@@ -5,6 +5,7 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useIsFocused } from '@react-navigation/native';
 import { DataStore, Predicates } from 'aws-amplify';
 import ProgressPercentageByProjectChart from '../../components/Charts/ProgressPercentageByProjectChart';
+import TotalTimeByProjectChart from '../../components/Charts/TotalTimeByProjectChart';
 import TotalWordsByDayChart from '../../components/Charts/TotalWordsByDayChart';
 import TotalWordsByProjectChart from '../../components/Charts/TotalWordsByProjectChart';
 import { Project, Session } from '../../models';
@@ -80,6 +81,8 @@ const ChartsScreen = ({ navigation }: Props): React.ReactElement => {
           <ProgressPercentageByProjectChart />
           <Divider style={styles.divider} />
           <TotalWordsByProjectChart />
+          <Divider style={styles.divider} />
+          <TotalTimeByProjectChart />
           <Divider style={styles.divider} />
           <TotalWordsByDayChart />
         </Layout>
