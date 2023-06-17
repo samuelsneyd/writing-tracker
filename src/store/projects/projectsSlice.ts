@@ -1,14 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { SerializedProject } from '../../models/serialized';
 
-const initialState: any[] = [];
-
-// TODO - add typescript types
+const initialState: SerializedProject[] = [];
 
 export const projectsSlice = createSlice({
   name: 'projects',
   initialState,
   reducers: {
-    projectAdded: (state, action: PayloadAction<any>) => {
+    projectAdded: (state, action: PayloadAction<SerializedProject>) => {
       const foundIndex = state.findIndex(project => project.id === action.payload.id);
 
       if (foundIndex === -1) {
@@ -18,19 +17,19 @@ export const projectsSlice = createSlice({
       }
     },
 
-    projectsAdded: (state, action: PayloadAction<any>) => {
+    projectsAdded: (state, action: PayloadAction<SerializedProject[]>) => {
       if (Array.isArray(action.payload)) {
         return state.concat(action.payload);
       }
     },
 
-    projectsSet: (state, action: PayloadAction<any>) => {
+    projectsSet: (state, action: PayloadAction<SerializedProject[]>) => {
       if (Array.isArray(action.payload)) {
         return action.payload;
       }
     },
 
-    projectRemoved: (state, action: PayloadAction<any>) => {
+    projectRemoved: (state, action: PayloadAction<SerializedProject>) => {
       const indexToDelete = state.findIndex(project => project.id === action.payload.id);
 
       if (indexToDelete !== -1) {
@@ -38,7 +37,7 @@ export const projectsSlice = createSlice({
       }
     },
 
-    projectsRemoved: (state, action) => {
+    projectsRemoved: (state, action: PayloadAction<SerializedProject[]>) => {
       // TODO
     },
   },

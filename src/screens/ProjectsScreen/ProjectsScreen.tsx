@@ -6,6 +6,7 @@ import { deserializeModel, serializeModel } from '@aws-amplify/datastore/ssr';
 import type { ICredentials } from '@aws-amplify/core';
 import { useIsFocused } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { SerializedProject, SerializedSession } from '../../models/serialized';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { projectsSet } from '../../store/projects/projectsSlice';
 import { sessionsSet } from '../../store/sessions/sessionsSlice';
@@ -46,7 +47,7 @@ const ProjectsScreen = ({ navigation }: Props): React.ReactElement => {
   // Try read from redux first
   let foundReduxProjects: Project[];
   try {
-    foundReduxProjects = deserializeModel(Project, reduxProjects);
+    foundReduxProjects = deserializeModel(Project, reduxProjects as unknown as Project[]);
   } catch (e) {
     foundReduxProjects = [];
   }
@@ -54,7 +55,7 @@ const ProjectsScreen = ({ navigation }: Props): React.ReactElement => {
   // Try read from redux first
   let foundReduxSessions: Session[];
   try {
-    foundReduxSessions = deserializeModel(Session, reduxSessions);
+    foundReduxSessions = deserializeModel(Session, reduxSessions as unknown as Session[]);
   } catch (e) {
     foundReduxSessions = [];
   }
@@ -77,7 +78,7 @@ const ProjectsScreen = ({ navigation }: Props): React.ReactElement => {
     const getProjects = async () => {
       const foundProjects = await DataStore.query(Project);
       setProjects(foundProjects);
-      dispatch(projectsSet(serializeModel(foundProjects)));
+      dispatch(projectsSet(serializeModel(foundProjects) as unknown as SerializedProject[]));
     };
 
     getProjects().then();
@@ -92,7 +93,7 @@ const ProjectsScreen = ({ navigation }: Props): React.ReactElement => {
     const getSessions = async () => {
       const foundSessions = await DataStore.query(Session);
       setSessions(foundSessions);
-      dispatch(sessionsSet(serializeModel(foundSessions)));
+      dispatch(sessionsSet(serializeModel(foundSessions) as unknown as SerializedSession[]));
     };
 
     getSessions().then();

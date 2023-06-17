@@ -28,7 +28,10 @@ const ProjectDetailsScreen = ({ route, navigation }: Props): React.ReactElement 
   // Try read from redux first
   let foundReduxProject: Project | undefined;
   try {
-    foundReduxProject = deserializeModel(Project, reduxProjects.find(project => project.id === id));
+    const found = reduxProjects.find(project => project.id === id);
+    if (found) {
+      foundReduxProject = deserializeModel(Project, found as unknown as Project);
+    }
   } catch (e) {
     foundReduxProject = undefined;
   }
@@ -36,7 +39,8 @@ const ProjectDetailsScreen = ({ route, navigation }: Props): React.ReactElement 
   // Try read from redux first
   let foundReduxSessions: Session[];
   try {
-    foundReduxSessions = deserializeModel(Session, reduxSessions.filter(session => session.projectSessionsId === id));
+    const filtered = reduxSessions.filter(session => session.projectSessionsId === id);
+    foundReduxSessions = deserializeModel(Session, filtered as unknown as Session[]);
   } catch (e) {
     foundReduxSessions = [];
   }

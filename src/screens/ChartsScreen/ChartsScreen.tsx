@@ -8,6 +8,7 @@ import ProgressPercentageByProjectChart from '../../components/Charts/ProgressPe
 import TotalWordsByDayChart from '../../components/Charts/TotalWordsByDayChart';
 import TotalWordsByProjectChart from '../../components/Charts/TotalWordsByProjectChart';
 import { EagerProject, EagerSession, Project, Session } from '../../models';
+import { SerializedProject, SerializedSession } from '../../models/serialized';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { projectsSet } from '../../store/projects/projectsSlice';
 import { sessionsSet } from '../../store/sessions/sessionsSlice';
@@ -32,8 +33,6 @@ const ChartsScreen = ({ navigation }: Props): React.ReactElement => {
   const dispatch = useAppDispatch();
   const reduxProjects = useAppSelector(state => state.projects);
   const reduxSessions = useAppSelector(state => state.sessions);
-  console.log('redux projects', reduxProjects.length, reduxProjects);
-  console.log('redux sessions', reduxSessions.length, reduxSessions);
 
   React.useEffect(() => {
     if (!isFocused) {
@@ -52,7 +51,7 @@ const ChartsScreen = ({ navigation }: Props): React.ReactElement => {
 
       // TODO - refactor
       if (reduxProjects.length === 0) {
-        dispatch(projectsSet(serializeModel(projects)));
+        dispatch(projectsSet(serializeModel(projects) as unknown as SerializedProject[]));
       }
     };
 
@@ -76,7 +75,7 @@ const ChartsScreen = ({ navigation }: Props): React.ReactElement => {
 
       // TODO - refactor
       if (reduxSessions.length === 0) {
-        dispatch(sessionsSet(serializeModel(sessions)));
+        dispatch(sessionsSet(serializeModel(sessions) as unknown as SerializedSession[]));
       }
     };
 

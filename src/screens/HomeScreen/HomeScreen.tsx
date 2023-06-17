@@ -5,6 +5,7 @@ import { SafeAreaView, StyleSheet } from 'react-native';
 import { useIsFocused } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Project, Session } from '../../models';
+import { SerializedProject, SerializedSession } from '../../models/serialized';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { projectsSet } from '../../store/projects/projectsSlice';
 import { sessionsSet } from '../../store/sessions/sessionsSlice';
@@ -38,7 +39,7 @@ const HomeScreen = ({ navigation }: Props): React.ReactElement => {
     // Load from DataStore and update Redux
     const getProjects = async () => {
       const foundProjects = await DataStore.query(Project);
-      dispatch(projectsSet(serializeModel(foundProjects)));
+      dispatch(projectsSet(serializeModel(foundProjects) as unknown as SerializedProject[]));
     };
 
     getProjects().then();
@@ -53,7 +54,7 @@ const HomeScreen = ({ navigation }: Props): React.ReactElement => {
     // Load from DataStore and update Redux
     const getSessions = async () => {
       const foundSessions = await DataStore.query(Session);
-      dispatch(sessionsSet(serializeModel(foundSessions)));
+      dispatch(sessionsSet(serializeModel(foundSessions) as unknown as SerializedSession[]));
     };
 
     getSessions().then();

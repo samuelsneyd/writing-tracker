@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { SafeAreaView, ScrollView, StyleSheet } from 'react-native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { SerializedProject } from '../../models/serialized';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { projectAdded } from '../../store/projects/projectsSlice';
 import type { ProjectsStackParamList } from '../../types/types';
@@ -50,7 +51,10 @@ const ProjectNewScreen = ({ route, navigation }: Props): React.ReactElement => {
   // Try read from redux first
   let foundReduxProject: Project | undefined;
   try {
-    foundReduxProject = deserializeModel(Project, reduxProjects.find(project => project.id === id));
+    const found = reduxProjects.find(project => project.id === id);
+    if (found) {
+      foundReduxProject = deserializeModel(Project, found as unknown as Project);
+    }
   } catch (e) {
     foundReduxProject = undefined;
   }
@@ -121,7 +125,7 @@ const ProjectNewScreen = ({ route, navigation }: Props): React.ReactElement => {
       return;
     }
     const savedProject = await DataStore.save(Project.copyOf(project, () => undefined));
-    dispatch(projectAdded(serializeModel(savedProject)));
+    dispatch(projectAdded(serializeModel(savedProject) as unknown as SerializedProject));
     const { title } = project;
 
     navigation.popToTop();
