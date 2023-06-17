@@ -7,7 +7,7 @@ import { DataStore, Predicates } from 'aws-amplify';
 import ProgressPercentageByProjectChart from '../../components/Charts/ProgressPercentageByProjectChart';
 import TotalWordsByDayChart from '../../components/Charts/TotalWordsByDayChart';
 import TotalWordsByProjectChart from '../../components/Charts/TotalWordsByProjectChart';
-import { EagerProject, EagerSession, Project, Session } from '../../models';
+import { Project, Session } from '../../models';
 import { SerializedProject, SerializedSession } from '../../models/serialized';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { projectsSet } from '../../store/projects/projectsSlice';
@@ -25,11 +25,7 @@ import { MenuIcon } from '../../components/Icons/Icons';
 type Props = NativeStackScreenProps<ChartsStackParamList, 'Charts'>
 
 const ChartsScreen = ({ navigation }: Props): React.ReactElement => {
-  const [eagerProjects, setEagerProjects] = React.useState<EagerProject[]>([]);
-  const [eagerSessions, setEagerSessions] = React.useState<EagerSession[]>([]);
   const isFocused = useIsFocused();
-
-  // TODO - use redux models in charts
   const dispatch = useAppDispatch();
   const reduxProjects = useAppSelector(state => state.projects);
   const reduxSessions = useAppSelector(state => state.sessions);
@@ -41,13 +37,6 @@ const ChartsScreen = ({ navigation }: Props): React.ReactElement => {
 
     const hydrateProjects = async () => {
       const projects = await DataStore.query(Project, Predicates.ALL);
-      // Hydrate projects with sessions
-      const hydratedProjects: EagerProject[] = await Promise.all(projects.map(async project => ({
-        ...project,
-        sessions: await DataStore.query(Session, c => c.project.id.eq(project.id)),
-      })));
-
-      setEagerProjects(hydratedProjects);
 
       // TODO - refactor
       if (reduxProjects.length === 0) {
@@ -65,13 +54,6 @@ const ChartsScreen = ({ navigation }: Props): React.ReactElement => {
 
     const hydrateSessions = async () => {
       const sessions = await DataStore.query(Session, Predicates.ALL);
-      // Hydrate sessions with projects
-      const hydratedSessions: EagerSession[] = await Promise.all(sessions.map(async session => ({
-        ...session,
-        project: await session.project,
-      })));
-
-      setEagerSessions(hydratedSessions);
 
       // TODO - refactor
       if (reduxSessions.length === 0) {
@@ -95,7 +77,7 @@ const ChartsScreen = ({ navigation }: Props): React.ReactElement => {
       <Divider />
       <ScrollView style={styles.container}>
         <Layout style={styles.body}>
-          <ProgressPercentageByProjectChart eagerProjects={eagerProjects} />
+          <ProgressPercentageByProjectChart />
           <Divider style={styles.divider} />
           <TotalWordsByProjectChart />
           <Divider style={styles.divider} />
