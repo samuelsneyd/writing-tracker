@@ -11,8 +11,8 @@ const LoginStreak = ({ isFocused }: LoginStreakProps): React.ReactElement => {
 
   return (
     <Card status="primary">
-      <Text>Current streak: {currentStreak} days</Text>
-      <Text>Longest streak: {longestStreak} days</Text>
+      <Text>Current streak: {currentStreak} day{currentStreak === 1 ? '' : 's'}</Text>
+      <Text>Longest streak: {longestStreak} day{longestStreak === 1 ? '' : 's'}</Text>
     </Card>
   );
 };
