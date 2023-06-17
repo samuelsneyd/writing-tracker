@@ -10,18 +10,20 @@ import { BarDataItemType } from './chart-types';
  * @param prefix an optional prefix.
  * @param suffix an optional suffix.
  * @param fractionDigits limit decimal places for floating-point numbers.
+ * @param offset multiplies the value by this offset
  */
 export const renderTooltip = (
   item: BarDataItemType,
   prefix: string = '',
   suffix: string = '',
   fractionDigits: number | undefined = undefined,
+  offset: number = 1,
 ): TextElement => {
   let value = '';
   if (fractionDigits !== undefined && item.value !== undefined) {
-    value = item.value.toFixed(fractionDigits);
+    value = (item.value * offset).toFixed(fractionDigits);
   } else if (item.value !== undefined) {
-    value = item.value.toLocaleString();
+    value = (item.value * offset).toLocaleString();
   }
 
   return (
@@ -44,10 +46,17 @@ export const renderLabel = (label: string | undefined): TextElement => (
  * the default max is used for the top y-axis label.
  * @param step the value by which the top y-axis label will update. E.g., if the
  * value is 1001 and the step is 1000, the top of the y-axis will be 2000.
+ * @param offset multiplies the value by this offset
  */
-export const getMaxYAxisValue = (barData: BarDataItemType[], defaultMax = 1000, step = 1000): number => {
-  const dataCeiling = Math.ceil(_.max(barData.map(d => (d.value ?? 0) / step)) || 0) * step;
-  return dataCeiling || defaultMax;
+export const getMaxYAxisValue = (
+  barData: BarDataItemType[],
+  defaultMax: number = 1000,
+  step: number = 1000,
+  offset: number = 1,
+): number => {
+  const dataValues = barData.map(d => (d.value ?? 0) * offset / step);
+  const dataCeiling = Math.ceil(_.max(dataValues) || 0) * step;
+  return Math.max(dataCeiling, defaultMax);
 };
 
 /**
@@ -56,8 +65,14 @@ export const getMaxYAxisValue = (barData: BarDataItemType[], defaultMax = 1000, 
  * @param maxYAxisValue the maximum value in the y-axis.
  * @param prefix an optional prefix.
  * @param suffix an optional suffix.
+ * @param offset multiplies all values by this offset.
  */
-export const getYAxisLabelTexts = (maxYAxisValue: number, prefix: string = '', suffix: string = ''): string[] => {
+export const getYAxisLabelTexts = (
+  maxYAxisValue: number,
+  prefix: string = '',
+  suffix: string = '',
+  offset: number = 1,
+): string[] => {
   const kLimit = 10000;
   return [
     0,
@@ -65,12 +80,14 @@ export const getYAxisLabelTexts = (maxYAxisValue: number, prefix: string = '', s
     maxYAxisValue / 2,
     (maxYAxisValue / 4) * 3,
     maxYAxisValue,
-  ].map(n => {
-    if (n === 0 || maxYAxisValue < kLimit) {
-      return `${prefix}${n.toLocaleString()}${suffix}`;
-    }
-    return `${prefix}${n / 1000}K${suffix}`;
-  });
+  ]
+    .map(n => n * offset)
+    .map(n => {
+      if (n === 0 || maxYAxisValue < kLimit) {
+        return `${prefix}${n.toLocaleString()}${suffix}`;
+      }
+      return `${prefix}${n / 1000}K${suffix}`;
+    });
 };
 
 /**
