@@ -70,7 +70,7 @@ const ProjectsScreen = ({ navigation }: Props): React.ReactElement => {
   const isFocused = useIsFocused();
 
   React.useEffect(() => {
-    if (reduxProjects.length > 0 || !isFocused) {
+    if (!isFocused) {
       return;
     }
 
@@ -85,7 +85,7 @@ const ProjectsScreen = ({ navigation }: Props): React.ReactElement => {
   }, [isFocused]);
 
   React.useEffect(() => {
-    if (reduxSessions.length > 0 || !isFocused) {
+    if (!isFocused) {
       return;
     }
 
