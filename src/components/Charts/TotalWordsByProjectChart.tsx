@@ -1,19 +1,25 @@
 import * as React from 'react';
 import _ from 'lodash';
-import { EagerProject } from '../../models';
 import { Text, useTheme } from '@ui-kitten/components';
 import { BarChart } from 'react-native-gifted-charts';
+import { useAppSelector } from '../../store/hooks';
 import { BarDataItemType } from './chart-types';
 import { getMaxYAxisValue, getYAxisLabelTexts, renderLabel, renderTooltip } from './chart-utils';
 
-type Props = {
-  eagerProjects: EagerProject[];
-};
-
-const TotalWordsByProjectChart = ({ eagerProjects }: Props): React.ReactElement => {
+const TotalWordsByProjectChart = (): React.ReactElement => {
   const theme = useTheme();
+  const reduxProjects = useAppSelector(state => state.projects);
+  const reduxSessions = useAppSelector(state => state.sessions);
+
+  // Group sessions by projects
+  const groupedSessions = _.groupBy(reduxSessions, 'projectSessionsId');
+
   // Sum words of all sessions, grouped by project
-  const barData: BarDataItemType[] = _(eagerProjects)
+  const barData: BarDataItemType[] = _(reduxProjects)
+    .mapValues((project) => ({
+      ...project,
+      sessions: groupedSessions[project.id] ?? []
+    }))
     .map((item): BarDataItemType => ({
       label: item.title,
       value: _.sumBy(item.sessions, 'words') + item.initialWords,

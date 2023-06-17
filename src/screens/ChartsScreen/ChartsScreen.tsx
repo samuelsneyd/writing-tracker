@@ -97,7 +97,7 @@ const ChartsScreen = ({ navigation }: Props): React.ReactElement => {
         <Layout style={styles.body}>
           <ProgressPercentageByProjectChart eagerProjects={eagerProjects} />
           <Divider style={styles.divider} />
-          <TotalWordsByProjectChart eagerProjects={eagerProjects} />
+          <TotalWordsByProjectChart />
           <Divider style={styles.divider} />
           <TotalWordsByDayChart />
         </Layout>
