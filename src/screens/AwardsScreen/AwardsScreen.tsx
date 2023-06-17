@@ -1,26 +1,78 @@
 import * as React from 'react';
-import { SafeAreaView } from 'react-native';
+import { SafeAreaView, ScrollView, StyleSheet } from 'react-native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { AwardMap } from '../../hooks/useAwards/awards';
+import useAwards from '../../hooks/useAwards/useAwards';
+import useLoginStreak from '../../hooks/useLoginStreak/useLoginStreak';
+import { useAppSelector } from '../../store/hooks';
 import type { MoreStackParamList } from '../../types/types';
-import { Divider, Layout, TopNavigation, Text, TopNavigationAction } from '@ui-kitten/components';
+import { Card, Divider, Layout, TopNavigation, Text, TopNavigationAction } from '@ui-kitten/components';
 import { ArrowIosBackIcon } from '../../components/Icons/Icons';
 
 type Props = NativeStackScreenProps<MoreStackParamList, 'Awards'>
 
 const AwardsScreen = ({ navigation }: Props): React.ReactElement => {
+  const awards = useAwards();
+  const loginStreak = useLoginStreak({});
+  const reduxProjects = useAppSelector(state => state.projects);
+  const reduxSessions = useAppSelector(state => state.sessions);
+
   const BackAction = () => (
     <TopNavigationAction icon={ArrowIosBackIcon} onPress={() => navigation.goBack()} />
   );
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={styles.container}>
       <TopNavigation title="Awards" alignment="center" accessoryLeft={BackAction} />
       <Divider />
-      <Layout style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text category="h1">Awards</Text>
-      </Layout>
+      <ScrollView style={styles.container} contentContainerStyle={{ flexGrow: 1 }}>
+        <Layout style={styles.body}>
+          {awards &&
+            Object.keys(awards)
+              .map(key => awards[key as keyof AwardMap])
+              .map(award => ({
+                ...award,
+                isCompleted: award.isEligible(
+                  reduxProjects,
+                  reduxSessions,
+                  loginStreak,
+                ),
+              }))
+              .map(award => (
+                <Card
+                  key={award.id}
+                  style={styles.card}
+                  header={<Text category="h6">{award.name}</Text>}
+                  footer={
+                    <Text appearance="hint" status={award.isCompleted ? 'success' : 'warning'}>
+                      {award.isCompleted ? 'Completed' : 'Not completed'}
+                    </Text>
+                  }
+                >
+                  <Text>{award.description}</Text>
+                </Card>
+              ))
+          }
+        </Layout>
+      </ScrollView>
     </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  body: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 16,
+  },
+  card: {
+    width: '100%',
+    marginVertical: 8,
+  },
+});
 
 export default AwardsScreen;
