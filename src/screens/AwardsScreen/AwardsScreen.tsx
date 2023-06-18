@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { SafeAreaView, ScrollView, StyleSheet } from 'react-native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { AwardMap } from '../../hooks/useAwards/awards';
 import useAwards from '../../hooks/useAwards/useAwards';
 import useLoginStreak from '../../hooks/useLoginStreak/useLoginStreak';
 import { useAppSelector } from '../../store/hooks';
@@ -28,15 +27,14 @@ const AwardsScreen = ({ navigation }: Props): React.ReactElement => {
       <ScrollView style={styles.container} contentContainerStyle={{ flexGrow: 1 }}>
         <Layout style={styles.body}>
           {awards &&
-            Object.keys(awards)
-              .map(key => awards[key as keyof AwardMap])
+            Object.values(awards)
               .map(award => ({
                 ...award,
-                isCompleted: award.isEligible(
-                  reduxProjects,
-                  reduxSessions,
-                  loginStreak,
-                ),
+                progressSummary: award.getProgress(reduxProjects, reduxSessions, loginStreak),
+              }))
+              .map(award => ({
+                ...award,
+                isCompleted: award.progressSummary.progress === 1,
               }))
               .map(award => (
                 <Card
@@ -50,6 +48,8 @@ const AwardsScreen = ({ navigation }: Props): React.ReactElement => {
                   }
                 >
                   <Text>{award.description}</Text>
+                  <Text>{award.progressSummary.current} / {award.progressSummary.target}</Text>
+                  <Text>{(award.progressSummary.progress * 100).toFixed(0)}%</Text>
                 </Card>
               ))
           }
