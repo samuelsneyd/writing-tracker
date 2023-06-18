@@ -31,68 +31,72 @@ export type AwardProgressSummary = {
   progress: number; // Range (0-1)
 };
 
+const NIGHT_OWL_TARGETS = [1000, 5000, 10000, 25000];
+
 export const NIGHT_OWL_1: AwardLocal = {
   type: AwardType.NIGHT_OWL_1,
   name: 'Night Owl I',
-  description: 'Write 1000 words between 12-4 am',
+  description: `Write ${NIGHT_OWL_TARGETS[0].toLocaleString()} words between 12-4 am`,
   icon: AwardIcon,
-  getProgress: curriedNightOwlProgress(1000),
+  getProgress: curriedNightOwlProgress(NIGHT_OWL_TARGETS[0]),
 };
 
 export const NIGHT_OWL_2: AwardLocal = {
   type: AwardType.NIGHT_OWL_2,
   name: 'Night Owl II',
-  description: 'Write 5000 words between 12-4 am',
+  description: `Write ${NIGHT_OWL_TARGETS[1].toLocaleString()} words between 12-4 am`,
   icon: AwardIcon,
-  getProgress: curriedNightOwlProgress(5000),
+  getProgress: curriedNightOwlProgress(NIGHT_OWL_TARGETS[1]),
 };
 
 export const NIGHT_OWL_3: AwardLocal = {
   type: AwardType.NIGHT_OWL_3,
   name: 'Night Owl III',
-  description: 'Write 10000 words between 12-4 am',
+  description: `Write ${NIGHT_OWL_TARGETS[2].toLocaleString()} words between 12-4 am`,
   icon: AwardIcon,
-  getProgress: curriedNightOwlProgress(10000),
+  getProgress: curriedNightOwlProgress(NIGHT_OWL_TARGETS[2]),
 };
 
 export const NIGHT_OWL_4: AwardLocal = {
   type: AwardType.NIGHT_OWL_4,
   name: 'Night Owl IV',
-  description: 'Write 25000 words between 12-4 am',
+  description: `Write ${NIGHT_OWL_TARGETS[3].toLocaleString()} words between 12-4 am`,
   icon: AwardIcon,
-  getProgress: curriedNightOwlProgress(25000),
+  getProgress: curriedNightOwlProgress(NIGHT_OWL_TARGETS[3]),
 };
+
+const EARLY_BIRD_TARGETS = [1000, 5000, 10000, 25000];
 
 export const EARLY_BIRD_1: AwardLocal = {
   type: AwardType.EARLY_BIRD_1,
   name: 'Early Bird I',
-  description: 'Write 1000 words between 4-6 am',
+  description: `Write ${EARLY_BIRD_TARGETS[0].toLocaleString()} words between 4-6 am`,
   icon: AwardIcon,
-  getProgress: curriedEarlyBirdProgress(1000),
+  getProgress: curriedEarlyBirdProgress(EARLY_BIRD_TARGETS[0]),
 };
 
 export const EARLY_BIRD_2: AwardLocal = {
   type: AwardType.EARLY_BIRD_2,
   name: 'Early Bird II',
-  description: 'Write 5000 words between 4-6 am',
+  description: `Write ${EARLY_BIRD_TARGETS[1].toLocaleString()} words between 4-6 am`,
   icon: AwardIcon,
-  getProgress: curriedEarlyBirdProgress(5000),
+  getProgress: curriedEarlyBirdProgress(EARLY_BIRD_TARGETS[1]),
 };
 
 export const EARLY_BIRD_3: AwardLocal = {
   type: AwardType.EARLY_BIRD_3,
   name: 'Early Bird III',
-  description: 'Write 10000 words between 4-6 am',
+  description: `Write ${EARLY_BIRD_TARGETS[2].toLocaleString()} words between 4-6 am`,
   icon: AwardIcon,
-  getProgress: curriedEarlyBirdProgress(10000),
+  getProgress: curriedEarlyBirdProgress(EARLY_BIRD_TARGETS[2]),
 };
 
 export const EARLY_BIRD_4: AwardLocal = {
   type: AwardType.EARLY_BIRD_4,
   name: 'Early Bird IV',
-  description: 'Write 25000 words between 4-6 am',
+  description: `Write ${EARLY_BIRD_TARGETS[3].toLocaleString()} words between 4-6 am`,
   icon: AwardIcon,
-  getProgress: curriedEarlyBirdProgress(25000),
+  getProgress: curriedEarlyBirdProgress(EARLY_BIRD_TARGETS[3]),
 };
 
 export const OVERACHIEVER_1: AwardLocal = {

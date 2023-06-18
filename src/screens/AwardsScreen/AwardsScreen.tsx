@@ -48,7 +48,7 @@ const AwardsScreen = ({ navigation }: Props): React.ReactElement => {
                   }
                 >
                   <Text>{award.description}</Text>
-                  <Text>{award.progressSummary.current} / {award.progressSummary.target}</Text>
+                  <Text>{award.progressSummary.current.toLocaleString()} / {award.progressSummary.target.toLocaleString()}</Text>
                   <Text>{(award.progressSummary.progress * 100).toFixed(0)}%</Text>
                 </Card>
               ))
