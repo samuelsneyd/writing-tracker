@@ -5,7 +5,7 @@ import { SerializedProject, SerializedSession } from '../../models/serialized';
 import { DateStreakSummary } from '../../types/types';
 import { AwardProgressSummary } from './awards';
 
-export const earlyBirdProgressHelper = (target: number) => ((
+export const curriedEarlyBirdProgress = (target: number) => ((
     _projects: SerializedProject[],
     sessions: SerializedSession[],
     _loginStreak: DateStreakSummary,
@@ -30,7 +30,7 @@ export const earlyBirdProgressHelper = (target: number) => ((
   }
 );
 
-export const nightOwlProgressHelper = (target: number) => ((
+export const curriedNightOwlProgress = (target: number) => ((
     _projects: SerializedProject[],
     sessions: SerializedSession[],
     _loginStreak: DateStreakSummary,
@@ -51,7 +51,7 @@ export const nightOwlProgressHelper = (target: number) => ((
   }
 );
 
-export const overachieverProgressHelper = (targetMultiplier: number) => ((
+export const curriedOverachieverProgress = (targetMultiplier: number) => ((
     projects: SerializedProject[],
     sessions: SerializedSession[],
     _loginStreak: DateStreakSummary,
@@ -80,7 +80,7 @@ export const overachieverProgressHelper = (targetMultiplier: number) => ((
   }
 );
 
-export const dailyStreakProgressHelper = (target: number) => ((
+export const curriedDailyStreakProgress = (target: number) => ((
     _projects: SerializedProject[],
     _sessions: SerializedSession[],
     loginStreak: DateStreakSummary,
@@ -93,10 +93,10 @@ export const dailyStreakProgressHelper = (target: number) => ((
 );
 
 const awardUtil = {
-  earlyBirdProgressHelper,
-  nightOwlProgressHelper,
-  overachieverProgressHelper,
-  dailyStreakProgressHelper,
+  curriedEarlyBirdProgress,
+  curriedNightOwlProgress,
+  curriedOverachieverProgress,
+  curriedDailyStreakProgress,
 };
 
 export default awardUtil;

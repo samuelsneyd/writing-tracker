@@ -3,10 +3,10 @@ import { AwardIcon } from '../../components/Icons/Icons';
 import { SerializedProject, SerializedSession } from '../../models/serialized';
 import { DateStreakSummary } from '../../types/types';
 import {
-  dailyStreakProgressHelper,
-  earlyBirdProgressHelper,
-  nightOwlProgressHelper,
-  overachieverProgressHelper,
+  curriedDailyStreakProgress,
+  curriedEarlyBirdProgress,
+  curriedNightOwlProgress,
+  curriedOverachieverProgress,
 } from './award-utils';
 
 export enum AwardEnum {
@@ -55,7 +55,7 @@ export const NIGHT_OWL_1: Award = {
   name: 'Night Owl I',
   description: 'Write 1000 words between 12-4 am',
   icon: AwardIcon,
-  getProgress: nightOwlProgressHelper(1000),
+  getProgress: curriedNightOwlProgress(1000),
 };
 
 export const NIGHT_OWL_2: Award = {
@@ -63,7 +63,7 @@ export const NIGHT_OWL_2: Award = {
   name: 'Night Owl II',
   description: 'Write 5000 words between 12-4 am',
   icon: AwardIcon,
-  getProgress: nightOwlProgressHelper(5000),
+  getProgress: curriedNightOwlProgress(5000),
 };
 
 export const NIGHT_OWL_3: Award = {
@@ -71,7 +71,7 @@ export const NIGHT_OWL_3: Award = {
   name: 'Night Owl III',
   description: 'Write 10000 words between 12-4 am',
   icon: AwardIcon,
-  getProgress: nightOwlProgressHelper(10000),
+  getProgress: curriedNightOwlProgress(10000),
 };
 
 export const NIGHT_OWL_4: Award = {
@@ -79,7 +79,7 @@ export const NIGHT_OWL_4: Award = {
   name: 'Night Owl IV',
   description: 'Write 25000 words between 12-4 am',
   icon: AwardIcon,
-  getProgress: nightOwlProgressHelper(25000),
+  getProgress: curriedNightOwlProgress(25000),
 };
 
 export const EARLY_BIRD_1: Award = {
@@ -87,7 +87,7 @@ export const EARLY_BIRD_1: Award = {
   name: 'Early Bird I',
   description: 'Write 1000 words between 4-6 am',
   icon: AwardIcon,
-  getProgress: earlyBirdProgressHelper(1000),
+  getProgress: curriedEarlyBirdProgress(1000),
 };
 
 export const EARLY_BIRD_2: Award = {
@@ -95,7 +95,7 @@ export const EARLY_BIRD_2: Award = {
   name: 'Early Bird II',
   description: 'Write 5000 words between 4-6 am',
   icon: AwardIcon,
-  getProgress: earlyBirdProgressHelper(5000),
+  getProgress: curriedEarlyBirdProgress(5000),
 };
 
 export const EARLY_BIRD_3: Award = {
@@ -103,7 +103,7 @@ export const EARLY_BIRD_3: Award = {
   name: 'Early Bird III',
   description: 'Write 10000 words between 4-6 am',
   icon: AwardIcon,
-  getProgress: earlyBirdProgressHelper(10000),
+  getProgress: curriedEarlyBirdProgress(10000),
 };
 
 export const EARLY_BIRD_4: Award = {
@@ -111,7 +111,7 @@ export const EARLY_BIRD_4: Award = {
   name: 'Early Bird IV',
   description: 'Write 25000 words between 4-6 am',
   icon: AwardIcon,
-  getProgress: earlyBirdProgressHelper(25000),
+  getProgress: curriedEarlyBirdProgress(25000),
 };
 
 export const OVERACHIEVER_1: Award = {
@@ -119,7 +119,7 @@ export const OVERACHIEVER_1: Award = {
   name: 'Overachiever I',
   description: 'Achieve your daily word goal',
   icon: AwardIcon,
-  getProgress: overachieverProgressHelper(1),
+  getProgress: curriedOverachieverProgress(1),
 };
 
 export const OVERACHIEVER_2: Award = {
@@ -127,7 +127,7 @@ export const OVERACHIEVER_2: Award = {
   name: 'Overachiever II',
   description: 'Double your daily word goal',
   icon: AwardIcon,
-  getProgress: overachieverProgressHelper(2),
+  getProgress: curriedOverachieverProgress(2),
 };
 
 export const OVERACHIEVER_3: Award = {
@@ -135,7 +135,7 @@ export const OVERACHIEVER_3: Award = {
   name: 'Overachiever III',
   description: 'Triple your daily word goal',
   icon: AwardIcon,
-  getProgress: overachieverProgressHelper(3),
+  getProgress: curriedOverachieverProgress(3),
 };
 
 export const OVERACHIEVER_4: Award = {
@@ -143,7 +143,7 @@ export const OVERACHIEVER_4: Award = {
   name: 'Overachiever IV',
   description: 'Quadruple your daily word goal',
   icon: AwardIcon,
-  getProgress: overachieverProgressHelper(4),
+  getProgress: curriedOverachieverProgress(4),
 };
 
 export const DAILY_STREAK_1: Award = {
@@ -151,7 +151,7 @@ export const DAILY_STREAK_1: Award = {
   name: 'Daily Streak I',
   description: 'Logged in once',
   icon: AwardIcon,
-  getProgress: dailyStreakProgressHelper(1),
+  getProgress: curriedDailyStreakProgress(1),
 };
 
 export const DAILY_STREAK_2: Award = {
@@ -159,7 +159,7 @@ export const DAILY_STREAK_2: Award = {
   name: 'Daily Streak II',
   description: 'Logged in every day for three days',
   icon: AwardIcon,
-  getProgress: dailyStreakProgressHelper(3),
+  getProgress: curriedDailyStreakProgress(3),
 };
 
 export const DAILY_STREAK_3: Award = {
@@ -167,7 +167,7 @@ export const DAILY_STREAK_3: Award = {
   name: 'Daily Streak III',
   description: 'Logged in every day for one week',
   icon: AwardIcon,
-  getProgress: dailyStreakProgressHelper(7),
+  getProgress: curriedDailyStreakProgress(7),
 };
 
 export const DAILY_STREAK_4: Award = {
@@ -175,7 +175,7 @@ export const DAILY_STREAK_4: Award = {
   name: 'Daily Streak IV',
   description: 'Logged in every day for two weeks',
   icon: AwardIcon,
-  getProgress: dailyStreakProgressHelper(14),
+  getProgress: curriedDailyStreakProgress(14),
 };
 
 export const DAILY_STREAK_5: Award = {
@@ -183,7 +183,7 @@ export const DAILY_STREAK_5: Award = {
   name: 'Daily Streak V',
   description: 'Logged in every day for one month',
   icon: AwardIcon,
-  getProgress: dailyStreakProgressHelper(30),
+  getProgress: curriedDailyStreakProgress(30),
 };
 
 export const DAILY_STREAK_6: Award = {
@@ -191,7 +191,7 @@ export const DAILY_STREAK_6: Award = {
   name: 'Daily Streak VI',
   description: 'Logged in every day for three months',
   icon: AwardIcon,
-  getProgress: dailyStreakProgressHelper(90),
+  getProgress: curriedDailyStreakProgress(90),
 };
 
 export const DAILY_STREAK_7: Award = {
@@ -199,7 +199,7 @@ export const DAILY_STREAK_7: Award = {
   name: 'Daily Streak VII',
   description: 'Logged in every day for six months',
   icon: AwardIcon,
-  getProgress: dailyStreakProgressHelper(180),
+  getProgress: curriedDailyStreakProgress(180),
 };
 
 export const DAILY_STREAK_8: Award = {
@@ -207,7 +207,7 @@ export const DAILY_STREAK_8: Award = {
   name: 'Daily Streak VIII',
   description: 'Logged in every day for one year',
   icon: AwardIcon,
-  getProgress: dailyStreakProgressHelper(365),
+  getProgress: curriedDailyStreakProgress(365),
 };
 
 export type AwardMap = {
