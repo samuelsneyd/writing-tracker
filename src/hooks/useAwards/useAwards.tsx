@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useAppSelector } from '../../store/hooks';
-import { awards, AwardMap } from './awards';
+import { awardMap, AwardMap } from './awards';
 
 export type AwardSummary = {
   allAwards: AwardMap;
@@ -14,7 +14,7 @@ const useAwards = () => {
   const [availableAwards, setAvailableAwards] = React.useState<AwardMap>();
 
   React.useEffect(() => {
-    setAvailableAwards(awards);
+    setAvailableAwards(awardMap);
   }, [reduxProjects, reduxSessions]);
 
   return availableAwards;
