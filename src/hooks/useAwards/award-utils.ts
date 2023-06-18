@@ -74,7 +74,9 @@ export const curriedOverachieverProgress = (targetMultiplier: number) => ((
       .filter(session => isToday(session.date))
       .sumBy('words');
 
-    const progress = Math.min(current / target, 1);
+    const progress = target !== 0
+      ? Math.min(current / target, 1)
+      : 0;
 
     return { target, current, progress };
   }
