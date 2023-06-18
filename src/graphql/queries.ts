@@ -16,31 +16,39 @@ export const getProject = /* GraphQL */ `
         mon {
           enabled
           words
+          __typename
         }
         tue {
           enabled
           words
+          __typename
         }
         wed {
           enabled
           words
+          __typename
         }
         thu {
           enabled
           words
+          __typename
         }
         fri {
           enabled
           words
+          __typename
         }
         sat {
           enabled
           words
+          __typename
         }
         sun {
           enabled
           words
+          __typename
         }
+        __typename
       }
       wordsPerPage
       sessions {
@@ -56,9 +64,11 @@ export const getProject = /* GraphQL */ `
           _deleted
           _lastChangedAt
           projectSessionsId
+          __typename
         }
         nextToken
         startedAt
+        __typename
       }
       owner
       createdAt
@@ -66,6 +76,7 @@ export const getProject = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      __typename
     }
   }
 `;
@@ -84,10 +95,14 @@ export const listProjects = /* GraphQL */ `
         status
         initialWords
         overallWordTarget
+        wordTarget {
+          __typename
+        }
         wordsPerPage
         sessions {
           nextToken
           startedAt
+          __typename
         }
         owner
         createdAt
@@ -95,9 +110,11 @@ export const listProjects = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        __typename
       }
       nextToken
       startedAt
+      __typename
     }
   }
 `;
@@ -122,10 +139,14 @@ export const syncProjects = /* GraphQL */ `
         status
         initialWords
         overallWordTarget
+        wordTarget {
+          __typename
+        }
         wordsPerPage
         sessions {
           nextToken
           startedAt
+          __typename
         }
         owner
         createdAt
@@ -133,9 +154,11 @@ export const syncProjects = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        __typename
       }
       nextToken
       startedAt
+      __typename
     }
   }
 `;
@@ -154,10 +177,14 @@ export const getSession = /* GraphQL */ `
         status
         initialWords
         overallWordTarget
+        wordTarget {
+          __typename
+        }
         wordsPerPage
         sessions {
           nextToken
           startedAt
+          __typename
         }
         owner
         createdAt
@@ -165,6 +192,7 @@ export const getSession = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        __typename
       }
       owner
       createdAt
@@ -173,6 +201,7 @@ export const getSession = /* GraphQL */ `
       _deleted
       _lastChangedAt
       projectSessionsId
+      __typename
     }
   }
 `;
@@ -203,6 +232,7 @@ export const listSessions = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          __typename
         }
         owner
         createdAt
@@ -211,9 +241,11 @@ export const listSessions = /* GraphQL */ `
         _deleted
         _lastChangedAt
         projectSessionsId
+        __typename
       }
       nextToken
       startedAt
+      __typename
     }
   }
 `;
@@ -250,6 +282,7 @@ export const syncSessions = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          __typename
         }
         owner
         createdAt
@@ -258,9 +291,11 @@ export const syncSessions = /* GraphQL */ `
         _deleted
         _lastChangedAt
         projectSessionsId
+        __typename
       }
       nextToken
       startedAt
+      __typename
     }
   }
 `;
@@ -275,6 +310,7 @@ export const getLoginDate = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      __typename
     }
   }
 `;
@@ -294,9 +330,11 @@ export const listLoginDates = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        __typename
       }
       nextToken
       startedAt
+      __typename
     }
   }
 `;
@@ -322,9 +360,83 @@ export const syncLoginDates = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        __typename
       }
       nextToken
       startedAt
+      __typename
+    }
+  }
+`;
+export const getAward = /* GraphQL */ `
+  query GetAward($id: ID!) {
+    getAward(id: $id) {
+      id
+      type
+      date
+      owner
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      __typename
+    }
+  }
+`;
+export const listAwards = /* GraphQL */ `
+  query ListAwards(
+    $filter: ModelAwardFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listAwards(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        type
+        date
+        owner
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        __typename
+      }
+      nextToken
+      startedAt
+      __typename
+    }
+  }
+`;
+export const syncAwards = /* GraphQL */ `
+  query SyncAwards(
+    $filter: ModelAwardFilterInput
+    $limit: Int
+    $nextToken: String
+    $lastSync: AWSTimestamp
+  ) {
+    syncAwards(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
+    ) {
+      items {
+        id
+        type
+        date
+        owner
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        __typename
+      }
+      nextToken
+      startedAt
+      __typename
     }
   }
 `;

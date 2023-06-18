@@ -38,7 +38,7 @@ const AwardsScreen = ({ navigation }: Props): React.ReactElement => {
               }))
               .map(award => (
                 <Card
-                  key={award.id}
+                  key={award.type}
                   style={styles.card}
                   header={<Text category="h6">{award.name}</Text>}
                   footer={

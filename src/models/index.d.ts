@@ -15,6 +15,29 @@ export enum ProjectStatus {
   COMPLETED = "COMPLETED"
 }
 
+export enum AwardType {
+  EARLY_BIRD_1 = "EARLY_BIRD_1",
+  EARLY_BIRD_2 = "EARLY_BIRD_2",
+  EARLY_BIRD_3 = "EARLY_BIRD_3",
+  EARLY_BIRD_4 = "EARLY_BIRD_4",
+  NIGHT_OWL_1 = "NIGHT_OWL_1",
+  NIGHT_OWL_2 = "NIGHT_OWL_2",
+  NIGHT_OWL_3 = "NIGHT_OWL_3",
+  NIGHT_OWL_4 = "NIGHT_OWL_4",
+  OVERACHIEVER_1 = "OVERACHIEVER_1",
+  OVERACHIEVER_2 = "OVERACHIEVER_2",
+  OVERACHIEVER_3 = "OVERACHIEVER_3",
+  OVERACHIEVER_4 = "OVERACHIEVER_4",
+  DAILY_STREAK_1 = "DAILY_STREAK_1",
+  DAILY_STREAK_2 = "DAILY_STREAK_2",
+  DAILY_STREAK_3 = "DAILY_STREAK_3",
+  DAILY_STREAK_4 = "DAILY_STREAK_4",
+  DAILY_STREAK_5 = "DAILY_STREAK_5",
+  DAILY_STREAK_6 = "DAILY_STREAK_6",
+  DAILY_STREAK_7 = "DAILY_STREAK_7",
+  DAILY_STREAK_8 = "DAILY_STREAK_8"
+}
+
 type EagerTargetByDay = {
   readonly enabled: boolean;
   readonly words: number;
@@ -62,6 +85,10 @@ type SessionMetaData = {
 }
 
 type LoginDateMetaData = {
+  readOnlyFields: 'createdAt' | 'updatedAt';
+}
+
+type AwardMetaData = {
   readOnlyFields: 'createdAt' | 'updatedAt';
 }
 
@@ -151,4 +178,28 @@ export declare type LoginDate = LazyLoading extends LazyLoadingDisabled ? EagerL
 
 export declare const LoginDate: (new (init: ModelInit<LoginDate, LoginDateMetaData>) => LoginDate) & {
   copyOf(source: LoginDate, mutator: (draft: MutableModel<LoginDate, LoginDateMetaData>) => MutableModel<LoginDate, LoginDateMetaData> | void): LoginDate;
+}
+
+type EagerAward = {
+  readonly id: string;
+  readonly type: AwardType | keyof typeof AwardType;
+  readonly date: string;
+  readonly owner?: string | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+type LazyAward = {
+  readonly id: string;
+  readonly type: AwardType | keyof typeof AwardType;
+  readonly date: string;
+  readonly owner?: string | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+export declare type Award = LazyLoading extends LazyLoadingDisabled ? EagerAward : LazyAward
+
+export declare const Award: (new (init: ModelInit<Award, AwardMetaData>) => Award) & {
+  copyOf(source: Award, mutator: (draft: MutableModel<Award, AwardMetaData>) => MutableModel<Award, AwardMetaData> | void): Award;
 }

@@ -302,6 +302,79 @@ export type DeleteLoginDateInput = {
   _version?: number | null,
 };
 
+export type CreateAwardInput = {
+  id?: string | null,
+  type: AwardType,
+  date: string,
+  owner?: string | null,
+  _version?: number | null,
+};
+
+export enum AwardType {
+  EARLY_BIRD_1 = "EARLY_BIRD_1",
+  EARLY_BIRD_2 = "EARLY_BIRD_2",
+  EARLY_BIRD_3 = "EARLY_BIRD_3",
+  EARLY_BIRD_4 = "EARLY_BIRD_4",
+  NIGHT_OWL_1 = "NIGHT_OWL_1",
+  NIGHT_OWL_2 = "NIGHT_OWL_2",
+  NIGHT_OWL_3 = "NIGHT_OWL_3",
+  NIGHT_OWL_4 = "NIGHT_OWL_4",
+  OVERACHIEVER_1 = "OVERACHIEVER_1",
+  OVERACHIEVER_2 = "OVERACHIEVER_2",
+  OVERACHIEVER_3 = "OVERACHIEVER_3",
+  OVERACHIEVER_4 = "OVERACHIEVER_4",
+  DAILY_STREAK_1 = "DAILY_STREAK_1",
+  DAILY_STREAK_2 = "DAILY_STREAK_2",
+  DAILY_STREAK_3 = "DAILY_STREAK_3",
+  DAILY_STREAK_4 = "DAILY_STREAK_4",
+  DAILY_STREAK_5 = "DAILY_STREAK_5",
+  DAILY_STREAK_6 = "DAILY_STREAK_6",
+  DAILY_STREAK_7 = "DAILY_STREAK_7",
+  DAILY_STREAK_8 = "DAILY_STREAK_8",
+}
+
+
+export type ModelAwardConditionInput = {
+  type?: ModelAwardTypeInput | null,
+  date?: ModelStringInput | null,
+  owner?: ModelStringInput | null,
+  and?: Array< ModelAwardConditionInput | null > | null,
+  or?: Array< ModelAwardConditionInput | null > | null,
+  not?: ModelAwardConditionInput | null,
+  _deleted?: ModelBooleanInput | null,
+};
+
+export type ModelAwardTypeInput = {
+  eq?: AwardType | null,
+  ne?: AwardType | null,
+};
+
+export type Award = {
+  __typename: "Award",
+  id: string,
+  type: AwardType,
+  date: string,
+  owner?: string | null,
+  createdAt: string,
+  updatedAt: string,
+  _version: number,
+  _deleted?: boolean | null,
+  _lastChangedAt: number,
+};
+
+export type UpdateAwardInput = {
+  id: string,
+  type?: AwardType | null,
+  date?: string | null,
+  owner?: string | null,
+  _version?: number | null,
+};
+
+export type DeleteAwardInput = {
+  id: string,
+  _version?: number | null,
+};
+
 export type ModelProjectFilterInput = {
   id?: ModelIDInput | null,
   title?: ModelStringInput | null,
@@ -351,6 +424,24 @@ export type ModelLoginDateFilterInput = {
 export type ModelLoginDateConnection = {
   __typename: "ModelLoginDateConnection",
   items:  Array<LoginDate | null >,
+  nextToken?: string | null,
+  startedAt?: number | null,
+};
+
+export type ModelAwardFilterInput = {
+  id?: ModelIDInput | null,
+  type?: ModelAwardTypeInput | null,
+  date?: ModelStringInput | null,
+  owner?: ModelStringInput | null,
+  and?: Array< ModelAwardFilterInput | null > | null,
+  or?: Array< ModelAwardFilterInput | null > | null,
+  not?: ModelAwardFilterInput | null,
+  _deleted?: ModelBooleanInput | null,
+};
+
+export type ModelAwardConnection = {
+  __typename: "ModelAwardConnection",
+  items:  Array<Award | null >,
   nextToken?: string | null,
   startedAt?: number | null,
 };
@@ -426,6 +517,15 @@ export type ModelSubscriptionLoginDateFilterInput = {
   date?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionLoginDateFilterInput | null > | null,
   or?: Array< ModelSubscriptionLoginDateFilterInput | null > | null,
+  _deleted?: ModelBooleanInput | null,
+};
+
+export type ModelSubscriptionAwardFilterInput = {
+  id?: ModelSubscriptionIDInput | null,
+  type?: ModelSubscriptionStringInput | null,
+  date?: ModelSubscriptionStringInput | null,
+  and?: Array< ModelSubscriptionAwardFilterInput | null > | null,
+  or?: Array< ModelSubscriptionAwardFilterInput | null > | null,
   _deleted?: ModelBooleanInput | null,
 };
 
@@ -696,6 +796,9 @@ export type CreateSessionMutation = {
       status: ProjectStatus,
       initialWords: number,
       overallWordTarget: number,
+      wordTarget:  {
+        __typename: "WeeklyTarget",
+      },
       wordsPerPage: number,
       sessions?:  {
         __typename: "ModelSessionConnection",
@@ -740,6 +843,9 @@ export type UpdateSessionMutation = {
       status: ProjectStatus,
       initialWords: number,
       overallWordTarget: number,
+      wordTarget:  {
+        __typename: "WeeklyTarget",
+      },
       wordsPerPage: number,
       sessions?:  {
         __typename: "ModelSessionConnection",
@@ -784,6 +890,9 @@ export type DeleteSessionMutation = {
       status: ProjectStatus,
       initialWords: number,
       overallWordTarget: number,
+      wordTarget:  {
+        __typename: "WeeklyTarget",
+      },
       wordsPerPage: number,
       sessions?:  {
         __typename: "ModelSessionConnection",
@@ -854,6 +963,66 @@ export type DeleteLoginDateMutation = {
   deleteLoginDate?:  {
     __typename: "LoginDate",
     id: string,
+    date: string,
+    owner?: string | null,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+  } | null,
+};
+
+export type CreateAwardMutationVariables = {
+  input: CreateAwardInput,
+  condition?: ModelAwardConditionInput | null,
+};
+
+export type CreateAwardMutation = {
+  createAward?:  {
+    __typename: "Award",
+    id: string,
+    type: AwardType,
+    date: string,
+    owner?: string | null,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+  } | null,
+};
+
+export type UpdateAwardMutationVariables = {
+  input: UpdateAwardInput,
+  condition?: ModelAwardConditionInput | null,
+};
+
+export type UpdateAwardMutation = {
+  updateAward?:  {
+    __typename: "Award",
+    id: string,
+    type: AwardType,
+    date: string,
+    owner?: string | null,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+  } | null,
+};
+
+export type DeleteAwardMutationVariables = {
+  input: DeleteAwardInput,
+  condition?: ModelAwardConditionInput | null,
+};
+
+export type DeleteAwardMutation = {
+  deleteAward?:  {
+    __typename: "Award",
+    id: string,
+    type: AwardType,
     date: string,
     owner?: string | null,
     createdAt: string,
@@ -963,6 +1132,9 @@ export type ListProjectsQuery = {
       status: ProjectStatus,
       initialWords: number,
       overallWordTarget: number,
+      wordTarget:  {
+        __typename: "WeeklyTarget",
+      },
       wordsPerPage: number,
       sessions?:  {
         __typename: "ModelSessionConnection",
@@ -1000,6 +1172,9 @@ export type SyncProjectsQuery = {
       status: ProjectStatus,
       initialWords: number,
       overallWordTarget: number,
+      wordTarget:  {
+        __typename: "WeeklyTarget",
+      },
       wordsPerPage: number,
       sessions?:  {
         __typename: "ModelSessionConnection",
@@ -1038,6 +1213,9 @@ export type GetSessionQuery = {
       status: ProjectStatus,
       initialWords: number,
       overallWordTarget: number,
+      wordTarget:  {
+        __typename: "WeeklyTarget",
+      },
       wordsPerPage: number,
       sessions?:  {
         __typename: "ModelSessionConnection",
@@ -1208,6 +1386,78 @@ export type SyncLoginDatesQuery = {
     items:  Array< {
       __typename: "LoginDate",
       id: string,
+      date: string,
+      owner?: string | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+    } | null >,
+    nextToken?: string | null,
+    startedAt?: number | null,
+  } | null,
+};
+
+export type GetAwardQueryVariables = {
+  id: string,
+};
+
+export type GetAwardQuery = {
+  getAward?:  {
+    __typename: "Award",
+    id: string,
+    type: AwardType,
+    date: string,
+    owner?: string | null,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+  } | null,
+};
+
+export type ListAwardsQueryVariables = {
+  filter?: ModelAwardFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListAwardsQuery = {
+  listAwards?:  {
+    __typename: "ModelAwardConnection",
+    items:  Array< {
+      __typename: "Award",
+      id: string,
+      type: AwardType,
+      date: string,
+      owner?: string | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+    } | null >,
+    nextToken?: string | null,
+    startedAt?: number | null,
+  } | null,
+};
+
+export type SyncAwardsQueryVariables = {
+  filter?: ModelAwardFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+  lastSync?: number | null,
+};
+
+export type SyncAwardsQuery = {
+  syncAwards?:  {
+    __typename: "ModelAwardConnection",
+    items:  Array< {
+      __typename: "Award",
+      id: string,
+      type: AwardType,
       date: string,
       owner?: string | null,
       createdAt: string,
@@ -1488,6 +1738,9 @@ export type OnCreateSessionSubscription = {
       status: ProjectStatus,
       initialWords: number,
       overallWordTarget: number,
+      wordTarget:  {
+        __typename: "WeeklyTarget",
+      },
       wordsPerPage: number,
       sessions?:  {
         __typename: "ModelSessionConnection",
@@ -1532,6 +1785,9 @@ export type OnUpdateSessionSubscription = {
       status: ProjectStatus,
       initialWords: number,
       overallWordTarget: number,
+      wordTarget:  {
+        __typename: "WeeklyTarget",
+      },
       wordsPerPage: number,
       sessions?:  {
         __typename: "ModelSessionConnection",
@@ -1576,6 +1832,9 @@ export type OnDeleteSessionSubscription = {
       status: ProjectStatus,
       initialWords: number,
       overallWordTarget: number,
+      wordTarget:  {
+        __typename: "WeeklyTarget",
+      },
       wordsPerPage: number,
       sessions?:  {
         __typename: "ModelSessionConnection",
@@ -1646,6 +1905,66 @@ export type OnDeleteLoginDateSubscription = {
   onDeleteLoginDate?:  {
     __typename: "LoginDate",
     id: string,
+    date: string,
+    owner?: string | null,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+  } | null,
+};
+
+export type OnCreateAwardSubscriptionVariables = {
+  filter?: ModelSubscriptionAwardFilterInput | null,
+  owner?: string | null,
+};
+
+export type OnCreateAwardSubscription = {
+  onCreateAward?:  {
+    __typename: "Award",
+    id: string,
+    type: AwardType,
+    date: string,
+    owner?: string | null,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+  } | null,
+};
+
+export type OnUpdateAwardSubscriptionVariables = {
+  filter?: ModelSubscriptionAwardFilterInput | null,
+  owner?: string | null,
+};
+
+export type OnUpdateAwardSubscription = {
+  onUpdateAward?:  {
+    __typename: "Award",
+    id: string,
+    type: AwardType,
+    date: string,
+    owner?: string | null,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+  } | null,
+};
+
+export type OnDeleteAwardSubscriptionVariables = {
+  filter?: ModelSubscriptionAwardFilterInput | null,
+  owner?: string | null,
+};
+
+export type OnDeleteAwardSubscription = {
+  onDeleteAward?:  {
+    __typename: "Award",
+    id: string,
+    type: AwardType,
     date: string,
     owner?: string | null,
     createdAt: string,

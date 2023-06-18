@@ -302,6 +302,84 @@ export const schema = {
                     }
                 }
             ]
+        },
+        "Award": {
+            "name": "Award",
+            "fields": {
+                "id": {
+                    "name": "id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "type": {
+                    "name": "type",
+                    "isArray": false,
+                    "type": {
+                        "enum": "AwardType"
+                    },
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "date": {
+                    "name": "date",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "owner": {
+                    "name": "owner",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "createdAt": {
+                    "name": "createdAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                },
+                "updatedAt": {
+                    "name": "updatedAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                }
+            },
+            "syncable": true,
+            "pluralName": "Awards",
+            "attributes": [
+                {
+                    "type": "model",
+                    "properties": {}
+                },
+                {
+                    "type": "auth",
+                    "properties": {
+                        "rules": [
+                            {
+                                "provider": "userPools",
+                                "ownerField": "owner",
+                                "allow": "owner",
+                                "identityClaim": "cognito:username",
+                                "operations": [
+                                    "create",
+                                    "update",
+                                    "delete",
+                                    "read"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]
         }
     },
     "enums": {
@@ -320,6 +398,31 @@ export const schema = {
                 "IN_PROGRESS",
                 "ON_HOLD",
                 "COMPLETED"
+            ]
+        },
+        "AwardType": {
+            "name": "AwardType",
+            "values": [
+                "EARLY_BIRD_1",
+                "EARLY_BIRD_2",
+                "EARLY_BIRD_3",
+                "EARLY_BIRD_4",
+                "NIGHT_OWL_1",
+                "NIGHT_OWL_2",
+                "NIGHT_OWL_3",
+                "NIGHT_OWL_4",
+                "OVERACHIEVER_1",
+                "OVERACHIEVER_2",
+                "OVERACHIEVER_3",
+                "OVERACHIEVER_4",
+                "DAILY_STREAK_1",
+                "DAILY_STREAK_2",
+                "DAILY_STREAK_3",
+                "DAILY_STREAK_4",
+                "DAILY_STREAK_5",
+                "DAILY_STREAK_6",
+                "DAILY_STREAK_7",
+                "DAILY_STREAK_8"
             ]
         }
     },
@@ -412,6 +515,6 @@ export const schema = {
             }
         }
     },
-    "codegenVersion": "3.4.3",
-    "version": "9f3d930d7bb2ef62a10c9976ed1f3b0a"
+    "codegenVersion": "3.4.4",
+    "version": "3f36ffd0fa82ad8251e9989f29f7ff66"
 };

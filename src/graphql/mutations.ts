@@ -19,31 +19,39 @@ export const createProject = /* GraphQL */ `
         mon {
           enabled
           words
+          __typename
         }
         tue {
           enabled
           words
+          __typename
         }
         wed {
           enabled
           words
+          __typename
         }
         thu {
           enabled
           words
+          __typename
         }
         fri {
           enabled
           words
+          __typename
         }
         sat {
           enabled
           words
+          __typename
         }
         sun {
           enabled
           words
+          __typename
         }
+        __typename
       }
       wordsPerPage
       sessions {
@@ -59,9 +67,11 @@ export const createProject = /* GraphQL */ `
           _deleted
           _lastChangedAt
           projectSessionsId
+          __typename
         }
         nextToken
         startedAt
+        __typename
       }
       owner
       createdAt
@@ -69,6 +79,7 @@ export const createProject = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      __typename
     }
   }
 `;
@@ -89,31 +100,39 @@ export const updateProject = /* GraphQL */ `
         mon {
           enabled
           words
+          __typename
         }
         tue {
           enabled
           words
+          __typename
         }
         wed {
           enabled
           words
+          __typename
         }
         thu {
           enabled
           words
+          __typename
         }
         fri {
           enabled
           words
+          __typename
         }
         sat {
           enabled
           words
+          __typename
         }
         sun {
           enabled
           words
+          __typename
         }
+        __typename
       }
       wordsPerPage
       sessions {
@@ -129,9 +148,11 @@ export const updateProject = /* GraphQL */ `
           _deleted
           _lastChangedAt
           projectSessionsId
+          __typename
         }
         nextToken
         startedAt
+        __typename
       }
       owner
       createdAt
@@ -139,6 +160,7 @@ export const updateProject = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      __typename
     }
   }
 `;
@@ -159,31 +181,39 @@ export const deleteProject = /* GraphQL */ `
         mon {
           enabled
           words
+          __typename
         }
         tue {
           enabled
           words
+          __typename
         }
         wed {
           enabled
           words
+          __typename
         }
         thu {
           enabled
           words
+          __typename
         }
         fri {
           enabled
           words
+          __typename
         }
         sat {
           enabled
           words
+          __typename
         }
         sun {
           enabled
           words
+          __typename
         }
+        __typename
       }
       wordsPerPage
       sessions {
@@ -199,9 +229,11 @@ export const deleteProject = /* GraphQL */ `
           _deleted
           _lastChangedAt
           projectSessionsId
+          __typename
         }
         nextToken
         startedAt
+        __typename
       }
       owner
       createdAt
@@ -209,6 +241,7 @@ export const deleteProject = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      __typename
     }
   }
 `;
@@ -230,10 +263,14 @@ export const createSession = /* GraphQL */ `
         status
         initialWords
         overallWordTarget
+        wordTarget {
+          __typename
+        }
         wordsPerPage
         sessions {
           nextToken
           startedAt
+          __typename
         }
         owner
         createdAt
@@ -241,6 +278,7 @@ export const createSession = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        __typename
       }
       owner
       createdAt
@@ -249,6 +287,7 @@ export const createSession = /* GraphQL */ `
       _deleted
       _lastChangedAt
       projectSessionsId
+      __typename
     }
   }
 `;
@@ -270,10 +309,14 @@ export const updateSession = /* GraphQL */ `
         status
         initialWords
         overallWordTarget
+        wordTarget {
+          __typename
+        }
         wordsPerPage
         sessions {
           nextToken
           startedAt
+          __typename
         }
         owner
         createdAt
@@ -281,6 +324,7 @@ export const updateSession = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        __typename
       }
       owner
       createdAt
@@ -289,6 +333,7 @@ export const updateSession = /* GraphQL */ `
       _deleted
       _lastChangedAt
       projectSessionsId
+      __typename
     }
   }
 `;
@@ -310,10 +355,14 @@ export const deleteSession = /* GraphQL */ `
         status
         initialWords
         overallWordTarget
+        wordTarget {
+          __typename
+        }
         wordsPerPage
         sessions {
           nextToken
           startedAt
+          __typename
         }
         owner
         createdAt
@@ -321,6 +370,7 @@ export const deleteSession = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        __typename
       }
       owner
       createdAt
@@ -329,6 +379,7 @@ export const deleteSession = /* GraphQL */ `
       _deleted
       _lastChangedAt
       projectSessionsId
+      __typename
     }
   }
 `;
@@ -346,6 +397,7 @@ export const createLoginDate = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      __typename
     }
   }
 `;
@@ -363,6 +415,7 @@ export const updateLoginDate = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      __typename
     }
   }
 `;
@@ -380,6 +433,64 @@ export const deleteLoginDate = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      __typename
+    }
+  }
+`;
+export const createAward = /* GraphQL */ `
+  mutation CreateAward(
+    $input: CreateAwardInput!
+    $condition: ModelAwardConditionInput
+  ) {
+    createAward(input: $input, condition: $condition) {
+      id
+      type
+      date
+      owner
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      __typename
+    }
+  }
+`;
+export const updateAward = /* GraphQL */ `
+  mutation UpdateAward(
+    $input: UpdateAwardInput!
+    $condition: ModelAwardConditionInput
+  ) {
+    updateAward(input: $input, condition: $condition) {
+      id
+      type
+      date
+      owner
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      __typename
+    }
+  }
+`;
+export const deleteAward = /* GraphQL */ `
+  mutation DeleteAward(
+    $input: DeleteAwardInput!
+    $condition: ModelAwardConditionInput
+  ) {
+    deleteAward(input: $input, condition: $condition) {
+      id
+      type
+      date
+      owner
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      __typename
     }
   }
 `;
