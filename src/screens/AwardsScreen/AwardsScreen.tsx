@@ -54,6 +54,7 @@ const AwardsScreen = ({ navigation }: Props): React.ReactElement => {
                   <ProgressBar
                     status={getSteppedColors(award.progressSummary.progress)}
                     progress={award.progressSummary.progress}
+                    animating={false}
                   />
                 </Card>
               ))

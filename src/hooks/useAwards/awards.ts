@@ -32,106 +32,6 @@ export type AwardProgressSummary = {
   progress: number; // Range (0-1)
 };
 
-const NIGHT_OWL_TARGETS = [1000, 5000, 10000, 25000];
-
-export const NIGHT_OWL_1: AwardLocal = {
-  type: AwardType.NIGHT_OWL_1,
-  name: 'Night Owl I',
-  description: `Write ${NIGHT_OWL_TARGETS[0].toLocaleString()} words between 12-4 am`,
-  icon: AwardIcon,
-  getProgress: curriedNightOwlProgress(NIGHT_OWL_TARGETS[0]),
-};
-
-export const NIGHT_OWL_2: AwardLocal = {
-  type: AwardType.NIGHT_OWL_2,
-  name: 'Night Owl II',
-  description: `Write ${NIGHT_OWL_TARGETS[1].toLocaleString()} words between 12-4 am`,
-  icon: AwardIcon,
-  getProgress: curriedNightOwlProgress(NIGHT_OWL_TARGETS[1]),
-};
-
-export const NIGHT_OWL_3: AwardLocal = {
-  type: AwardType.NIGHT_OWL_3,
-  name: 'Night Owl III',
-  description: `Write ${NIGHT_OWL_TARGETS[2].toLocaleString()} words between 12-4 am`,
-  icon: AwardIcon,
-  getProgress: curriedNightOwlProgress(NIGHT_OWL_TARGETS[2]),
-};
-
-export const NIGHT_OWL_4: AwardLocal = {
-  type: AwardType.NIGHT_OWL_4,
-  name: 'Night Owl IV',
-  description: `Write ${NIGHT_OWL_TARGETS[3].toLocaleString()} words between 12-4 am`,
-  icon: AwardIcon,
-  getProgress: curriedNightOwlProgress(NIGHT_OWL_TARGETS[3]),
-};
-
-const EARLY_BIRD_TARGETS = [1000, 5000, 10000, 25000];
-
-export const EARLY_BIRD_1: AwardLocal = {
-  type: AwardType.EARLY_BIRD_1,
-  name: 'Early Bird I',
-  description: `Write ${EARLY_BIRD_TARGETS[0].toLocaleString()} words between 4-6 am`,
-  icon: AwardIcon,
-  getProgress: curriedEarlyBirdProgress(EARLY_BIRD_TARGETS[0]),
-};
-
-export const EARLY_BIRD_2: AwardLocal = {
-  type: AwardType.EARLY_BIRD_2,
-  name: 'Early Bird II',
-  description: `Write ${EARLY_BIRD_TARGETS[1].toLocaleString()} words between 4-6 am`,
-  icon: AwardIcon,
-  getProgress: curriedEarlyBirdProgress(EARLY_BIRD_TARGETS[1]),
-};
-
-export const EARLY_BIRD_3: AwardLocal = {
-  type: AwardType.EARLY_BIRD_3,
-  name: 'Early Bird III',
-  description: `Write ${EARLY_BIRD_TARGETS[2].toLocaleString()} words between 4-6 am`,
-  icon: AwardIcon,
-  getProgress: curriedEarlyBirdProgress(EARLY_BIRD_TARGETS[2]),
-};
-
-export const EARLY_BIRD_4: AwardLocal = {
-  type: AwardType.EARLY_BIRD_4,
-  name: 'Early Bird IV',
-  description: `Write ${EARLY_BIRD_TARGETS[3].toLocaleString()} words between 4-6 am`,
-  icon: AwardIcon,
-  getProgress: curriedEarlyBirdProgress(EARLY_BIRD_TARGETS[3]),
-};
-
-export const OVERACHIEVER_1: AwardLocal = {
-  type: AwardType.OVERACHIEVER_1,
-  name: 'Overachiever I',
-  description: 'Achieve your daily word goal',
-  icon: AwardIcon,
-  getProgress: curriedOverachieverProgress(1),
-};
-
-export const OVERACHIEVER_2: AwardLocal = {
-  type: AwardType.OVERACHIEVER_2,
-  name: 'Overachiever II',
-  description: 'Double your daily word goal',
-  icon: AwardIcon,
-  getProgress: curriedOverachieverProgress(2),
-};
-
-export const OVERACHIEVER_3: AwardLocal = {
-  type: AwardType.OVERACHIEVER_3,
-  name: 'Overachiever III',
-  description: 'Triple your daily word goal',
-  icon: AwardIcon,
-  getProgress: curriedOverachieverProgress(3),
-};
-
-export const OVERACHIEVER_4: AwardLocal = {
-  type: AwardType.OVERACHIEVER_4,
-  name: 'Overachiever IV',
-  description: 'Quadruple your daily word goal',
-  icon: AwardIcon,
-  getProgress: curriedOverachieverProgress(4),
-};
-
 export const DAILY_STREAK_1: AwardLocal = {
   type: AwardType.DAILY_STREAK_1,
   name: 'Daily Streak I',
@@ -196,6 +96,106 @@ export const DAILY_STREAK_8: AwardLocal = {
   getProgress: curriedDailyStreakProgress(365),
 };
 
+const EARLY_BIRD_TARGETS = [1000, 5000, 10000, 25000];
+
+export const EARLY_BIRD_1: AwardLocal = {
+  type: AwardType.EARLY_BIRD_1,
+  name: 'Early Bird I',
+  description: `Write ${EARLY_BIRD_TARGETS[0].toLocaleString()} words between 4-6 am`,
+  icon: AwardIcon,
+  getProgress: curriedEarlyBirdProgress(EARLY_BIRD_TARGETS[0]),
+};
+
+export const EARLY_BIRD_2: AwardLocal = {
+  type: AwardType.EARLY_BIRD_2,
+  name: 'Early Bird II',
+  description: `Write ${EARLY_BIRD_TARGETS[1].toLocaleString()} words between 4-6 am`,
+  icon: AwardIcon,
+  getProgress: curriedEarlyBirdProgress(EARLY_BIRD_TARGETS[1]),
+};
+
+export const EARLY_BIRD_3: AwardLocal = {
+  type: AwardType.EARLY_BIRD_3,
+  name: 'Early Bird III',
+  description: `Write ${EARLY_BIRD_TARGETS[2].toLocaleString()} words between 4-6 am`,
+  icon: AwardIcon,
+  getProgress: curriedEarlyBirdProgress(EARLY_BIRD_TARGETS[2]),
+};
+
+export const EARLY_BIRD_4: AwardLocal = {
+  type: AwardType.EARLY_BIRD_4,
+  name: 'Early Bird IV',
+  description: `Write ${EARLY_BIRD_TARGETS[3].toLocaleString()} words between 4-6 am`,
+  icon: AwardIcon,
+  getProgress: curriedEarlyBirdProgress(EARLY_BIRD_TARGETS[3]),
+};
+
+const NIGHT_OWL_TARGETS = [1000, 5000, 10000, 25000];
+
+export const NIGHT_OWL_1: AwardLocal = {
+  type: AwardType.NIGHT_OWL_1,
+  name: 'Night Owl I',
+  description: `Write ${NIGHT_OWL_TARGETS[0].toLocaleString()} words between 12-4 am`,
+  icon: AwardIcon,
+  getProgress: curriedNightOwlProgress(NIGHT_OWL_TARGETS[0]),
+};
+
+export const NIGHT_OWL_2: AwardLocal = {
+  type: AwardType.NIGHT_OWL_2,
+  name: 'Night Owl II',
+  description: `Write ${NIGHT_OWL_TARGETS[1].toLocaleString()} words between 12-4 am`,
+  icon: AwardIcon,
+  getProgress: curriedNightOwlProgress(NIGHT_OWL_TARGETS[1]),
+};
+
+export const NIGHT_OWL_3: AwardLocal = {
+  type: AwardType.NIGHT_OWL_3,
+  name: 'Night Owl III',
+  description: `Write ${NIGHT_OWL_TARGETS[2].toLocaleString()} words between 12-4 am`,
+  icon: AwardIcon,
+  getProgress: curriedNightOwlProgress(NIGHT_OWL_TARGETS[2]),
+};
+
+export const NIGHT_OWL_4: AwardLocal = {
+  type: AwardType.NIGHT_OWL_4,
+  name: 'Night Owl IV',
+  description: `Write ${NIGHT_OWL_TARGETS[3].toLocaleString()} words between 12-4 am`,
+  icon: AwardIcon,
+  getProgress: curriedNightOwlProgress(NIGHT_OWL_TARGETS[3]),
+};
+
+export const OVERACHIEVER_1: AwardLocal = {
+  type: AwardType.OVERACHIEVER_1,
+  name: 'Overachiever I',
+  description: 'Achieve your daily word goal',
+  icon: AwardIcon,
+  getProgress: curriedOverachieverProgress(1),
+};
+
+export const OVERACHIEVER_2: AwardLocal = {
+  type: AwardType.OVERACHIEVER_2,
+  name: 'Overachiever II',
+  description: 'Double your daily word goal',
+  icon: AwardIcon,
+  getProgress: curriedOverachieverProgress(2),
+};
+
+export const OVERACHIEVER_3: AwardLocal = {
+  type: AwardType.OVERACHIEVER_3,
+  name: 'Overachiever III',
+  description: 'Triple your daily word goal',
+  icon: AwardIcon,
+  getProgress: curriedOverachieverProgress(3),
+};
+
+export const OVERACHIEVER_4: AwardLocal = {
+  type: AwardType.OVERACHIEVER_4,
+  name: 'Overachiever IV',
+  description: 'Quadruple your daily word goal',
+  icon: AwardIcon,
+  getProgress: curriedOverachieverProgress(4),
+};
+
 const FINISHER_TARGETS = [1, 3, 5, 10];
 
 export const FINISHER_1: AwardLocal = {
@@ -235,6 +235,14 @@ export type AwardMap = {
 };
 
 export const awardMap: AwardMap = {
+  DAILY_STREAK_1,
+  DAILY_STREAK_2,
+  DAILY_STREAK_3,
+  DAILY_STREAK_4,
+  DAILY_STREAK_5,
+  DAILY_STREAK_6,
+  DAILY_STREAK_7,
+  DAILY_STREAK_8,
   EARLY_BIRD_1,
   EARLY_BIRD_2,
   EARLY_BIRD_3,
@@ -247,14 +255,6 @@ export const awardMap: AwardMap = {
   OVERACHIEVER_2,
   OVERACHIEVER_3,
   OVERACHIEVER_4,
-  DAILY_STREAK_1,
-  DAILY_STREAK_2,
-  DAILY_STREAK_3,
-  DAILY_STREAK_4,
-  DAILY_STREAK_5,
-  DAILY_STREAK_6,
-  DAILY_STREAK_7,
-  DAILY_STREAK_8,
   FINISHER_1,
   FINISHER_2,
   FINISHER_3,
