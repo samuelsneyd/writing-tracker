@@ -95,13 +95,16 @@ export const curriedOverachieverProgress = (targetMultiplier: number) => ((
       }))
       .sumBy('todayTarget') * targetMultiplier;
 
-    const current = _(sessions)
-      .map(session => ({
-        date: new Date(session.date),
-        words: session.words,
-      }))
-      .filter(session => isToday(session.date))
-      .sumBy('words');
+    const current = Math.min(
+      _(sessions)
+        .map(session => ({
+          date: new Date(session.date),
+          words: session.words,
+        }))
+        .filter(session => isToday(session.date))
+        .sumBy('words'),
+      target,
+    );
 
     const progress = target !== 0 && !isNaN(target)
       ? Math.min(current / target, 1)
@@ -130,20 +133,23 @@ export const curriedFinisherProgress = (target: number) => ((
   ): AwardProgressSummary => {
     const groupedSessions = _.groupBy(sessions, 'projectSessionsId');
 
-    const current = _(projects)
-      .mapValues(project => ({
-        ...project,
-        sessions: groupedSessions[project.id] ?? []
-      }))
-      .map(item => ({
-        value: Math.min(
-          (_.sumBy(item.sessions, 'words') + item.initialWords) / item.overallWordTarget * 100,
-          100,
-        ),
-      }))
-      .filter(item => item.value === 100)
-      .value()
-      .length;
+    const current = Math.min(
+      _(projects)
+        .mapValues(project => ({
+          ...project,
+          sessions: groupedSessions[project.id] ?? [],
+        }))
+        .map(item => ({
+          value: Math.min(
+            (_.sumBy(item.sessions, 'words') + item.initialWords) / item.overallWordTarget,
+            1,
+          ),
+        }))
+        .filter(item => item.value === 1)
+        .value()
+        .length,
+      target,
+    );
 
     const progress = target !== 0 && !isNaN(target)
       ? Math.min(current / target, 1)
