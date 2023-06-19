@@ -1,11 +1,12 @@
 import * as React from 'react';
 import { SafeAreaView, ScrollView, StyleSheet } from 'react-native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { getSteppedColors } from '../../hooks/useAwards/award-utils';
 import useAwards from '../../hooks/useAwards/useAwards';
 import useLoginStreak from '../../hooks/useLoginStreak/useLoginStreak';
 import { useAppSelector } from '../../store/hooks';
 import type { MoreStackParamList } from '../../types/types';
-import { Card, Divider, Layout, TopNavigation, Text, TopNavigationAction } from '@ui-kitten/components';
+import { Card, Divider, Layout, TopNavigation, Text, TopNavigationAction, ProgressBar } from '@ui-kitten/components';
 import { ArrowIosBackIcon } from '../../components/Icons/Icons';
 
 type Props = NativeStackScreenProps<MoreStackParamList, 'Awards'>
@@ -50,6 +51,10 @@ const AwardsScreen = ({ navigation }: Props): React.ReactElement => {
                   <Text>{award.description}</Text>
                   <Text>{award.progressSummary.current.toLocaleString()} / {award.progressSummary.target.toLocaleString()}</Text>
                   <Text>{(award.progressSummary.progress * 100).toFixed(0)}%</Text>
+                  <ProgressBar
+                    status={getSteppedColors(award.progressSummary.progress)}
+                    progress={award.progressSummary.progress}
+                  />
                 </Card>
               ))
           }

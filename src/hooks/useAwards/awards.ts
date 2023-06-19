@@ -6,6 +6,7 @@ import { DateStreakSummary } from '../../types/types';
 import {
   curriedDailyStreakProgress,
   curriedEarlyBirdProgress,
+  curriedFinisherProgress,
   curriedNightOwlProgress,
   curriedOverachieverProgress,
 } from './award-utils';
@@ -195,6 +196,40 @@ export const DAILY_STREAK_8: AwardLocal = {
   getProgress: curriedDailyStreakProgress(365),
 };
 
+const FINISHER_TARGETS = [1, 3, 5, 10];
+
+export const FINISHER_1: AwardLocal = {
+  type: AwardType.FINISHER_1,
+  name: 'Finisher I',
+  description: 'Reach your overall word count target for one project',
+  icon: AwardIcon,
+  getProgress: curriedFinisherProgress(FINISHER_TARGETS[0]),
+};
+
+export const FINISHER_2: AwardLocal = {
+  type: AwardType.FINISHER_2,
+  name: 'Finisher II',
+  description: 'Reach your overall word count target for three projects',
+  icon: AwardIcon,
+  getProgress: curriedFinisherProgress(FINISHER_TARGETS[1]),
+};
+
+export const FINISHER_3: AwardLocal = {
+  type: AwardType.FINISHER_3,
+  name: 'Finisher III',
+  description: 'Reach your overall word count target for five projects',
+  icon: AwardIcon,
+  getProgress: curriedFinisherProgress(FINISHER_TARGETS[2]),
+};
+
+export const FINISHER_4: AwardLocal = {
+  type: AwardType.FINISHER_4,
+  name: 'Finisher IV',
+  description: 'Reach your overall word count target for ten projects',
+  icon: AwardIcon,
+  getProgress: curriedFinisherProgress(FINISHER_TARGETS[3]),
+};
+
 export type AwardMap = {
   [key in AwardType]: AwardLocal;
 };
@@ -220,6 +255,10 @@ export const awardMap: AwardMap = {
   DAILY_STREAK_6,
   DAILY_STREAK_7,
   DAILY_STREAK_8,
+  FINISHER_1,
+  FINISHER_2,
+  FINISHER_3,
+  FINISHER_4,
 };
 
 export const awardArray: AwardLocal[] = Object.values(awardMap);

@@ -422,7 +422,11 @@ export const schema = {
                 "DAILY_STREAK_5",
                 "DAILY_STREAK_6",
                 "DAILY_STREAK_7",
-                "DAILY_STREAK_8"
+                "DAILY_STREAK_8",
+                "FINISHER_1",
+                "FINISHER_2",
+                "FINISHER_3",
+                "FINISHER_4"
             ]
         }
     },

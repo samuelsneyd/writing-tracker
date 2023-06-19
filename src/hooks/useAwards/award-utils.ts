@@ -1,9 +1,38 @@
-import { isToday } from 'date-fns';
 import _ from 'lodash';
+import { isToday } from 'date-fns';
 import { WeeklyTarget } from '../../models';
 import { SerializedProject, SerializedSession } from '../../models/serialized';
 import { DateStreakSummary } from '../../types/types';
 import { AwardProgressSummary } from './awards';
+
+/**
+ * Gets stepped colors based on the progress.
+ * >= 100%: success.
+ * 75-100%: primary.
+ * 50-75%: info.
+ * 25-50%: warning.
+ * > 0-25%: danger.
+ * <= 0: basic
+ * No value: basic.
+ * @param progress the progress from 0-1
+ */
+export const getSteppedColors = (progress: number): 'basic' | 'primary' | 'success' | 'info' | 'warning' | 'danger' => {
+  if (isNaN(progress) || progress === undefined || progress === null) {
+    return 'basic';
+  } else if (progress >= 1) {
+    return 'success';
+  } else if (progress >= 0.75) {
+    return 'primary';
+  } else if (progress >= 0.5) {
+    return 'info';
+  } else if (progress >= 0.25) {
+    return 'warning';
+  } else if (progress > 0) {
+    return 'danger';
+  } else {
+    return 'basic';
+  }
+};
 
 export const curriedEarlyBirdProgress = (target: number) => ((
     _projects: SerializedProject[],
@@ -74,7 +103,7 @@ export const curriedOverachieverProgress = (targetMultiplier: number) => ((
       .filter(session => isToday(session.date))
       .sumBy('words');
 
-    const progress = target !== 0
+    const progress = target !== 0 && !isNaN(target)
       ? Math.min(current / target, 1)
       : 0;
 
@@ -94,11 +123,42 @@ export const curriedDailyStreakProgress = (target: number) => ((
   }
 );
 
+export const curriedFinisherProgress = (target: number) => ((
+    projects: SerializedProject[],
+    sessions: SerializedSession[],
+    _loginStreak: DateStreakSummary,
+  ): AwardProgressSummary => {
+    const groupedSessions = _.groupBy(sessions, 'projectSessionsId');
+
+    const current = _(projects)
+      .mapValues(project => ({
+        ...project,
+        sessions: groupedSessions[project.id] ?? []
+      }))
+      .map(item => ({
+        value: Math.min(
+          (_.sumBy(item.sessions, 'words') + item.initialWords) / item.overallWordTarget * 100,
+          100,
+        ),
+      }))
+      .filter(item => item.value === 100)
+      .value()
+      .length;
+
+    const progress = target !== 0 && !isNaN(target)
+      ? Math.min(current / target, 1)
+      : 0;
+
+    return { target, current, progress };
+  }
+);
+
 const awardUtil = {
   curriedEarlyBirdProgress,
   curriedNightOwlProgress,
   curriedOverachieverProgress,
   curriedDailyStreakProgress,
+  curriedFinisherProgress,
 };
 
 export default awardUtil;
