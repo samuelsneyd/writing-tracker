@@ -227,10 +227,12 @@ const ProjectsScreen = ({ navigation }: Props): React.ReactElement => {
     try {
       const foundProjects = await DataStore.query(Project);
       setProjects(foundProjects);
+      dispatch(projectsSet(serializeModel(foundProjects) as unknown as SerializedProject[]));
       console.log('Projects retrieved successfully!', JSON.stringify(foundProjects, null, 2));
     } catch (e) {
       console.log('Error retrieving projects', e);
       setProjects([]);
+      dispatch(projectsSet([]));
     }
   };
 
@@ -238,6 +240,7 @@ const ProjectsScreen = ({ navigation }: Props): React.ReactElement => {
     try {
       await DataStore.delete(Project, Predicates.ALL);
       setProjects([]);
+      dispatch(projectsSet([]));
     } catch (e) {
       console.log('Error wiping projects', e);
     }
@@ -262,10 +265,12 @@ const ProjectsScreen = ({ navigation }: Props): React.ReactElement => {
     try {
       const foundSessions = await DataStore.query(Session);
       setSessions(foundSessions);
+      dispatch(sessionsSet(serializeModel(foundSessions) as unknown as SerializedSession[]));
       console.log('Sessions retrieved successfully!', JSON.stringify(foundSessions, null, 2));
     } catch (e) {
       console.log('Error retrieving sessions', e);
       setSessions([]);
+      dispatch(sessionsSet([]));
     }
   };
 
@@ -273,6 +278,7 @@ const ProjectsScreen = ({ navigation }: Props): React.ReactElement => {
     try {
       await DataStore.delete(Session, Predicates.ALL);
       setSessions([]);
+      dispatch(sessionsSet([]));
     } catch (e) {
       console.log('Error wiping sessions', e);
     }
