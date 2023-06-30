@@ -33,13 +33,15 @@ export type AwardProgressSummary = {
   progress: number; // Range (0-1)
 };
 
+const DAILY_STREAK_TARGETS = [1, 3, 7, 14, 30, 90, 180, 365];
+
 export const DAILY_STREAK_1: AwardLocal = {
   category: AwardCategory.DAILY_STREAK,
   type: AwardType.DAILY_STREAK_1,
   name: 'Daily Streak I',
   description: 'Logged in once',
   icon: AwardIcon,
-  getProgress: curriedDailyStreakProgress(1),
+  getProgress: curriedDailyStreakProgress(DAILY_STREAK_TARGETS[0]),
 };
 
 export const DAILY_STREAK_2: AwardLocal = {
@@ -48,7 +50,7 @@ export const DAILY_STREAK_2: AwardLocal = {
   name: 'Daily Streak II',
   description: 'Logged in every day for three days',
   icon: AwardIcon,
-  getProgress: curriedDailyStreakProgress(3),
+  getProgress: curriedDailyStreakProgress(DAILY_STREAK_TARGETS[1]),
 };
 
 export const DAILY_STREAK_3: AwardLocal = {
@@ -57,7 +59,7 @@ export const DAILY_STREAK_3: AwardLocal = {
   name: 'Daily Streak III',
   description: 'Logged in every day for one week',
   icon: AwardIcon,
-  getProgress: curriedDailyStreakProgress(7),
+  getProgress: curriedDailyStreakProgress(DAILY_STREAK_TARGETS[2]),
 };
 
 export const DAILY_STREAK_4: AwardLocal = {
@@ -66,7 +68,7 @@ export const DAILY_STREAK_4: AwardLocal = {
   name: 'Daily Streak IV',
   description: 'Logged in every day for two weeks',
   icon: AwardIcon,
-  getProgress: curriedDailyStreakProgress(14),
+  getProgress: curriedDailyStreakProgress(DAILY_STREAK_TARGETS[3]),
 };
 
 export const DAILY_STREAK_5: AwardLocal = {
@@ -75,7 +77,7 @@ export const DAILY_STREAK_5: AwardLocal = {
   name: 'Daily Streak V',
   description: 'Logged in every day for one month',
   icon: AwardIcon,
-  getProgress: curriedDailyStreakProgress(30),
+  getProgress: curriedDailyStreakProgress(DAILY_STREAK_TARGETS[4]),
 };
 
 export const DAILY_STREAK_6: AwardLocal = {
@@ -84,7 +86,7 @@ export const DAILY_STREAK_6: AwardLocal = {
   name: 'Daily Streak VI',
   description: 'Logged in every day for three months',
   icon: AwardIcon,
-  getProgress: curriedDailyStreakProgress(90),
+  getProgress: curriedDailyStreakProgress(DAILY_STREAK_TARGETS[5]),
 };
 
 export const DAILY_STREAK_7: AwardLocal = {
@@ -93,7 +95,7 @@ export const DAILY_STREAK_7: AwardLocal = {
   name: 'Daily Streak VII',
   description: 'Logged in every day for six months',
   icon: AwardIcon,
-  getProgress: curriedDailyStreakProgress(180),
+  getProgress: curriedDailyStreakProgress(DAILY_STREAK_TARGETS[6]),
 };
 
 export const DAILY_STREAK_8: AwardLocal = {
@@ -102,7 +104,7 @@ export const DAILY_STREAK_8: AwardLocal = {
   name: 'Daily Streak VIII',
   description: 'Logged in every day for one year',
   icon: AwardIcon,
-  getProgress: curriedDailyStreakProgress(365),
+  getProgress: curriedDailyStreakProgress(DAILY_STREAK_TARGETS[7]),
 };
 
 const EARLY_BIRD_TARGETS = [1000, 5000, 10000, 25000];
