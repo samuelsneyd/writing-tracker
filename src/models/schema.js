@@ -313,6 +313,15 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
+                "category": {
+                    "name": "category",
+                    "isArray": false,
+                    "type": {
+                        "enum": "AwardCategory"
+                    },
+                    "isRequired": true,
+                    "attributes": []
+                },
                 "type": {
                     "name": "type",
                     "isArray": false,
@@ -398,6 +407,17 @@ export const schema = {
                 "IN_PROGRESS",
                 "ON_HOLD",
                 "COMPLETED"
+            ]
+        },
+        "AwardCategory": {
+            "name": "AwardCategory",
+            "values": [
+                "DAILY_STREAK",
+                "EARLY_BIRD",
+                "NIGHT_OWL",
+                "OVERACHIEVER",
+                "FINISHER",
+                "GENERAL"
             ]
         },
         "AwardType": {
@@ -520,5 +540,5 @@ export const schema = {
         }
     },
     "codegenVersion": "3.4.4",
-    "version": "3f36ffd0fa82ad8251e9989f29f7ff66"
+    "version": "1f73c6fc0e87e974cb476eab804294e8"
 };

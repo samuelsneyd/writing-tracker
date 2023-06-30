@@ -444,6 +444,7 @@ export const onCreateAward = /* GraphQL */ `
   ) {
     onCreateAward(filter: $filter, owner: $owner) {
       id
+      category
       type
       date
       owner
@@ -463,6 +464,7 @@ export const onUpdateAward = /* GraphQL */ `
   ) {
     onUpdateAward(filter: $filter, owner: $owner) {
       id
+      category
       type
       date
       owner
@@ -482,6 +484,7 @@ export const onDeleteAward = /* GraphQL */ `
   ) {
     onDeleteAward(filter: $filter, owner: $owner) {
       id
+      category
       type
       date
       owner

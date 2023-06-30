@@ -15,6 +15,15 @@ export enum ProjectStatus {
   COMPLETED = "COMPLETED"
 }
 
+export enum AwardCategory {
+  DAILY_STREAK = "DAILY_STREAK",
+  EARLY_BIRD = "EARLY_BIRD",
+  NIGHT_OWL = "NIGHT_OWL",
+  OVERACHIEVER = "OVERACHIEVER",
+  FINISHER = "FINISHER",
+  GENERAL = "GENERAL"
+}
+
 export enum AwardType {
   DAILY_STREAK_1 = "DAILY_STREAK_1",
   DAILY_STREAK_2 = "DAILY_STREAK_2",
@@ -186,6 +195,7 @@ export declare const LoginDate: (new (init: ModelInit<LoginDate, LoginDateMetaDa
 
 type EagerAward = {
   readonly id: string;
+  readonly category: AwardCategory | keyof typeof AwardCategory;
   readonly type: AwardType | keyof typeof AwardType;
   readonly date: string;
   readonly owner?: string | null;
@@ -195,6 +205,7 @@ type EagerAward = {
 
 type LazyAward = {
   readonly id: string;
+  readonly category: AwardCategory | keyof typeof AwardCategory;
   readonly type: AwardType | keyof typeof AwardType;
   readonly date: string;
   readonly owner?: string | null;

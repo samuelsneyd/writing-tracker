@@ -1,6 +1,6 @@
 import { IconElement, IconProps } from '@ui-kitten/components';
 import { AwardIcon } from '../../components/Icons/Icons';
-import { AwardType } from '../../models';
+import { AwardCategory, AwardType } from '../../models';
 import { SerializedProject, SerializedSession } from '../../models/serialized';
 import { DateStreakSummary } from '../../types/types';
 import {
@@ -15,6 +15,7 @@ import {
  * A local representation of the Award model with local helper functions.
  */
 export type AwardLocal = {
+  category: AwardCategory;
   type: AwardType;
   name: string;
   description: string;
@@ -33,6 +34,7 @@ export type AwardProgressSummary = {
 };
 
 export const DAILY_STREAK_1: AwardLocal = {
+  category: AwardCategory.DAILY_STREAK,
   type: AwardType.DAILY_STREAK_1,
   name: 'Daily Streak I',
   description: 'Logged in once',
@@ -41,6 +43,7 @@ export const DAILY_STREAK_1: AwardLocal = {
 };
 
 export const DAILY_STREAK_2: AwardLocal = {
+  category: AwardCategory.DAILY_STREAK,
   type: AwardType.DAILY_STREAK_2,
   name: 'Daily Streak II',
   description: 'Logged in every day for three days',
@@ -49,6 +52,7 @@ export const DAILY_STREAK_2: AwardLocal = {
 };
 
 export const DAILY_STREAK_3: AwardLocal = {
+  category: AwardCategory.DAILY_STREAK,
   type: AwardType.DAILY_STREAK_3,
   name: 'Daily Streak III',
   description: 'Logged in every day for one week',
@@ -57,6 +61,7 @@ export const DAILY_STREAK_3: AwardLocal = {
 };
 
 export const DAILY_STREAK_4: AwardLocal = {
+  category: AwardCategory.DAILY_STREAK,
   type: AwardType.DAILY_STREAK_4,
   name: 'Daily Streak IV',
   description: 'Logged in every day for two weeks',
@@ -65,6 +70,7 @@ export const DAILY_STREAK_4: AwardLocal = {
 };
 
 export const DAILY_STREAK_5: AwardLocal = {
+  category: AwardCategory.DAILY_STREAK,
   type: AwardType.DAILY_STREAK_5,
   name: 'Daily Streak V',
   description: 'Logged in every day for one month',
@@ -73,6 +79,7 @@ export const DAILY_STREAK_5: AwardLocal = {
 };
 
 export const DAILY_STREAK_6: AwardLocal = {
+  category: AwardCategory.DAILY_STREAK,
   type: AwardType.DAILY_STREAK_6,
   name: 'Daily Streak VI',
   description: 'Logged in every day for three months',
@@ -81,6 +88,7 @@ export const DAILY_STREAK_6: AwardLocal = {
 };
 
 export const DAILY_STREAK_7: AwardLocal = {
+  category: AwardCategory.DAILY_STREAK,
   type: AwardType.DAILY_STREAK_7,
   name: 'Daily Streak VII',
   description: 'Logged in every day for six months',
@@ -89,6 +97,7 @@ export const DAILY_STREAK_7: AwardLocal = {
 };
 
 export const DAILY_STREAK_8: AwardLocal = {
+  category: AwardCategory.DAILY_STREAK,
   type: AwardType.DAILY_STREAK_8,
   name: 'Daily Streak VIII',
   description: 'Logged in every day for one year',
@@ -99,6 +108,7 @@ export const DAILY_STREAK_8: AwardLocal = {
 const EARLY_BIRD_TARGETS = [1000, 5000, 10000, 25000];
 
 export const EARLY_BIRD_1: AwardLocal = {
+  category: AwardCategory.EARLY_BIRD,
   type: AwardType.EARLY_BIRD_1,
   name: 'Early Bird I',
   description: `Write ${EARLY_BIRD_TARGETS[0].toLocaleString()} words between 4-6 am`,
@@ -107,6 +117,7 @@ export const EARLY_BIRD_1: AwardLocal = {
 };
 
 export const EARLY_BIRD_2: AwardLocal = {
+  category: AwardCategory.EARLY_BIRD,
   type: AwardType.EARLY_BIRD_2,
   name: 'Early Bird II',
   description: `Write ${EARLY_BIRD_TARGETS[1].toLocaleString()} words between 4-6 am`,
@@ -115,6 +126,7 @@ export const EARLY_BIRD_2: AwardLocal = {
 };
 
 export const EARLY_BIRD_3: AwardLocal = {
+  category: AwardCategory.EARLY_BIRD,
   type: AwardType.EARLY_BIRD_3,
   name: 'Early Bird III',
   description: `Write ${EARLY_BIRD_TARGETS[2].toLocaleString()} words between 4-6 am`,
@@ -123,6 +135,7 @@ export const EARLY_BIRD_3: AwardLocal = {
 };
 
 export const EARLY_BIRD_4: AwardLocal = {
+  category: AwardCategory.EARLY_BIRD,
   type: AwardType.EARLY_BIRD_4,
   name: 'Early Bird IV',
   description: `Write ${EARLY_BIRD_TARGETS[3].toLocaleString()} words between 4-6 am`,
@@ -133,6 +146,7 @@ export const EARLY_BIRD_4: AwardLocal = {
 const NIGHT_OWL_TARGETS = [1000, 5000, 10000, 25000];
 
 export const NIGHT_OWL_1: AwardLocal = {
+  category: AwardCategory.NIGHT_OWL,
   type: AwardType.NIGHT_OWL_1,
   name: 'Night Owl I',
   description: `Write ${NIGHT_OWL_TARGETS[0].toLocaleString()} words between 12-4 am`,
@@ -141,6 +155,7 @@ export const NIGHT_OWL_1: AwardLocal = {
 };
 
 export const NIGHT_OWL_2: AwardLocal = {
+  category: AwardCategory.NIGHT_OWL,
   type: AwardType.NIGHT_OWL_2,
   name: 'Night Owl II',
   description: `Write ${NIGHT_OWL_TARGETS[1].toLocaleString()} words between 12-4 am`,
@@ -149,6 +164,7 @@ export const NIGHT_OWL_2: AwardLocal = {
 };
 
 export const NIGHT_OWL_3: AwardLocal = {
+  category: AwardCategory.NIGHT_OWL,
   type: AwardType.NIGHT_OWL_3,
   name: 'Night Owl III',
   description: `Write ${NIGHT_OWL_TARGETS[2].toLocaleString()} words between 12-4 am`,
@@ -157,6 +173,7 @@ export const NIGHT_OWL_3: AwardLocal = {
 };
 
 export const NIGHT_OWL_4: AwardLocal = {
+  category: AwardCategory.NIGHT_OWL,
   type: AwardType.NIGHT_OWL_4,
   name: 'Night Owl IV',
   description: `Write ${NIGHT_OWL_TARGETS[3].toLocaleString()} words between 12-4 am`,
@@ -165,6 +182,7 @@ export const NIGHT_OWL_4: AwardLocal = {
 };
 
 export const OVERACHIEVER_1: AwardLocal = {
+  category: AwardCategory.OVERACHIEVER,
   type: AwardType.OVERACHIEVER_1,
   name: 'Overachiever I',
   description: 'Achieve your daily word goal',
@@ -173,6 +191,7 @@ export const OVERACHIEVER_1: AwardLocal = {
 };
 
 export const OVERACHIEVER_2: AwardLocal = {
+  category: AwardCategory.OVERACHIEVER,
   type: AwardType.OVERACHIEVER_2,
   name: 'Overachiever II',
   description: 'Double your daily word goal',
@@ -181,6 +200,7 @@ export const OVERACHIEVER_2: AwardLocal = {
 };
 
 export const OVERACHIEVER_3: AwardLocal = {
+  category: AwardCategory.OVERACHIEVER,
   type: AwardType.OVERACHIEVER_3,
   name: 'Overachiever III',
   description: 'Triple your daily word goal',
@@ -189,6 +209,7 @@ export const OVERACHIEVER_3: AwardLocal = {
 };
 
 export const OVERACHIEVER_4: AwardLocal = {
+  category: AwardCategory.OVERACHIEVER,
   type: AwardType.OVERACHIEVER_4,
   name: 'Overachiever IV',
   description: 'Quadruple your daily word goal',
@@ -199,6 +220,7 @@ export const OVERACHIEVER_4: AwardLocal = {
 const FINISHER_TARGETS = [1, 3, 5, 10];
 
 export const FINISHER_1: AwardLocal = {
+  category: AwardCategory.FINISHER,
   type: AwardType.FINISHER_1,
   name: 'Finisher I',
   description: 'Reach your overall word count target for one project',
@@ -207,6 +229,7 @@ export const FINISHER_1: AwardLocal = {
 };
 
 export const FINISHER_2: AwardLocal = {
+  category: AwardCategory.FINISHER,
   type: AwardType.FINISHER_2,
   name: 'Finisher II',
   description: 'Reach your overall word count target for three projects',
@@ -215,6 +238,7 @@ export const FINISHER_2: AwardLocal = {
 };
 
 export const FINISHER_3: AwardLocal = {
+  category: AwardCategory.FINISHER,
   type: AwardType.FINISHER_3,
   name: 'Finisher III',
   description: 'Reach your overall word count target for five projects',
@@ -223,6 +247,7 @@ export const FINISHER_3: AwardLocal = {
 };
 
 export const FINISHER_4: AwardLocal = {
+  category: AwardCategory.FINISHER,
   type: AwardType.FINISHER_4,
   name: 'Finisher IV',
   description: 'Reach your overall word count target for ten projects',

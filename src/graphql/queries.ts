@@ -372,6 +372,7 @@ export const getAward = /* GraphQL */ `
   query GetAward($id: ID!) {
     getAward(id: $id) {
       id
+      category
       type
       date
       owner
@@ -393,6 +394,7 @@ export const listAwards = /* GraphQL */ `
     listAwards(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
+        category
         type
         date
         owner
@@ -424,6 +426,7 @@ export const syncAwards = /* GraphQL */ `
     ) {
       items {
         id
+        category
         type
         date
         owner

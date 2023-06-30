@@ -304,11 +304,22 @@ export type DeleteLoginDateInput = {
 
 export type CreateAwardInput = {
   id?: string | null,
+  category: AwardCategory,
   type: AwardType,
   date: string,
   owner?: string | null,
   _version?: number | null,
 };
+
+export enum AwardCategory {
+  DAILY_STREAK = "DAILY_STREAK",
+  EARLY_BIRD = "EARLY_BIRD",
+  NIGHT_OWL = "NIGHT_OWL",
+  OVERACHIEVER = "OVERACHIEVER",
+  FINISHER = "FINISHER",
+  GENERAL = "GENERAL",
+}
+
 
 export enum AwardType {
   DAILY_STREAK_1 = "DAILY_STREAK_1",
@@ -339,6 +350,7 @@ export enum AwardType {
 
 
 export type ModelAwardConditionInput = {
+  category?: ModelAwardCategoryInput | null,
   type?: ModelAwardTypeInput | null,
   date?: ModelStringInput | null,
   owner?: ModelStringInput | null,
@@ -346,6 +358,11 @@ export type ModelAwardConditionInput = {
   or?: Array< ModelAwardConditionInput | null > | null,
   not?: ModelAwardConditionInput | null,
   _deleted?: ModelBooleanInput | null,
+};
+
+export type ModelAwardCategoryInput = {
+  eq?: AwardCategory | null,
+  ne?: AwardCategory | null,
 };
 
 export type ModelAwardTypeInput = {
@@ -356,6 +373,7 @@ export type ModelAwardTypeInput = {
 export type Award = {
   __typename: "Award",
   id: string,
+  category: AwardCategory,
   type: AwardType,
   date: string,
   owner?: string | null,
@@ -368,6 +386,7 @@ export type Award = {
 
 export type UpdateAwardInput = {
   id: string,
+  category?: AwardCategory | null,
   type?: AwardType | null,
   date?: string | null,
   owner?: string | null,
@@ -434,6 +453,7 @@ export type ModelLoginDateConnection = {
 
 export type ModelAwardFilterInput = {
   id?: ModelIDInput | null,
+  category?: ModelAwardCategoryInput | null,
   type?: ModelAwardTypeInput | null,
   date?: ModelStringInput | null,
   owner?: ModelStringInput | null,
@@ -526,6 +546,7 @@ export type ModelSubscriptionLoginDateFilterInput = {
 
 export type ModelSubscriptionAwardFilterInput = {
   id?: ModelSubscriptionIDInput | null,
+  category?: ModelSubscriptionStringInput | null,
   type?: ModelSubscriptionStringInput | null,
   date?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionAwardFilterInput | null > | null,
@@ -986,6 +1007,7 @@ export type CreateAwardMutation = {
   createAward?:  {
     __typename: "Award",
     id: string,
+    category: AwardCategory,
     type: AwardType,
     date: string,
     owner?: string | null,
@@ -1006,6 +1028,7 @@ export type UpdateAwardMutation = {
   updateAward?:  {
     __typename: "Award",
     id: string,
+    category: AwardCategory,
     type: AwardType,
     date: string,
     owner?: string | null,
@@ -1026,6 +1049,7 @@ export type DeleteAwardMutation = {
   deleteAward?:  {
     __typename: "Award",
     id: string,
+    category: AwardCategory,
     type: AwardType,
     date: string,
     owner?: string | null,
@@ -1411,6 +1435,7 @@ export type GetAwardQuery = {
   getAward?:  {
     __typename: "Award",
     id: string,
+    category: AwardCategory,
     type: AwardType,
     date: string,
     owner?: string | null,
@@ -1434,6 +1459,7 @@ export type ListAwardsQuery = {
     items:  Array< {
       __typename: "Award",
       id: string,
+      category: AwardCategory,
       type: AwardType,
       date: string,
       owner?: string | null,
@@ -1461,6 +1487,7 @@ export type SyncAwardsQuery = {
     items:  Array< {
       __typename: "Award",
       id: string,
+      category: AwardCategory,
       type: AwardType,
       date: string,
       owner?: string | null,
@@ -1928,6 +1955,7 @@ export type OnCreateAwardSubscription = {
   onCreateAward?:  {
     __typename: "Award",
     id: string,
+    category: AwardCategory,
     type: AwardType,
     date: string,
     owner?: string | null,
@@ -1948,6 +1976,7 @@ export type OnUpdateAwardSubscription = {
   onUpdateAward?:  {
     __typename: "Award",
     id: string,
+    category: AwardCategory,
     type: AwardType,
     date: string,
     owner?: string | null,
@@ -1968,6 +1997,7 @@ export type OnDeleteAwardSubscription = {
   onDeleteAward?:  {
     __typename: "Award",
     id: string,
+    category: AwardCategory,
     type: AwardType,
     date: string,
     owner?: string | null,

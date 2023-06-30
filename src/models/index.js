@@ -15,6 +15,15 @@ const ProjectStatus = {
   "COMPLETED": "COMPLETED"
 };
 
+const AwardCategory = {
+  "DAILY_STREAK": "DAILY_STREAK",
+  "EARLY_BIRD": "EARLY_BIRD",
+  "NIGHT_OWL": "NIGHT_OWL",
+  "OVERACHIEVER": "OVERACHIEVER",
+  "FINISHER": "FINISHER",
+  "GENERAL": "GENERAL"
+};
+
 const AwardType = {
   "DAILY_STREAK_1": "DAILY_STREAK_1",
   "DAILY_STREAK_2": "DAILY_STREAK_2",
@@ -51,6 +60,7 @@ export {
   Award,
   ProjectType,
   ProjectStatus,
+  AwardCategory,
   AwardType,
   TargetByDay,
   WeeklyTarget

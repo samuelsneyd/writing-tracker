@@ -59,6 +59,15 @@ type LoginDate @model @auth(rules: [{ allow: owner }]) {
   owner: String @auth(rules: [{ allow: owner, operations: [read, delete] }])
 }
 
+enum AwardCategory {
+  DAILY_STREAK
+  EARLY_BIRD
+  NIGHT_OWL
+  OVERACHIEVER
+  FINISHER
+  GENERAL
+}
+
 enum AwardType {
   DAILY_STREAK_1
   DAILY_STREAK_2
@@ -88,6 +97,7 @@ enum AwardType {
 
 type Award @model @auth(rules: [{ allow: owner }]) {
   id: ID!
+  category: AwardCategory!
   type: AwardType!
   date: AWSDateTime!
   owner: String @auth(rules: [{ allow: owner, operations: [read, delete] }])
