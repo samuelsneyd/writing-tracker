@@ -4,8 +4,9 @@ import { DataStore } from 'aws-amplify';
 import { SafeAreaView, StyleSheet } from 'react-native';
 import { useIsFocused } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { Project, Session } from '../../models';
-import { SerializedProject, SerializedSession } from '../../models/serialized';
+import { Award, Project, Session } from '../../models';
+import { SerializedAward, SerializedProject, SerializedSession } from '../../models/serialized';
+import { awardsSet } from '../../store/awards/awardsSlice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { projectsSet } from '../../store/projects/projectsSlice';
 import { sessionsSet } from '../../store/sessions/sessionsSlice';
@@ -27,6 +28,7 @@ type Props = NativeStackScreenProps<HomeStackParamList, 'Home'>
 const HomeScreen = ({ navigation }: Props): React.ReactElement => {
   const isFocused = useIsFocused();
   const dispatch = useAppDispatch();
+  const reduxAwards = useAppSelector(state => state.awards);
   const reduxProjects = useAppSelector(state => state.projects);
   const reduxSessions = useAppSelector(state => state.sessions);
 
@@ -58,6 +60,21 @@ const HomeScreen = ({ navigation }: Props): React.ReactElement => {
     };
 
     getSessions().then();
+  }, [isFocused]);
+
+  // Prefetch awards
+  React.useEffect(() => {
+    if (reduxAwards.length > 0 || !isFocused) {
+      return;
+    }
+
+    // Load from DataStore and update Redux
+    const getAwards = async () => {
+      const foundAwards = await DataStore.query(Award);
+      dispatch(awardsSet(serializeModel(foundAwards) as unknown as SerializedAward[]));
+    };
+
+    getAwards().then();
   }, [isFocused]);
 
   const renderDrawerAction = (): TopNavigationActionElement => (
