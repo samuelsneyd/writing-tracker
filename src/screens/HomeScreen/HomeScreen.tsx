@@ -1,6 +1,6 @@
+import * as React from 'react';
 import { serializeModel } from '@aws-amplify/datastore/ssr';
 import { DataStore } from 'aws-amplify';
-import * as React from 'react';
 import { SafeAreaView, StyleSheet } from 'react-native';
 import { useIsFocused } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
