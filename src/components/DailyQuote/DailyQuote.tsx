@@ -1,3 +1,4 @@
+import { CardProps } from '@ui-kitten/components/ui/card/card.component';
 import * as React from 'react';
 import { StyleSheet } from 'react-native';
 import { Card, Text } from '@ui-kitten/components';
@@ -7,21 +8,25 @@ type DailyQuoteProps = {
   isFocused: boolean,
 };
 
-const DailyQuote = ({ isFocused }: DailyQuoteProps): React.ReactElement => {
+const DailyQuote = (props: DailyQuoteProps & CardProps): React.ReactElement => {
+  const { isFocused } = props;
   const dailyQuote = useDailyQuote({ isFocused });
 
   return (
-    <Card status="primary">
+    <Card {...props} status="primary" style={styles.card}>
       <Text>
-        <Text style={styles.italic}>"{dailyQuote.quote}"</Text>
-        <Text style={styles.italic} status="primary"> - {dailyQuote.author}</Text>
+        <Text style={styles.text}>"{dailyQuote.quote}"</Text>
+        <Text style={styles.text} status="primary"> - {dailyQuote.author}</Text>
       </Text>
     </Card>
   );
 };
 
 const styles = StyleSheet.create({
-  italic: {
+  card: {
+    width: '100%',
+  },
+  text: {
     fontStyle: 'italic',
   },
 });

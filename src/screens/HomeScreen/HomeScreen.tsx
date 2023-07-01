@@ -86,9 +86,9 @@ const styles = StyleSheet.create({
   },
   body: {
     flex: 1,
-    justifyContent: 'space-around',
     alignItems: 'center',
     padding: 16,
+    gap: 16,
   },
 });
 
