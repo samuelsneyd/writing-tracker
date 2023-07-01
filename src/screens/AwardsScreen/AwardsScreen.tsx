@@ -38,6 +38,7 @@ const AwardsScreen = ({ navigation }: Props): React.ReactElement => {
                           ? new Date(award.date).toLocaleDateString()
                           // Fallback to today if completed but date missing
                           : new Date().toLocaleDateString()
+                        // Not completed, show nothing
                         : ''
                       }
                     </Text>
