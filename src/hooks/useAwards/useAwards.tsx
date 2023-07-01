@@ -20,6 +20,14 @@ export type MergedAward = AwardLocal & Partial<SerializedAward> & {
   isCompleted: boolean;
 };
 
+/**
+ * Returns an array of awards that can be displayed in the UI, merged from
+ * a static client-side list with helper functions/metadata and the achieved
+ * awards from in the datastore.
+ *
+ * Also checks eligibility for all outstanding awards. If a new award
+ * is eligible, updates the datastore with the award and the date achieved.
+ */
 const useAwards = () => {
   const dispatch = useAppDispatch();
   const loginStreak = useLoginStreak({});
