@@ -11,6 +11,7 @@ export type AwardSummary = {
 const useAwards = () => {
   const reduxProjects = useAppSelector(state => state.projects);
   const reduxSessions = useAppSelector(state => state.sessions);
+  const reduxAwards = useAppSelector(state => state.awards);
   const [availableAwards, setAvailableAwards] = React.useState<AwardMap>();
 
   React.useEffect(() => {
