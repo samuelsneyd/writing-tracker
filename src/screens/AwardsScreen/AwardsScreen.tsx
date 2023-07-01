@@ -22,39 +22,36 @@ const AwardsScreen = ({ navigation }: Props): React.ReactElement => {
       <Divider />
       <ScrollView style={styles.container} contentContainerStyle={{ flexGrow: 1 }}>
         <Layout style={styles.body}>
-          {awards &&
-            awards
-              .map(award => (
-                <Card
-                  key={award.type}
-                  style={styles.card}
-                  header={<Text category="h6">{award.name}</Text>}
-                  footer={
-                    <Text appearance="hint" status={award.isCompleted ? 'success' : 'warning'}>
-                      {award.isCompleted ? 'Completed ' : 'Not completed'}
-                      {award.isCompleted
-                        ? award.date
-                          // Show date completed
-                          ? new Date(award.date).toLocaleDateString()
-                          // Fallback to today if completed but date missing
-                          : new Date().toLocaleDateString()
-                        // Not completed, show nothing
-                        : ''
-                      }
-                    </Text>
+          {awards.map(award => (
+            <Card
+              key={award.type}
+              style={styles.card}
+              header={<Text category="h6">{award.name}</Text>}
+              footer={
+                <Text appearance="hint" status={award.isCompleted ? 'success' : 'warning'}>
+                  {award.isCompleted ? 'Completed ' : 'Not completed'}
+                  {award.isCompleted
+                    ? award.date
+                      // Show date completed
+                      ? new Date(award.date).toLocaleDateString()
+                      // Fallback to today if completed but date missing
+                      : new Date().toLocaleDateString()
+                    // Not completed, show nothing
+                    : ''
                   }
-                >
-                  <Text>{award.description}</Text>
-                  <Text>{award.progressSummary.current.toLocaleString()} / {award.progressSummary.target.toLocaleString()}</Text>
-                  <Text>{(award.progressSummary.progress * 100).toFixed(0)}%</Text>
-                  <ProgressBar
-                    status={getSteppedColors(award.progressSummary.progress)}
-                    progress={award.progressSummary.progress}
-                    animating={false}
-                  />
-                </Card>
-              ))
-          }
+                </Text>
+              }
+            >
+              <Text>{award.description}</Text>
+              <Text>{award.progressSummary.current.toLocaleString()} / {award.progressSummary.target.toLocaleString()}</Text>
+              <Text>{(award.progressSummary.progress * 100).toFixed(0)}%</Text>
+              <ProgressBar
+                status={getSteppedColors(award.progressSummary.progress)}
+                progress={award.progressSummary.progress}
+                animating={false}
+              />
+            </Card>
+          ))}
         </Layout>
       </ScrollView>
     </SafeAreaView>
