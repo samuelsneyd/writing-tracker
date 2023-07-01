@@ -3,8 +3,6 @@ import { SafeAreaView, ScrollView, StyleSheet } from 'react-native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { getSteppedColors } from '../../hooks/useAwards/award-utils';
 import useAwards from '../../hooks/useAwards/useAwards';
-import useLoginStreak from '../../hooks/useLoginStreak/useLoginStreak';
-import { useAppSelector } from '../../store/hooks';
 import type { MoreStackParamList } from '../../types/types';
 import { Card, Divider, Layout, TopNavigation, Text, TopNavigationAction, ProgressBar } from '@ui-kitten/components';
 import { ArrowIosBackIcon } from '../../components/Icons/Icons';
@@ -13,9 +11,6 @@ type Props = NativeStackScreenProps<MoreStackParamList, 'Awards'>
 
 const AwardsScreen = ({ navigation }: Props): React.ReactElement => {
   const awards = useAwards();
-  const loginStreak = useLoginStreak({});
-  const reduxProjects = useAppSelector(state => state.projects);
-  const reduxSessions = useAppSelector(state => state.sessions);
 
   const BackAction = () => (
     <TopNavigationAction icon={ArrowIosBackIcon} onPress={() => navigation.goBack()} />
@@ -28,15 +23,7 @@ const AwardsScreen = ({ navigation }: Props): React.ReactElement => {
       <ScrollView style={styles.container} contentContainerStyle={{ flexGrow: 1 }}>
         <Layout style={styles.body}>
           {awards &&
-            Object.values(awards)
-              .map(award => ({
-                ...award,
-                progressSummary: award.getProgress(reduxProjects, reduxSessions, loginStreak),
-              }))
-              .map(award => ({
-                ...award,
-                isCompleted: award.progressSummary.progress === 1,
-              }))
+            awards
               .map(award => (
                 <Card
                   key={award.type}
@@ -44,7 +31,15 @@ const AwardsScreen = ({ navigation }: Props): React.ReactElement => {
                   header={<Text category="h6">{award.name}</Text>}
                   footer={
                     <Text appearance="hint" status={award.isCompleted ? 'success' : 'warning'}>
-                      {award.isCompleted ? 'Completed' : 'Not completed'}
+                      {award.isCompleted ? 'Completed ' : 'Not completed'}
+                      {award.isCompleted
+                        ? award.date
+                          // Show date completed
+                          ? new Date(award.date).toLocaleDateString()
+                          // Fallback to today if completed but date missing
+                          : new Date().toLocaleDateString()
+                        : ''
+                      }
                     </Text>
                   }
                 >
