@@ -22,6 +22,7 @@ const AwardsScreen = ({ navigation }: Props): React.ReactElement => {
       <Divider />
       <ScrollView style={styles.container} contentContainerStyle={{ flexGrow: 1 }}>
         <Layout style={styles.body}>
+          <Text>Awards achieved: {awards.filter(award => award.isCompleted).length}/{awards.length}</Text>
           {awards.map(award => (
             <Card
               key={award.type}
