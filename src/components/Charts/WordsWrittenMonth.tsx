@@ -9,7 +9,7 @@ import { getMaxYAxisValue, getYAxisLabelTexts, renderLabel, renderTooltip } from
 
 setDefaultOptions({ weekStartsOn: 1 });
 
-const WordsWrittenMonth = (): React.ReactElement => {
+export const WordsWrittenMonth = (): React.ReactElement => {
   const theme = useTheme();
   const reduxSessions = useAppSelector(state => state.sessions);
   const datesArray = reduxSessions.map(session => new Date(session.date));
@@ -91,5 +91,3 @@ const WordsWrittenMonth = (): React.ReactElement => {
     </>
   );
 };
-
-export default WordsWrittenMonth;

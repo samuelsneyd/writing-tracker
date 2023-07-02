@@ -4,13 +4,15 @@ import { SafeAreaView, ScrollView, StyleSheet } from 'react-native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useIsFocused } from '@react-navigation/native';
 import { DataStore, Predicates } from 'aws-amplify';
-import ProgressPercentageByProjectChart from '../../components/Charts/ProgressPercentageByProjectChart';
-import TotalTimeByProjectChart from '../../components/Charts/TotalTimeByProjectChart';
-import TotalWordsByDayChart from '../../components/Charts/TotalWordsByDayChart';
-import TotalWordsByProjectChart from '../../components/Charts/TotalWordsByProjectChart';
-import WordsWritten6Month from '../../components/Charts/WordsWritten6Month';
-import WordsWrittenMonth from '../../components/Charts/WordsWrittenMonth';
-import WordsWrittenWeek from '../../components/Charts/WordsWrittenWeek';
+import {
+  ProgressPercentageByProjectChart,
+  TotalTimeByProjectChart,
+  TotalWordsByDayChart,
+  TotalWordsByProjectChart,
+  WordsWritten6Month,
+  WordsWrittenMonth,
+  WordsWrittenWeek,
+} from '../../components/Charts';
 import { Project, Session } from '../../models';
 import { SerializedProject, SerializedSession } from '../../models/serialized';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';

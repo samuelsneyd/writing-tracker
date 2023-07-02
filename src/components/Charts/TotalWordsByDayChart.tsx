@@ -11,7 +11,7 @@ setDefaultOptions({ weekStartsOn: 1 });
 
 const DAYS_OF_WEEK = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
-const TotalWordsByDayChart = (): React.ReactElement => {
+export const TotalWordsByDayChart = (): React.ReactElement => {
   const theme = useTheme();
   const reduxSessions = useAppSelector(state => state.sessions);
 
@@ -73,5 +73,3 @@ const TotalWordsByDayChart = (): React.ReactElement => {
     </>
   );
 };
-
-export default TotalWordsByDayChart;

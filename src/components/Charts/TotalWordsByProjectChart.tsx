@@ -6,7 +6,7 @@ import { useAppSelector } from '../../store/hooks';
 import { BarDataItemType } from './chart-types';
 import { getMaxYAxisValue, getYAxisLabelTexts, renderLabel, renderTooltip } from './chart-utils';
 
-const TotalWordsByProjectChart = (): React.ReactElement => {
+export const TotalWordsByProjectChart = (): React.ReactElement => {
   const theme = useTheme();
   const reduxProjects = useAppSelector(state => state.projects);
   const reduxSessions = useAppSelector(state => state.sessions);
@@ -69,5 +69,3 @@ const TotalWordsByProjectChart = (): React.ReactElement => {
     </>
   );
 };
-
-export default TotalWordsByProjectChart;

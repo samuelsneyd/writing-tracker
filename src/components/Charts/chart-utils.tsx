@@ -26,9 +26,7 @@ export const renderTooltip = (
     value = (item.value * offset).toLocaleString();
   }
 
-  return (
-    <Text appearance="hint" style={styles.toolTip}>{prefix}{value}{suffix}</Text>
-  );
+  return <Text appearance="hint" style={styles.toolTip}>{prefix}{value}{suffix}</Text>;
 };
 
 /**
@@ -131,13 +129,6 @@ export const getSteppedColors = (item: BarDataItemType, theme: ThemeType, maxVal
   };
 };
 
-const chartUtil = {
-  renderTooltip,
-  renderLabel,
-  getMaxYAxisValue,
-  getYAxisLabelTexts,
-};
-
 const styles = StyleSheet.create({
   toolTip: {
     textAlign: 'center',
@@ -149,5 +140,3 @@ const styles = StyleSheet.create({
     minWidth: '100%',
   },
 });
-
-export default chartUtil;

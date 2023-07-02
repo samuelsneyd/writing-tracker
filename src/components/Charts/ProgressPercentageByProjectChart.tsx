@@ -6,7 +6,7 @@ import { useAppSelector } from '../../store/hooks';
 import { BarDataItemType } from './chart-types';
 import { getMaxYAxisValue, getSteppedColors, getYAxisLabelTexts, renderLabel, renderTooltip } from './chart-utils';
 
-const ProgressPercentageByProjectChart = (): React.ReactElement => {
+export const ProgressPercentageByProjectChart = (): React.ReactElement => {
   const theme = useTheme();
   const reduxProjects = useAppSelector(state => state.projects);
   const reduxSessions = useAppSelector(state => state.sessions);
@@ -66,5 +66,3 @@ const ProgressPercentageByProjectChart = (): React.ReactElement => {
     </>
   );
 };
-
-export default ProgressPercentageByProjectChart;

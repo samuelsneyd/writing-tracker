@@ -19,7 +19,7 @@ import { getMaxYAxisValue, getYAxisLabelTexts, renderLabel, renderTooltip } from
 
 setDefaultOptions({ weekStartsOn: 1 });
 
-const WordsWritten6Month = (): React.ReactElement => {
+export const WordsWritten6Month = (): React.ReactElement => {
   const theme = useTheme();
   const reduxSessions = useAppSelector(state => state.sessions);
   const datesArray = reduxSessions.map(session => new Date(session.date));
@@ -114,10 +114,7 @@ const WordsWritten6Month = (): React.ReactElement => {
         yAxisColor={theme['text-hint-color']}
         xAxisColor={theme['text-hint-color']}
         scrollToEnd
-        autoShiftLabels={true}
       />
     </>
   );
 };
-
-export default WordsWritten6Month;
