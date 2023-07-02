@@ -18,7 +18,7 @@ export const TotalTimeByProject = (): React.ReactElement => {
   const barData: BarDataItemType[] = _(reduxProjects)
     .mapValues((project) => ({
       ...project,
-      sessions: groupedSessions[project.id] ?? []
+      sessions: groupedSessions[project.id] ?? [],
     }))
     .map((item): BarDataItemType => ({
       label: item.title,
@@ -41,7 +41,7 @@ export const TotalTimeByProject = (): React.ReactElement => {
     .value();
 
   const maxValue = getMaxYAxisValue(barData, 10 * 60, 10 * 60);
-  const yAxisLabelTexts = getYAxisLabelTexts(maxValue, '', 'h', 1/60);
+  const yAxisLabelTexts = getYAxisLabelTexts(maxValue, 4, '', 'h', 1 / 60);
 
   return (
     <>
@@ -58,7 +58,7 @@ export const TotalTimeByProject = (): React.ReactElement => {
         initialSpacing={20}
         maxValue={maxValue}
         noOfSections={4}
-        renderTooltip={(item: BarDataItemType) => renderTooltip(item, '', 'h', 2, 1/60)}
+        renderTooltip={(item: BarDataItemType) => renderTooltip(item, '', 'h', 2, 1 / 60)}
         yAxisLabelWidth={50}
         yAxisLabelTexts={yAxisLabelTexts}
         yAxisTextStyle={{ color: theme['text-hint-color'] }}

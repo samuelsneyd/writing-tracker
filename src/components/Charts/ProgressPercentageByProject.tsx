@@ -18,7 +18,7 @@ export const ProgressPercentageByProject = (): React.ReactElement => {
   const barData: BarDataItemType[] = _(reduxProjects)
     .mapValues((project) => ({
       ...project,
-      sessions: groupedSessions[project.id] ?? []
+      sessions: groupedSessions[project.id] ?? [],
     }))
     .map((item): BarDataItemType => ({
       label: item.title,
@@ -38,7 +38,7 @@ export const ProgressPercentageByProject = (): React.ReactElement => {
     .value();
 
   const maxValue = getMaxYAxisValue(barData, 100, 0);
-  const yAxisLabelTexts = getYAxisLabelTexts(maxValue, '', '%');
+  const yAxisLabelTexts = getYAxisLabelTexts(maxValue, 4, '', '%');
 
   return (
     <>

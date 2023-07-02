@@ -75,16 +75,17 @@ export const getMaxYAxisValue = (
  * @param prefix an optional prefix.
  * @param suffix an optional suffix.
  * @param offset multiplies all values by this offset.
- * @param stepCount the number of labels between 0 and the max value, excluding 0
+ * @param stepCount the number of labels between 0 and the max value, excluding 0.
+ * @param kLimit the cutoff point where thousands show 1K instead of 1000. Default 10K.
  */
 export const getYAxisLabelTexts = (
   maxYAxisValue: number,
+  stepCount: number = 4,
   prefix: string = '',
   suffix: string = '',
   offset: number = 1,
-  stepCount: number = 4,
+  kLimit: number = 10000,
 ): string[] => {
-  const kLimit = 10000;
   const step = maxYAxisValue / stepCount;
 
   // Array of length stepCount + 1 spanning range (0, maxYAxisValue)
