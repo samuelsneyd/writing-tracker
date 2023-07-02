@@ -2,35 +2,32 @@ import * as React from 'react';
 import _ from 'lodash';
 import { Text, useTheme } from '@ui-kitten/components';
 import { BarChart } from 'react-native-gifted-charts';
-import { format, setDefaultOptions } from 'date-fns';
 import { useAppSelector } from '../../store/hooks';
 import { BarDataItemType } from './chart-types';
 import { getMaxYAxisValue, getYAxisLabelTexts, renderLabel, renderTooltip } from './chart-utils';
 
-setDefaultOptions({ weekStartsOn: 1 });
-
-const DAYS_OF_WEEK = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-
-export const TotalWordsByDayChart = (): React.ReactElement => {
+export const TotalTimeByProject = (): React.ReactElement => {
   const theme = useTheme();
+  const reduxProjects = useAppSelector(state => state.projects);
   const reduxSessions = useAppSelector(state => state.sessions);
 
-  // Sum words of all projects, grouped by day of the week
-  const barData = _(reduxSessions)
-    .map(session => ({
-      value: session.words,
-      label: format(new Date(session.date), 'E'),
+  // Group sessions by projects
+  const groupedSessions = _.groupBy(reduxSessions, 'projectSessionsId');
+
+  // Sum words of all sessions, grouped by project
+  const barData: BarDataItemType[] = _(reduxProjects)
+    .mapValues((project) => ({
+      ...project,
+      sessions: groupedSessions[project.id] ?? []
     }))
-    .groupBy('label')
-    .mapValues(group => _.sumBy(group, 'value'))
-    .defaults(_.zipObject(DAYS_OF_WEEK, Array(DAYS_OF_WEEK.length).fill(0)))
-    .map((value, label): BarDataItemType => ({
-      value,
-      label,
-      labelComponent: () => renderLabel(label),
+    .map((item): BarDataItemType => ({
+      label: item.title,
+      value: _.sumBy(item.sessions, 'minutes'),
+      labelComponent: () => renderLabel(item.title),
     }))
-    // Sort Mon -> Sun
-    .sortBy(item => _.indexOf(DAYS_OF_WEEK, item.label))
+    // Sort descending
+    .sortBy('value')
+    .reverse()
     .map((item, i): BarDataItemType => (
       theme.useRainbow
         ? {
@@ -43,12 +40,12 @@ export const TotalWordsByDayChart = (): React.ReactElement => {
     ))
     .value();
 
-  const maxValue = getMaxYAxisValue(barData);
-  const yAxisLabelTexts = getYAxisLabelTexts(maxValue);
+  const maxValue = getMaxYAxisValue(barData, 10 * 60, 10 * 60);
+  const yAxisLabelTexts = getYAxisLabelTexts(maxValue, '', 'h', 1/60);
 
   return (
     <>
-      <Text category="h6" appearance="hint">Total words by day of the week</Text>
+      <Text category="h6" appearance="hint">Total time writing by project</Text>
       <BarChart
         data={barData}
         frontColor={theme['color-primary-500']}
@@ -56,19 +53,18 @@ export const TotalWordsByDayChart = (): React.ReactElement => {
         showGradient
         barBorderRadius={4}
         hideRules
+        barWidth={80}
         spacing={15}
         initialSpacing={20}
         maxValue={maxValue}
         noOfSections={4}
-        renderTooltip={(item: BarDataItemType) => renderTooltip(item)}
-        leftShiftForTooltip={3}
-        leftShiftForLastIndexTooltip={3}
+        renderTooltip={(item: BarDataItemType) => renderTooltip(item, '', 'h', 2, 1/60)}
         yAxisLabelWidth={50}
         yAxisLabelTexts={yAxisLabelTexts}
         yAxisTextStyle={{ color: theme['text-hint-color'] }}
         yAxisColor={theme['text-hint-color']}
         xAxisColor={theme['text-hint-color']}
-        disableScroll
+        xAxisLabelTextStyle={{ color: theme['text-hint-color'] }}
       />
     </>
   );

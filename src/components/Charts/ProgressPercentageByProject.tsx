@@ -4,9 +4,9 @@ import { Text, useTheme } from '@ui-kitten/components';
 import { BarChart } from 'react-native-gifted-charts';
 import { useAppSelector } from '../../store/hooks';
 import { BarDataItemType } from './chart-types';
-import { getMaxYAxisValue, getYAxisLabelTexts, renderLabel, renderTooltip } from './chart-utils';
+import { getMaxYAxisValue, getSteppedColors, getYAxisLabelTexts, renderLabel, renderTooltip } from './chart-utils';
 
-export const TotalWordsByProjectChart = (): React.ReactElement => {
+export const ProgressPercentageByProject = (): React.ReactElement => {
   const theme = useTheme();
   const reduxProjects = useAppSelector(state => state.projects);
   const reduxSessions = useAppSelector(state => state.sessions);
@@ -22,30 +22,27 @@ export const TotalWordsByProjectChart = (): React.ReactElement => {
     }))
     .map((item): BarDataItemType => ({
       label: item.title,
-      value: _.sumBy(item.sessions, 'words') + item.initialWords,
+      value: Math.min(
+        (_.sumBy(item.sessions, 'words') + item.initialWords) / item.overallWordTarget * 100,
+        100,
+      ),
       labelComponent: () => renderLabel(item.title),
     }))
     // Sort descending
     .sortBy('value')
     .reverse()
-    .map((item, i): BarDataItemType => (
-      theme.useRainbow
-        ? {
-          ...item,
-          frontColor: theme[`color-rainbow-${i % Number.parseInt(theme.rainbowLength)}-500`],
-          gradientColor: theme[`color-rainbow-${i % Number.parseInt(theme.rainbowLength)}-300`],
-          showGradient: true,
-        }
-        : item
-    ))
+    .map((item): BarDataItemType => ({
+      ...item,
+      ...getSteppedColors(item, theme, 100),
+    }))
     .value();
 
-  const maxValue = getMaxYAxisValue(barData);
-  const yAxisLabelTexts = getYAxisLabelTexts(maxValue);
+  const maxValue = getMaxYAxisValue(barData, 100, 0);
+  const yAxisLabelTexts = getYAxisLabelTexts(maxValue, '', '%');
 
   return (
     <>
-      <Text category="h6" appearance="hint">Total words by project</Text>
+      <Text category="h6" appearance="hint">Progress % by project</Text>
       <BarChart
         data={barData}
         frontColor={theme['color-primary-500']}
@@ -58,7 +55,7 @@ export const TotalWordsByProjectChart = (): React.ReactElement => {
         initialSpacing={20}
         maxValue={maxValue}
         noOfSections={4}
-        renderTooltip={(item: BarDataItemType) => renderTooltip(item)}
+        renderTooltip={(item: BarDataItemType) => renderTooltip(item, '', '%', 0)}
         yAxisLabelWidth={50}
         yAxisLabelTexts={yAxisLabelTexts}
         yAxisTextStyle={{ color: theme['text-hint-color'] }}
