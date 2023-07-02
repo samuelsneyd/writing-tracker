@@ -20,4 +20,7 @@ export type BarDataItemType = {
   barBackgroundPattern?: Function;
   patternId?: string;
   barStyle?: object;
+
+  // Any
+  [key: string]: any;
 };

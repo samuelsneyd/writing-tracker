@@ -8,6 +8,8 @@ import ProgressPercentageByProjectChart from '../../components/Charts/ProgressPe
 import TotalTimeByProjectChart from '../../components/Charts/TotalTimeByProjectChart';
 import TotalWordsByDayChart from '../../components/Charts/TotalWordsByDayChart';
 import TotalWordsByProjectChart from '../../components/Charts/TotalWordsByProjectChart';
+import WordsWrittenMonth from '../../components/Charts/WordsWrittenMonth';
+import WordsWrittenWeek from '../../components/Charts/WordsWrittenWeek';
 import { Project, Session } from '../../models';
 import { SerializedProject, SerializedSession } from '../../models/serialized';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
@@ -78,6 +80,10 @@ const ChartsScreen = ({ navigation }: Props): React.ReactElement => {
       <Divider />
       <ScrollView style={styles.container}>
         <Layout style={styles.body}>
+          <WordsWrittenWeek />
+          <Divider style={styles.divider} />
+          <WordsWrittenMonth />
+          <Divider style={styles.divider} />
           <ProgressPercentageByProjectChart />
           <Divider style={styles.divider} />
           <TotalWordsByProjectChart />
