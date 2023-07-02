@@ -8,6 +8,7 @@ import ProgressPercentageByProjectChart from '../../components/Charts/ProgressPe
 import TotalTimeByProjectChart from '../../components/Charts/TotalTimeByProjectChart';
 import TotalWordsByDayChart from '../../components/Charts/TotalWordsByDayChart';
 import TotalWordsByProjectChart from '../../components/Charts/TotalWordsByProjectChart';
+import WordsWritten6Month from '../../components/Charts/WordsWritten6Month';
 import WordsWrittenMonth from '../../components/Charts/WordsWrittenMonth';
 import WordsWrittenWeek from '../../components/Charts/WordsWrittenWeek';
 import { Project, Session } from '../../models';
@@ -83,6 +84,8 @@ const ChartsScreen = ({ navigation }: Props): React.ReactElement => {
           <WordsWrittenWeek />
           <Divider style={styles.divider} />
           <WordsWrittenMonth />
+          <Divider style={styles.divider} />
+          <WordsWritten6Month />
           <Divider style={styles.divider} />
           <ProgressPercentageByProjectChart />
           <Divider style={styles.divider} />
