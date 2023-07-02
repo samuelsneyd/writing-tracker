@@ -1,6 +1,6 @@
 import * as React from 'react';
 import _ from 'lodash';
-import { Layout, Text, useTheme } from '@ui-kitten/components';
+import { Text, useTheme } from '@ui-kitten/components';
 import { BarChart } from 'react-native-gifted-charts';
 import { eachDayOfInterval, format, min, startOfDay } from 'date-fns';
 import { useAppSelector } from '../../store/hooks';
