@@ -30,7 +30,7 @@ export type MergedAward = AwardLocal & Partial<SerializedAward> & {
  */
 const useAwards = () => {
   const dispatch = useAppDispatch();
-  const loginStreak = useLoginStreak({});
+  const loginStreak = useLoginStreak();
   const reduxAwards = useAppSelector(state => state.awards);
   const reduxProjects = useAppSelector(state => state.projects);
   const reduxSessions = useAppSelector(state => state.sessions);

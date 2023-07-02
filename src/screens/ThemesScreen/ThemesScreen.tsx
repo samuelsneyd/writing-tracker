@@ -1,15 +1,23 @@
 import * as React from 'react';
 import { SafeAreaView } from 'react-native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { themeSet } from '../../store/themes/themeSlice';
 import type { MoreStackParamList } from '../../types/types';
 import { Divider, Layout, TopNavigation, Text, Button, TopNavigationAction } from '@ui-kitten/components';
-import { ThemeContext } from '../../themes/theme-context';
 import { ArrowIosBackIcon } from '../../components/Icons/Icons';
 
 type Props = NativeStackScreenProps<MoreStackParamList, 'Themes'>
 
 const ThemesScreen = ({ navigation }: Props): React.ReactElement => {
-  const themeContext = React.useContext(ThemeContext);
+  const dispatch = useAppDispatch();
+  const theme = useAppSelector(state => state.theme).value;
+
+  // TODO - handle multiple themes beyond light/dark
+  const handleThemeChange = () => {
+    const nextTheme = theme === 'light' ? 'dark' : 'light';
+    dispatch(themeSet(nextTheme));
+  };
 
   const BackAction = () => (
     <TopNavigationAction icon={ArrowIosBackIcon} onPress={() => navigation.goBack()} />
@@ -21,7 +29,7 @@ const ThemesScreen = ({ navigation }: Props): React.ReactElement => {
       <Divider />
       <Layout style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <Text category="h1">Themes</Text>
-        <Button onPress={themeContext.toggleTheme}>Toggle light/dark mode</Button>
+        <Button onPress={handleThemeChange}>Toggle light/dark mode</Button>
       </Layout>
     </SafeAreaView>
   );

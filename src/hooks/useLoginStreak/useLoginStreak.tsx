@@ -13,7 +13,8 @@ type UseLoginStreakParams = {
  * Returns a summary of the signed-in user's daily login streak.
  * If not already signed-in today, updates the daily login streak.
  */
-const useLoginStreak = ({ isFocused = false }: UseLoginStreakParams): DateStreakSummary => {
+const useLoginStreak = (options: UseLoginStreakParams = { isFocused: false }): DateStreakSummary => {
+  const { isFocused } = options;
   const DATE_FORMAT = 'YYYY-MM-DD';
   const [loginSummary, setLoginSummary] = React.useState<DateStreakSummary>({
     currentStreak: 0,
