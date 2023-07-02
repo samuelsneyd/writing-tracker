@@ -11,16 +11,6 @@ import { Provider } from 'react-redux';
 import { store } from './store/store';
 import useLoginStreak from './hooks/useLoginStreak/useLoginStreak';
 
-type ReduxProviderProps = {
-  children?: JSX.Element;
-};
-
-const ReduxProvider = ({ children }: ReduxProviderProps) => (
-  <Provider store={store}>
-    {children}
-  </Provider>
-);
-
 const ThemedContent = () => {
   const theme = useAppSelector(state => state.theme).value;
   useLoginStreak();
@@ -38,9 +28,9 @@ const ThemedContent = () => {
 };
 
 const App = () => (
-  <ReduxProvider>
+  <Provider store={store}>
     <ThemedContent />
-  </ReduxProvider>
+  </Provider>
 );
 
 export default withAuthenticator(App);
