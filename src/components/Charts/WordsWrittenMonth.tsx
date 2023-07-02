@@ -60,7 +60,7 @@ const WordsWrittenMonth = (): React.ReactElement => {
 
   return (
     <>
-      <Text category="h6" appearance="hint">Words written by day (month)</Text>
+      <Text category="h6" appearance="hint">Words written (month)</Text>
       <BarChart
         data={barData}
         frontColor={theme['color-primary-500']}

@@ -59,7 +59,7 @@ const WordsWrittenWeek = (): React.ReactElement => {
 
   return (
     <>
-      <Text category="h6" appearance="hint">Words written by day (week)</Text>
+      <Text category="h6" appearance="hint">Words written (week)</Text>
       <BarChart
         data={barData}
         frontColor={theme['color-primary-500']}
@@ -72,7 +72,7 @@ const WordsWrittenWeek = (): React.ReactElement => {
         maxValue={maxValue}
         noOfSections={4}
         renderTooltip={(item: BarDataItemType) => renderTooltip(item, `${format(new Date(item.day), 'MMM d')}\n`)}
-        leftShiftForTooltip={3}
+        leftShiftForTooltip={7}
         leftShiftForLastIndexTooltip={3}
         yAxisLabelWidth={50}
         yAxisLabelTexts={yAxisLabelTexts}
