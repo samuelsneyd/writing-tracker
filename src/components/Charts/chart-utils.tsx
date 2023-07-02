@@ -34,9 +34,10 @@ export const renderTooltip = (
 /**
  * Returns a text component for rendering bar charts' x-axis labels.
  * @param label the text to render for the label.
+ * @param widthMultiplier multiply the width of the label component. Default = 1 (100%)
  */
-export const renderLabel = (label: string | undefined): TextElement => (
-  <Text style={styles.barLabel} appearance="hint" numberOfLines={2}>{label}</Text>
+export const renderLabel = (label: string | undefined, widthMultiplier: number = 1): TextElement => (
+  <Text style={{ ...styles.barLabel, width: `${100 * widthMultiplier}%` }} appearance="hint" numberOfLines={2}>{label}</Text>
 );
 
 /**
@@ -145,7 +146,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     position: 'absolute',
     top: -20,
-    width: '100%',
+    minWidth: '100%',
   },
 });
 
