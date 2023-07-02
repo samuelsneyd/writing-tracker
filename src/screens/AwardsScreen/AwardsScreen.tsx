@@ -68,10 +68,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 16,
+    gap: 16,
   },
   card: {
     width: '100%',
-    marginVertical: 8,
   },
 });
 
