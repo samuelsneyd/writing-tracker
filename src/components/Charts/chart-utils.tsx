@@ -35,7 +35,13 @@ export const renderTooltip = (
  * @param widthMultiplier multiply the width of the label component. Default = 1 (100%)
  */
 export const renderLabel = (label: string | undefined, widthMultiplier: number = 1): TextElement => (
-  <Text style={{ ...styles.barLabel, width: `${100 * widthMultiplier}%` }} appearance="hint" numberOfLines={2}>{label}</Text>
+  <Text
+    style={{
+      ...styles.barLabel,
+      width: `${100 * widthMultiplier}%`,
+    }}
+    appearance="hint" numberOfLines={2}
+  >{label}</Text>
 );
 
 /**
@@ -64,34 +70,31 @@ export const getMaxYAxisValue = (
 };
 
 /**
- * Returns an array of 4 text values to use as the Y axis label texts
- * TODO - make the step count dynamic (e.g., 4 labels, 10 labels, etc).
+ * Returns an array of <stepCount> text values to use as the Y axis label texts
  * @param maxYAxisValue the maximum value in the y-axis.
  * @param prefix an optional prefix.
  * @param suffix an optional suffix.
  * @param offset multiplies all values by this offset.
+ * @param stepCount the number of labels between 0 and the max value, excluding 0
  */
 export const getYAxisLabelTexts = (
   maxYAxisValue: number,
   prefix: string = '',
   suffix: string = '',
   offset: number = 1,
+  stepCount: number = 4,
 ): string[] => {
   const kLimit = 10000;
-  return [
-    0,
-    maxYAxisValue / 4,
-    maxYAxisValue / 2,
-    (maxYAxisValue / 4) * 3,
-    maxYAxisValue,
-  ]
-    .map(n => n * offset)
-    .map(n => {
-      if (n === 0 || maxYAxisValue < kLimit) {
-        return `${prefix}${n.toLocaleString()}${suffix}`;
-      }
-      return `${prefix}${n / 1000}K${suffix}`;
-    });
+  const step = maxYAxisValue / stepCount;
+
+  // Array of length stepCount + 1 spanning range (0, maxYAxisValue)
+  return _.times(stepCount + 1, i => step * i * offset)
+    // Add prefix, suffix, and 'K'
+    .map(n =>
+      n === 0 || maxYAxisValue < kLimit
+        ? `${prefix}${n.toLocaleString()}${suffix}`
+        : `${prefix}${n / 1000}K${suffix}`,
+    );
 };
 
 /**
