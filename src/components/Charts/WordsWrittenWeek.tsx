@@ -2,12 +2,12 @@ import * as React from 'react';
 import _ from 'lodash';
 import { Text, useTheme } from '@ui-kitten/components';
 import { BarChart } from 'react-native-gifted-charts';
-import { eachDayOfInterval, format, min, startOfDay } from 'date-fns';
+import { eachDayOfInterval, format, getDay, min, setDefaultOptions, startOfDay } from 'date-fns';
 import { useAppSelector } from '../../store/hooks';
 import { BarDataItemType } from './chart-types';
 import { getMaxYAxisValue, getYAxisLabelTexts, renderLabel, renderTooltip } from './chart-utils';
 
-const DAYS_OF_WEEK = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+setDefaultOptions({ weekStartsOn: 1 });
 
 const WordsWrittenWeek = (): React.ReactElement => {
   const theme = useTheme();
@@ -29,14 +29,13 @@ const WordsWrittenWeek = (): React.ReactElement => {
     .mapValues(group => _.sumBy(group, 'value'))
     .defaults(_.zipObject(allDatesInInterval, Array(allDatesInInterval.length).fill(0)))
     .map((value, day): BarDataItemType => {
-      // 0: Mon, 6: Sun
-      const dayIndex = (new Date(day).getDay() + 6) % 7;
-      const label = DAYS_OF_WEEK[dayIndex];
+      const dayDate = new Date(day);
+      const dayIndex = getDay(dayDate);
+      const label = format(dayDate, 'E');
       return ({
         day,
         dayIndex,
         value,
-        label,
         labelComponent: () => renderLabel(label),
       });
     })

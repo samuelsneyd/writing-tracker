@@ -2,12 +2,12 @@ import * as React from 'react';
 import _ from 'lodash';
 import { Text, useTheme } from '@ui-kitten/components';
 import { BarChart } from 'react-native-gifted-charts';
-import { eachDayOfInterval, format, min, startOfDay } from 'date-fns';
+import { eachDayOfInterval, format, getDay, min, setDefaultOptions, startOfDay } from 'date-fns';
 import { useAppSelector } from '../../store/hooks';
 import { BarDataItemType } from './chart-types';
 import { getMaxYAxisValue, getYAxisLabelTexts, renderLabel, renderTooltip } from './chart-utils';
 
-const DAYS_OF_WEEK = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
+setDefaultOptions({ weekStartsOn: 1 });
 
 const WordsWrittenMonth = (): React.ReactElement => {
   const theme = useTheme();
@@ -29,16 +29,19 @@ const WordsWrittenMonth = (): React.ReactElement => {
     .mapValues(group => _.sumBy(group, 'value'))
     .defaults(_.zipObject(allDatesInInterval, Array(allDatesInInterval.length).fill(0)))
     .map((value, day): BarDataItemType => {
-      // 0: Mon, 6: Sun
-      const dayIndex = (new Date(day).getDay() + 6) % 7;
-      const label = DAYS_OF_WEEK[dayIndex];
+      const dayDate = new Date(day);
+      const dayIndex = getDay(dayDate);
       return ({
         day,
         dayIndex,
         value,
-        label,
         // Only render label for Mondays
-        labelComponent: () => dayIndex === 0 ? renderLabel(label) : undefined,
+        labelComponent: () => {
+          if (dayIndex === 0) {
+            const label = format(dayDate, 'dd MMM');
+            return renderLabel(label, 4);
+          }
+        },
       });
     })
     // Sort chronologically
@@ -73,7 +76,9 @@ const WordsWrittenMonth = (): React.ReactElement => {
         initialSpacing={8}
         maxValue={maxValue}
         noOfSections={4}
-        renderTooltip={(item: BarDataItemType) => renderTooltip(item, `${format(new Date(item.day), 'MMM d')}\n`)}
+        renderTooltip={(item: BarDataItemType) =>
+          renderTooltip(item, `${format(new Date(item.day), 'MMM d')}\n`)
+        }
         leftShiftForTooltip={15}
         leftShiftForLastIndexTooltip={30}
         yAxisLabelWidth={50}
