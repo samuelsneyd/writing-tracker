@@ -15,7 +15,7 @@ type UseLoginStreakParams = {
  */
 const useLoginStreak = (options: UseLoginStreakParams = { isFocused: false }): DateStreakSummary => {
   const { isFocused } = options;
-  const DATE_FORMAT = 'YYYY-MM-DD';
+  const DATE_FORMAT = 'yyyy-MM-dd';
   const [loginSummary, setLoginSummary] = React.useState<DateStreakSummary>({
     currentStreak: 0,
     longestStreak: 0,
@@ -32,7 +32,7 @@ const useLoginStreak = (options: UseLoginStreakParams = { isFocused: false }): D
       const today = new Date();
       const todayDate = format(today, DATE_FORMAT);
       const loginDates = await DataStore.query(LoginDate);
-      const dates = loginDates.map(login => format(login.date, DATE_FORMAT));
+      const dates = loginDates.map(login => format(new Date(login.date), DATE_FORMAT));
       const hasSignedInToday = dates.some(date => date === todayDate);
 
       if (!hasSignedInToday) {
@@ -42,7 +42,7 @@ const useLoginStreak = (options: UseLoginStreakParams = { isFocused: false }): D
         });
         await DataStore.save(todayLogin);
         loginDates.push(todayLogin);
-        dates.push(format(todayLogin.date, DATE_FORMAT));
+        dates.push(format(new Date(todayLogin.date), DATE_FORMAT));
       }
 
       // Date streaks are summarized in local timezone via local YYYY-MM-DD
