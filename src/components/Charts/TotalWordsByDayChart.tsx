@@ -45,7 +45,7 @@ const TotalWordsByDayChart = (): React.ReactElement => {
 
   return (
     <>
-      <Text category="h6" appearance="hint">Total words by week day</Text>
+      <Text category="h6" appearance="hint">Total words by day of the week</Text>
       <BarChart
         data={barData}
         frontColor={theme['color-primary-500']}
