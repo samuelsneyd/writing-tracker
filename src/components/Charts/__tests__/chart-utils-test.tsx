@@ -122,6 +122,12 @@ describe('getMaxYAxisValue', () => {
     expect(value).toEqual(customMax + customStep);
   });
 
+  it('returns default max when step is 0', () => {
+    const value = getMaxYAxisValue(mockBarDataAboveMax, defaultMax, 0);
+
+    expect(value).toEqual(defaultMax);
+  });
+
   it('applies offset', () => {
     const customOffset = 2;
     const valueA = getMaxYAxisValue(mockBarDataAboveMax, defaultMax, defaultStep, customOffset);
