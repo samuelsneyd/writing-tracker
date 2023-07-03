@@ -43,12 +43,15 @@ export const TotalWordsByDay = (): React.ReactElement => {
     ))
     .value();
 
+  const totalWords = Math.round(_(barData).sumBy('value'));
+
   const maxValue = getMaxYAxisValue(barData);
   const yAxisLabelTexts = getYAxisLabelTexts(maxValue);
 
   return (
     <>
       <Text category="h6" appearance="hint">Total words by day of the week</Text>
+      <Text category="s1" appearance="hint">Total: {totalWords.toLocaleString()} words</Text>
       <BarChart
         data={barData}
         frontColor={theme['color-primary-500']}

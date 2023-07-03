@@ -37,12 +37,18 @@ export const ProgressPercentageByProject = (): React.ReactElement => {
     }))
     .value();
 
+  const totalProjects = barData.length;
+  const completedProjects = barData.filter(data => data.value === 100).length;
+
   const maxValue = getMaxYAxisValue(barData, 100, 0);
   const yAxisLabelTexts = getYAxisLabelTexts(maxValue, 4, '', '%');
 
   return (
     <>
       <Text category="h6" appearance="hint">Progress % by project</Text>
+      <Text category="s1" appearance="hint">
+        {totalProjects.toLocaleString()} projects | {completedProjects.toLocaleString()} completed
+      </Text>
       <BarChart
         data={barData}
         frontColor={theme['color-primary-500']}

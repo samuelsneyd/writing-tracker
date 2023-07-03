@@ -18,7 +18,7 @@ export const TotalWordsByProject = (): React.ReactElement => {
   const barData: BarDataItemType[] = _(reduxProjects)
     .mapValues((project) => ({
       ...project,
-      sessions: groupedSessions[project.id] ?? []
+      sessions: groupedSessions[project.id] ?? [],
     }))
     .map((item): BarDataItemType => ({
       label: item.title,
@@ -40,12 +40,18 @@ export const TotalWordsByProject = (): React.ReactElement => {
     ))
     .value();
 
+  const totalWords = Math.round(_(barData).sumBy('value'));
+  const averageWordsByProject = Math.round(_(barData).meanBy('value'));
+
   const maxValue = getMaxYAxisValue(barData);
   const yAxisLabelTexts = getYAxisLabelTexts(maxValue);
 
   return (
     <>
       <Text category="h6" appearance="hint">Total words by project</Text>
+      <Text category="s1" appearance="hint">
+        Total: {totalWords.toLocaleString()} | Average: {averageWordsByProject.toLocaleString()}
+      </Text>
       <BarChart
         data={barData}
         frontColor={theme['color-primary-500']}

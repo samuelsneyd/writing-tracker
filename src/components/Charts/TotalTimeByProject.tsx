@@ -40,12 +40,15 @@ export const TotalTimeByProject = (): React.ReactElement => {
     ))
     .value();
 
+  const totalHours = (_(barData).sumBy('value') / 60).toFixed(2);
+
   const maxValue = getMaxYAxisValue(barData, 10 * 60, 10 * 60);
   const yAxisLabelTexts = getYAxisLabelTexts(maxValue, 4, '', 'h', 1 / 60);
 
   return (
     <>
       <Text category="h6" appearance="hint">Total time writing by project</Text>
+      <Text category="s1" appearance="hint">Total: {totalHours.toLocaleString()} hours</Text>
       <BarChart
         data={barData}
         frontColor={theme['color-primary-500']}

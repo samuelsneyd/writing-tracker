@@ -2,7 +2,7 @@ import * as React from 'react';
 import _ from 'lodash';
 import { Text, useTheme } from '@ui-kitten/components';
 import { BarChart } from 'react-native-gifted-charts';
-import { eachDayOfInterval, format, getDay, min, setDefaultOptions, startOfDay } from 'date-fns';
+import { eachDayOfInterval, format, getDay, isWithinInterval, min, setDefaultOptions, startOfDay, sub } from 'date-fns';
 import { useAppSelector } from '../../store/hooks';
 import { BarDataItemType } from './chart-types';
 import { getMaxYAxisValue, getYAxisLabelTexts, renderLabel, renderTooltip } from './chart-utils';
@@ -13,9 +13,10 @@ export const WordsWrittenMonth = (): React.ReactElement => {
   const theme = useTheme();
   const reduxSessions = useAppSelector(state => state.sessions);
   const datesArray = reduxSessions.map(session => new Date(session.date));
+  const today = new Date();
   const interval = {
     start: min(datesArray),
-    end: new Date(),
+    end: today,
   };
   const allDatesInInterval = eachDayOfInterval(interval).map(date => date.toISOString());
 
@@ -58,12 +59,23 @@ export const WordsWrittenMonth = (): React.ReactElement => {
     ))
     .value();
 
+  const dailyAverage30Days = Math.round(
+    _(barData)
+      .filter(data => data.value && isWithinInterval(new Date(data.day), {
+        start: sub(startOfDay(today), { days: 30 }),
+        end: today,
+      }))
+      .meanBy('value'),
+  );
+
+
   const maxValue = getMaxYAxisValue(barData);
   const yAxisLabelTexts = getYAxisLabelTexts(maxValue);
 
   return (
     <>
       <Text category="h6" appearance="hint">Words written (month)</Text>
+      <Text category="s1" appearance="hint">30-day average: {dailyAverage30Days.toLocaleString()} words</Text>
       <BarChart
         data={barData}
         frontColor={theme['color-primary-500']}

@@ -6,10 +6,10 @@ import {
   eachWeekOfInterval,
   endOfWeek,
   format,
-  getWeekOfMonth,
+  getWeekOfMonth, isWithinInterval,
   lastDayOfWeek,
   min,
-  setDefaultOptions,
+  setDefaultOptions, startOfDay,
   startOfWeek,
   sub,
 } from 'date-fns';
@@ -23,9 +23,10 @@ export const WordsWritten6Month = (): React.ReactElement => {
   const theme = useTheme();
   const reduxSessions = useAppSelector(state => state.sessions);
   const datesArray = reduxSessions.map(session => new Date(session.date));
+  const today = new Date();
   const interval = {
-    start: min([...datesArray, sub(new Date(), { months: 6 })]),
-    end: new Date(),
+    start: min([...datesArray, sub(today, { months: 6 })]),
+    end: today,
   };
   const allWeeksInInterval = eachWeekOfInterval(interval).map(date => date.toISOString());
 
@@ -83,12 +84,22 @@ export const WordsWritten6Month = (): React.ReactElement => {
     ))
     .value();
 
+  const weeklyAverage6Months = Math.round(
+    _(barData)
+      .filter(data => data.value && isWithinInterval(new Date(data.week), {
+        start: sub(startOfDay(today), { months: 6 }),
+        end: today,
+      }))
+      .meanBy('value'),
+  );
+
   const maxValue = getMaxYAxisValue(barData);
   const yAxisLabelTexts = getYAxisLabelTexts(maxValue);
 
   return (
     <>
       <Text category="h6" appearance="hint">Words written (6 months)</Text>
+      <Text category="s1" appearance="hint">Weekly average: {weeklyAverage6Months.toLocaleString()} words</Text>
       <BarChart
         data={barData}
         frontColor={theme['color-primary-500']}
