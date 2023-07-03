@@ -73,10 +73,10 @@ export const getMaxYAxisValue = (
 /**
  * Returns an array of <stepCount> text values to use as the Y axis label texts
  * @param maxYAxisValue the maximum value in the y-axis.
+ * @param stepCount the number of labels between 0 and the max value, excluding 0.
  * @param prefix an optional prefix.
  * @param suffix an optional suffix.
  * @param offset multiplies all values by this offset.
- * @param stepCount the number of labels between 0 and the max value, excluding 0.
  * @param kLimit the cutoff point where thousands show 1K instead of 1000. Default 10K.
  */
 export const getYAxisLabelTexts = (

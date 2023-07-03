@@ -1,17 +1,17 @@
 import { BarDataItemType } from '../chart-types';
-import { getMaxYAxisValue, renderLabel, renderTooltip } from '../chart-utils';
+import { getMaxYAxisValue, getYAxisLabelTexts, renderLabel, renderTooltip } from '../chart-utils';
 
 describe('renderTooltip', () => {
   const mockItem: BarDataItemType = {
     value: 10,
   };
-  const mockItemFloat = {
+  const mockItemFloat: BarDataItemType = {
     value: Math.PI,
   };
-  const mockItemLarge = {
+  const mockItemLarge: BarDataItemType = {
     value: 1000,
   };
-  const mockItemUndefined = {
+  const mockItemUndefined: BarDataItemType = {
     value: undefined,
   };
 
@@ -127,5 +127,78 @@ describe('getMaxYAxisValue', () => {
     const valueA = getMaxYAxisValue(mockBarDataAboveMax, defaultMax, defaultStep, customOffset);
 
     expect(valueA).toEqual(defaultMax + defaultStep * customOffset);
+  });
+});
+
+describe('getYAxisLabelTexts', () => {
+  const maxYAxisValue = 1000;
+  const defaultStepCount = 4;
+  const customStepCount = 10;
+  const defaultKLimit = 10000;
+
+  it('should return default labels', () => {
+    const labels = getYAxisLabelTexts(maxYAxisValue);
+    const expectedLabels = ['0', '250', '500', '750', '1,000'];
+
+    expect(labels).toHaveLength(defaultStepCount + 1);
+    expect(labels).toEqual(expectedLabels);
+  });
+
+  it('should return labels with custom step counts', () => {
+    const labels = getYAxisLabelTexts(maxYAxisValue, customStepCount);
+    const expectedLabels = ['0', '100', '200', '300', '400', '500', '600', '700', '800', '900', '1,000'];
+
+    expect(labels).toHaveLength(customStepCount + 1);
+    expect(labels).toEqual(expectedLabels);
+  });
+
+  it('should apply prefix and suffix', () => {
+    const prefix = '-';
+    const suffix = '%';
+    const labels = getYAxisLabelTexts(maxYAxisValue, defaultStepCount, prefix, suffix);
+    const expectedLabels = ['-0%', '-250%', '-500%', '-750%', '-1,000%'];
+
+    expect(labels).toEqual(expectedLabels);
+  });
+
+  it('should apply offset', () => {
+    const customOffset = 2;
+    const labels = getYAxisLabelTexts(maxYAxisValue, defaultStepCount, '', '', customOffset);
+    const expectedLabels = ['0', '500', '1,000', '1,500', '2,000'];
+
+    expect(labels).toEqual(expectedLabels);
+  });
+
+  it('should use default kLimit', () => {
+    const belowKLimit = defaultKLimit - 1000;
+    const atKLimit = defaultKLimit;
+    const aboveKLimit = defaultKLimit + 1000;
+    const labelsBelowKLimit = getYAxisLabelTexts(belowKLimit);
+    const labelsAtKLimit = getYAxisLabelTexts(atKLimit);
+    const labelsAboveKLimit = getYAxisLabelTexts(aboveKLimit);
+    const expectedLabelsBelowKLimit = ['0', '2,250', '4,500', '6,750', '9,000'];
+    const expectedLabelsAtKLimit = ['0', '2.5K', '5K', '7.5K', '10K'];
+    const expectedLabelsAboveKLimit = ['0', '2.75K', '5.5K', '8.25K', '11K'];
+
+    expect(labelsBelowKLimit).toEqual(expectedLabelsBelowKLimit);
+    expect(labelsAtKLimit).toEqual(expectedLabelsAtKLimit);
+    expect(labelsAboveKLimit).toEqual(expectedLabelsAboveKLimit);
+  });
+
+  it('should use a custom kLimit if set', () => {
+    const customKLimit = 100000;
+    const belowKLimit = customKLimit - 10000;
+    const atKLimit = customKLimit;
+    const aboveKLimit = customKLimit + 10000;
+    const labelsBelowKLimit = getYAxisLabelTexts(belowKLimit, defaultStepCount, '', '', 1, customKLimit);
+    const labelsAtKLimit = getYAxisLabelTexts(atKLimit, defaultStepCount, '', '', 1, customKLimit);
+    const labelsAboveKLimit = getYAxisLabelTexts(aboveKLimit, defaultStepCount, '', '', 1, customKLimit);
+    const expectedLabelsBelowKLimit = ['0', '22,500', '45,000', '67,500', '90,000'];
+    const expectedLabelsAtKLimit = ['0', '25K', '50K', '75K', '100K'];
+    const expectedLabelsAboveKLimit = ['0', '27.5K', '55K', '82.5K', '110K'];
+
+    expect(labelsBelowKLimit).toEqual(expectedLabelsBelowKLimit);
+    expect(labelsAtKLimit).toEqual(expectedLabelsAtKLimit);
+    expect(labelsAboveKLimit).toEqual(expectedLabelsAboveKLimit);
   });
 });
