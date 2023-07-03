@@ -31,7 +31,7 @@ export const WordsWrittenMonth = (): React.ReactElement => {
     .defaults(_.zipObject(allDatesInInterval, Array(allDatesInInterval.length).fill(0)))
     .map((value, day): BarDataItemType => {
       const dayDate = new Date(day);
-      const dayIndex = getDay(dayDate);
+      const dayIndex = (getDay(dayDate) + 6) % 7;
       return ({
         day,
         dayIndex,
