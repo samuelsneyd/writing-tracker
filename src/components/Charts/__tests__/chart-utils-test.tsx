@@ -1,5 +1,5 @@
-import { renderTooltip } from '../chart-utils';
 import { BarDataItemType } from '../chart-types';
+import { renderLabel, renderTooltip } from '../chart-utils';
 
 describe('renderTooltip', () => {
   const mockItem: BarDataItemType = {
@@ -52,7 +52,7 @@ describe('renderTooltip', () => {
     expect(children).toEqual(expectedChildren);
   });
 
-  it('renders tooltip with no label if undefined value', () => {
+  it('renders tooltip with empty string if undefined value', () => {
     const children = renderTooltip(mockItemUndefined).props.children;
     const expectedChildren = ['', '', ''];
 
@@ -64,5 +64,22 @@ describe('renderTooltip', () => {
     const expectedChildren = ['', '20', ''];
 
     expect(children).toEqual(expectedChildren);
+  });
+});
+
+describe('renderLabel', () => {
+  const mockLabel = 'Label';
+  const mockLabelUndefined = undefined;
+
+  it('renders label', () => {
+    const children = renderLabel(mockLabel).props.children;
+
+    expect(children).toEqual(mockLabel);
+  });
+
+  it('renders empty label if label is undefined', () => {
+    const children = renderLabel(mockLabelUndefined).props.children;
+
+    expect(children).toBeUndefined();
   });
 });
