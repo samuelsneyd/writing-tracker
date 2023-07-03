@@ -47,7 +47,7 @@ export const TotalTimeByProject = (): React.ReactElement => {
 
   return (
     <>
-      <Text category="h6" appearance="hint">Total time writing by project</Text>
+      <Text category="h6" appearance="hint">Total time by project</Text>
       <Text category="s1" appearance="hint">Total: {totalHours.toLocaleString()} hours</Text>
       <BarChart
         data={barData}

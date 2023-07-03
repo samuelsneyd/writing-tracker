@@ -74,7 +74,7 @@ export const WordsWrittenMonth = (): React.ReactElement => {
 
   return (
     <>
-      <Text category="h6" appearance="hint">Words written (month)</Text>
+      <Text category="h6" appearance="hint">Words (month)</Text>
       <Text category="s1" appearance="hint">30-day average: {dailyAverage30Days.toLocaleString()} words</Text>
       <BarChart
         data={barData}

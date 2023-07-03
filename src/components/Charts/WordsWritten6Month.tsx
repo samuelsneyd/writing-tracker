@@ -100,7 +100,7 @@ export const WordsWritten6Month = (): React.ReactElement => {
 
   return (
     <>
-      <Text category="h6" appearance="hint">Words written (6 months)</Text>
+      <Text category="h6" appearance="hint">Words (6 months)</Text>
       <Text category="s1" appearance="hint">Weekly average: {weeklyAverage6Months.toLocaleString()} words</Text>
       <BarChart
         data={barData}

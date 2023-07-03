@@ -68,7 +68,7 @@ export const WordsWrittenWeek = (): React.ReactElement => {
 
   return (
     <>
-      <Text category="h6" appearance="hint">Words written (week)</Text>
+      <Text category="h6" appearance="hint">Words (week)</Text>
       <Text category="s1" appearance="hint">7-day average: {dailyAverage7Days.toLocaleString()} words</Text>
       <BarChart
         data={barData}
