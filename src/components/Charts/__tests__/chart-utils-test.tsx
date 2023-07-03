@@ -1,5 +1,6 @@
 import { BarDataItemType } from '../chart-types';
-import { getMaxYAxisValue, getYAxisLabelTexts, renderLabel, renderTooltip } from '../chart-utils';
+import { getMaxYAxisValue, getSteppedColors, getYAxisLabelTexts, renderLabel, renderTooltip } from '../chart-utils';
+import mock = jest.mock;
 
 describe('renderTooltip', () => {
   const mockItem: BarDataItemType = {
@@ -200,5 +201,117 @@ describe('getYAxisLabelTexts', () => {
     expect(labelsBelowKLimit).toEqual(expectedLabelsBelowKLimit);
     expect(labelsAtKLimit).toEqual(expectedLabelsAtKLimit);
     expect(labelsAboveKLimit).toEqual(expectedLabelsAboveKLimit);
+  });
+});
+
+describe('getSteppedColors', () => {
+  const defaultMaxValue = 100;
+  const customMaxValue = 1000;
+  const mockTheme = {
+    'color-primary-100': '#D5FDF3',
+    'color-primary-200': '#ACFCED',
+    'color-primary-300': '#81F6EA',
+    'color-primary-400': '#61EDEB',
+    'color-primary-500': '#30D6E2',
+    'color-primary-600': '#23AAC2',
+    'color-primary-700': '#1882A2',
+    'color-primary-800': '#0F5E83',
+    'color-primary-900': '#09446C',
+    'color-success-100': '#E1FBD7',
+    'color-success-200': '#BDF7B1',
+    'color-success-300': '#8EE985',
+    'color-success-400': '#62D363',
+    'color-success-500': '#35B742',
+    'color-success-600': '#269D3D',
+    'color-success-700': '#1A8338',
+    'color-success-800': '#106A32',
+    'color-success-900': '#0A572E',
+    'color-info-100': '#D4E9FE',
+    'color-info-200': '#ABD1FE',
+    'color-info-300': '#80B5FE',
+    'color-info-400': '#619DFD',
+    'color-info-500': '#2D75FC',
+    'color-info-600': '#205AD8',
+    'color-info-700': '#1642B5',
+    'color-info-800': '#0E2E92',
+    'color-info-900': '#081F78',
+    'color-warning-100': '#FFFDCD',
+    'color-warning-200': '#FFFA9B',
+    'color-warning-300': '#FFF66A',
+    'color-warning-400': '#FFF345',
+    'color-warning-500': '#FFEE07',
+    'color-warning-600': '#DBCB05',
+    'color-warning-700': '#B7A803',
+    'color-warning-800': '#938602',
+    'color-warning-900': '#7A6E01',
+    'color-danger-100': '#FFE4D9',
+    'color-danger-200': '#FFC2B3',
+    'color-danger-300': '#FF9A8D',
+    'color-danger-400': '#FF7471',
+    'color-danger-500': '#FF424E',
+    'color-danger-600': '#DB304A',
+    'color-danger-700': '#B72145',
+    'color-danger-800': '#93153F',
+    'color-danger-900': '#7A0C3B',
+  };
+
+  it('should return primary color on undefined or null value', () => {
+    // @ts-ignore
+    const values: BarDataItemType[] = [{ value: undefined }, { value: null }];
+    const steppedColors = values.map(ele => getSteppedColors(ele, mockTheme));
+
+    steppedColors.forEach(color => {
+      expect(color).toEqual({
+        frontColor: mockTheme['color-primary-500'],
+        gradientColor: mockTheme['color-primary-300'],
+        showGradient: true,
+      });
+    });
+  });
+
+  it('should return stepped colors', () => {
+    const values: BarDataItemType[] = [
+      { value: -1 },
+      { value: 0 },
+      { value: 24 },
+      { value: 25 },
+      { value: 26 },
+      { value: 49 },
+      { value: 50 },
+      { value: 51 },
+      { value: 74 },
+      { value: 75 },
+      { value: 76 },
+      { value: 99 },
+      { value: 100 },
+      { value: 101 },
+    ];
+
+    const expected: ('primary' | 'success' | 'info' | 'warning' | 'danger')[] = [
+      'danger',
+      'danger',
+      'danger',
+      'warning',
+      'warning',
+      'warning',
+      'info',
+      'info',
+      'info',
+      'primary',
+      'primary',
+      'primary',
+      'success',
+      'success',
+    ];
+
+    const steppedColors = values.map(ele => getSteppedColors(ele, mockTheme));
+
+    steppedColors.forEach((color, i) => {
+      expect(color).toEqual({
+        frontColor: mockTheme[`color-${expected[i]}-500`],
+        gradientColor: mockTheme[`color-${expected[i]}-300`],
+        showGradient: true,
+      });
+    });
   });
 });
