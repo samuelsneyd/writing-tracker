@@ -13,6 +13,7 @@ const DAYS_OF_WEEK = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
 export const TotalWordsByDay = (): React.ReactElement => {
   const theme = useTheme();
+  const reduxProjects = useAppSelector(state => state.projects);
   const reduxSessions = useAppSelector(state => state.sessions);
 
   // Sum words of all projects, grouped by day of the week
@@ -43,7 +44,8 @@ export const TotalWordsByDay = (): React.ReactElement => {
     ))
     .value();
 
-  const totalWords = Math.round(_(barData).sumBy('value'));
+  const trackedWords = Math.round(_(barData).sumBy('value'));
+  const initialWords = Math.round(_(reduxProjects).sumBy('initialWords'));
 
   const maxValue = getMaxYAxisValue(barData);
   const yAxisLabelTexts = getYAxisLabelTexts(maxValue);
@@ -51,7 +53,10 @@ export const TotalWordsByDay = (): React.ReactElement => {
   return (
     <>
       <Text category="h6" appearance="hint">Total words by day of the week</Text>
-      <Text category="s1" appearance="hint">Total: {totalWords.toLocaleString()} words</Text>
+      <Text category="s1" appearance="hint">
+        Total: {(trackedWords + initialWords).toLocaleString()}
+        {initialWords && ` | Tracked: ${trackedWords.toLocaleString()} | Initial: ${initialWords.toLocaleString()}`}
+      </Text>
       <BarChart
         data={barData}
         frontColor={theme['color-primary-500']}
