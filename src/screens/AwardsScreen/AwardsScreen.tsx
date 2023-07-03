@@ -29,7 +29,7 @@ const AwardsScreen = ({ navigation }: Props): React.ReactElement => {
               style={styles.card}
               header={<Text category="h6">{award.name}</Text>}
               footer={
-                <Text appearance="hint" status={award.isCompleted ? 'success' : 'warning'}>
+                <Text appearance="hint">
                   {award.isCompleted ? 'Completed ' : 'Not completed'}
                   {award.isCompleted
                     ? award.date
