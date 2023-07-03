@@ -29,17 +29,6 @@ import {
 } from '@ui-kitten/components';
 import { MenuIcon } from '../../components/Icons/Icons';
 
-const CHARTS = [
-  <WordsWrittenWeek />,
-  <WordsWrittenMonth />,
-  <WordsWritten6Month />,
-  <WordsWrittenYear />,
-  <ProgressPercentageByProject />,
-  <TotalWordsByProject />,
-  <TotalTimeByProject />,
-  <TotalWordsByDay />,
-];
-
 type Props = NativeStackScreenProps<ChartsStackParamList, 'Charts'>
 
 const ChartsScreen = ({ navigation }: Props): React.ReactElement => {
@@ -95,7 +84,19 @@ const ChartsScreen = ({ navigation }: Props): React.ReactElement => {
       <Divider />
       <ScrollView style={styles.container}>
         <Layout style={styles.body}>
-          {CHARTS.map(chart => <>{chart}<Divider style={styles.divider} /></>)}
+          {[
+            WordsWrittenWeek,
+            WordsWrittenMonth,
+            WordsWritten6Month,
+            WordsWrittenYear,
+            ProgressPercentageByProject,
+            TotalWordsByProject,
+            TotalTimeByProject,
+            TotalWordsByDay,
+          ].map((Chart, i) =>
+            // Order should never change so using index as key shouldn't cause unnecessary re-renders
+            <React.Fragment key={i}><Chart /><Divider style={styles.divider} /></React.Fragment>,
+          )}
         </Layout>
       </ScrollView>
     </SafeAreaView>

@@ -66,6 +66,7 @@ export const getMaxYAxisValue = (
   }
   const dataValues = barData.map(d => (d.value ?? 0) * offset / step);
   const dataCeiling = Math.ceil(_.max(dataValues) || 0) * step;
+
   return Math.max(dataCeiling, defaultMax);
 };
 
