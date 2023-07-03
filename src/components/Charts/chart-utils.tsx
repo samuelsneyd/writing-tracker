@@ -40,7 +40,8 @@ export const renderLabel = (label: string | undefined, widthMultiplier: number =
       ...styles.barLabel,
       width: `${100 * widthMultiplier}%`,
     }}
-    appearance="hint" numberOfLines={2}
+    appearance="hint"
+    numberOfLines={2}
   >{label}</Text>
 );
 
