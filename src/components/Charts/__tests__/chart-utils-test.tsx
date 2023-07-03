@@ -1,6 +1,5 @@
 import { BarDataItemType } from '../chart-types';
 import { getMaxYAxisValue, getSteppedColors, getYAxisLabelTexts, renderLabel, renderTooltip } from '../chart-utils';
-import mock = jest.mock;
 
 describe('renderTooltip', () => {
   const mockItem: BarDataItemType = {
@@ -205,8 +204,6 @@ describe('getYAxisLabelTexts', () => {
 });
 
 describe('getSteppedColors', () => {
-  const defaultMaxValue = 100;
-  const customMaxValue = 1000;
   const mockTheme = {
     'color-primary-100': '#D5FDF3',
     'color-primary-200': '#ACFCED',
