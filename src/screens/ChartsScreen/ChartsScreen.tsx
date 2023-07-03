@@ -11,7 +11,8 @@ import {
   TotalWordsByProject,
   WordsWritten6Month,
   WordsWrittenMonth,
-  WordsWrittenWeek, WordsWrittenYear,
+  WordsWrittenWeek,
+  WordsWrittenYear,
 } from '../../components/Charts';
 import { Project, Session } from '../../models';
 import { SerializedProject, SerializedSession } from '../../models/serialized';
@@ -27,6 +28,17 @@ import {
   TopNavigationActionElement,
 } from '@ui-kitten/components';
 import { MenuIcon } from '../../components/Icons/Icons';
+
+const CHARTS = [
+  <WordsWrittenWeek />,
+  <WordsWrittenMonth />,
+  <WordsWritten6Month />,
+  <WordsWrittenYear />,
+  <ProgressPercentageByProject />,
+  <TotalWordsByProject />,
+  <TotalTimeByProject />,
+  <TotalWordsByDay />,
+];
 
 type Props = NativeStackScreenProps<ChartsStackParamList, 'Charts'>
 
@@ -83,21 +95,7 @@ const ChartsScreen = ({ navigation }: Props): React.ReactElement => {
       <Divider />
       <ScrollView style={styles.container}>
         <Layout style={styles.body}>
-          <WordsWrittenWeek />
-          <Divider style={styles.divider} />
-          <WordsWrittenMonth />
-          <Divider style={styles.divider} />
-          <WordsWritten6Month />
-          <Divider style={styles.divider} />
-          <WordsWrittenYear />
-          <Divider style={styles.divider} />
-          <ProgressPercentageByProject />
-          <Divider style={styles.divider} />
-          <TotalWordsByProject />
-          <Divider style={styles.divider} />
-          <TotalTimeByProject />
-          <Divider style={styles.divider} />
-          <TotalWordsByDay />
+          {CHARTS.map(chart => <>{chart}<Divider style={styles.divider} /></>)}
         </Layout>
       </ScrollView>
     </SafeAreaView>
