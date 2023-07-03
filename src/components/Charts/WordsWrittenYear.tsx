@@ -29,9 +29,6 @@ export const WordsWrittenYear = (): React.ReactElement => {
   };
   const allMonthsInInterval = eachMonthOfInterval(interval).map(date => date.toISOString());
 
-  // First label always shown
-  let showLabel = true;
-
   // Sum words of all projects, grouped by month
   const barData = _(reduxSessions)
     .map(session => ({
