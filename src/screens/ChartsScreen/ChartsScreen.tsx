@@ -11,7 +11,7 @@ import {
   TotalWordsByProject,
   WordsWritten6Month,
   WordsWrittenMonth,
-  WordsWrittenWeek,
+  WordsWrittenWeek, WordsWrittenYear,
 } from '../../components/Charts';
 import { Project, Session } from '../../models';
 import { SerializedProject, SerializedSession } from '../../models/serialized';
@@ -88,6 +88,8 @@ const ChartsScreen = ({ navigation }: Props): React.ReactElement => {
           <WordsWrittenMonth />
           <Divider style={styles.divider} />
           <WordsWritten6Month />
+          <Divider style={styles.divider} />
+          <WordsWrittenYear />
           <Divider style={styles.divider} />
           <ProgressPercentageByProject />
           <Divider style={styles.divider} />
