@@ -87,9 +87,9 @@ const HomeScreen = ({ navigation }: Props): React.ReactElement => {
 
   return (
     <SafeAreaView style={styles.container}>
+      <TopNavigation title="Home" alignment="center" accessoryLeft={renderDrawerAction} />
+      <Divider />
       <ScrollView style={styles.container} contentContainerStyle={{ flexGrow: 1 }}>
-        <TopNavigation title="Home" alignment="center" accessoryLeft={renderDrawerAction} />
-        <Divider />
         <Layout style={styles.body}>
           <Text category="h1">Home</Text>
           <DailyQuote isFocused={isFocused} />
