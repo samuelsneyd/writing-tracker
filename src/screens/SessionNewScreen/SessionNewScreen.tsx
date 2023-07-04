@@ -15,6 +15,7 @@ import {
   Input,
   Layout,
   Spinner,
+  Text,
   TopNavigation,
   TopNavigationAction,
 } from '@ui-kitten/components';
@@ -51,7 +52,7 @@ const SessionNewScreen = ({ navigation, route }: Props): React.ReactElement => {
     }));
     dispatch(sessionAdded(serializeModel(savedSession) as unknown as SerializedSession));
 
-    navigation.popToTop();
+    navigation.pop();
   };
 
   return (
@@ -62,7 +63,33 @@ const SessionNewScreen = ({ navigation, route }: Props): React.ReactElement => {
         <Layout style={styles.body}>
           {sessionForm && sessionProject
             ? <>
-              <Input></Input>
+              <Text category="h5" appearance="hint">{sessionProject.title}</Text>
+              <Layout style={styles.horizontalContainer}>
+                <Input
+                  style={styles.input}
+                  placeholder="0"
+                  label="Words"
+                  value={sessionForm.words ? sessionForm.words.toString() : ''}
+                  onChangeText={nextValue => {
+                    const nextIntValue = parseInt(nextValue.replace(/\D/g, '')) || 0;
+                    setSessionForm({ ...sessionForm, words: nextIntValue });
+                  }}
+                  keyboardType="number-pad"
+                  size="large"
+                ></Input>
+                <Input
+                  style={styles.input}
+                  placeholder="0"
+                  label="Minutes"
+                  value={sessionForm.minutes ? sessionForm.minutes.toString() : ''}
+                  onChangeText={nextValue => {
+                    const nextIntValue = parseInt(nextValue.replace(/\D/g, '')) || 0;
+                    setSessionForm({ ...sessionForm, minutes: nextIntValue });
+                  }}
+                  keyboardType="number-pad"
+                  size="large"
+                ></Input>
+              </Layout>
               <Button onPress={handleSave}>Save Session</Button>
             </>
             : <Spinner />
@@ -83,6 +110,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 16,
     gap: 10,
+  },
+  horizontalContainer: {
+    flexDirection: 'row',
+  },
+  input: {
+    flex: 1,
+    paddingHorizontal: 8,
   },
 });
 
