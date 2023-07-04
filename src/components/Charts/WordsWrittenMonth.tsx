@@ -84,7 +84,7 @@ export const WordsWrittenMonth = (): React.ReactElement => {
         barBorderRadius={2}
         hideRules
         barWidth={8}
-        spacing={4}
+        spacing={3}
         initialSpacing={8}
         maxValue={maxValue}
         noOfSections={4}
