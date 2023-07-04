@@ -6,7 +6,7 @@ import useDailyTasks from '../../hooks/useDailyTasks/useDailyTasks';
 import DailyTaskCard from '../DailyTaskCard/DailyTaskCard';
 
 const DailyTaskTabs = (): React.ReactElement => {
-  const [selectedIndex, setSelectedIndex] = React.useState(0);
+  const [selectedIndex, setSelectedIndex] = React.useState<number>(0);
   const dailyTasks = useDailyTasks();
   const [completedTasks, inProgressTasks] = _.partition(dailyTasks, task => task.progress === 1);
 
