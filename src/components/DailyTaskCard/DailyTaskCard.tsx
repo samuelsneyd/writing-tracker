@@ -37,7 +37,6 @@ const DailyTaskCard = (props: CardProps & { task: DailyTask }): CardElement => {
   );
 };
 
-
 const styles = StyleSheet.create({
   card: {
     width: '100%',
