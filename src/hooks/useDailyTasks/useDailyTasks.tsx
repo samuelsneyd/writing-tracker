@@ -6,7 +6,7 @@ import { SerializedProject } from '../../models/serialized';
 import { useAppSelector } from '../../store/hooks';
 import { ProjectStatus } from '../../types/API';
 
-type DailyTask = {
+export type DailyTask = {
   project: SerializedProject;
   wordsToDo: number;
   wordsCompleted: number;
