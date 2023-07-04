@@ -13,7 +13,13 @@ export type DailyTask = {
   progress: number; // Range (0-1)
 };
 
-const useDailyTasks = (): DailyTask[] => {
+export type DailyTaskSummary = {
+  allTasks: DailyTask[];
+  inProgressTasks: DailyTask[];
+  completedTasks: DailyTask[];
+};
+
+const useDailyTasks = (): DailyTaskSummary => {
   const reduxProjects = useAppSelector(state => state.projects);
   const reduxSessions = useAppSelector(state => state.sessions);
 
@@ -27,7 +33,7 @@ const useDailyTasks = (): DailyTask[] => {
   const today = new Date();
   const dayKey = format(today, 'E').toLowerCase() as keyof WeeklyTarget;
 
-  return reduxProjects
+  const allTasks = reduxProjects
     // Active projects with targets today
     .filter(project =>
       project.status === ProjectStatus.IN_PROGRESS
@@ -44,6 +50,10 @@ const useDailyTasks = (): DailyTask[] => {
       ...task,
       progress: Math.min(task.wordsCompleted / task.wordsToDo, 1),
     }));
+
+  const [completedTasks, inProgressTasks] = _.partition(allTasks, task => task.progress === 1);
+
+  return { allTasks, inProgressTasks, completedTasks };
 };
 
 export default useDailyTasks;

@@ -1,5 +1,4 @@
 import * as React from 'react';
-import _ from 'lodash';
 import { StyleSheet } from 'react-native';
 import { Layout, Tab, TabView, TabViewElement } from '@ui-kitten/components';
 import useDailyTasks from '../../hooks/useDailyTasks/useDailyTasks';
@@ -7,8 +6,7 @@ import DailyGoalCard from '../DailyGoalCard/DailyGoalCard';
 
 const DailyGoalTabs = (): TabViewElement => {
   const [selectedIndex, setSelectedIndex] = React.useState<number>(0);
-  const dailyTasks = useDailyTasks();
-  const [completedTasks, inProgressTasks] = _.partition(dailyTasks, task => task.progress === 1);
+  const { allTasks, inProgressTasks, completedTasks } = useDailyTasks();
 
   return (
     <TabView
@@ -19,7 +17,7 @@ const DailyGoalTabs = (): TabViewElement => {
     >
       <Tab title="All">
         <Layout style={styles.tabContainer}>
-          {dailyTasks.map(task => <DailyGoalCard key={task.project.id} task={task} />)}
+          {allTasks.map(task => <DailyGoalCard key={task.project.id} task={task} />)}
         </Layout>
       </Tab>
       <Tab title="To Do">
