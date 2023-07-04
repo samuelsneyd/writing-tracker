@@ -13,7 +13,6 @@ const DailyGoalCard = (props: CardProps & { task: DailyTask }): CardElement => {
   return (
     <Card
       {...props}
-      status="basic"
       style={styles.card}
       header={<Text category="s1">{task.project.title}</Text>}
       onPress={() =>
