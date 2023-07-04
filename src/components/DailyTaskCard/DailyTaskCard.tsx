@@ -20,6 +20,7 @@ const DailyTaskCard = (props: CardProps & { task: DailyTask }): CardElement => {
         navigation.getParent()?.navigate('ProjectsStackNavigator', {
           screen: 'Details',
           params: { id: task.project.id, title: task.project.title },
+          initial: false,
         })
       }
     >

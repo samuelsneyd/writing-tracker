@@ -4,7 +4,7 @@ import { DataStore } from 'aws-amplify';
 import { SafeAreaView, ScrollView, StyleSheet } from 'react-native';
 import { useIsFocused } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
-import HomeTabView from '../../components/HomeTabView/HomeTabView';
+import DailyTaskTabs from '../../components/DailyTaskTabs/DailyTaskTabs';
 import { Award, Project, Session } from '../../models';
 import { SerializedAward, SerializedProject, SerializedSession } from '../../models/serialized';
 import { awardsSet } from '../../store/awards/awardsSlice';
@@ -93,9 +93,10 @@ const HomeScreen = ({ navigation }: Props): React.ReactElement => {
         <Layout style={styles.body}>
           <Text category="h1">Home</Text>
           <DailyQuote isFocused={isFocused} />
-          <LoginStreak isFocused={isFocused} />
           <Text category="h5">Daily Tasks</Text>
-          <HomeTabView />
+          <DailyTaskTabs />
+          <Text category="h5">Login Streak</Text>
+          <LoginStreak isFocused={isFocused} />
         </Layout>
       </ScrollView>
     </SafeAreaView>

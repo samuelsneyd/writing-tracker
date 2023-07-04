@@ -5,7 +5,7 @@ import { Layout, Tab, TabView } from '@ui-kitten/components';
 import useDailyTasks from '../../hooks/useDailyTasks/useDailyTasks';
 import DailyTaskCard from '../DailyTaskCard/DailyTaskCard';
 
-const HomeTabView = (): React.ReactElement => {
+const DailyTaskTabs = (): React.ReactElement => {
   const [selectedIndex, setSelectedIndex] = React.useState(0);
   const dailyTasks = useDailyTasks();
   const [completedTasks, inProgressTasks] = _.partition(dailyTasks, task => task.progress === 1);
@@ -49,4 +49,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HomeTabView;
+export default DailyTaskTabs;
