@@ -1,4 +1,5 @@
 import * as React from 'react';
+import _ from 'lodash';
 import { SafeAreaView, ScrollView, StyleSheet } from 'react-native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { SerializedProject } from '../../models/serialized';
@@ -61,7 +62,7 @@ const initialProjectValues: CreateProjectInput = {
   wordsPerPage: 300,
 };
 
-type Props = NativeStackScreenProps<ProjectsStackParamList, 'New'>
+type Props = NativeStackScreenProps<ProjectsStackParamList, 'NewProject'>
 
 const ProjectNewScreen = ({ navigation }: Props): React.ReactElement => {
   const dispatch = useAppDispatch();
@@ -72,8 +73,7 @@ const ProjectNewScreen = ({ navigation }: Props): React.ReactElement => {
 
   React.useEffect(() => {
     // Update weekly target as sum of daily targets
-    const { mon, tue, wed, thu, fri, sat, sun } = projectForm.wordTarget;
-    const sumWeeklyTarget = mon.words + tue.words + wed.words + thu.words + fri.words + sat.words + sun.words;
+    const sumWeeklyTarget = _(projectForm.wordTarget).values().sumBy('words');
 
     setWeeklyTarget(sumWeeklyTarget);
   }, [projectForm]);

@@ -1,4 +1,5 @@
 import * as React from 'react';
+import _ from 'lodash';
 import { SafeAreaView, ScrollView, StyleSheet } from 'react-native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { SerializedProject } from '../../models/serialized';
@@ -41,7 +42,7 @@ const PROJECT_TYPE_DATA: EnumObject<ProjectType>[] = enumToSelectData(ProjectTyp
 
 const PROJECT_STATUS_DATA: EnumObject<ProjectStatus>[] = enumToSelectData(ProjectStatus);
 
-type Props = NativeStackScreenProps<ProjectsStackParamList, 'Edit'>
+type Props = NativeStackScreenProps<ProjectsStackParamList, 'EditProject'>
 
 const ProjectNewScreen = ({ route, navigation }: Props): React.ReactElement => {
   const { id } = route.params;
@@ -104,8 +105,7 @@ const ProjectNewScreen = ({ route, navigation }: Props): React.ReactElement => {
     if (!project) {
       return;
     }
-    const { mon, tue, wed, thu, fri, sat, sun } = project.wordTarget;
-    const sumWeeklyTarget = mon.words + tue.words + wed.words + thu.words + fri.words + sat.words + sun.words;
+    const sumWeeklyTarget = _(project.wordTarget).values().sumBy('words');
 
     setWeeklyTarget(sumWeeklyTarget);
   }, [project]);

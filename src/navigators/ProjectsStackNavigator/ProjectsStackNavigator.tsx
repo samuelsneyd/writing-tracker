@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import SessionNewScreen from '../../screens/SessionNewScreen/SessionNewScreen';
 import type { ProjectsStackParamList } from '../../types/types';
 import ProjectDetailsScreen from '../../screens/ProjectDetailsScreen/ProjectDetailsScreen';
 import ProjectsScreen from '../../screens/ProjectsScreen/ProjectsScreen';
@@ -18,11 +19,12 @@ const ProjectsStackNavigator = (): React.ReactElement => {
         component={ProjectDetailsScreen}
       />
       <Stack.Screen
-        name="Edit"
+        name="EditProject"
         options={({ route }) => ({ title: route.params.title })}
         component={ProjectEditScreen}
       />
-      <Stack.Screen name="New" component={ProjectNewScreen} />
+      <Stack.Screen name="NewProject" component={ProjectNewScreen} />
+      <Stack.Screen name="NewSession" component={SessionNewScreen} />
     </Stack.Navigator>
   );
 };

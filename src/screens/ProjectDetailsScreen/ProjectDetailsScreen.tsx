@@ -1,4 +1,5 @@
 import * as React from 'react';
+import _ from 'lodash';
 import { SafeAreaView, ScrollView, StyleSheet } from 'react-native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useAppSelector } from '../../store/hooks';
@@ -7,6 +8,7 @@ import { DataStore } from 'aws-amplify';
 import { Project, Session } from '../../models';
 import { deserializeModel } from '@aws-amplify/datastore/ssr';
 import {
+  Button,
   CircularProgressBar,
   Divider,
   Layout,
@@ -83,8 +85,7 @@ const ProjectDetailsScreen = ({ route, navigation }: Props): React.ReactElement 
     if (!project) {
       return;
     }
-    const { mon, tue, wed, thu, fri, sat, sun } = project.wordTarget;
-    const sumWeeklyTarget = mon.words + tue.words + wed.words + thu.words + fri.words + sat.words + sun.words;
+    const sumWeeklyTarget = _(project.wordTarget).values().sumBy('words');
 
     setWeeklyTarget(sumWeeklyTarget);
   }, [id, project]);
@@ -108,7 +109,7 @@ const ProjectDetailsScreen = ({ route, navigation }: Props): React.ReactElement 
   const editProjectAction = (): TopNavigationActionElement => (
     <TopNavigationAction
       icon={EditIcon}
-      onPress={() => navigation.navigate('Edit', { id, title })}
+      onPress={() => navigation.navigate('EditProject', { id, title })}
     />
   );
 
@@ -126,6 +127,9 @@ const ProjectDetailsScreen = ({ route, navigation }: Props): React.ReactElement 
           {project
             ? <>
               <Text style={styles.title} category="h1">{project.title || 'My Project'}</Text>
+              <Button onPress={() => navigation.navigate('NewSession', { projectId: project.id })}>
+                <Text>Add Session</Text>
+              </Button>
               <Text>Description: {project.description}</Text>
               <Text>Type: {capitalCase(project.type)}</Text>
               <Text>Progress: {Math.round(progress * 100) || '-'}%</Text>

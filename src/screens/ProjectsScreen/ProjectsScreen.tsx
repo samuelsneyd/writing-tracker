@@ -133,7 +133,7 @@ const ProjectsScreen = ({ navigation }: Props): React.ReactElement => {
   const addProjectAction = (): TopNavigationActionElement => (
     <TopNavigationAction
       icon={PlusIcon}
-      onPress={() => navigation.navigate('New')}
+      onPress={() => navigation.navigate('NewProject')}
     />
   );
 
