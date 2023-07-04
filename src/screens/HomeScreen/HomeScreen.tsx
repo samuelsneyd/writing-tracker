@@ -38,7 +38,7 @@ const HomeScreen = ({ navigation }: Props): React.ReactElement => {
 
   // Prefetch projects
   React.useEffect(() => {
-    if (reduxProjects.length > 0 || !isFocused) {
+    if (reduxProjects.length > 0) {
       return;
     }
 
@@ -49,11 +49,11 @@ const HomeScreen = ({ navigation }: Props): React.ReactElement => {
     };
 
     getProjects().then();
-  }, [isFocused]);
+  }, []);
 
   // Prefetch sessions
   React.useEffect(() => {
-    if (reduxSessions.length > 0 || !isFocused) {
+    if (reduxSessions.length > 0) {
       return;
     }
 
@@ -64,11 +64,11 @@ const HomeScreen = ({ navigation }: Props): React.ReactElement => {
     };
 
     getSessions().then();
-  }, [isFocused]);
+  }, []);
 
   // Prefetch awards
   React.useEffect(() => {
-    if (reduxAwards.length > 0 || !isFocused) {
+    if (reduxAwards.length > 0) {
       return;
     }
 
@@ -79,7 +79,7 @@ const HomeScreen = ({ navigation }: Props): React.ReactElement => {
     };
 
     getAwards().then();
-  }, [isFocused]);
+  }, []);
 
   const renderDrawerAction = (): TopNavigationActionElement => (
     <TopNavigationAction

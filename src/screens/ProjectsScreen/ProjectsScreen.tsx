@@ -4,7 +4,6 @@ import { Auth, DataStore, Predicates } from 'aws-amplify';
 import { Project, ProjectStatus, ProjectType, Session } from '../../models';
 import { deserializeModel, serializeModel } from '@aws-amplify/datastore/ssr';
 import type { ICredentials } from '@aws-amplify/core';
-import { useIsFocused } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { SerializedProject, SerializedSession } from '../../models/serialized';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
@@ -67,13 +66,7 @@ const ProjectsScreen = ({ navigation }: Props): React.ReactElement => {
   const [credentials, setCredentials] = React.useState<ICredentials>();
   const [aggregateStats, setAggregateStats] = React.useState<ProjectAggregateStats>({ words: 0, minutes: 0 });
 
-  const isFocused = useIsFocused();
-
   React.useEffect(() => {
-    if (!isFocused) {
-      return;
-    }
-
     // Load from DataStore and update Redux
     const getProjects = async () => {
       const foundProjects = await DataStore.query(Project);
@@ -82,13 +75,9 @@ const ProjectsScreen = ({ navigation }: Props): React.ReactElement => {
     };
 
     getProjects().then();
-  }, [isFocused]);
+  }, []);
 
   React.useEffect(() => {
-    if (!isFocused) {
-      return;
-    }
-
     // Load from DataStore and update Redux
     const getSessions = async () => {
       const foundSessions = await DataStore.query(Session);
@@ -97,7 +86,7 @@ const ProjectsScreen = ({ navigation }: Props): React.ReactElement => {
     };
 
     getSessions().then();
-  }, [isFocused]);
+  }, []);
 
   React.useEffect(() => {
     setAggregateStats(sessions.reduce((prev, { words, minutes }) => ({

@@ -2,8 +2,7 @@ import { serializeModel } from '@aws-amplify/datastore/ssr';
 import * as React from 'react';
 import { SafeAreaView, ScrollView, StyleSheet } from 'react-native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { useIsFocused } from '@react-navigation/native';
-import { DataStore, Predicates } from 'aws-amplify';
+import { DataStore } from 'aws-amplify';
 import {
   ProgressPercentageByProject,
   TotalTimeByProject,
@@ -32,44 +31,39 @@ import { MenuIcon } from '../../components/Icons/Icons';
 type Props = NativeStackScreenProps<ChartsStackParamList, 'Charts'>
 
 const ChartsScreen = ({ navigation }: Props): React.ReactElement => {
-  const isFocused = useIsFocused();
   const dispatch = useAppDispatch();
   const reduxProjects = useAppSelector(state => state.projects);
   const reduxSessions = useAppSelector(state => state.sessions);
 
+  // Prefetch projects
   React.useEffect(() => {
-    if (!isFocused) {
+    if (reduxProjects.length > 0) {
       return;
     }
 
-    const hydrateProjects = async () => {
-      const projects = await DataStore.query(Project, Predicates.ALL);
-
-      // TODO - refactor
-      if (reduxProjects.length === 0) {
-        dispatch(projectsSet(serializeModel(projects) as unknown as SerializedProject[]));
-      }
+    // Load from DataStore and update Redux
+    const getProjects = async () => {
+      const foundProjects = await DataStore.query(Project);
+      dispatch(projectsSet(serializeModel(foundProjects) as unknown as SerializedProject[]));
     };
 
-    hydrateProjects().then();
-  }, [isFocused]);
+    getProjects().then();
+  }, []);
 
+  // Prefetch sessions
   React.useEffect(() => {
-    if (!isFocused) {
+    if (reduxSessions.length > 0) {
       return;
     }
 
-    const hydrateSessions = async () => {
-      const sessions = await DataStore.query(Session, Predicates.ALL);
-
-      // TODO - refactor
-      if (reduxSessions.length === 0) {
-        dispatch(sessionsSet(serializeModel(sessions) as unknown as SerializedSession[]));
-      }
+    // Load from DataStore and update Redux
+    const getSessions = async () => {
+      const foundSessions = await DataStore.query(Session);
+      dispatch(sessionsSet(serializeModel(foundSessions) as unknown as SerializedSession[]));
     };
 
-    hydrateSessions().then();
-  }, [isFocused]);
+    getSessions().then();
+  }, []);
 
   const renderDrawerAction = (): TopNavigationActionElement => (
     <TopNavigationAction
