@@ -6,7 +6,7 @@ import { CardProps } from '@ui-kitten/components/ui/card/card.component';
 import { getSteppedColors } from '../../hooks/useAwards/award-utils';
 import { DailyTask } from '../../hooks/useDailyTasks/useDailyTasks';
 
-const DailyTaskCard = (props: CardProps & { task: DailyTask }): CardElement => {
+const DailyGoalCard = (props: CardProps & { task: DailyTask }): CardElement => {
   const { task } = props;
   const navigation = useNavigation();
 
@@ -50,4 +50,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DailyTaskCard;
+export default DailyGoalCard;
