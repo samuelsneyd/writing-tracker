@@ -1,11 +1,11 @@
 import * as React from 'react';
 import _ from 'lodash';
 import { StyleSheet } from 'react-native';
-import { Layout, Tab, TabView } from '@ui-kitten/components';
+import { Layout, Tab, TabView, TabViewElement } from '@ui-kitten/components';
 import useDailyTasks from '../../hooks/useDailyTasks/useDailyTasks';
 import DailyGoalCard from '../DailyGoalCard/DailyGoalCard';
 
-const DailyGoalTabs = (): React.ReactElement => {
+const DailyGoalTabs = (): TabViewElement => {
   const [selectedIndex, setSelectedIndex] = React.useState<number>(0);
   const dailyTasks = useDailyTasks();
   const [completedTasks, inProgressTasks] = _.partition(dailyTasks, task => task.progress === 1);
