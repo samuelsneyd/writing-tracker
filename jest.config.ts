@@ -13,6 +13,8 @@ const config: Config = {
     + '|aws-amplify-react-native'
     + '|react-native-gifted-charts'
     + '|react-native-linear-gradient'
+    + '|@aws-sdk'
+    + '|uuid/dist/esm-browser'
     + ')/)',
     'amplify/#current-cloud-backend',
   ],
