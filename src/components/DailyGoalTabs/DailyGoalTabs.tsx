@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { StyleSheet } from 'react-native';
-import { Layout, Tab, TabView, TabViewProps } from '@ui-kitten/components';
+import { Layout, Tab, TabView, TabViewProps, Text } from '@ui-kitten/components';
 import useDailyTasks from '../../hooks/useDailyTasks/useDailyTasks';
 import DailyGoalCard from '../DailyGoalCard/DailyGoalCard';
 
@@ -14,6 +14,9 @@ const DailyGoalTabs = (props: TabViewProps): React.ReactElement => {
         {...props}
         selectedIndex={selectedIndex}
         onSelect={index => setSelectedIndex(index)}
+        // Workaround for animation bug https://github.com/akveo/react-native-ui-kitten/issues/1234
+        animationDuration={0}
+        swipeEnabled={false}
         style={styles.tabViewContainer}
       >
         {/* Tabs children intentionally empty to avoid tab static height limitation */}
@@ -26,16 +29,19 @@ const DailyGoalTabs = (props: TabViewProps): React.ReactElement => {
         {selectedIndex === 0 &&
           <Layout style={styles.tabContainer}>
             {allTasks.map(task => <DailyGoalCard key={task.project.id} task={task} />)}
+            {allTasks.length === 0 && <Text appearance="hint">No goals today</Text>}
           </Layout>
         }
         {selectedIndex === 1 &&
           <Layout style={styles.tabContainer}>
             {inProgressTasks.map(task => <DailyGoalCard key={task.project.id} task={task} />)}
+            {inProgressTasks.length === 0 && <Text appearance="hint">No outstanding goals today</Text>}
           </Layout>
         }
         {selectedIndex === 2 &&
           <Layout style={styles.tabContainer}>
             {completedTasks.map(task => <DailyGoalCard key={task.project.id} task={task} />)}
+            {completedTasks.length === 0 && <Text appearance="hint">No daily goals completed yet</Text>}
           </Layout>
         }
       </Layout>
