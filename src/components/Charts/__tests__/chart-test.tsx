@@ -20,7 +20,12 @@ describe('ProgressPercentageByProject', () => {
   const store = mockStore(initialState);
 
   it('renders correctly', () => {
-    renderer.create(testingWrapper(<ProgressPercentageByProject />, store));
+    renderer.create(testingWrapper(<ProgressPercentageByProject />, { store }));
+  });
+
+  it('renders correctly with rainbow theme', () => {
+    const theme = 'rainbowTheme';
+    renderer.create(testingWrapper(<ProgressPercentageByProject />, { store, theme }));
   });
 });
 
@@ -30,7 +35,12 @@ describe('TotalTimeByProject', () => {
   const store = mockStore(initialState);
 
   it('renders correctly', () => {
-    renderer.create(testingWrapper(<TotalTimeByProject />, store));
+    renderer.create(testingWrapper(<TotalTimeByProject />, { store }));
+  });
+
+  it('renders correctly with rainbow theme', () => {
+    const theme = 'rainbowTheme';
+    renderer.create(testingWrapper(<TotalTimeByProject />, { store, theme }));
   });
 });
 
@@ -40,7 +50,12 @@ describe('TotalWordsByDay', () => {
   const store = mockStore(initialState);
 
   it('renders correctly', () => {
-    renderer.create(testingWrapper(<TotalWordsByDay />, store));
+    renderer.create(testingWrapper(<TotalWordsByDay />, { store }));
+  });
+
+  it('renders correctly with rainbow theme', () => {
+    const theme = 'rainbowTheme';
+    renderer.create(testingWrapper(<TotalWordsByDay />, { store, theme }));
   });
 });
 
@@ -50,7 +65,12 @@ describe('TotalWordsByProject', () => {
   const store = mockStore(initialState);
 
   it('renders correctly', () => {
-    renderer.create(testingWrapper(<TotalWordsByProject />, store));
+    renderer.create(testingWrapper(<TotalWordsByProject />, { store }));
+  });
+
+  it('renders correctly with rainbow theme', () => {
+    const theme = 'rainbowTheme';
+    renderer.create(testingWrapper(<TotalWordsByProject />, { store, theme }));
   });
 });
 
@@ -60,7 +80,12 @@ describe('WordsWritten6Month', () => {
   const store = mockStore(initialState);
 
   it('renders correctly', () => {
-    renderer.create(testingWrapper(<WordsWritten6Month />, store));
+    renderer.create(testingWrapper(<WordsWritten6Month />, { store }));
+  });
+
+  it('renders correctly with rainbow theme', () => {
+    const theme = 'rainbowTheme';
+    renderer.create(testingWrapper(<WordsWritten6Month />, { store, theme }));
   });
 });
 
@@ -70,7 +95,12 @@ describe('WordsWrittenMonth', () => {
   const store = mockStore(initialState);
 
   it('renders correctly', () => {
-    renderer.create(testingWrapper(<WordsWrittenMonth />, store));
+    renderer.create(testingWrapper(<WordsWrittenMonth />, { store }));
+  });
+
+  it('renders correctly with rainbow theme', () => {
+    const theme = 'rainbowTheme';
+    renderer.create(testingWrapper(<WordsWrittenMonth />, { store, theme }));
   });
 });
 
@@ -80,7 +110,12 @@ describe('WordsWrittenWeek', () => {
   const store = mockStore(initialState);
 
   it('renders correctly', () => {
-    renderer.create(testingWrapper(<WordsWrittenWeek />, store));
+    renderer.create(testingWrapper(<WordsWrittenWeek />, { store }));
+  });
+
+  it('renders correctly with rainbow theme', () => {
+    const theme = 'rainbowTheme';
+    renderer.create(testingWrapper(<WordsWrittenWeek />, { store, theme }));
   });
 });
 
@@ -90,6 +125,11 @@ describe('WordsWrittenYear', () => {
   const store = mockStore(initialState);
 
   it('renders correctly', () => {
-    renderer.create(testingWrapper(<WordsWrittenYear />, store));
+    renderer.create(testingWrapper(<WordsWrittenYear />, { store }));
+  });
+
+  it('renders correctly with rainbow theme', () => {
+    const theme = 'rainbowTheme';
+    renderer.create(testingWrapper(<WordsWrittenYear />, { store, theme }));
   });
 });
