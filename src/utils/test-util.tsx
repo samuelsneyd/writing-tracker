@@ -7,7 +7,7 @@ import { MockStoreEnhanced } from 'redux-mock-store';
 
 /**
  * Wraps a component with a mock Redux store and the Eva application provider.
- * Allows unit testing components that
+ * Allows unit testing components that use Redux state and UI Kitten components.
  *
  * renderer.create(testingWrapper(<Component />, store));
  * @param component a React component that uses UI Kitten elements as children.
