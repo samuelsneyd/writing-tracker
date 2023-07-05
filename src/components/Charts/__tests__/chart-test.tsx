@@ -11,7 +11,10 @@ import {
   TotalTimeByProject,
   TotalWordsByDay,
   TotalWordsByProject,
-  WordsWritten6Month, WordsWrittenMonth, WordsWrittenWeek, WordsWrittenYear,
+  WordsWritten6Month,
+  WordsWrittenMonth,
+  WordsWrittenWeek,
+  WordsWrittenYear,
 } from '../../Charts';
 
 /**
