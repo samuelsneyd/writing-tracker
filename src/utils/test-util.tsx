@@ -1,4 +1,3 @@
-import { PropsWithChildren } from 'react';
 import * as React from 'react';
 import * as eva from '@eva-design/eva';
 import { ApplicationProvider, IconRegistry } from '@ui-kitten/components';
@@ -12,7 +11,7 @@ export type TestingWrapperOptions = {
   store: MockStoreEnhanced<unknown, unknown>;
 };
 
-const ThemedWrapper = ({ children }: PropsWithChildren): React.ReactElement => {
+const ThemedWrapper = ({ children }: React.PropsWithChildren): React.ReactElement => {
   // Read theme from Redux, but use default values if none found
   const theme = useAppSelector(state => state.theme) ?? { colorMode: 'light', themeValue: undefined };
 
