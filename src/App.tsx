@@ -13,12 +13,19 @@ import useLoginStreak from './hooks/useLoginStreak/useLoginStreak';
 
 const ThemedContent = () => {
   const theme = useAppSelector(state => state.theme);
+
   useLoginStreak();
 
   return (
     <>
       <IconRegistry icons={EvaIconsPack} />
-      <ApplicationProvider {...eva} theme={{ ...eva[theme.colorMode], ...themesMap[theme.themeValue] }}>
+      <ApplicationProvider
+        {...eva}
+        theme={{
+          ...eva[theme.colorMode],
+          ...themesMap[theme.themeValue],
+        }}
+      >
         <NavigationContainer>
           <RootTabNavigator />
         </NavigationContainer>
