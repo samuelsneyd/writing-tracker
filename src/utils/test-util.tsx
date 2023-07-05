@@ -35,7 +35,7 @@ const ThemedWrapper = ({ children }: React.PropsWithChildren): React.ReactElemen
  * Wraps a component with a mock Redux store and the Eva application provider.
  * Allows unit testing components that use Redux state and UI Kitten components.
  *
- * renderer.create(testingWrapper(<Component />, store));
+ * renderer.create(testingWrapper(<Component />, { store }));
  * @param component a React component that uses UI Kitten elements as children.
  * @param options store is required, others are optional.
  */
