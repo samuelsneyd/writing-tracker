@@ -1,14 +1,35 @@
+import { PropsWithChildren } from 'react';
 import * as React from 'react';
 import * as eva from '@eva-design/eva';
 import { ApplicationProvider, IconRegistry } from '@ui-kitten/components';
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
 import { Provider } from 'react-redux';
 import { MockStoreEnhanced } from 'redux-mock-store';
+import { useAppSelector } from '../store/hooks';
 import { themesMap } from '../themes';
 
 export type TestingWrapperOptions = {
-  store: MockStoreEnhanced<unknown, unknown>,
-  theme?: string;
+  store: MockStoreEnhanced<unknown, unknown>;
+};
+
+const ThemedWrapper = ({ children }: PropsWithChildren): React.ReactElement => {
+  // Read theme from Redux, but use default values if none found
+  const theme = useAppSelector(state => state.theme) ?? { colorMode: 'light', themeValue: undefined };
+
+  return (
+    <>
+      <IconRegistry icons={EvaIconsPack} />
+      <ApplicationProvider
+        {...eva}
+        theme={{
+          ...eva[theme.colorMode],
+          ...themesMap[theme.themeValue],
+        }}
+      >
+        {children}
+      </ApplicationProvider>
+    </>
+  );
 };
 
 /**
@@ -24,15 +45,8 @@ export const testingWrapper = (
   options: TestingWrapperOptions,
 ): React.ReactElement => (
   <Provider store={options.store}>
-    <IconRegistry icons={EvaIconsPack} />
-    <ApplicationProvider
-      {...eva}
-      theme={{
-        ...eva.light,
-        ...(options.theme && themesMap[options.theme]),
-      }}
-    >
+    <ThemedWrapper>
       {component}
-    </ApplicationProvider>
+    </ThemedWrapper>
   </Provider>
 );
