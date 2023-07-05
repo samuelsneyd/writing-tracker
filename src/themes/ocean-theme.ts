@@ -49,7 +49,7 @@ const overrideTheme: CustomTheme = {
   'color-danger-900': '#594601',
 };
 
-export const oceanSunriseTheme = {
+export const oceanTheme = {
   ...defaultTheme,
   ...overrideTheme,
 };
