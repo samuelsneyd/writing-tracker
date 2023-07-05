@@ -15,7 +15,7 @@ export const WordsWrittenMonth = (): React.ReactElement => {
   const datesArray = reduxSessions.map(session => new Date(session.date));
   const today = new Date();
   const interval = {
-    start: min(datesArray),
+    start: min([...datesArray, sub(today, { days: 30 })]),
     end: today,
   };
   const allDatesInInterval = eachDayOfInterval(interval).map(date => date.toISOString());

@@ -15,7 +15,7 @@ export const WordsWrittenWeek = (): React.ReactElement => {
   const datesArray = reduxSessions.map(session => new Date(session.date));
   const today = new Date();
   const interval = {
-    start: min(datesArray),
+    start: min([...datesArray, sub(today, { weeks: 1 })]),
     end: today,
   };
   const allDatesInInterval = eachDayOfInterval(interval).map(date => date.toISOString());

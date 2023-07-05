@@ -6,7 +6,13 @@ import { EvaIconsPack } from '@ui-kitten/eva-icons';
 import renderer from 'react-test-renderer';
 import { Provider } from 'react-redux';
 import configureStore, { MockStoreEnhanced } from 'redux-mock-store';
-import { ProgressPercentageByProject, TotalTimeByProject } from '../../Charts';
+import {
+  ProgressPercentageByProject,
+  TotalTimeByProject,
+  TotalWordsByDay,
+  TotalWordsByProject,
+  WordsWritten6Month, WordsWrittenMonth, WordsWrittenWeek, WordsWrittenYear,
+} from '../../Charts';
 
 /**
  * Wraps a component with a mock Redux store and the Eva application provider.
@@ -24,7 +30,6 @@ const testingWrapper = (
     </ApplicationProvider>
   </Provider>
 );
-
 
 describe('ProgressPercentageByProject', () => {
   const initialState = { projects: [], sessions: [] };
@@ -52,3 +57,62 @@ describe('TotalTimeByProject', () => {
   });
 });
 
+describe('TotalWordsByDay', () => {
+  const initialState = { projects: [], sessions: [] };
+  const mockStore = configureStore();
+  const store = mockStore(initialState);
+
+  it('renders correctly', () => {
+    renderer.create(testingWrapper(<TotalWordsByDay />, store));
+  });
+});
+
+describe('TotalWordsByProject', () => {
+  const initialState = { projects: [], sessions: [] };
+  const mockStore = configureStore();
+  const store = mockStore(initialState);
+
+  it('renders correctly', () => {
+    renderer.create(testingWrapper(<TotalWordsByProject />, store));
+  });
+});
+
+describe('WordsWritten6Month', () => {
+  const initialState = { projects: [], sessions: [] };
+  const mockStore = configureStore();
+  const store = mockStore(initialState);
+
+  it('renders correctly', () => {
+    renderer.create(testingWrapper(<WordsWritten6Month />, store));
+  });
+});
+
+describe('WordsWrittenMonth', () => {
+  const initialState = { projects: [], sessions: [] };
+  const mockStore = configureStore();
+  const store = mockStore(initialState);
+
+  it('renders correctly', () => {
+    renderer.create(testingWrapper(<WordsWrittenMonth />, store));
+  });
+});
+
+describe('WordsWrittenWeek', () => {
+  const initialState = { projects: [], sessions: [] };
+  const mockStore = configureStore();
+  const store = mockStore(initialState);
+
+  it('renders correctly', () => {
+    renderer.create(testingWrapper(<WordsWrittenWeek />, store));
+  });
+});
+
+describe('WordsWrittenYear', () => {
+  const initialState = { projects: [], sessions: [] };
+  const mockStore = configureStore();
+  const store = mockStore(initialState);
+
+  it('renders correctly', () => {
+    renderer.create(testingWrapper(<WordsWrittenYear />, store));
+  });
+});
