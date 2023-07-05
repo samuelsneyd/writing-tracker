@@ -1,13 +1,16 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-type Theme = 'light' | 'dark';
+type ThemeMode = 'light' | 'dark';
+type Theme = string;
 
 type ThemeState = {
-  value: Theme;
+  colorMode: ThemeMode
+  themeValue: Theme;
 };
 
 const initialState: ThemeState = {
-  value: 'light',
+  colorMode: 'light',
+  themeValue: 'rainbowTheme',
 };
 
 export const themeSlice = createSlice({
@@ -15,12 +18,16 @@ export const themeSlice = createSlice({
   initialState,
   reducers: {
     themeSet: (state, action: PayloadAction<Theme>) => {
-      state.value = action.payload;
+      state.themeValue = action.payload;
+    },
+
+    colorModeSet: (state, action: PayloadAction<ThemeMode>) => {
+      state.colorMode = action.payload;
     },
   },
 });
 
-export const { themeSet } = themeSlice.actions;
+export const { themeSet, colorModeSet } = themeSlice.actions;
 
 const themeReducer = themeSlice.reducer;
 

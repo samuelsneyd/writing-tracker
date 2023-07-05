@@ -1,8 +1,11 @@
 import * as React from 'react';
-import { SafeAreaView } from 'react-native';
+import { SafeAreaView, ScrollView, StyleSheet } from 'react-native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { noCase } from 'change-case';
+import { titleCase } from 'title-case';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { themeSet } from '../../store/themes/themeSlice';
+import { colorModeSet, themeSet } from '../../store/themes/themeSlice';
+import { themesList } from '../../themes';
 import type { MoreStackParamList } from '../../types/types';
 import { Divider, Layout, TopNavigation, Text, Button, TopNavigationAction } from '@ui-kitten/components';
 import { ArrowIosBackIcon } from '../../components/Icons/Icons';
@@ -11,12 +14,16 @@ type Props = NativeStackScreenProps<MoreStackParamList, 'Themes'>
 
 const ThemesScreen = ({ navigation }: Props): React.ReactElement => {
   const dispatch = useAppDispatch();
-  const theme = useAppSelector(state => state.theme).value;
+  const theme = useAppSelector(state => state.theme);
 
   // TODO - handle multiple themes beyond light/dark
-  const handleThemeChange = () => {
-    const nextTheme = theme === 'light' ? 'dark' : 'light';
-    dispatch(themeSet(nextTheme));
+  const handleColorModeChange = () => {
+    const nextColorMode = theme.colorMode === 'light' ? 'dark' : 'light';
+    dispatch(colorModeSet(nextColorMode));
+  };
+
+  const handleThemeChange = (theme: string): void => {
+    dispatch(themeSet(theme));
   };
 
   const BackAction = () => (
@@ -24,15 +31,35 @@ const ThemesScreen = ({ navigation }: Props): React.ReactElement => {
   );
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={styles.container}>
       <TopNavigation title="Themes" alignment="center" accessoryLeft={BackAction} />
       <Divider />
-      <Layout style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text category="h1">Themes</Text>
-        <Button onPress={handleThemeChange}>Toggle light/dark mode</Button>
-      </Layout>
+      <ScrollView style={styles.container} contentContainerStyle={{ flexGrow: 1 }}>
+        <Layout style={styles.body}>
+          <Text category="h1">Themes</Text>
+          <Button onPress={handleColorModeChange}>Toggle light/dark mode</Button>
+          {themesList.map(theme =>
+            <Button key={theme} onPress={() => handleThemeChange(theme)}>
+              <Text>{titleCase(noCase(theme))}</Text>
+            </Button>,
+          )}
+        </Layout>
+      </ScrollView>
     </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  body: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 16,
+    gap: 8,
+  },
+});
 
 export default ThemesScreen;
