@@ -184,7 +184,7 @@ const ProjectNewScreen = ({ route, navigation }: Props): React.ReactElement => {
                   const indexPath = index as IndexPath;
                   setSelectedStatusIndex(indexPath);
                   setProject(Project.copyOf(project, draft => {
-                    draft.status = PROJECT_STATUS_DATA[selectedTypeIndex.row].enumVal;
+                    draft.status = PROJECT_STATUS_DATA[indexPath.row].enumVal;
                   }));
                 }}
               >

@@ -145,7 +145,7 @@ const ProjectNewScreen = ({ navigation }: Props): React.ReactElement => {
                 onSelect={index => {
                   const indexPath = index as IndexPath;
                   setSelectedStatusIndex(indexPath);
-                  setProjectForm({ ...projectForm, status: PROJECT_STATUS_DATA[selectedTypeIndex.row].enumVal });
+                  setProjectForm({ ...projectForm, status: PROJECT_STATUS_DATA[indexPath.row].enumVal });
                 }}
               >
                 {PROJECT_STATUS_DATA.map(status => renderOption(status.display))}
