@@ -1,4 +1,5 @@
 import * as React from 'react';
+import _ from 'lodash';
 import { format } from 'date-fns';
 import { ListRenderItemInfo, SafeAreaView, StyleSheet } from 'react-native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -13,23 +14,27 @@ type Props = NativeStackScreenProps<ProjectsStackParamList, 'ListSessions'>
 const SettingsScreen = ({ navigation, route }: Props): React.ReactElement => {
   const { projectId } = route.params;
   const projects = useAppSelector(state => state.projects);
-  const project = projects.find(project => project.id === projectId);
+  const project = projectId ? projects.find(project => project.id === projectId) : undefined;
   const sessions = useAppSelector(state => state.sessions);
-  const filteredSessions = !projectId
-    ? sessions
-    : sessions.filter(session => session.projectSessionsId === projectId);
+  const filteredSessions = _(sessions)
+    .filter(session => !projectId || session.projectSessionsId === projectId)
+    .sortBy('date')
+    .reverse()
+    .value();
 
   const renderVerticalItem = (info: ListRenderItemInfo<SerializedSession>): React.ReactElement => {
     const { item } = info;
     const hours = Math.floor(item.minutes / 60);
     const minutes = Math.floor(item.minutes % 60);
+    const title = format(new Date(item.date), 'yyyy-MM-dd');
     const description = `${item.words} words, `
       + `${hours.toLocaleString()} hour${hours === 1 ? '' : 's'}, `
       + `${minutes.toLocaleString()} minute${minutes === 1 ? '' : 's'}`;
 
     return (
       <ListItem
-        title={format(new Date(item.date), 'yyyy-MM-dd')}
+        key={item.id}
+        title={title}
         description={description}
         onPress={() => navigation.navigate('EditSession', { sessionId: item.id })}
         accessoryRight={ArrowIosForwardIcon}
@@ -46,7 +51,7 @@ const SettingsScreen = ({ navigation, route }: Props): React.ReactElement => {
       <TopNavigation title="Sessions" alignment="center" accessoryLeft={BackAction} />
       <Divider />
       <Layout style={styles.body}>
-        <Text appearance="hint" category="h6">{project && project.title}</Text>
+        <Text appearance="hint" category="h6">{projectId && project ? project.title : 'All Sessions'}</Text>
         <List
           style={styles.verticalList}
           data={filteredSessions}
