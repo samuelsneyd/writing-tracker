@@ -57,7 +57,7 @@ const SessionNewScreen = ({ navigation, route }: Props): React.ReactElement => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <TopNavigation title={'New Session'} alignment="center" accessoryLeft={backAction} />
+      <TopNavigation title="New Session" alignment="center" accessoryLeft={backAction} />
       <Divider />
       <ScrollView style={styles.container} contentContainerStyle={{ flexGrow: 1 }}>
         <Layout style={styles.body}>

@@ -25,7 +25,6 @@ const SettingsScreen = ({ navigation, route }: Props): React.ReactElement => {
       <ListItem
         title={format(new Date(item.date), 'yyyy-MM-dd')}
         description={`${item.words} words, ${Math.floor(item.minutes / 60).toLocaleString()} hour${Math.floor(item.minutes / 60) === 1 ? '' : 's'}, ${(item.minutes % 60).toLocaleString()} minute${item.minutes % 60 === 1 ? '' : 's'}`}
-        // TODO - navigate to edit session screen
         onPress={() => navigation.navigate('EditSession', { sessionId: item.id })}
       />
     );
