@@ -11,7 +11,7 @@ import { ArrowIosBackIcon, ArrowIosForwardIcon } from '../../components/Icons/Ic
 type Props = NativeStackScreenProps<ProjectsStackParamList, 'ListSessions'>
 
 const SettingsScreen = ({ navigation, route }: Props): React.ReactElement => {
-  const projectId = route.params.projectId;
+  const { projectId } = route.params;
   const projects = useAppSelector(state => state.projects);
   const project = projects.find(project => project.id === projectId);
   const sessions = useAppSelector(state => state.sessions);
@@ -21,10 +21,16 @@ const SettingsScreen = ({ navigation, route }: Props): React.ReactElement => {
 
   const renderVerticalItem = (info: ListRenderItemInfo<SerializedSession>): React.ReactElement => {
     const { item } = info;
+    const hours = Math.floor(item.minutes / 60);
+    const minutes = Math.floor(item.minutes % 60);
+    const description = `${item.words} words, `
+      + `${hours.toLocaleString()} hour${hours === 1 ? '' : 's'}, `
+      + `${minutes.toLocaleString()} minute${minutes === 1 ? '' : 's'}`;
+
     return (
       <ListItem
         title={format(new Date(item.date), 'yyyy-MM-dd')}
-        description={`${item.words} words, ${Math.floor(item.minutes / 60).toLocaleString()} hour${Math.floor(item.minutes / 60) === 1 ? '' : 's'}, ${(item.minutes % 60).toLocaleString()} minute${item.minutes % 60 === 1 ? '' : 's'}`}
+        description={description}
         onPress={() => navigation.navigate('EditSession', { sessionId: item.id })}
         accessoryRight={ArrowIosForwardIcon}
       />
