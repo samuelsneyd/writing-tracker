@@ -1,8 +1,9 @@
 import * as React from 'react';
 import { StyleSheet } from 'react-native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { MenuIcon } from '../../components/Icons/Icons';
 import type { MoreStackParamList } from '../../types/types';
-import { Divider, TopNavigation } from '@ui-kitten/components';
+import { Divider, TopNavigation, TopNavigationAction, TopNavigationActionElement } from '@ui-kitten/components';
 import { SafeAreaLayout } from '../../components/SafeAreaComponent/SafeAreaComponent';
 import { MenuGridList } from '../../components/MenuGridList/MenuGridList';
 import { data } from './data';
@@ -15,9 +16,16 @@ const MoreScreen = ({ navigation }: Props): React.ReactElement => {
     navigation.getParent()!.navigate(data[index].route);
   };
 
+  const renderDrawerAction = (): TopNavigationActionElement => (
+    <TopNavigationAction
+      icon={MenuIcon}
+      onPress={() => undefined}
+    />
+  );
+
   return (
     <SafeAreaLayout style={styles.safeArea} insets="top">
-      <TopNavigation title="More" alignment="center" />
+      <TopNavigation title="More" alignment="center" accessoryLeft={renderDrawerAction} />
       <Divider />
       <MenuGridList data={data} onItemPress={onItemPress} />
     </SafeAreaLayout>
