@@ -190,6 +190,16 @@ const ProjectNewScreen = ({ route, navigation }: Props): React.ReactElement => {
               >
                 {PROJECT_STATUS_DATA.map(status => renderOption(status.display))}
               </Select>
+              <Input
+                placeholder="0"
+                label="Initial words"
+                value={project.initialWords ? project.initialWords.toString() : ''}
+                onChangeText={nextValue => setProject(Project.copyOf(project, draft => {
+                  draft.initialWords = parseInt(nextValue.replace(/\D/g, '')) || 0;
+                }))}
+                size="large"
+                keyboardType="number-pad"
+              />
               <Text appearance="hint">Daily targets</Text>
               <DailyWordRow project={project} setProject={setProject} dayName="Monday" dayKey="mon" />
               <DailyWordRow project={project} setProject={setProject} dayName="Tuesday" dayKey="tue" />
@@ -199,6 +209,16 @@ const ProjectNewScreen = ({ route, navigation }: Props): React.ReactElement => {
               <DailyWordRow project={project} setProject={setProject} dayName="Saturday" dayKey="sat" />
               <DailyWordRow project={project} setProject={setProject} dayName="Sunday" dayKey="sun" />
               <Text appearance="hint">Weekly target: {weeklyTarget}</Text>
+              <Input
+                placeholder="0"
+                label="Words per page"
+                value={project.wordsPerPage ? project.wordsPerPage.toString() : ''}
+                onChangeText={nextValue => setProject(Project.copyOf(project, draft => {
+                  draft.wordsPerPage = parseInt(nextValue.replace(/\D/g, '')) || 0;
+                }))}
+                size="large"
+                keyboardType="number-pad"
+              />
               <Button onPress={handleSave}>Save Project</Button>
             </>
             : <Spinner />
