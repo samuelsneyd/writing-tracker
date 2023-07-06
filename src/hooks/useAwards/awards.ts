@@ -9,6 +9,7 @@ import {
   curriedFinisherProgress,
   curriedNightOwlProgress,
   curriedOverachieverProgress,
+  curriedWriterProgress,
 } from './award-utils';
 
 /**
@@ -282,6 +283,88 @@ export const FINISHER_4: AwardLocal = {
   getProgress: curriedFinisherProgress(FINISHER_TARGETS[3]),
 };
 
+const WRITER_TARGETS = [500, 1000, 2000, 5000, 10000, 20000, 50000, 100000];
+
+export const WRITER_1: AwardLocal = {
+  category: AwardCategory.WRITER,
+  type: AwardType.WRITER_1,
+  name: 'Writer I',
+  description: `Write ${WRITER_TARGETS[0].toLocaleString()} total words`,
+  icon: AwardIcon,
+  target: WRITER_TARGETS[0],
+  getProgress: curriedWriterProgress(WRITER_TARGETS[0]),
+};
+
+export const WRITER_2: AwardLocal = {
+  category: AwardCategory.WRITER,
+  type: AwardType.WRITER_2,
+  name: 'Writer II',
+  description: `Write ${WRITER_TARGETS[1].toLocaleString()} total words`,
+  icon: AwardIcon,
+  target: WRITER_TARGETS[1],
+  getProgress: curriedWriterProgress(WRITER_TARGETS[1]),
+};
+
+export const WRITER_3: AwardLocal = {
+  category: AwardCategory.WRITER,
+  type: AwardType.WRITER_3,
+  name: 'Writer III',
+  description: `Write ${WRITER_TARGETS[2].toLocaleString()} total words`,
+  icon: AwardIcon,
+  target: WRITER_TARGETS[2],
+  getProgress: curriedWriterProgress(WRITER_TARGETS[2]),
+};
+
+export const WRITER_4: AwardLocal = {
+  category: AwardCategory.WRITER,
+  type: AwardType.WRITER_4,
+  name: 'Writer IV',
+  description: `Write ${WRITER_TARGETS[3].toLocaleString()} total words`,
+  icon: AwardIcon,
+  target: WRITER_TARGETS[3],
+  getProgress: curriedWriterProgress(WRITER_TARGETS[3]),
+};
+
+export const WRITER_5: AwardLocal = {
+  category: AwardCategory.WRITER,
+  type: AwardType.WRITER_5,
+  name: 'Writer V',
+  description: `Write ${WRITER_TARGETS[4].toLocaleString()} total words`,
+  icon: AwardIcon,
+  target: WRITER_TARGETS[4],
+  getProgress: curriedWriterProgress(WRITER_TARGETS[4]),
+};
+
+export const WRITER_6: AwardLocal = {
+  category: AwardCategory.WRITER,
+  type: AwardType.WRITER_6,
+  name: 'Writer VI',
+  description: `Write ${WRITER_TARGETS[5].toLocaleString()} total words`,
+  icon: AwardIcon,
+  target: WRITER_TARGETS[5],
+  getProgress: curriedWriterProgress(WRITER_TARGETS[5]),
+};
+
+export const WRITER_7: AwardLocal = {
+  category: AwardCategory.WRITER,
+  type: AwardType.WRITER_7,
+  name: 'Writer VII',
+  description: `Write ${WRITER_TARGETS[6].toLocaleString()} total words`,
+  icon: AwardIcon,
+  target: WRITER_TARGETS[6],
+  getProgress: curriedWriterProgress(WRITER_TARGETS[6]),
+};
+
+export const WRITER_8: AwardLocal = {
+  category: AwardCategory.WRITER,
+  type: AwardType.WRITER_8,
+  name: 'Writer VIII',
+  description: `Write ${WRITER_TARGETS[7].toLocaleString()} total words`,
+  icon: AwardIcon,
+  target: WRITER_TARGETS[7],
+  getProgress: curriedWriterProgress(WRITER_TARGETS[7]),
+};
+
 export type AwardMap = {
   [key in AwardType]: AwardLocal;
 };
@@ -311,6 +394,14 @@ export const awardMap: AwardMap = {
   FINISHER_2,
   FINISHER_3,
   FINISHER_4,
+  WRITER_1,
+  WRITER_2,
+  WRITER_3,
+  WRITER_4,
+  WRITER_5,
+  WRITER_6,
+  WRITER_7,
+  WRITER_8,
 };
 
 export const localAwards: AwardLocal[] = Object.values(awardMap);

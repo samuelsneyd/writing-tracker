@@ -159,12 +159,29 @@ export const curriedFinisherProgress = (target: number) => ((
   }
 );
 
+export const curriedWriterProgress = (target: number) => (
+  projects: SerializedProject[],
+  sessions: SerializedSession[],
+  _loginStreak: DateStreakSummary,
+): AwardProgressSummary => {
+
+  const current = Math.min(
+    _(projects).sumBy('initialWords') + _(sessions).sumBy('words'),
+    target,
+  );
+
+  const progress = Math.min(current / target, 1);
+
+  return { target, current, progress };
+};
+
 const awardUtil = {
   curriedEarlyBirdProgress,
   curriedNightOwlProgress,
   curriedOverachieverProgress,
   curriedDailyStreakProgress,
   curriedFinisherProgress,
+  curriedWriterProgress,
 };
 
 export default awardUtil;

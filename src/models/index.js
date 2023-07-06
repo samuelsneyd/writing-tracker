@@ -21,7 +21,8 @@ const AwardCategory = {
   "NIGHT_OWL": "NIGHT_OWL",
   "OVERACHIEVER": "OVERACHIEVER",
   "FINISHER": "FINISHER",
-  "GENERAL": "GENERAL"
+  "GENERAL": "GENERAL",
+  "WRITER": "WRITER"
 };
 
 const AwardType = {
@@ -48,7 +49,15 @@ const AwardType = {
   "FINISHER_1": "FINISHER_1",
   "FINISHER_2": "FINISHER_2",
   "FINISHER_3": "FINISHER_3",
-  "FINISHER_4": "FINISHER_4"
+  "FINISHER_4": "FINISHER_4",
+  "WRITER_1": "WRITER_1",
+  "WRITER_2": "WRITER_2",
+  "WRITER_3": "WRITER_3",
+  "WRITER_4": "WRITER_4",
+  "WRITER_5": "WRITER_5",
+  "WRITER_6": "WRITER_6",
+  "WRITER_7": "WRITER_7",
+  "WRITER_8": "WRITER_8"
 };
 
 const { Project, Session, LoginDate, Award, TargetByDay, WeeklyTarget } = initSchema(schema);
