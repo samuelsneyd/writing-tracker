@@ -26,7 +26,7 @@ const SettingsScreen = ({ navigation, route }: Props): React.ReactElement => {
         title={format(new Date(item.date), 'yyyy-MM-dd')}
         description={`${item.words} words, ${Math.floor(item.minutes / 60).toLocaleString()} hour${Math.floor(item.minutes / 60) === 1 ? '' : 's'}, ${(item.minutes % 60).toLocaleString()} minute${item.minutes % 60 === 1 ? '' : 's'}`}
         // TODO - navigate to edit session screen
-        onPress={() => navigation.navigate('NewSession', { projectId: projectId || '' })}
+        onPress={() => navigation.navigate('EditSession', { sessionId: item.id })}
       />
     );
   };
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 16,
+    paddingTop: 16,
     gap: 10,
   },
   verticalList: {

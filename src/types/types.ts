@@ -17,7 +17,7 @@ export type ProjectsStackParamList = {
   EditProject: Required<{ id: string, title: string }>;
   NewProject: undefined;
   ListSessions: Partial<{ projectId: string }>;
-  EditSession: Required<{ projectId: string, sessionId: string }>;
+  EditSession: Required<{ sessionId: string }>;
   NewSession: Required<{ projectId: string }>;
 };
 
