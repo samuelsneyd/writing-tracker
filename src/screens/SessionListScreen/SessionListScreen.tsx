@@ -6,7 +6,7 @@ import { SerializedSession } from '../../models/serialized';
 import { useAppSelector } from '../../store/hooks';
 import type { ProjectsStackParamList } from '../../types/types';
 import { Divider, Layout, TopNavigation, Text, TopNavigationAction, List, ListItem } from '@ui-kitten/components';
-import { ArrowIosBackIcon } from '../../components/Icons/Icons';
+import { ArrowIosBackIcon, ArrowIosForwardIcon } from '../../components/Icons/Icons';
 
 type Props = NativeStackScreenProps<ProjectsStackParamList, 'ListSessions'>
 
@@ -26,6 +26,7 @@ const SettingsScreen = ({ navigation, route }: Props): React.ReactElement => {
         title={format(new Date(item.date), 'yyyy-MM-dd')}
         description={`${item.words} words, ${Math.floor(item.minutes / 60).toLocaleString()} hour${Math.floor(item.minutes / 60) === 1 ? '' : 's'}, ${(item.minutes % 60).toLocaleString()} minute${item.minutes % 60 === 1 ? '' : 's'}`}
         onPress={() => navigation.navigate('EditSession', { sessionId: item.id })}
+        accessoryRight={ArrowIosForwardIcon}
       />
     );
   };
