@@ -22,7 +22,8 @@ export enum AwardCategory {
   OVERACHIEVER = "OVERACHIEVER",
   FINISHER = "FINISHER",
   GENERAL = "GENERAL",
-  WRITER = "WRITER"
+  WRITER = "WRITER",
+  ON_THE_CLOCK = "ON_THE_CLOCK"
 }
 
 export enum AwardType {
@@ -57,7 +58,15 @@ export enum AwardType {
   WRITER_5 = "WRITER_5",
   WRITER_6 = "WRITER_6",
   WRITER_7 = "WRITER_7",
-  WRITER_8 = "WRITER_8"
+  WRITER_8 = "WRITER_8",
+  ON_THE_CLOCK_1 = "ON_THE_CLOCK_1",
+  ON_THE_CLOCK_2 = "ON_THE_CLOCK_2",
+  ON_THE_CLOCK_3 = "ON_THE_CLOCK_3",
+  ON_THE_CLOCK_4 = "ON_THE_CLOCK_4",
+  ON_THE_CLOCK_5 = "ON_THE_CLOCK_5",
+  ON_THE_CLOCK_6 = "ON_THE_CLOCK_6",
+  ON_THE_CLOCK_7 = "ON_THE_CLOCK_7",
+  ON_THE_CLOCK_8 = "ON_THE_CLOCK_8"
 }
 
 type EagerTargetByDay = {

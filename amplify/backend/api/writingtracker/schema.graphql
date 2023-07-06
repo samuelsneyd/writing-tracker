@@ -67,6 +67,7 @@ enum AwardCategory {
   FINISHER
   GENERAL
   WRITER
+  ON_THE_CLOCK
 }
 
 enum AwardType {
@@ -102,6 +103,14 @@ enum AwardType {
   WRITER_6
   WRITER_7
   WRITER_8
+  ON_THE_CLOCK_1
+  ON_THE_CLOCK_2
+  ON_THE_CLOCK_3
+  ON_THE_CLOCK_4
+  ON_THE_CLOCK_5
+  ON_THE_CLOCK_6
+  ON_THE_CLOCK_7
+  ON_THE_CLOCK_8
 }
 
 type Award @model @auth(rules: [{ allow: owner }]) {

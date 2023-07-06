@@ -418,7 +418,8 @@ export const schema = {
                 "OVERACHIEVER",
                 "FINISHER",
                 "GENERAL",
-                "WRITER"
+                "WRITER",
+                "ON_THE_CLOCK"
             ]
         },
         "AwardType": {
@@ -455,7 +456,15 @@ export const schema = {
                 "WRITER_5",
                 "WRITER_6",
                 "WRITER_7",
-                "WRITER_8"
+                "WRITER_8",
+                "ON_THE_CLOCK_1",
+                "ON_THE_CLOCK_2",
+                "ON_THE_CLOCK_3",
+                "ON_THE_CLOCK_4",
+                "ON_THE_CLOCK_5",
+                "ON_THE_CLOCK_6",
+                "ON_THE_CLOCK_7",
+                "ON_THE_CLOCK_8"
             ]
         }
     },

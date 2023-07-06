@@ -8,6 +8,7 @@ import {
   curriedEarlyBirdProgress,
   curriedFinisherProgress,
   curriedNightOwlProgress,
+  curriedOnTheClockProgress,
   curriedOverachieverProgress,
   curriedWriterProgress,
 } from './award-utils';
@@ -365,6 +366,88 @@ export const WRITER_8: AwardLocal = {
   getProgress: curriedWriterProgress(WRITER_TARGETS[7]),
 };
 
+const ON_THE_CLOCK_TARGETS = [1, 3, 10, 20, 40, 100, 500, 1000];
+
+export const ON_THE_CLOCK_1: AwardLocal = {
+  category: AwardCategory.ON_THE_CLOCK,
+  type: AwardType.ON_THE_CLOCK_1,
+  name: 'On the Clock I',
+  description: `Write for ${ON_THE_CLOCK_TARGETS[0].toLocaleString()} hour`,
+  icon: AwardIcon,
+  target: ON_THE_CLOCK_TARGETS[0],
+  getProgress: curriedOnTheClockProgress(ON_THE_CLOCK_TARGETS[0]),
+};
+
+export const ON_THE_CLOCK_2: AwardLocal = {
+  category: AwardCategory.ON_THE_CLOCK,
+  type: AwardType.ON_THE_CLOCK_2,
+  name: 'On the Clock II',
+  description: `Write for ${ON_THE_CLOCK_TARGETS[1].toLocaleString()} hours`,
+  icon: AwardIcon,
+  target: ON_THE_CLOCK_TARGETS[1],
+  getProgress: curriedOnTheClockProgress(ON_THE_CLOCK_TARGETS[1]),
+};
+
+export const ON_THE_CLOCK_3: AwardLocal = {
+  category: AwardCategory.ON_THE_CLOCK,
+  type: AwardType.ON_THE_CLOCK_3,
+  name: 'On the Clock III',
+  description: `Write for ${ON_THE_CLOCK_TARGETS[2].toLocaleString()} hours`,
+  icon: AwardIcon,
+  target: ON_THE_CLOCK_TARGETS[2],
+  getProgress: curriedOnTheClockProgress(ON_THE_CLOCK_TARGETS[2]),
+};
+
+export const ON_THE_CLOCK_4: AwardLocal = {
+  category: AwardCategory.ON_THE_CLOCK,
+  type: AwardType.ON_THE_CLOCK_4,
+  name: 'On the Clock IV',
+  description: `Write for ${ON_THE_CLOCK_TARGETS[3].toLocaleString()} hours`,
+  icon: AwardIcon,
+  target: ON_THE_CLOCK_TARGETS[3],
+  getProgress: curriedOnTheClockProgress(ON_THE_CLOCK_TARGETS[3]),
+};
+
+export const ON_THE_CLOCK_5: AwardLocal = {
+  category: AwardCategory.ON_THE_CLOCK,
+  type: AwardType.ON_THE_CLOCK_5,
+  name: 'On the Clock V',
+  description: `Write for ${ON_THE_CLOCK_TARGETS[4].toLocaleString()} hours`,
+  icon: AwardIcon,
+  target: ON_THE_CLOCK_TARGETS[4],
+  getProgress: curriedOnTheClockProgress(ON_THE_CLOCK_TARGETS[4]),
+};
+
+export const ON_THE_CLOCK_6: AwardLocal = {
+  category: AwardCategory.ON_THE_CLOCK,
+  type: AwardType.ON_THE_CLOCK_6,
+  name: 'On the Clock VI',
+  description: `Write for ${ON_THE_CLOCK_TARGETS[5].toLocaleString()} hours`,
+  icon: AwardIcon,
+  target: ON_THE_CLOCK_TARGETS[5],
+  getProgress: curriedOnTheClockProgress(ON_THE_CLOCK_TARGETS[5]),
+};
+
+export const ON_THE_CLOCK_7: AwardLocal = {
+  category: AwardCategory.ON_THE_CLOCK,
+  type: AwardType.ON_THE_CLOCK_7,
+  name: 'On the Clock VII',
+  description: `Write for ${ON_THE_CLOCK_TARGETS[6].toLocaleString()} hours`,
+  icon: AwardIcon,
+  target: ON_THE_CLOCK_TARGETS[6],
+  getProgress: curriedOnTheClockProgress(ON_THE_CLOCK_TARGETS[6]),
+};
+
+export const ON_THE_CLOCK_8: AwardLocal = {
+  category: AwardCategory.ON_THE_CLOCK,
+  type: AwardType.ON_THE_CLOCK_8,
+  name: 'On the Clock VIII',
+  description: `Write for ${ON_THE_CLOCK_TARGETS[7].toLocaleString()} hours`,
+  icon: AwardIcon,
+  target: ON_THE_CLOCK_TARGETS[7],
+  getProgress: curriedOnTheClockProgress(ON_THE_CLOCK_TARGETS[7]),
+};
+
 export type AwardMap = {
   [key in AwardType]: AwardLocal;
 };
@@ -402,6 +485,14 @@ export const awardMap: AwardMap = {
   WRITER_6,
   WRITER_7,
   WRITER_8,
+  ON_THE_CLOCK_1,
+  ON_THE_CLOCK_2,
+  ON_THE_CLOCK_3,
+  ON_THE_CLOCK_4,
+  ON_THE_CLOCK_5,
+  ON_THE_CLOCK_6,
+  ON_THE_CLOCK_7,
+  ON_THE_CLOCK_8,
 };
 
 export const localAwards: AwardLocal[] = Object.values(awardMap);
