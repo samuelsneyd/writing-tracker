@@ -130,6 +130,9 @@ const ProjectDetailsScreen = ({ route, navigation }: Props): React.ReactElement 
               <Button onPress={() => navigation.navigate('NewSession', { projectId: project.id })}>
                 <Text>Add Session</Text>
               </Button>
+              <Button onPress={() => navigation.navigate('ListSessions', { projectId: project.id })}>
+                <Text>View/Edit Past Sessions</Text>
+              </Button>
               <Text>Description: {project.description}</Text>
               <Text>Type: {capitalCase(project.type)}</Text>
               <Text>Progress: {Math.round(progress * 100) || '-'}%</Text>
