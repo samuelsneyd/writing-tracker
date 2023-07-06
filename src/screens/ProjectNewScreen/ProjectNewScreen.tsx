@@ -67,6 +67,7 @@ type Props = NativeStackScreenProps<ProjectsStackParamList, 'NewProject'>
 const ProjectNewScreen = ({ navigation }: Props): React.ReactElement => {
   const dispatch = useAppDispatch();
   const [projectForm, setProjectForm] = React.useState<CreateProjectInput>(initialProjectValues);
+  const [isSaving, setIsSaving] = React.useState<boolean>(false);
   const [selectedTypeIndex, setSelectedTypeIndex] = React.useState<IndexPath>(new IndexPath(0));
   const [selectedStatusIndex, setSelectedStatusIndex] = React.useState<IndexPath>(new IndexPath(0));
   const [weeklyTarget, setWeeklyTarget] = React.useState<number>(0);
@@ -92,12 +93,19 @@ const ProjectNewScreen = ({ navigation }: Props): React.ReactElement => {
       console.log('No project to save!');
       return;
     }
-    const savedProject = await DataStore.save(new Project(projectForm));
-    dispatch(projectAdded(serializeModel(savedProject) as unknown as SerializedProject));
-    const { id, title } = savedProject;
 
-    navigation.popToTop();
-    navigation.navigate('Details', { id, title });
+    setIsSaving(true);
+    try {
+      const savedProject = await DataStore.save(new Project(projectForm));
+      dispatch(projectAdded(serializeModel(savedProject) as unknown as SerializedProject));
+      const { id, title } = savedProject;
+
+      navigation.popToTop();
+      navigation.navigate('Details', { id, title });
+    } catch (e) {
+      // TODO - show error message
+      setIsSaving(false);
+    }
   };
 
   return (
@@ -106,7 +114,7 @@ const ProjectNewScreen = ({ navigation }: Props): React.ReactElement => {
         <TopNavigation title="New Project" alignment="center" accessoryLeft={backAction} />
         <Divider />
         <Layout style={styles.body}>
-          {projectForm
+          {projectForm && !isSaving
             ? <>
               <Input
                 placeholder="Title"

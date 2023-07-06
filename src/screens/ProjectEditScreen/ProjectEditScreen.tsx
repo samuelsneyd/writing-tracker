@@ -61,6 +61,7 @@ const ProjectNewScreen = ({ route, navigation }: Props): React.ReactElement => {
   }
 
   const [isLoaded, setIsLoaded] = React.useState<boolean>(!!foundReduxProject);
+  const [isSaving, setIsSaving] = React.useState<boolean>(false);
   const [project, setProject] = React.useState<Project | undefined>(foundReduxProject);
   const [selectedTypeIndex, setSelectedTypeIndex] = React.useState<IndexPath>(new IndexPath(
     foundReduxProject
@@ -124,12 +125,20 @@ const ProjectNewScreen = ({ route, navigation }: Props): React.ReactElement => {
       console.log('No project to save!');
       return;
     }
-    const savedProject = await DataStore.save(Project.copyOf(project, () => undefined));
-    dispatch(projectAdded(serializeModel(savedProject) as unknown as SerializedProject));
-    const { title } = project;
 
-    navigation.popToTop();
-    navigation.navigate('Details', { id, title });
+    setIsSaving(true);
+
+    try {
+      const savedProject = await DataStore.save(Project.copyOf(project, () => undefined));
+      dispatch(projectAdded(serializeModel(savedProject) as unknown as SerializedProject));
+      const { title } = project;
+
+      navigation.popToTop();
+      navigation.navigate('Details', { id, title });
+    } catch (e) {
+      // TODO - show error message
+      setIsSaving(false);
+    }
   };
 
   return (
@@ -138,7 +147,7 @@ const ProjectNewScreen = ({ route, navigation }: Props): React.ReactElement => {
         <TopNavigation title="Edit Project" alignment="center" accessoryLeft={backAction} />
         <Divider />
         <Layout style={styles.body}>
-          {project && isLoaded
+          {project && isLoaded && !isSaving
             ? <>
               <Input
                 placeholder="Title"

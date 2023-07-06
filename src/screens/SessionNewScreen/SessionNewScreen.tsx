@@ -32,6 +32,7 @@ const SessionNewScreen = ({ navigation, route }: Props): React.ReactElement => {
     words: 0,
   };
   const [sessionForm, setSessionForm] = React.useState<CreateSessionInput>(initialSessionValues);
+  const [isSaving, setIsSaving] = React.useState<boolean>(false);
   const reduxProjects = useAppSelector(state => state.projects);
   const sessionProject = reduxProjects.find(project => project.id === projectId);
   const dispatch = useAppDispatch();
@@ -46,13 +47,21 @@ const SessionNewScreen = ({ navigation, route }: Props): React.ReactElement => {
       console.log('No session to save!');
       return;
     }
-    const savedSession = await DataStore.save(new Session({
-      ...sessionForm,
-      project: await DataStore.query(Project, sessionForm.projectSessionsId) as Project,
-    }));
-    dispatch(sessionAdded(serializeModel(savedSession) as unknown as SerializedSession));
 
-    navigation.pop();
+    setIsSaving(true);
+
+    try {
+      const savedSession = await DataStore.save(new Session({
+        ...sessionForm,
+        project: await DataStore.query(Project, sessionForm.projectSessionsId) as Project,
+      }));
+      dispatch(sessionAdded(serializeModel(savedSession) as unknown as SerializedSession));
+
+      navigation.pop();
+    } catch (e) {
+      // TODO - show error message
+      setIsSaving(false);
+    }
   };
 
   return (
@@ -61,7 +70,7 @@ const SessionNewScreen = ({ navigation, route }: Props): React.ReactElement => {
       <Divider />
       <ScrollView style={styles.container} contentContainerStyle={{ flexGrow: 1 }}>
         <Layout style={styles.body}>
-          {sessionForm && sessionProject
+          {sessionForm && sessionProject && !isSaving
             ? <>
               <Text category="h5" appearance="hint">{sessionProject.title}</Text>
               <Layout style={styles.horizontalContainer}>

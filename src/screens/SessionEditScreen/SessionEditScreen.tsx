@@ -50,6 +50,7 @@ const SessionEditScreen = ({ navigation, route }: Props): React.ReactElement => 
   }
 
   const [isLoaded, setIsLoaded] = React.useState<boolean>(!!foundReduxSession && !!foundReduxProject);
+  const [isSaving, setIsSaving] = React.useState<boolean>(false);
   const [session, setSession] = React.useState<Session | undefined>(foundReduxSession);
   const [project, setProject] = React.useState<Project | undefined>(foundReduxProject);
   const dispatch = useAppDispatch();
@@ -64,10 +65,18 @@ const SessionEditScreen = ({ navigation, route }: Props): React.ReactElement => 
       console.log('No session to save!');
       return;
     }
-    const savedSession = await DataStore.save(Session.copyOf(session, () => undefined));
-    dispatch(sessionAdded(serializeModel(savedSession) as unknown as SerializedSession));
 
-    navigation.pop();
+    setIsSaving(true);
+
+    try {
+      const savedSession = await DataStore.save(Session.copyOf(session, () => undefined));
+      dispatch(sessionAdded(serializeModel(savedSession) as unknown as SerializedSession));
+
+      navigation.pop();
+    } catch (e) {
+      // TODO - show error message
+      setIsSaving(false);
+    }
   };
 
   return (
@@ -76,7 +85,7 @@ const SessionEditScreen = ({ navigation, route }: Props): React.ReactElement => 
       <Divider />
       <ScrollView style={styles.container} contentContainerStyle={{ flexGrow: 1 }}>
         <Layout style={styles.body}>
-          {session && project && isLoaded
+          {session && project && isLoaded && !isSaving
             ? <>
               <Text category="h5" appearance="hint">{project.title}</Text>
               <Layout style={styles.horizontalContainer}>
