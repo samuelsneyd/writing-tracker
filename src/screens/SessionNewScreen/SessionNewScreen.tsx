@@ -77,6 +77,7 @@ const SessionNewScreen = ({ navigation, route }: Props): React.ReactElement => {
               <Layout style={styles.horizontalContainer}>
                 <Datepicker
                   date={new Date(sessionForm.date)}
+                  max={new Date()}
                   onSelect={nextDate => setSessionForm({
                     ...sessionForm,
                     date: new Date(nextDate).toISOString(),

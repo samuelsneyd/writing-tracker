@@ -108,6 +108,7 @@ const SessionEditScreen = ({ navigation, route }: Props): React.ReactElement => 
               <Layout style={styles.horizontalContainer}>
                 <Datepicker
                   date={new Date(session.date)}
+                  max={new Date()}
                   onSelect={nextDate => setSession(Session.copyOf(session, draft => {
                     draft.date = new Date(nextDate).toISOString();
                   }))}
