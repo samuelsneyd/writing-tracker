@@ -8,6 +8,7 @@ export const SessionHeatmap = () => {
   const theme = useTheme();
   const today = new Date();
   const reduxSessions = useAppSelector(state => state.sessions);
+  const reduxTheme = useAppSelector(state => state.theme);
 
   return (
     <>
@@ -18,7 +19,7 @@ export const SessionHeatmap = () => {
         endDate={today}
         numDays={getDaysInYear(today)}
         colorArray={[
-          theme['color-basic-300'],
+          reduxTheme.colorMode === 'light' ? theme['color-basic-300'] : theme['color-basic-700'],
           theme['color-primary-100'],
           theme['color-primary-200'],
           theme['color-primary-300'],
