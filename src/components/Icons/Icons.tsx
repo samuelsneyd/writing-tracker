@@ -21,6 +21,14 @@ export const BookIcon = (props: IconProps): IconElement => (
   <Icon {...props} name="book-outline" />
 );
 
+export const CalendarIcon = (props: IconProps): IconElement => (
+  <Icon {...props} name="calendar-outline" />
+);
+
+export const ClockIcon = (props: IconProps): IconElement => (
+  <Icon {...props} name="clock-outline" />
+);
+
 export const ColorPaletteIcon = (props: IconProps): IconElement => (
   <Icon {...props} name="color-palette-outline" />
 );
@@ -55,4 +63,8 @@ export const PlusIcon = (props: IconProps): IconElement => (
 
 export const SettingsIcon = (props: IconProps): IconElement => (
   <Icon {...props} name="settings-outline" />
+);
+
+export const WriteIcon = (props: IconProps): IconElement => (
+  <Icon {...props} name="edit-2-outline" />
 );
