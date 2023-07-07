@@ -17,7 +17,7 @@ const DailyGoalCard = (props: CardProps & { task: DailyTask }): CardElement => {
       header={<Text category="s1">{task.project.title}</Text>}
       onPress={() =>
         navigation.getParent()?.navigate('ProjectsStackNavigator', {
-          screen: 'Details',
+          screen: 'ProjectDetails',
           params: { id: task.project.id, title: task.project.title },
           initial: false,
         })
