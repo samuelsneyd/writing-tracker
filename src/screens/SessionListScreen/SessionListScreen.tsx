@@ -11,7 +11,7 @@ import { ArrowIosBackIcon, ArrowIosForwardIcon } from '../../components/Icons/Ic
 
 type Props = NativeStackScreenProps<ProjectsStackParamList, 'SessionList'>;
 
-const SettingsScreen = ({ navigation, route }: Props): React.ReactElement => {
+const SessionListScreen = ({ navigation, route }: Props): React.ReactElement => {
   const projectId = route.params?.projectId;
   const projects = useAppSelector(state => state.projects);
   const project = projectId ? projects.find(project => project.id === projectId) : undefined;
@@ -79,4 +79,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SettingsScreen;
+export default SessionListScreen;
