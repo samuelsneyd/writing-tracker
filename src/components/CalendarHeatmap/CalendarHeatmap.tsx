@@ -21,11 +21,12 @@ import {
 
 const rectColor = ['#eeeeee', '#d6e685', '#8cc665', '#44a340', '#1e6823'];
 
-// Array of objects with date and arbitrary metadata
-type Values = { date: string | number | Date }[];
+// Objects with date and arbitrary metadata
+type Value = { date: string | number | Date };
 
 type CalendarHeatmapProps = {
-  values: Values;
+  // Array of objects with date and arbitrary metadata
+  values: Value[];
   // Number of days back from endDate to show
   numDays?: number;
   // End of date range
@@ -47,7 +48,7 @@ type CalendarHeatmapProps = {
   // Function which returns title text for value
   titleForValue?: Function;
   // Callback function when a square is clicked
-  onPress?: Function;
+  onPress?: (index: number) => any;
   // Array of colors to render the squares
   colorArray?: any[];
 };
@@ -57,7 +58,8 @@ type CalendarHeatmapProps = {
  *
  * Changes: Convert to TypeScript. Fix undeclared variable bugs.
  * Add monthLabelComponent prop. Remove dead props. Tidy code and
- * comments. Make ScrollView scrollable.
+ * comments. Make ScrollView scrollable. Regenerate value cache on
+ * values update.
  */
 const CalendarHeatmap = (props: CalendarHeatmapProps) => {
   const {
@@ -68,7 +70,7 @@ const CalendarHeatmap = (props: CalendarHeatmapProps) => {
     endDate = new Date(),
     titleForValue,
     tooltipDataAttrs,
-    onPress = () => undefined,
+    onPress = undefined,
     showOutOfRangeDays = false,
     monthLabelsColor = 'black',
     monthLabelComponent = undefined,
@@ -84,7 +86,7 @@ const CalendarHeatmap = (props: CalendarHeatmapProps) => {
     scrollViewRef.current.scrollToEnd({ animated: false });
   }, []);
 
-  const getValueCache = (values: Values) => {
+  const getValueCache = (values: Value[]) => {
     const countedArray = getCountByDuplicateValues(values);
     return _.reduce(
       values,
@@ -110,11 +112,11 @@ const CalendarHeatmap = (props: CalendarHeatmapProps) => {
 
   React.useEffect(() => {
     setValueCache(getValueCache(values));
-  }, []);
+  }, [values]);
 
   const [valueCache, setValueCache] = React.useState(getValueCache(values));
 
-  const handleClick = (value: any) => {
+  const handleClick = (value: number) => {
     if (onPress) {
       onPress(value);
     }
