@@ -6,3 +6,4 @@ export * from './WordsWritten6Month';
 export * from './WordsWrittenMonth';
 export * from './WordsWrittenWeek';
 export * from './WordsWrittenYear';
+export * from './SessionHeatmap';

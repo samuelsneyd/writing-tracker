@@ -1,5 +1,5 @@
-import { serializeModel } from '@aws-amplify/datastore/ssr';
 import * as React from 'react';
+import { serializeModel } from '@aws-amplify/datastore/ssr';
 import { SafeAreaView, ScrollView, StyleSheet } from 'react-native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { DataStore } from 'aws-amplify';
@@ -12,6 +12,7 @@ import {
   WordsWrittenMonth,
   WordsWrittenWeek,
   WordsWrittenYear,
+  SessionHeatmap,
 } from '../../components/Charts';
 import { Project, Session } from '../../models';
 import { SerializedProject, SerializedSession } from '../../models/serialized';
@@ -21,16 +22,18 @@ import { sessionsSet } from '../../store/sessions/sessionsSlice';
 import type { ChartsStackParamList } from '../../types/types';
 import {
   Divider,
-  Layout,
+  Layout, Text,
   TopNavigation,
   TopNavigationAction,
   TopNavigationActionElement,
+  useTheme,
 } from '@ui-kitten/components';
 import { MenuIcon } from '../../components/Icons/Icons';
 
 type Props = NativeStackScreenProps<ChartsStackParamList, 'Charts'>
 
 const ChartsScreen = ({ navigation }: Props): React.ReactElement => {
+  const theme = useTheme();
   const dispatch = useAppDispatch();
   const reduxProjects = useAppSelector(state => state.projects);
   const reduxSessions = useAppSelector(state => state.sessions);
@@ -87,6 +90,7 @@ const ChartsScreen = ({ navigation }: Props): React.ReactElement => {
             TotalWordsByProject,
             TotalTimeByProject,
             TotalWordsByDay,
+            SessionHeatmap
           ].map((Chart, i) =>
             // Order should never change so using index as key shouldn't cause unnecessary re-renders
             <React.Fragment key={i}><Chart /><Divider style={styles.divider} /></React.Fragment>,

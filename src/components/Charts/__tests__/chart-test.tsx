@@ -12,6 +12,7 @@ import {
   WordsWrittenMonth,
   WordsWrittenWeek,
   WordsWrittenYear,
+  SessionHeatmap,
 } from '../../Charts';
 
 const mockStore = configureStore();
@@ -115,5 +116,17 @@ describe('WordsWrittenYear', () => {
   it('renders correctly with rainbow theme', () => {
     const store = mockStore({ ...initialState, theme: rainbowTheme });
     renderer.create(testingWrapper(<WordsWrittenYear />, { store }));
+  });
+});
+
+describe('SessionHeatmap', () => {
+  it('renders correctly', () => {
+    const store = mockStore(initialState);
+    renderer.create(testingWrapper(<SessionHeatmap />, { store }));
+  });
+
+  it('renders correctly with rainbow theme', () => {
+    const store = mockStore({ ...initialState, theme: rainbowTheme });
+    renderer.create(testingWrapper(<SessionHeatmap />, { store }));
   });
 });
