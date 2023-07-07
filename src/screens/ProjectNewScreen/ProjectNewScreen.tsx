@@ -62,7 +62,7 @@ const initialProjectValues: CreateProjectInput = {
   wordsPerPage: 300,
 };
 
-type Props = NativeStackScreenProps<ProjectsStackParamList, 'NewProject'>
+type Props = NativeStackScreenProps<ProjectsStackParamList, 'ProjectNew'>;
 
 const ProjectNewScreen = ({ navigation }: Props): React.ReactElement => {
   const dispatch = useAppDispatch();
@@ -101,7 +101,7 @@ const ProjectNewScreen = ({ navigation }: Props): React.ReactElement => {
       const { id, title } = savedProject;
 
       navigation.popToTop();
-      navigation.navigate('Details', { id, title });
+      navigation.navigate('ProjectDetails', { id, title });
     } catch (e) {
       // TODO - show error message
       setIsSaving(false);

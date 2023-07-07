@@ -9,10 +9,10 @@ import type { ProjectsStackParamList } from '../../types/types';
 import { Divider, Layout, TopNavigation, Text, TopNavigationAction, List, ListItem } from '@ui-kitten/components';
 import { ArrowIosBackIcon, ArrowIosForwardIcon } from '../../components/Icons/Icons';
 
-type Props = NativeStackScreenProps<ProjectsStackParamList, 'ListSessions'>
+type Props = NativeStackScreenProps<ProjectsStackParamList, 'SessionList'>;
 
 const SettingsScreen = ({ navigation, route }: Props): React.ReactElement => {
-  const { projectId } = route.params;
+  const projectId = route.params?.projectId;
   const projects = useAppSelector(state => state.projects);
   const project = projectId ? projects.find(project => project.id === projectId) : undefined;
   const sessions = useAppSelector(state => state.sessions);
@@ -36,7 +36,7 @@ const SettingsScreen = ({ navigation, route }: Props): React.ReactElement => {
         key={item.id}
         title={title}
         description={description}
-        onPress={() => navigation.navigate('EditSession', { sessionId: item.id })}
+        onPress={() => navigation.navigate('SessionEdit', { sessionId: item.id })}
         accessoryRight={ArrowIosForwardIcon}
       />
     );

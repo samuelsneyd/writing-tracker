@@ -20,7 +20,7 @@ import {
 import { capitalCase, noCase } from 'change-case';
 import { ArrowIosBackIcon, EditIcon } from '../../components/Icons/Icons';
 
-type Props = NativeStackScreenProps<ProjectsStackParamList, 'Details'>
+type Props = NativeStackScreenProps<ProjectsStackParamList, 'ProjectDetails'>;
 
 const ProjectDetailsScreen = ({ route, navigation }: Props): React.ReactElement => {
   const { id, title } = route.params;
@@ -109,7 +109,7 @@ const ProjectDetailsScreen = ({ route, navigation }: Props): React.ReactElement 
   const editProjectAction = (): TopNavigationActionElement => (
     <TopNavigationAction
       icon={EditIcon}
-      onPress={() => navigation.navigate('EditProject', { id, title })}
+      onPress={() => navigation.navigate('ProjectEdit', { id })}
     />
   );
 
@@ -127,10 +127,10 @@ const ProjectDetailsScreen = ({ route, navigation }: Props): React.ReactElement 
           {project
             ? <>
               <Text style={styles.title} category="h1">{project.title || 'My Project'}</Text>
-              <Button onPress={() => navigation.navigate('NewSession', { projectId: project.id })}>
+              <Button onPress={() => navigation.navigate('SessionNew', { projectId: project.id })}>
                 <Text>Add Session</Text>
               </Button>
-              <Button onPress={() => navigation.navigate('ListSessions', { projectId: project.id })}>
+              <Button onPress={() => navigation.navigate('SessionList', { projectId: project.id })}>
                 <Text>View/Edit Past Sessions</Text>
               </Button>
               <Text>Description: {project.description}</Text>

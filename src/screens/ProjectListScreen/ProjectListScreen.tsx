@@ -25,7 +25,7 @@ import BookCoverImage from '../../components/BookCoverImage/BookCoverImage';
 import { MenuIcon, PlusIcon } from '../../components/Icons/Icons';
 import util, { S3SignedHeaders } from '../../utils/util';
 
-type Props = NativeStackScreenProps<ProjectsStackParamList, 'Projects'>
+type Props = NativeStackScreenProps<ProjectsStackParamList, 'ProjectList'>;
 
 type ImageUri = {
   key: string,
@@ -38,7 +38,7 @@ type ProjectAggregateStats = {
   minutes: number,
 };
 
-const ProjectsScreen = ({ navigation }: Props): React.ReactElement => {
+const ProjectListScreen = ({ navigation }: Props): React.ReactElement => {
   const dispatch = useAppDispatch();
   const reduxProjects = useAppSelector(state => state.projects);
   const reduxSessions = useAppSelector(state => state.sessions);
@@ -133,7 +133,7 @@ const ProjectsScreen = ({ navigation }: Props): React.ReactElement => {
   const addProjectAction = (): TopNavigationActionElement => (
     <TopNavigationAction
       icon={PlusIcon}
-      onPress={() => navigation.navigate('NewProject')}
+      onPress={() => navigation.navigate('ProjectNew')}
     />
   );
 
@@ -283,7 +283,7 @@ const ProjectsScreen = ({ navigation }: Props): React.ReactElement => {
       <ListItem
         title={item.title || 'New Project'}
         description={item.description}
-        onPress={() => navigation.navigate('Details', { id: item.id, title: item.title })}
+        onPress={() => navigation.navigate('ProjectDetails', { id: item.id, title: item.title })}
       />
     );
   };
@@ -377,4 +377,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ProjectsScreen;
+export default ProjectListScreen;

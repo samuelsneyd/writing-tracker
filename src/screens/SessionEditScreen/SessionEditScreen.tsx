@@ -21,7 +21,7 @@ import {
 } from '@ui-kitten/components';
 import { ArrowIosBackIcon, CalendarIcon, ClockIcon, WriteIcon } from '../../components/Icons/Icons';
 
-type Props = NativeStackScreenProps<ProjectsStackParamList, 'EditSession'>
+type Props = NativeStackScreenProps<ProjectsStackParamList, 'SessionEdit'>;
 
 const SessionEditScreen = ({ navigation, route }: Props): React.ReactElement => {
   const { sessionId } = route.params;

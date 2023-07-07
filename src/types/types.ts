@@ -12,13 +12,13 @@ export type HomeStackParamList = {
 };
 
 export type ProjectsStackParamList = {
-  Projects: undefined;
-  Details: Required<{ id: string, title: string }>;
-  EditProject: Required<{ id: string, title: string }>;
-  NewProject: undefined;
-  ListSessions: Partial<{ projectId: string }>;
-  EditSession: Required<{ sessionId: string }>;
-  NewSession: Required<{ projectId: string }>;
+  ProjectDetails: Required<{ id: string, title: string }>;
+  ProjectEdit: Required<{ id: string }>;
+  ProjectList: undefined;
+  ProjectNew: undefined;
+  SessionEdit: Required<{ sessionId: string }>;
+  SessionList: Required<{ projectId: string }> | undefined;
+  SessionNew: Required<{ projectId: string }>;
 };
 
 export type AddDataStackParamList = {

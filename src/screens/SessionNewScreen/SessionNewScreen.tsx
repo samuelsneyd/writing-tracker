@@ -22,7 +22,7 @@ import {
 } from '@ui-kitten/components';
 import { ArrowIosBackIcon, CalendarIcon, ClockIcon, WriteIcon } from '../../components/Icons/Icons';
 
-type Props = NativeStackScreenProps<ProjectsStackParamList, 'NewSession'>
+type Props = NativeStackScreenProps<ProjectsStackParamList, 'SessionNew'>;
 
 const SessionNewScreen = ({ navigation, route }: Props): React.ReactElement => {
   const { projectId } = route.params;

@@ -42,9 +42,9 @@ const PROJECT_TYPE_DATA: EnumObject<ProjectType>[] = enumToSelectData(ProjectTyp
 
 const PROJECT_STATUS_DATA: EnumObject<ProjectStatus>[] = enumToSelectData(ProjectStatus);
 
-type Props = NativeStackScreenProps<ProjectsStackParamList, 'EditProject'>
+type Props = NativeStackScreenProps<ProjectsStackParamList, 'ProjectEdit'>;
 
-const ProjectNewScreen = ({ route, navigation }: Props): React.ReactElement => {
+const ProjectEditScreen = ({ route, navigation }: Props): React.ReactElement => {
   const { id } = route.params;
   const dispatch = useAppDispatch();
   const reduxProjects = useAppSelector(state => state.projects);
@@ -134,7 +134,7 @@ const ProjectNewScreen = ({ route, navigation }: Props): React.ReactElement => {
       const { title } = project;
 
       navigation.popToTop();
-      navigation.navigate('Details', { id, title });
+      navigation.navigate('ProjectDetails', { id, title });
     } catch (e) {
       // TODO - show error message
       setIsSaving(false);
@@ -254,4 +254,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ProjectNewScreen;
+export default ProjectEditScreen;
