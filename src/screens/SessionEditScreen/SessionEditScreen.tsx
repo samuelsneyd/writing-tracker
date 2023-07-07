@@ -10,6 +10,7 @@ import { deserializeModel, serializeModel } from '@aws-amplify/datastore/ssr';
 import { DataStore } from 'aws-amplify';
 import {
   Button,
+  Datepicker,
   Divider,
   Input,
   Layout,
@@ -18,7 +19,7 @@ import {
   TopNavigation,
   TopNavigationAction,
 } from '@ui-kitten/components';
-import { ArrowIosBackIcon } from '../../components/Icons/Icons';
+import { ArrowIosBackIcon, CalendarIcon, ClockIcon, WriteIcon } from '../../components/Icons/Icons';
 
 type Props = NativeStackScreenProps<ProjectsStackParamList, 'EditSession'>
 
@@ -55,6 +56,22 @@ const SessionEditScreen = ({ navigation, route }: Props): React.ReactElement => 
   const [project, setProject] = React.useState<Project | undefined>(foundReduxProject);
   const dispatch = useAppDispatch();
 
+  // Read updated data from datastore
+  React.useEffect(() => {
+    const fetchFromDataStore = async () => {
+      const foundSession = await DataStore.query(Session, sessionId);
+      setSession(foundSession);
+
+      if (foundSession) {
+        const foundProject = await foundSession.project;
+        setProject(foundProject);
+        setIsLoaded(true);
+      }
+    };
+
+    fetchFromDataStore().then();
+  }, [sessionId]);
+
   const backAction = () => (
     <TopNavigationAction icon={ArrowIosBackIcon} onPress={() => navigation.goBack()} />
   );
@@ -89,6 +106,18 @@ const SessionEditScreen = ({ navigation, route }: Props): React.ReactElement => 
             ? <>
               <Text category="h5" appearance="hint">{project.title}</Text>
               <Layout style={styles.horizontalContainer}>
+                <Datepicker
+                  date={new Date(session.date)}
+                  onSelect={nextDate => setSession(Session.copyOf(session, draft => {
+                    draft.date = new Date(nextDate).toISOString();
+                  }))}
+                  accessoryRight={CalendarIcon}
+                  size="large"
+                  label="Date"
+                  style={styles.input}
+                />
+              </Layout>
+              <Layout style={styles.horizontalContainer}>
                 <Input
                   style={styles.input}
                   placeholder="0"
@@ -100,6 +129,7 @@ const SessionEditScreen = ({ navigation, route }: Props): React.ReactElement => 
                       draft.words = nextIntValue;
                     }));
                   }}
+                  accessoryRight={WriteIcon}
                   keyboardType="number-pad"
                   size="large"
                 ></Input>
@@ -114,6 +144,7 @@ const SessionEditScreen = ({ navigation, route }: Props): React.ReactElement => 
                       draft.minutes = nextIntValue;
                     }));
                   }}
+                  accessoryRight={ClockIcon}
                   keyboardType="number-pad"
                   size="large"
                 ></Input>

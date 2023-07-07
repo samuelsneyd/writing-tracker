@@ -11,6 +11,7 @@ import { serializeModel } from '@aws-amplify/datastore/ssr';
 import { DataStore } from 'aws-amplify';
 import {
   Button,
+  Datepicker,
   Divider,
   Input,
   Layout,
@@ -19,7 +20,7 @@ import {
   TopNavigation,
   TopNavigationAction,
 } from '@ui-kitten/components';
-import { ArrowIosBackIcon } from '../../components/Icons/Icons';
+import { ArrowIosBackIcon, CalendarIcon, ClockIcon, WriteIcon } from '../../components/Icons/Icons';
 
 type Props = NativeStackScreenProps<ProjectsStackParamList, 'NewSession'>
 
@@ -74,6 +75,19 @@ const SessionNewScreen = ({ navigation, route }: Props): React.ReactElement => {
             ? <>
               <Text category="h5" appearance="hint">{sessionProject.title}</Text>
               <Layout style={styles.horizontalContainer}>
+                <Datepicker
+                  date={new Date(sessionForm.date)}
+                  onSelect={nextDate => setSessionForm({
+                    ...sessionForm,
+                    date: new Date(nextDate).toISOString(),
+                  })}
+                  accessoryRight={CalendarIcon}
+                  size="large"
+                  label="Date"
+                  style={styles.input}
+                />
+              </Layout>
+              <Layout style={styles.horizontalContainer}>
                 <Input
                   style={styles.input}
                   placeholder="0"
@@ -83,6 +97,7 @@ const SessionNewScreen = ({ navigation, route }: Props): React.ReactElement => {
                     const nextIntValue = parseInt(nextValue.replace(/\D/g, '')) || 0;
                     setSessionForm({ ...sessionForm, words: nextIntValue });
                   }}
+                  accessoryRight={WriteIcon}
                   keyboardType="number-pad"
                   size="large"
                 ></Input>
@@ -95,6 +110,7 @@ const SessionNewScreen = ({ navigation, route }: Props): React.ReactElement => {
                     const nextIntValue = parseInt(nextValue.replace(/\D/g, '')) || 0;
                     setSessionForm({ ...sessionForm, minutes: nextIntValue });
                   }}
+                  accessoryRight={ClockIcon}
                   keyboardType="number-pad"
                   size="large"
                 ></Input>
