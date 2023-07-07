@@ -103,7 +103,7 @@ export const getYAxisLabelTexts = (
 /**
  * Gets stepped colors based on the item's value's percentage of the max value.
  * >= 100%: success.
- * 75-100%: primary.
+ * 75-100%: info.
  * 50-75%: info.
  * 25-50%: warning.
  * 0-25%: danger.
@@ -119,7 +119,7 @@ export const getSteppedColors = (item: BarDataItemType, theme: ThemeType, maxVal
   } else if (item.value >= maxValue) {
     colorStyle = 'success';
   } else if (item.value >= (maxValue / 4) * 3) {
-    colorStyle = 'primary';
+    colorStyle = 'info';
   } else if (item.value >= maxValue / 2) {
     colorStyle = 'info';
   } else if (item.value >= maxValue / 4) {

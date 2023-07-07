@@ -300,9 +300,9 @@ describe('getSteppedColors', () => {
       'info',
       'info',
       'info',
-      'primary',
-      'primary',
-      'primary',
+      'info',
+      'info',
+      'info',
       'success',
       'success',
     ];
