@@ -52,6 +52,13 @@ type CalendarHeatmapProps = {
   colorArray?: any[];
 };
 
+/**
+ * A fork of react-native-calendar-heatmap with some changes.
+ *
+ * Changes: Convert to TypeScript. Fix undeclared variable bugs.
+ * Add monthLabelComponent prop. Remove dead props. Tidy code and
+ * comments. Make ScrollView scrollable.
+ */
 const CalendarHeatmap = (props: CalendarHeatmapProps) => {
   const {
     values,
@@ -193,7 +200,12 @@ const CalendarHeatmap = (props: CalendarHeatmapProps) => {
   };
 
   return (
-    <ScrollView horizontal={horizontal} ref={scrollViewRef} style={{ marginVertical: 10 }}>
+    <ScrollView
+      horizontal={horizontal}
+      ref={scrollViewRef}
+      showsHorizontalScrollIndicator={false}
+      showsVerticalScrollIndicator={false}
+    >
       {!!monthLabelComponent && renderMonthLabels()}
       <Svg
         height={getHeight(gutterSize, showMonthLabels, horizontal)}
