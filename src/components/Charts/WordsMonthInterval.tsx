@@ -51,7 +51,7 @@ export const WordsMonthInterval = (): React.ReactElement => {
         // Only render label for Mondays
         labelComponent: () => {
           if (dayIndex === 0) {
-            const label = format(dayDate, 'dd MMM');
+            const label = format(dayDate, 'd');
             return renderLabel(label, 4);
           }
         },
