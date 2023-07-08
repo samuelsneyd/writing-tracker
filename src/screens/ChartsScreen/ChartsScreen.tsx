@@ -14,6 +14,7 @@ import {
   WordsWrittenYear,
   SessionHeatmap,
 } from '../../components/Charts';
+import { WordsWeekInterval } from '../../components/Charts/WordsWeekInterval';
 import { Project, Session } from '../../models';
 import { SerializedProject, SerializedSession } from '../../models/serialized';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
@@ -80,6 +81,7 @@ const ChartsScreen = (_props: Props): React.ReactElement => {
       <ScrollView style={styles.container}>
         <Layout style={styles.body}>
           {[
+            WordsWeekInterval,
             WordsWrittenWeek,
             WordsWrittenMonth,
             WordsWritten6Month,
