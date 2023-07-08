@@ -14,6 +14,7 @@ import {
   WordsWrittenYear,
   SessionHeatmap,
 } from '../../components/Charts';
+import { WordsMonthInterval } from '../../components/Charts/WordsMonthInterval';
 import { WordsWeekInterval } from '../../components/Charts/WordsWeekInterval';
 import { Project, Session } from '../../models';
 import { SerializedProject, SerializedSession } from '../../models/serialized';
@@ -82,6 +83,7 @@ const ChartsScreen = (_props: Props): React.ReactElement => {
         <Layout style={styles.body}>
           {[
             WordsWeekInterval,
+            WordsMonthInterval,
             WordsWrittenWeek,
             WordsWrittenMonth,
             WordsWritten6Month,
