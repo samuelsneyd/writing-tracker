@@ -8,17 +8,9 @@ import {
   TotalTimeByProject,
   TotalWordsByDay,
   TotalWordsByProject,
-  WordsWritten6Month,
-  WordsWrittenMonth,
-  WordsWrittenWeek,
-  WordsWrittenYear,
   SessionHeatmap,
 } from '../../components/Charts';
-import { WordsInterval6Month } from '../../components/Charts/WordsInterval6Month';
 import WordsIntervalChartGroup from '../../components/Charts/WordsIntervalChartGroup';
-import { WordsIntervalMonth } from '../../components/Charts/WordsIntervalMonth';
-import { WordsIntervalWeek } from '../../components/Charts/WordsIntervalWeek';
-import { WordsIntervalYear } from '../../components/Charts/WordsIntervalYear';
 import { Project, Session } from '../../models';
 import { SerializedProject, SerializedSession } from '../../models/serialized';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
