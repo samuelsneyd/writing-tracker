@@ -1,6 +1,6 @@
 import * as React from 'react';
 import _ from 'lodash';
-import { format, isSameMonth, isSameYear } from 'date-fns';
+import { format, isSameDay, isSameMonth, isSameYear } from 'date-fns';
 import { Text, TextElement, ThemeType } from '@ui-kitten/components';
 import { StyleSheet } from 'react-native';
 import { BarDataItemType } from './chart-types';
@@ -139,18 +139,19 @@ export const getSteppedColors = (item: BarDataItemType, theme: ThemeType, maxVal
 /**
  * Formats a date interval as a readable string, skipping the start
  * month/year when it would show as a duplicate of the end month/year.
- * Assumes that the interval dates are >= 1 day apart.
  * @param interval the date interval to format.
  */
 export const formatInterval = (interval: Interval): string => {
   const startFormat = isSameMonth(interval.start, interval.end)
     ? 'd'
     : isSameYear(interval.start, interval.end)
-      ? 'MMM d'
-      : 'MMM d yyyy';
-  const endFormat = 'MMM d yyyy';
+      ? 'd MMM'
+      : 'd MMM yyyy';
+  const endFormat = 'd MMM yyyy';
 
-  return `${format(interval.start, startFormat)} ‒ ${format(interval.end, endFormat)}`;
+  return isSameDay(interval.start, interval.end)
+    ? format(interval.end, endFormat)
+    : `${format(interval.start, startFormat)} ‒ ${format(interval.end, endFormat)}`;
 };
 
 const styles = StyleSheet.create({
