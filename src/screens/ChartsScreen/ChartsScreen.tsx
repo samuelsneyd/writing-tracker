@@ -14,6 +14,7 @@ import {
   WordsWrittenYear,
   SessionHeatmap,
 } from '../../components/Charts';
+import { Words6MonthInterval } from '../../components/Charts/Words6MonthInterval';
 import { WordsMonthInterval } from '../../components/Charts/WordsMonthInterval';
 import { WordsWeekInterval } from '../../components/Charts/WordsWeekInterval';
 import { Project, Session } from '../../models';
@@ -84,6 +85,7 @@ const ChartsScreen = (_props: Props): React.ReactElement => {
           {[
             WordsWeekInterval,
             WordsMonthInterval,
+            Words6MonthInterval,
             WordsWrittenWeek,
             WordsWrittenMonth,
             WordsWritten6Month,
@@ -92,7 +94,7 @@ const ChartsScreen = (_props: Props): React.ReactElement => {
             TotalWordsByProject,
             TotalTimeByProject,
             TotalWordsByDay,
-            SessionHeatmap
+            SessionHeatmap,
           ].map((Chart, i) =>
             // Order should never change so using index as key shouldn't cause unnecessary re-renders
             <React.Fragment key={i}><Chart /><Divider style={styles.divider} /></React.Fragment>,
