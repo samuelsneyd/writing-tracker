@@ -72,7 +72,7 @@ export const WordsMonthInterval = (): React.ReactElement => {
     .value();
 
   // Average per day during current interval
-  const average = Math.round(_.meanBy(barData, 'value'));
+  const average = Math.round(_(barData).filter(data => data.value).meanBy('value')) || 0;
 
   const maxValue = getMaxYAxisValue(barData);
   const yAxisLabelTexts = getYAxisLabelTexts(maxValue);
