@@ -26,7 +26,7 @@ import { MenuIcon } from '../../components/Icons/Icons';
 
 type Props = NativeStackScreenProps<HomeStackParamList, 'Home'>
 
-const HomeScreen = (props: Props): React.ReactElement => {
+const HomeScreen = (_props: Props): React.ReactElement => {
   const isFocused = useIsFocused();
   const dispatch = useAppDispatch();
   const reduxAwards = useAppSelector(state => state.awards);

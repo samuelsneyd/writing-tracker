@@ -22,18 +22,16 @@ import { sessionsSet } from '../../store/sessions/sessionsSlice';
 import type { ChartsStackParamList } from '../../types/types';
 import {
   Divider,
-  Layout, Text,
+  Layout,
   TopNavigation,
   TopNavigationAction,
   TopNavigationActionElement,
-  useTheme,
 } from '@ui-kitten/components';
 import { MenuIcon } from '../../components/Icons/Icons';
 
 type Props = NativeStackScreenProps<ChartsStackParamList, 'Charts'>
 
-const ChartsScreen = ({ navigation }: Props): React.ReactElement => {
-  const theme = useTheme();
+const ChartsScreen = (_props: Props): React.ReactElement => {
   const dispatch = useAppDispatch();
   const reduxProjects = useAppSelector(state => state.projects);
   const reduxSessions = useAppSelector(state => state.sessions);
