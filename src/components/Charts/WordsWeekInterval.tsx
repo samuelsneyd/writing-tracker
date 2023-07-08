@@ -101,7 +101,9 @@ export const WordsWeekInterval = (): React.ReactElement => {
         initialSpacing={20}
         maxValue={maxValue}
         noOfSections={4}
-        renderTooltip={(item: BarDataItemType) => renderTooltip(item, `${format(new Date(item.day), 'MMM d')}\n`)}
+        renderTooltip={(item: BarDataItemType) =>
+          renderTooltip(item, `${format(new Date(item.day), 'MMM d')}\n`)
+        }
         leftShiftForTooltip={7}
         leftShiftForLastIndexTooltip={3}
         yAxisLabelWidth={50}
@@ -109,6 +111,7 @@ export const WordsWeekInterval = (): React.ReactElement => {
         yAxisTextStyle={{ color: theme['text-hint-color'] }}
         yAxisColor={theme['text-hint-color']}
         xAxisColor={theme['text-hint-color']}
+        disableScroll
       />
     </>
   );
