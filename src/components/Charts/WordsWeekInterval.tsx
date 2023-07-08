@@ -76,7 +76,7 @@ export const WordsWeekInterval = (): React.ReactElement => {
     <>
       <Text category="h6">Words (week)</Text>
       <ChartAggregateHeader
-        aggregateText="average"
+        aggregateText="daily average"
         value={average}
         valueText="words"
         intervalText={formatInterval(interval)}
