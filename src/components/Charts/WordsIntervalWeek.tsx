@@ -5,13 +5,13 @@ import { BarChart } from 'react-native-gifted-charts';
 import {
   add,
   eachDayOfInterval,
-  endOfMonth,
+  endOfWeek,
   format,
   getDay,
   isWithinInterval,
   setDefaultOptions,
   startOfDay,
-  startOfMonth,
+  startOfWeek,
   sub,
 } from 'date-fns';
 import { useAppSelector } from '../../store/hooks';
@@ -21,13 +21,18 @@ import { formatInterval, getMaxYAxisValue, getYAxisLabelTexts, renderLabel, rend
 
 setDefaultOptions({ weekStartsOn: 1 });
 
-export const WordsMonthInterval = (): React.ReactElement => {
+type Props = {
+  showTitle?: boolean;
+};
+
+export const WordsIntervalWeek = (props: Props): React.ReactElement => {
+  const { showTitle = true } = props;
   const theme = useTheme();
   const reduxSessions = useAppSelector(state => state.sessions);
   const today = new Date();
   const [interval, setInterval] = React.useState<Interval>({
-    start: startOfMonth(today),
-    end: endOfMonth(today),
+    start: startOfWeek(today),
+    end: endOfWeek(today),
   });
   const allDatesInInterval = eachDayOfInterval(interval).map(date => date.toISOString());
 
@@ -44,17 +49,12 @@ export const WordsMonthInterval = (): React.ReactElement => {
     .map((value, day): BarDataItemType => {
       const dayDate = new Date(day);
       const dayIndex = (getDay(dayDate) + 6) % 7;
+      const label = format(dayDate, 'E');
       return ({
         day,
         dayIndex,
         value,
-        // Only render label for Mondays
-        labelComponent: () => {
-          if (dayIndex === 0) {
-            const label = format(dayDate, 'd');
-            return renderLabel(label, 4);
-          }
-        },
+        labelComponent: () => renderLabel(label),
       });
     })
     // Sort chronologically
@@ -79,19 +79,19 @@ export const WordsMonthInterval = (): React.ReactElement => {
 
   return (
     <>
-      <Text category="h6">Words (month)</Text>
+      {showTitle && <Text category="h6">Words (week)</Text>}
       <ChartAggregateHeader
         aggregateText="daily average"
         value={average}
         valueText="words"
         intervalText={formatInterval(interval)}
         onBackButtonPress={() => setInterval({
-          start: startOfMonth(sub(interval.start, { months: 1 })),
-          end: endOfMonth(sub(interval.end, { months: 1 })),
+          start: sub(interval.start, { weeks: 1 }),
+          end: sub(interval.end, { weeks: 1 }),
         })}
         onForwardButtonPress={() => setInterval({
-          start: startOfMonth(add(interval.start, { months: 1 })),
-          end: endOfMonth(add(interval.end, { months: 1 })),
+          start: add(interval.start, { weeks: 1 }),
+          end: add(interval.end, { weeks: 1 }),
         })}
         forwardButtonDisabled={isWithinInterval(today, interval)}
       />
@@ -100,18 +100,17 @@ export const WordsMonthInterval = (): React.ReactElement => {
         frontColor={theme['color-primary-500']}
         gradientColor={theme['color-primary-300']}
         showGradient
-        barBorderRadius={2}
+        barBorderRadius={4}
         hideRules
-        barWidth={7}
-        spacing={3}
-        initialSpacing={3}
+        spacing={15}
+        initialSpacing={20}
         maxValue={maxValue}
         noOfSections={4}
         renderTooltip={(item: BarDataItemType) =>
           renderTooltip(item, `${format(new Date(item.day), 'MMM d')}\n`)
         }
-        leftShiftForTooltip={15}
-        leftShiftForLastIndexTooltip={30}
+        leftShiftForTooltip={7}
+        leftShiftForLastIndexTooltip={3}
         yAxisLabelWidth={50}
         yAxisLabelTexts={yAxisLabelTexts}
         yAxisTextStyle={{ color: theme['text-hint-color'] }}

@@ -25,7 +25,12 @@ import { formatInterval, getMaxYAxisValue, getYAxisLabelTexts, renderLabel, rend
 
 setDefaultOptions({ weekStartsOn: 1 });
 
-export const Words6MonthInterval = (): React.ReactElement => {
+type Props = {
+  showTitle?: boolean;
+};
+
+export const WordsInterval6Month = (props: Props): React.ReactElement => {
+  const { showTitle = true } = props;
   const theme = useTheme();
   const reduxSessions = useAppSelector(state => state.sessions);
   const today = new Date();
@@ -103,7 +108,7 @@ export const Words6MonthInterval = (): React.ReactElement => {
 
   return (
     <>
-      <Text category="h6">Words (6 months)</Text>
+      {showTitle && <Text category="h6">Words (6 months)</Text>}
       <ChartAggregateHeader
         aggregateText="weekly average"
         value={average}
