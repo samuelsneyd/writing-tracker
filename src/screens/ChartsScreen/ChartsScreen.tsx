@@ -14,9 +14,11 @@ import {
   WordsWrittenYear,
   SessionHeatmap,
 } from '../../components/Charts';
-import { Words6MonthInterval } from '../../components/Charts/Words6MonthInterval';
-import { WordsMonthInterval } from '../../components/Charts/WordsMonthInterval';
-import { WordsWeekInterval } from '../../components/Charts/WordsWeekInterval';
+import { WordsInterval6Month } from '../../components/Charts/WordsInterval6Month';
+import WordsIntervalChartGroup from '../../components/Charts/WordsIntervalChartGroup';
+import { WordsIntervalMonth } from '../../components/Charts/WordsIntervalMonth';
+import { WordsIntervalWeek } from '../../components/Charts/WordsIntervalWeek';
+import { WordsIntervalYear } from '../../components/Charts/WordsIntervalYear';
 import { Project, Session } from '../../models';
 import { SerializedProject, SerializedSession } from '../../models/serialized';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
@@ -83,13 +85,7 @@ const ChartsScreen = (_props: Props): React.ReactElement => {
       <ScrollView style={styles.container}>
         <Layout style={styles.body}>
           {[
-            WordsWeekInterval,
-            WordsMonthInterval,
-            Words6MonthInterval,
-            WordsWrittenWeek,
-            WordsWrittenMonth,
-            WordsWritten6Month,
-            WordsWrittenYear,
+            WordsIntervalChartGroup,
             ProgressPercentageByProject,
             TotalWordsByProject,
             TotalTimeByProject,
