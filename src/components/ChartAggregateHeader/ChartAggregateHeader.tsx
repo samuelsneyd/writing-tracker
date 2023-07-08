@@ -15,6 +15,10 @@ type ChartAggregateHeaderProps = {
   forwardButtonDisabled?: boolean;
 };
 
+/**
+ * A header for charts showing aggregate values with optional navigation icons.
+ * Inspired by iOS health app charts.
+ */
 const ChartAggregateHeader = (props: ChartAggregateHeaderProps) => {
   const {
     aggregateText = '',
@@ -31,7 +35,7 @@ const ChartAggregateHeader = (props: ChartAggregateHeaderProps) => {
   return (
     <Layout style={styles.horizontalContainer}>
       <Layout style={styles.aggregateContainer}>
-        <Text category="s2" appearance="hint" style={{ textAlign: 'left' }}>{aggregateText.toUpperCase()}</Text>
+        <Text category="s2" appearance="hint">{aggregateText.toUpperCase()}</Text>
         <Text>
           <Text category="h4">{value.toLocaleString()} </Text>
           <Text category="s1" appearance="hint">{valueText}</Text>
