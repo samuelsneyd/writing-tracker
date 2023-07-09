@@ -10,7 +10,7 @@ import {
   TotalWordsByDay,
   TotalWordsByProject,
   SessionHeatmap,
-  WordsIntervalChartGroup,
+  WordsIntervalChartGroup, TimeIntervalWeek,
 } from '../../components/Charts';
 import { Project, Session } from '../../models';
 import { SerializedProject, SerializedSession } from '../../models/serialized';
@@ -79,6 +79,7 @@ const ChartsScreen = (_props: Props): React.ReactElement => {
         <Layout style={styles.body}>
           {[
             TimeIntervalDay,
+            TimeIntervalWeek,
             WordsIntervalChartGroup,
             ProgressPercentageByProject,
             TotalWordsByProject,

@@ -8,6 +8,7 @@ export * from './WordsWrittenWeek';
 export * from './WordsWrittenYear';
 export * from './SessionHeatmap';
 export * from './TimeInterval/TimeIntervalDay';
+export * from './TimeInterval/TimeIntervalWeek';
 export * from './WordsInterval/WordsIntervalDay';
 export * from './WordsInterval/WordsIntervalWeek';
 export * from './WordsInterval/WordsIntervalMonth';
