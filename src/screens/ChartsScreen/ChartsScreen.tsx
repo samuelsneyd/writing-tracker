@@ -4,12 +4,10 @@ import { SafeAreaView, ScrollView, StyleSheet } from 'react-native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { DataStore } from 'aws-amplify';
 import {
-  ProgressPercentageByProject,
+  ProjectsChartGroup,
   SessionHeatmap,
   TimeIntervalChartGroup,
-  TotalTimeByProject,
   TotalWordsByDay,
-  TotalWordsByProject,
   WordsIntervalChartGroup,
 } from '../../components/Charts';
 import { Project, Session } from '../../models';
@@ -27,7 +25,7 @@ import {
 } from '@ui-kitten/components';
 import { MenuIcon } from '../../components/Icons/Icons';
 
-type Props = NativeStackScreenProps<ChartsStackParamList, 'Charts'>
+type Props = NativeStackScreenProps<ChartsStackParamList, 'Charts'>;
 
 const ChartsScreen = (_props: Props): React.ReactElement => {
   const dispatch = useAppDispatch();
@@ -80,9 +78,7 @@ const ChartsScreen = (_props: Props): React.ReactElement => {
           {[
             WordsIntervalChartGroup,
             TimeIntervalChartGroup,
-            ProgressPercentageByProject,
-            TotalWordsByProject,
-            TotalTimeByProject,
+            ProjectsChartGroup,
             TotalWordsByDay,
             SessionHeatmap,
           ].map((Chart, i) =>
@@ -108,7 +104,7 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   divider: {
-    paddingVertical: 24,
+    paddingVertical: 12,
   },
 });
 
