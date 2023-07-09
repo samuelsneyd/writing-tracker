@@ -8,10 +8,11 @@ import {
   TotalTimeByProject,
   TotalWordsByDay,
   TotalWordsByProject,
-  WordsWritten6Month,
-  WordsWrittenMonth,
-  WordsWrittenWeek,
-  WordsWrittenYear,
+  WordsIntervalDay,
+  WordsIntervalWeek,
+  WordsIntervalMonth,
+  WordsInterval6Month,
+  WordsIntervalYear,
   SessionHeatmap,
 } from '../../Charts';
 
@@ -71,51 +72,63 @@ describe('TotalWordsByProject', () => {
   });
 });
 
-describe('WordsWritten6Month', () => {
+describe('WordsIntervalDay', () => {
   it('renders correctly', () => {
     const store = mockStore(initialState);
-    renderer.create(testingWrapper(<WordsWritten6Month />, { store }));
+    renderer.create(testingWrapper(<WordsIntervalDay />, { store }));
   });
 
   it('renders correctly with rainbow theme', () => {
     const store = mockStore({ ...initialState, theme: rainbowTheme });
-    renderer.create(testingWrapper(<WordsWritten6Month />, { store }));
+    renderer.create(testingWrapper(<WordsIntervalDay />, { store }));
   });
 });
 
-describe('WordsWrittenMonth', () => {
+describe('WordsInterval6Month', () => {
   it('renders correctly', () => {
     const store = mockStore(initialState);
-    renderer.create(testingWrapper(<WordsWrittenMonth />, { store }));
+    renderer.create(testingWrapper(<WordsInterval6Month />, { store }));
   });
 
   it('renders correctly with rainbow theme', () => {
     const store = mockStore({ ...initialState, theme: rainbowTheme });
-    renderer.create(testingWrapper(<WordsWrittenMonth />, { store }));
+    renderer.create(testingWrapper(<WordsInterval6Month />, { store }));
   });
 });
 
-describe('WordsWrittenWeek', () => {
+describe('WordsIntervalMonth', () => {
   it('renders correctly', () => {
     const store = mockStore(initialState);
-    renderer.create(testingWrapper(<WordsWrittenWeek />, { store }));
+    renderer.create(testingWrapper(<WordsIntervalMonth />, { store }));
   });
 
   it('renders correctly with rainbow theme', () => {
     const store = mockStore({ ...initialState, theme: rainbowTheme });
-    renderer.create(testingWrapper(<WordsWrittenWeek />, { store }));
+    renderer.create(testingWrapper(<WordsIntervalMonth />, { store }));
   });
 });
 
-describe('WordsWrittenYear', () => {
+describe('WordsIntervalWeek', () => {
   it('renders correctly', () => {
     const store = mockStore(initialState);
-    renderer.create(testingWrapper(<WordsWrittenYear />, { store }));
+    renderer.create(testingWrapper(<WordsIntervalWeek />, { store }));
   });
 
   it('renders correctly with rainbow theme', () => {
     const store = mockStore({ ...initialState, theme: rainbowTheme });
-    renderer.create(testingWrapper(<WordsWrittenYear />, { store }));
+    renderer.create(testingWrapper(<WordsIntervalWeek />, { store }));
+  });
+});
+
+describe('WordsIntervalYear', () => {
+  it('renders correctly', () => {
+    const store = mockStore(initialState);
+    renderer.create(testingWrapper(<WordsIntervalYear />, { store }));
+  });
+
+  it('renders correctly with rainbow theme', () => {
+    const store = mockStore({ ...initialState, theme: rainbowTheme });
+    renderer.create(testingWrapper(<WordsIntervalYear />, { store }));
   });
 });
 
