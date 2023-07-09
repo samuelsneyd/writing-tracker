@@ -1,6 +1,6 @@
 import * as React from 'react';
 import _ from 'lodash';
-import { format, isSameDay, isSameMonth, isSameYear, minutesToHours } from 'date-fns';
+import { format, isSameDay, isSameMonth, isSameYear } from 'date-fns';
 import { Text, TextElement, ThemeType } from '@ui-kitten/components';
 import { StyleSheet } from 'react-native';
 import { BarDataItemType } from './chart-types';
@@ -171,8 +171,8 @@ export const formatMinutesAsHourMinutes = (minutes: number): string => {
   const remainingMinutes = minutes % 60;
 
   return (
-    (hours || (!hours && !remainingMinutes) ? `${hours}h ` : '')
-    + (remainingMinutes || (!hours && !remainingMinutes) ? `${remainingMinutes}m` : '')
+    (hours || (!hours && !remainingMinutes) ? `${hours.toLocaleString()}h ` : '')
+    + (remainingMinutes || (!hours && !remainingMinutes) ? `${remainingMinutes.toLocaleString()}m` : '')
   );
 };
 
