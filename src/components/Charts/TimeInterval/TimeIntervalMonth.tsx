@@ -9,7 +9,6 @@ import {
   format,
   getDay,
   isWithinInterval,
-  minutesToHours,
   setDefaultOptions,
   startOfDay,
   startOfMonth,
@@ -18,7 +17,14 @@ import {
 import { useAppSelector } from '../../../store/hooks';
 import ChartAggregateHeader from '../../ChartAggregateHeader/ChartAggregateHeader';
 import { BarDataItemType } from '../chart-types';
-import { formatInterval, getMaxYAxisValue, getYAxisLabelTexts, renderLabel, renderTooltip } from '../chart-utils';
+import {
+  formatInterval,
+  formatMinutesAsHourMinutes,
+  getMaxYAxisValue,
+  getYAxisLabelTexts,
+  renderLabel,
+  renderTooltip,
+} from '../chart-utils';
 
 setDefaultOptions({ weekStartsOn: 1 });
 
@@ -82,12 +88,7 @@ export const TimeIntervalMonth = (props: Props): React.ReactElement => {
 
   const maxValue = getMaxYAxisValue(barData, 2 * 60, 2 * 60);
   const yAxisLabelTexts = getYAxisLabelTexts(maxValue, 4, '', 'h', 1 / 60);
-
-  const hours = minutesToHours(average);
-  const minutes = average % 60;
-  const formattedTime =
-    (hours || (!hours && !minutes) ? `${hours}h ` : '')
-    + (minutes || (!hours && !minutes) ? `${average % 60}m` : '');
+  const formattedTime = formatMinutesAsHourMinutes(average);
 
   return (
     <>

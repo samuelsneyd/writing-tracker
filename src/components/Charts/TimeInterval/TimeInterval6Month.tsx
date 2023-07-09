@@ -4,14 +4,15 @@ import { Text, useTheme } from '@ui-kitten/components';
 import { BarChart } from 'react-native-gifted-charts';
 import {
   add,
-  eachWeekOfInterval, endOfMonth,
+  eachWeekOfInterval,
+  endOfMonth,
   endOfWeek,
   endOfYear,
   format,
   getMonth,
   getWeekOfMonth,
   isWithinInterval,
-  lastDayOfWeek, minutesToHours,
+  lastDayOfWeek,
   setDefaultOptions,
   startOfMonth,
   startOfWeek,
@@ -21,7 +22,14 @@ import {
 import { useAppSelector } from '../../../store/hooks';
 import ChartAggregateHeader from '../../ChartAggregateHeader/ChartAggregateHeader';
 import { BarDataItemType } from '../chart-types';
-import { formatInterval, getMaxYAxisValue, getYAxisLabelTexts, renderLabel, renderTooltip } from '../chart-utils';
+import {
+  formatInterval,
+  formatMinutesAsHourMinutes,
+  getMaxYAxisValue,
+  getYAxisLabelTexts,
+  renderLabel,
+  renderTooltip,
+} from '../chart-utils';
 
 setDefaultOptions({ weekStartsOn: 1 });
 
@@ -100,17 +108,12 @@ export const TimeInterval6Month = (props: Props): React.ReactElement => {
     ))
     .value();
 
-  // Average minutes during current interval
+  // Average minutes per week during current interval
   const average = Math.round(_(barData).filter(data => data.value).meanBy('value')) || 0;
 
   const maxValue = getMaxYAxisValue(barData, 2 * 60, 2 * 60);
   const yAxisLabelTexts = getYAxisLabelTexts(maxValue, 4, '', 'h', 1 / 60);
-
-  const hours = minutesToHours(average);
-  const minutes = average % 60;
-  const formattedTime =
-    (hours || (!hours && !minutes) ? `${hours}h ` : '')
-    + (minutes || (!hours && !minutes) ? `${average % 60}m` : '');
+  const formattedTime = formatMinutesAsHourMinutes(average);
 
   return (
     <>

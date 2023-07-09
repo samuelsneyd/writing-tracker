@@ -1,6 +1,6 @@
 import * as React from 'react';
 import _ from 'lodash';
-import { format, isSameDay, isSameMonth, isSameYear } from 'date-fns';
+import { format, isSameDay, isSameMonth, isSameYear, minutesToHours } from 'date-fns';
 import { Text, TextElement, ThemeType } from '@ui-kitten/components';
 import { StyleSheet } from 'react-native';
 import { BarDataItemType } from './chart-types';
@@ -152,6 +152,28 @@ export const formatInterval = (interval: Interval): string => {
   return isSameDay(interval.start, interval.end)
     ? format(interval.end, endFormat)
     : `${format(interval.start, startFormat)} ‒ ${format(interval.end, endFormat)}`;
+};
+
+/**
+ * Formats minutes as hours and minutes.
+ *
+ * 0 -> 0h 0m
+ *
+ * 30 -> 30m
+ *
+ * 60 -> 1h
+ *
+ * 90 -> 1h 30m
+ * @param minutes the number of minutes.
+ */
+export const formatMinutesAsHourMinutes = (minutes: number): string => {
+  const hours = Math.floor(minutes / 60);
+  const remainingMinutes = minutes % 60;
+
+  return (
+    (hours || (!hours && !remainingMinutes) ? `${hours}h ` : '')
+    + (remainingMinutes || (!hours && !remainingMinutes) ? `${remainingMinutes}m` : '')
+  );
 };
 
 const styles = StyleSheet.create({
