@@ -1,7 +1,7 @@
 import * as React from 'react';
 import _ from 'lodash';
 import { Layout, Text, useTheme } from '@ui-kitten/components';
-import { StyleProp, StyleSheet, ViewStyle } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { BarChart } from 'react-native-gifted-charts';
 import {
   add,
@@ -16,17 +16,12 @@ import {
 } from 'date-fns';
 import { useAppSelector } from '../../../store/hooks';
 import ChartAggregateHeader from '../../ChartAggregateHeader/ChartAggregateHeader';
-import { BarDataItemType } from '../chart-types';
+import type { BarChartProps, BarDataItemType } from '../chart-types';
 import { formatInterval, getMaxYAxisValue, getYAxisLabelTexts, renderLabel, renderTooltip } from '../chart-utils';
 
 setDefaultOptions({ weekStartsOn: 1 });
 
-type Props = {
-  showTitle?: boolean;
-  barChartContainerStyle?: StyleProp<ViewStyle>;
-};
-
-export const WordsIntervalYear = (props: Props): React.ReactElement => {
+export const WordsIntervalYear = (props: BarChartProps): React.ReactElement => {
   const { showTitle = true, barChartContainerStyle = undefined } = props;
   const theme = useTheme();
   const reduxSessions = useAppSelector(state => state.sessions);

@@ -1,19 +1,14 @@
 import * as React from 'react';
 import _ from 'lodash';
 import { Layout, Text, useTheme } from '@ui-kitten/components';
-import { StyleProp, StyleSheet, ViewStyle } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { BarChart } from 'react-native-gifted-charts';
 import { useAppSelector } from '../../../store/hooks';
 import ChartAggregateHeader from '../../ChartAggregateHeader/ChartAggregateHeader';
-import { BarDataItemType } from '../chart-types';
+import type { BarChartProps, BarDataItemType } from '../chart-types';
 import { getMaxYAxisValue, getYAxisLabelTexts, renderLabel, renderTooltip } from '../chart-utils';
 
-type Props = {
-  showTitle?: boolean;
-  barChartContainerStyle?: StyleProp<ViewStyle>;
-};
-
-export const TotalWordsByProject = (props: Props): React.ReactElement => {
+export const TotalWordsByProject = (props: BarChartProps): React.ReactElement => {
   const { showTitle = true, barChartContainerStyle = undefined } = props;
   const theme = useTheme();
   const reduxProjects = useAppSelector(state => state.projects);

@@ -1,4 +1,4 @@
-import { ColorValue, View } from 'react-native';
+import { ColorValue, StyleProp, View, ViewStyle } from 'react-native';
 
 export type BarDataItemType = {
   value?: number;
@@ -23,4 +23,9 @@ export type BarDataItemType = {
 
   // Any
   [key: string]: any;
+};
+
+export type BarChartProps = {
+  showTitle?: boolean;
+  barChartContainerStyle?: StyleProp<ViewStyle>;
 };

@@ -1,11 +1,11 @@
 import * as React from 'react';
 import _ from 'lodash';
 import { Layout, Text, useTheme } from '@ui-kitten/components';
-import { StyleProp, StyleSheet, ViewStyle } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { BarChart } from 'react-native-gifted-charts';
 import { useAppSelector } from '../../../store/hooks';
 import ChartAggregateHeader from '../../ChartAggregateHeader/ChartAggregateHeader';
-import { BarDataItemType } from '../chart-types';
+import type { BarChartProps, BarDataItemType } from '../chart-types';
 import {
   formatMinutesAsHourMinutes,
   getMaxYAxisValue,
@@ -14,12 +14,7 @@ import {
   renderTooltip,
 } from '../chart-utils';
 
-type Props = {
-  showTitle?: boolean;
-  barChartContainerStyle?: StyleProp<ViewStyle>;
-};
-
-export const TotalTimeByProject = (props: Props): React.ReactElement => {
+export const TotalTimeByProject = (props: BarChartProps): React.ReactElement => {
   const { showTitle = true, barChartContainerStyle = undefined } = props;
   const theme = useTheme();
   const reduxProjects = useAppSelector(state => state.projects);
