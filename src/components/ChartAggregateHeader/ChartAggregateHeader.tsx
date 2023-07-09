@@ -5,7 +5,7 @@ import { ArrowIosBackIcon, ArrowIosForwardIcon } from '../Icons/Icons';
 
 type ChartAggregateHeaderProps = {
   aggregateText: string;
-  value: number;
+  value: number | string;
   valueText: string;
   intervalText: string;
   showNavButtons?: boolean;
@@ -21,8 +21,8 @@ type ChartAggregateHeaderProps = {
  */
 const ChartAggregateHeader = (props: ChartAggregateHeaderProps) => {
   const {
+    value,
     aggregateText = '',
-    value = 0,
     valueText = '',
     intervalText = '',
     showNavButtons = true,
@@ -37,7 +37,7 @@ const ChartAggregateHeader = (props: ChartAggregateHeaderProps) => {
       <Layout style={styles.aggregateContainer}>
         <Text category="s2" appearance="hint">{aggregateText.toUpperCase()}</Text>
         <Text>
-          <Text category="h4">{value.toLocaleString()} </Text>
+          <Text category="h4">{typeof value === 'number' ? value.toLocaleString() : value} </Text>
           <Text category="s1" appearance="hint">{valueText}</Text>
         </Text>
         <Text category="s1" appearance="hint">{intervalText}</Text>
