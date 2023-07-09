@@ -13,7 +13,7 @@ import {
   WordsIntervalChartGroup,
   TimeIntervalWeek,
   TimeIntervalMonth,
-  TimeInterval6Month,
+  TimeInterval6Month, TimeIntervalYear,
 } from '../../components/Charts';
 import { Project, Session } from '../../models';
 import { SerializedProject, SerializedSession } from '../../models/serialized';
@@ -85,6 +85,7 @@ const ChartsScreen = (_props: Props): React.ReactElement => {
             TimeIntervalWeek,
             TimeIntervalMonth,
             TimeInterval6Month,
+            TimeIntervalYear,
             WordsIntervalChartGroup,
             ProgressPercentageByProject,
             TotalWordsByProject,

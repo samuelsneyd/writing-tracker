@@ -11,6 +11,7 @@ export * from './TimeInterval/TimeIntervalDay';
 export * from './TimeInterval/TimeIntervalWeek';
 export * from './TimeInterval/TimeIntervalMonth';
 export * from './TimeInterval/TimeInterval6Month';
+export * from './TimeInterval/TimeIntervalYear';
 export * from './WordsInterval/WordsIntervalDay';
 export * from './WordsInterval/WordsIntervalWeek';
 export * from './WordsInterval/WordsIntervalMonth';
