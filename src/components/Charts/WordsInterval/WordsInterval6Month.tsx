@@ -1,10 +1,12 @@
 import * as React from 'react';
 import _ from 'lodash';
-import { Text, useTheme } from '@ui-kitten/components';
+import { Layout, Text, useTheme } from '@ui-kitten/components';
+import { StyleProp, StyleSheet, ViewStyle } from 'react-native';
 import { BarChart } from 'react-native-gifted-charts';
 import {
   add,
-  eachWeekOfInterval, endOfMonth,
+  eachWeekOfInterval,
+  endOfMonth,
   endOfWeek,
   endOfYear,
   format,
@@ -27,10 +29,11 @@ setDefaultOptions({ weekStartsOn: 1 });
 
 type Props = {
   showTitle?: boolean;
+  barChartContainerStyle?: StyleProp<ViewStyle>;
 };
 
 export const WordsInterval6Month = (props: Props): React.ReactElement => {
-  const { showTitle = true } = props;
+  const { showTitle = true, barChartContainerStyle = undefined } = props;
   const theme = useTheme();
   const reduxSessions = useAppSelector(state => state.sessions);
   const today = new Date();
@@ -124,32 +127,40 @@ export const WordsInterval6Month = (props: Props): React.ReactElement => {
         })}
         forwardButtonDisabled={isWithinInterval(today, interval)}
       />
-      <BarChart
-        data={barData}
-        frontColor={theme['color-primary-500']}
-        gradientColor={theme['color-primary-300']}
-        showGradient
-        barBorderRadius={2}
-        hideRules
-        barWidth={8}
-        spacing={4}
-        initialSpacing={8}
-        maxValue={maxValue}
-        noOfSections={4}
-        renderTooltip={(item: BarDataItemType) => {
-          const start = format(new Date(item.week), 'd');
-          const end = format(lastDayOfWeek(new Date(item.week)), 'd MMM');
-          return renderTooltip(item, `${start} -\n${end}\n`);
-        }}
-        leftShiftForTooltip={20}
-        leftShiftForLastIndexTooltip={30}
-        yAxisLabelWidth={50}
-        yAxisLabelTexts={yAxisLabelTexts}
-        yAxisTextStyle={{ color: theme['text-hint-color'] }}
-        yAxisColor={theme['text-hint-color']}
-        xAxisColor={theme['text-hint-color']}
-        scrollToEnd
-      />
+      <Layout style={barChartContainerStyle || styles.defaultBarChartContainer}>
+        <BarChart
+          data={barData}
+          frontColor={theme['color-primary-500']}
+          gradientColor={theme['color-primary-300']}
+          showGradient
+          barBorderRadius={2}
+          hideRules
+          barWidth={8}
+          spacing={4}
+          initialSpacing={8}
+          maxValue={maxValue}
+          noOfSections={4}
+          renderTooltip={(item: BarDataItemType) => {
+            const start = format(new Date(item.week), 'd');
+            const end = format(lastDayOfWeek(new Date(item.week)), 'd MMM');
+            return renderTooltip(item, `${start} -\n${end}\n`);
+          }}
+          leftShiftForTooltip={20}
+          leftShiftForLastIndexTooltip={30}
+          yAxisLabelWidth={50}
+          yAxisLabelTexts={yAxisLabelTexts}
+          yAxisTextStyle={{ color: theme['text-hint-color'] }}
+          yAxisColor={theme['text-hint-color']}
+          xAxisColor={theme['text-hint-color']}
+          scrollToEnd
+        />
+      </Layout>
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  defaultBarChartContainer: {
+    width: '100%',
+  },
+});

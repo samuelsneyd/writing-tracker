@@ -45,6 +45,6 @@ const styles = StyleSheet.create({
   },
   barChartContainer: {
     width: '100%',
-    marginHorizontal: -16,
+    marginHorizontal: -8,
   },
 });

@@ -25,11 +25,21 @@ export const WordsIntervalChartGroup = (props: TabViewProps) => {
         swipeEnabled={false}
         style={styles.tabViewContainer}
       >
-        <Tab title="Day"><WordsIntervalDay showTitle={false} /></Tab>
-        <Tab title="Week"><WordsIntervalWeek showTitle={false} /></Tab>
-        <Tab title="Month"><WordsIntervalMonth showTitle={false} /></Tab>
-        <Tab title="6 Month"><WordsInterval6Month showTitle={false} /></Tab>
-        <Tab title="Year"><WordsIntervalYear showTitle={false} /></Tab>
+        <Tab title="Day">
+          <WordsIntervalDay showTitle={false} barChartContainerStyle={styles.barChartContainer} />
+        </Tab>
+        <Tab title="Week">
+          <WordsIntervalWeek showTitle={false} barChartContainerStyle={styles.barChartContainer} />
+        </Tab>
+        <Tab title="Month">
+          <WordsIntervalMonth showTitle={false} barChartContainerStyle={styles.barChartContainer} />
+        </Tab>
+        <Tab title="6 Month">
+          <WordsInterval6Month showTitle={false} barChartContainerStyle={styles.barChartContainer} />
+        </Tab>
+        <Tab title="Year">
+          <WordsIntervalYear showTitle={false} barChartContainerStyle={styles.barChartContainer} />
+        </Tab>
       </TabView>
     </>
   );
@@ -41,5 +51,9 @@ const styles = StyleSheet.create({
     width: '100%',
     rowGap: 16,
     paddingBottom: 8,
+  },
+  barChartContainer: {
+    width: '100%',
+    marginHorizontal: -8,
   },
 });
