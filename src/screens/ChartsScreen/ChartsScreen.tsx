@@ -104,7 +104,8 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   divider: {
-    paddingVertical: 12,
+    marginBottom: 8,
+    width: '100%',
   },
 });
 
