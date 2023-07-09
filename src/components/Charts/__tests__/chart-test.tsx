@@ -5,6 +5,13 @@ import configureStore from 'redux-mock-store';
 import { testingWrapper } from '../../../utils/test-util';
 import {
   ProgressPercentageByProject,
+  SessionHeatmap,
+  TimeIntervalDay,
+  TimeIntervalWeek,
+  TimeIntervalMonth,
+  TimeInterval6Month,
+  TimeIntervalYear,
+  TimeIntervalChartGroup,
   TotalTimeByProject,
   TotalWordsByDay,
   TotalWordsByProject,
@@ -13,7 +20,7 @@ import {
   WordsIntervalMonth,
   WordsInterval6Month,
   WordsIntervalYear,
-  SessionHeatmap,
+  WordsIntervalChartGroup,
 } from '../../Charts';
 
 const mockStore = configureStore();
@@ -33,6 +40,78 @@ describe('ProgressPercentageByProject', () => {
   it('renders correctly with rainbow theme', () => {
     const store = mockStore({ ...initialState, theme: rainbowTheme });
     renderer.create(testingWrapper(<ProgressPercentageByProject />, { store }));
+  });
+});
+
+describe('TimeIntervalDay', () => {
+  it('renders correctly', () => {
+    const store = mockStore(initialState);
+    renderer.create(testingWrapper(<TimeIntervalDay />, { store }));
+  });
+
+  it('renders correctly with rainbow theme', () => {
+    const store = mockStore({ ...initialState, theme: rainbowTheme });
+    renderer.create(testingWrapper(<TimeIntervalDay />, { store }));
+  });
+});
+
+describe('TimeIntervalWeek', () => {
+  it('renders correctly', () => {
+    const store = mockStore(initialState);
+    renderer.create(testingWrapper(<TimeIntervalWeek />, { store }));
+  });
+
+  it('renders correctly with rainbow theme', () => {
+    const store = mockStore({ ...initialState, theme: rainbowTheme });
+    renderer.create(testingWrapper(<TimeIntervalWeek />, { store }));
+  });
+});
+
+describe('TimeIntervalMonth', () => {
+  it('renders correctly', () => {
+    const store = mockStore(initialState);
+    renderer.create(testingWrapper(<TimeIntervalMonth />, { store }));
+  });
+
+  it('renders correctly with rainbow theme', () => {
+    const store = mockStore({ ...initialState, theme: rainbowTheme });
+    renderer.create(testingWrapper(<TimeIntervalMonth />, { store }));
+  });
+});
+
+describe('TimeInterval6Month', () => {
+  it('renders correctly', () => {
+    const store = mockStore(initialState);
+    renderer.create(testingWrapper(<TimeInterval6Month />, { store }));
+  });
+
+  it('renders correctly with rainbow theme', () => {
+    const store = mockStore({ ...initialState, theme: rainbowTheme });
+    renderer.create(testingWrapper(<TimeInterval6Month />, { store }));
+  });
+});
+
+describe('TimeIntervalYear', () => {
+  it('renders correctly', () => {
+    const store = mockStore(initialState);
+    renderer.create(testingWrapper(<TimeIntervalYear />, { store }));
+  });
+
+  it('renders correctly with rainbow theme', () => {
+    const store = mockStore({ ...initialState, theme: rainbowTheme });
+    renderer.create(testingWrapper(<TimeIntervalYear />, { store }));
+  });
+});
+
+describe('TimeIntervalChartGroup', () => {
+  it('renders correctly', () => {
+    const store = mockStore(initialState);
+    renderer.create(testingWrapper(<TimeIntervalChartGroup />, { store }));
+  });
+
+  it('renders correctly with rainbow theme', () => {
+    const store = mockStore({ ...initialState, theme: rainbowTheme });
+    renderer.create(testingWrapper(<TimeIntervalChartGroup />, { store }));
   });
 });
 
@@ -129,6 +208,18 @@ describe('WordsIntervalYear', () => {
   it('renders correctly with rainbow theme', () => {
     const store = mockStore({ ...initialState, theme: rainbowTheme });
     renderer.create(testingWrapper(<WordsIntervalYear />, { store }));
+  });
+});
+
+describe('WordsIntervalChartGroup', () => {
+  it('renders correctly', () => {
+    const store = mockStore(initialState);
+    renderer.create(testingWrapper(<WordsIntervalChartGroup />, { store }));
+  });
+
+  it('renders correctly with rainbow theme', () => {
+    const store = mockStore({ ...initialState, theme: rainbowTheme });
+    renderer.create(testingWrapper(<WordsIntervalChartGroup />, { store }));
   });
 });
 
