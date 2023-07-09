@@ -1,17 +1,20 @@
 import * as React from 'react';
 import _ from 'lodash';
-import { Text, useTheme } from '@ui-kitten/components';
+import { Layout, Text, useTheme } from '@ui-kitten/components';
+import { StyleSheet } from 'react-native';
 import { BarChart } from 'react-native-gifted-charts';
 import { format, setDefaultOptions } from 'date-fns';
 import { useAppSelector } from '../../store/hooks';
-import { BarDataItemType } from './chart-types';
+import { defaultChartStyles } from './chart-styles';
+import type { ChartProps, BarDataItemType } from './chart-types';
 import { getMaxYAxisValue, getYAxisLabelTexts, renderLabel, renderTooltip } from './chart-utils';
 
 setDefaultOptions({ weekStartsOn: 1 });
 
 const DAYS_OF_WEEK = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
-export const TotalWordsByDay = (): React.ReactElement => {
+export const TotalWordsByDay = (props: ChartProps): React.ReactElement => {
+  const { showTitle = true, chartContainerStyle = defaultChartStyles.chartContainer } = props;
   const theme = useTheme();
   const reduxProjects = useAppSelector(state => state.projects);
   const reduxSessions = useAppSelector(state => state.sessions);
@@ -52,32 +55,34 @@ export const TotalWordsByDay = (): React.ReactElement => {
 
   return (
     <>
-      <Text category="h6" appearance="hint">Total words by day of the week</Text>
+      {showTitle && <Text category="h6" appearance="hint">Words by day of the week</Text>}
       <Text category="s1" appearance="hint">
         Total: {(trackedWords + initialWords).toLocaleString()}
         {initialWords && ` | Tracked: ${trackedWords.toLocaleString()} | Initial: ${initialWords.toLocaleString()}`}
       </Text>
-      <BarChart
-        data={barData}
-        frontColor={theme['color-primary-500']}
-        gradientColor={theme['color-primary-300']}
-        showGradient
-        barBorderRadius={4}
-        hideRules
-        spacing={15}
-        initialSpacing={20}
-        maxValue={maxValue}
-        noOfSections={4}
-        renderTooltip={(item: BarDataItemType) => renderTooltip(item)}
-        leftShiftForTooltip={3}
-        leftShiftForLastIndexTooltip={3}
-        yAxisLabelWidth={50}
-        yAxisLabelTexts={yAxisLabelTexts}
-        yAxisTextStyle={{ color: theme['text-hint-color'] }}
-        yAxisColor={theme['text-hint-color']}
-        xAxisColor={theme['text-hint-color']}
-        disableScroll
-      />
+      <Layout style={chartContainerStyle}>
+        <BarChart
+          data={barData}
+          frontColor={theme['color-primary-500']}
+          gradientColor={theme['color-primary-300']}
+          showGradient
+          barBorderRadius={4}
+          hideRules
+          spacing={15}
+          initialSpacing={20}
+          maxValue={maxValue}
+          noOfSections={4}
+          renderTooltip={(item: BarDataItemType) => renderTooltip(item)}
+          leftShiftForTooltip={3}
+          leftShiftForLastIndexTooltip={3}
+          yAxisLabelWidth={50}
+          yAxisLabelTexts={yAxisLabelTexts}
+          yAxisTextStyle={{ color: theme['text-hint-color'] }}
+          yAxisColor={theme['text-hint-color']}
+          xAxisColor={theme['text-hint-color']}
+          disableScroll
+        />
+      </Layout>
     </>
   );
 };

@@ -23,13 +23,13 @@ export const ProjectsChartGroup = (props: TabViewProps) => {
         style={styles.tabViewContainer}
       >
         <Tab title="Progress">
-          <ProgressPercentageByProject showTitle={false} barChartContainerStyle={styles.barChartContainer} />
+          <ProgressPercentageByProject showTitle={false} chartContainerStyle={styles.barChartContainer} />
         </Tab>
         <Tab title="Words">
-          <TotalWordsByProject showTitle={false} barChartContainerStyle={styles.barChartContainer} />
+          <TotalWordsByProject showTitle={false} chartContainerStyle={styles.barChartContainer} />
         </Tab>
         <Tab title="Time">
-          <TotalTimeByProject showTitle={false} barChartContainerStyle={styles.barChartContainer} />
+          <TotalTimeByProject showTitle={false} chartContainerStyle={styles.barChartContainer} />
         </Tab>
       </TabView>
     </>

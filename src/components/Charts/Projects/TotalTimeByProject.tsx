@@ -1,11 +1,11 @@
 import * as React from 'react';
 import _ from 'lodash';
 import { Layout, Text, useTheme } from '@ui-kitten/components';
-import { StyleSheet } from 'react-native';
 import { BarChart } from 'react-native-gifted-charts';
 import { useAppSelector } from '../../../store/hooks';
 import ChartAggregateHeader from '../../ChartAggregateHeader/ChartAggregateHeader';
-import type { BarChartProps, BarDataItemType } from '../chart-types';
+import { defaultChartStyles } from '../chart-styles';
+import type { ChartProps, BarDataItemType } from '../chart-types';
 import {
   formatMinutesAsHourMinutes,
   getMaxYAxisValue,
@@ -14,8 +14,8 @@ import {
   renderTooltip,
 } from '../chart-utils';
 
-export const TotalTimeByProject = (props: BarChartProps): React.ReactElement => {
-  const { showTitle = true, barChartContainerStyle = undefined } = props;
+export const TotalTimeByProject = (props: ChartProps): React.ReactElement => {
+  const { showTitle = true, chartContainerStyle = defaultChartStyles.chartContainer } = props;
   const theme = useTheme();
   const reduxProjects = useAppSelector(state => state.projects);
   const reduxSessions = useAppSelector(state => state.sessions);
@@ -68,7 +68,7 @@ export const TotalTimeByProject = (props: BarChartProps): React.ReactElement => 
         intervalText={`${formattedAverage} average`}
         showNavButtons={false}
       />
-      <Layout style={barChartContainerStyle || styles.defaultBarChartContainer}>
+      <Layout style={chartContainerStyle}>
         <BarChart
           data={barData}
           frontColor={theme['color-primary-500']}
@@ -93,9 +93,3 @@ export const TotalTimeByProject = (props: BarChartProps): React.ReactElement => 
     </>
   );
 };
-
-const styles = StyleSheet.create({
-  defaultBarChartContainer: {
-    width: '100%',
-  },
-});

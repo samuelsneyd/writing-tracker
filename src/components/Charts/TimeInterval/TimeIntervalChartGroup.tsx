@@ -24,11 +24,11 @@ export const TimeIntervalChartGroup = (props: TabViewProps) => {
         swipeEnabled={false}
         style={styles.tabViewContainer}
       >
-        <Tab title="Day"><TimeIntervalDay showTitle={false} barChartContainerStyle={styles.barChartContainer} /></Tab>
-        <Tab title="Week"><TimeIntervalWeek showTitle={false} barChartContainerStyle={styles.barChartContainer}/></Tab>
-        <Tab title="Month"><TimeIntervalMonth showTitle={false} barChartContainerStyle={styles.barChartContainer}/></Tab>
-        <Tab title="6 Month"><TimeInterval6Month showTitle={false} barChartContainerStyle={styles.barChartContainer}/></Tab>
-        <Tab title="Year"><TimeIntervalYear showTitle={false} barChartContainerStyle={styles.barChartContainer}/></Tab>
+        <Tab title="Day"><TimeIntervalDay showTitle={false} chartContainerStyle={styles.barChartContainer} /></Tab>
+        <Tab title="Week"><TimeIntervalWeek showTitle={false} chartContainerStyle={styles.barChartContainer}/></Tab>
+        <Tab title="Month"><TimeIntervalMonth showTitle={false} chartContainerStyle={styles.barChartContainer}/></Tab>
+        <Tab title="6 Month"><TimeInterval6Month showTitle={false} chartContainerStyle={styles.barChartContainer}/></Tab>
+        <Tab title="Year"><TimeIntervalYear showTitle={false} chartContainerStyle={styles.barChartContainer}/></Tab>
       </TabView>
     </>
   );

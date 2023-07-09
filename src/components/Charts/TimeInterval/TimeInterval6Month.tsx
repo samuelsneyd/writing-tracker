@@ -1,7 +1,6 @@
 import * as React from 'react';
 import _ from 'lodash';
 import { Layout, Text, useTheme } from '@ui-kitten/components';
-import { StyleSheet } from 'react-native';
 import { BarChart } from 'react-native-gifted-charts';
 import {
   add,
@@ -22,7 +21,8 @@ import {
 } from 'date-fns';
 import { useAppSelector } from '../../../store/hooks';
 import ChartAggregateHeader from '../../ChartAggregateHeader/ChartAggregateHeader';
-import type { BarDataItemType, BarChartProps } from '../chart-types';
+import { defaultChartStyles } from '../chart-styles';
+import type { BarDataItemType, ChartProps } from '../chart-types';
 import {
   formatInterval,
   formatMinutesAsHourMinutes,
@@ -34,8 +34,8 @@ import {
 
 setDefaultOptions({ weekStartsOn: 1 });
 
-export const TimeInterval6Month = (props: BarChartProps): React.ReactElement => {
-  const { showTitle = true, barChartContainerStyle = undefined } = props;
+export const TimeInterval6Month = (props: ChartProps): React.ReactElement => {
+  const { showTitle = true, chartContainerStyle = defaultChartStyles.chartContainer } = props;
   const theme = useTheme();
   const reduxSessions = useAppSelector(state => state.sessions);
   const today = new Date();
@@ -130,7 +130,7 @@ export const TimeInterval6Month = (props: BarChartProps): React.ReactElement => 
         })}
         forwardButtonDisabled={isWithinInterval(today, interval)}
       />
-      <Layout style={barChartContainerStyle || styles.defaultBarChartContainer}>
+      <Layout style={chartContainerStyle}>
         <BarChart
           data={barData}
           frontColor={theme['color-primary-500']}
@@ -161,9 +161,3 @@ export const TimeInterval6Month = (props: BarChartProps): React.ReactElement => 
     </>
   );
 };
-
-const styles = StyleSheet.create({
-  defaultBarChartContainer: {
-    width: '100%',
-  },
-});

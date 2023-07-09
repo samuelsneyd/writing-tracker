@@ -25,7 +25,9 @@ export type BarDataItemType = {
   [key: string]: any;
 };
 
-export type BarChartProps = {
+export type ChartProps = {
+  // Whether to show the title or not
   showTitle?: boolean;
-  barChartContainerStyle?: StyleProp<ViewStyle>;
+  // Styles to apply to the chart component's parent container
+  chartContainerStyle?: StyleProp<ViewStyle>;
 };

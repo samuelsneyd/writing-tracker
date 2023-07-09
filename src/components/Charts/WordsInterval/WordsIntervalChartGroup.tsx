@@ -25,19 +25,19 @@ export const WordsIntervalChartGroup = (props: TabViewProps) => {
         style={styles.tabViewContainer}
       >
         <Tab title="Day">
-          <WordsIntervalDay showTitle={false} barChartContainerStyle={styles.barChartContainer} />
+          <WordsIntervalDay showTitle={false} chartContainerStyle={styles.barChartContainer} />
         </Tab>
         <Tab title="Week">
-          <WordsIntervalWeek showTitle={false} barChartContainerStyle={styles.barChartContainer} />
+          <WordsIntervalWeek showTitle={false} chartContainerStyle={styles.barChartContainer} />
         </Tab>
         <Tab title="Month">
-          <WordsIntervalMonth showTitle={false} barChartContainerStyle={styles.barChartContainer} />
+          <WordsIntervalMonth showTitle={false} chartContainerStyle={styles.barChartContainer} />
         </Tab>
         <Tab title="6 Month">
-          <WordsInterval6Month showTitle={false} barChartContainerStyle={styles.barChartContainer} />
+          <WordsInterval6Month showTitle={false} chartContainerStyle={styles.barChartContainer} />
         </Tab>
         <Tab title="Year">
-          <WordsIntervalYear showTitle={false} barChartContainerStyle={styles.barChartContainer} />
+          <WordsIntervalYear showTitle={false} chartContainerStyle={styles.barChartContainer} />
         </Tab>
       </TabView>
     </>
