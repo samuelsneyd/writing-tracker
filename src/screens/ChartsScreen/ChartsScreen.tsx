@@ -5,6 +5,7 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { DataStore } from 'aws-amplify';
 import {
   ProgressPercentageByProject,
+  TimeIntervalDay,
   TotalTimeByProject,
   TotalWordsByDay,
   TotalWordsByProject,
@@ -77,6 +78,7 @@ const ChartsScreen = (_props: Props): React.ReactElement => {
       <ScrollView style={styles.container}>
         <Layout style={styles.body}>
           {[
+            TimeIntervalDay,
             WordsIntervalChartGroup,
             ProgressPercentageByProject,
             TotalWordsByProject,
