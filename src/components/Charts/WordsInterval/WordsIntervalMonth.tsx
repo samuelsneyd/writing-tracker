@@ -5,18 +5,19 @@ import { BarChart } from 'react-native-gifted-charts';
 import {
   add,
   eachDayOfInterval,
-  endOfDay,
+  endOfMonth,
   format,
   getDay,
   isWithinInterval,
   setDefaultOptions,
   startOfDay,
+  startOfMonth,
   sub,
 } from 'date-fns';
-import { useAppSelector } from '../../store/hooks';
-import ChartAggregateHeader from '../ChartAggregateHeader/ChartAggregateHeader';
-import { BarDataItemType } from './chart-types';
-import { formatInterval, getMaxYAxisValue, getYAxisLabelTexts, renderLabel, renderTooltip } from './chart-utils';
+import { useAppSelector } from '../../../store/hooks';
+import ChartAggregateHeader from '../../ChartAggregateHeader/ChartAggregateHeader';
+import { BarDataItemType } from '../chart-types';
+import { formatInterval, getMaxYAxisValue, getYAxisLabelTexts, renderLabel, renderTooltip } from '../chart-utils';
 
 setDefaultOptions({ weekStartsOn: 1 });
 
@@ -24,15 +25,14 @@ type Props = {
   showTitle?: boolean;
 };
 
-// TODO - refactor to show hours 0-23 as bars instead of days
-export const WordsIntervalDay = (props: Props): React.ReactElement => {
+export const WordsIntervalMonth = (props: Props): React.ReactElement => {
   const { showTitle = true } = props;
   const theme = useTheme();
   const reduxSessions = useAppSelector(state => state.sessions);
   const today = new Date();
   const [interval, setInterval] = React.useState<Interval>({
-    start: startOfDay(today),
-    end: endOfDay(today),
+    start: startOfMonth(today),
+    end: endOfMonth(today),
   });
   const allDatesInInterval = eachDayOfInterval(interval).map(date => date.toISOString());
 
@@ -49,12 +49,17 @@ export const WordsIntervalDay = (props: Props): React.ReactElement => {
     .map((value, day): BarDataItemType => {
       const dayDate = new Date(day);
       const dayIndex = (getDay(dayDate) + 6) % 7;
-      const label = format(dayDate, 'E');
       return ({
         day,
         dayIndex,
         value,
-        labelComponent: () => renderLabel(label),
+        // Only render label for Mondays
+        labelComponent: () => {
+          if (dayIndex === 0) {
+            const label = format(dayDate, 'd');
+            return renderLabel(label, 4);
+          }
+        },
       });
     })
     // Sort chronologically
@@ -72,31 +77,27 @@ export const WordsIntervalDay = (props: Props): React.ReactElement => {
     .value();
 
   // Average per day during current interval
-  const total = Math.round(_(barData).filter(data => data.value).sumBy('value')) || 0;
+  const average = Math.round(_(barData).filter(data => data.value).meanBy('value')) || 0;
 
   const maxValue = getMaxYAxisValue(barData);
   const yAxisLabelTexts = getYAxisLabelTexts(maxValue);
 
   return (
     <>
-      {showTitle && <Text category="h6">Words (day)</Text>}
+      {showTitle && <Text category="h6">Words (month)</Text>}
       <ChartAggregateHeader
-        aggregateText="total"
-        value={total}
+        aggregateText="daily average"
+        value={average}
         valueText="words"
         intervalText={formatInterval(interval)}
-        onBackButtonPress={() => {
-          setInterval({
-            start: sub(interval.start, { days: 1 }),
-            end: sub(interval.end, { days: 1 }),
-          });
-        }}
-        onForwardButtonPress={() => {
-          setInterval({
-            start: add(interval.start, { days: 1 }),
-            end: add(interval.end, { days: 1 }),
-          });
-        }}
+        onBackButtonPress={() => setInterval({
+          start: startOfMonth(sub(interval.start, { months: 1 })),
+          end: endOfMonth(sub(interval.end, { months: 1 })),
+        })}
+        onForwardButtonPress={() => setInterval({
+          start: startOfMonth(add(interval.start, { months: 1 })),
+          end: endOfMonth(add(interval.end, { months: 1 })),
+        })}
         forwardButtonDisabled={isWithinInterval(today, interval)}
       />
       <BarChart
@@ -104,17 +105,18 @@ export const WordsIntervalDay = (props: Props): React.ReactElement => {
         frontColor={theme['color-primary-500']}
         gradientColor={theme['color-primary-300']}
         showGradient
-        barBorderRadius={4}
+        barBorderRadius={2}
         hideRules
-        spacing={15}
-        initialSpacing={20}
+        barWidth={7}
+        spacing={3}
+        initialSpacing={3}
         maxValue={maxValue}
         noOfSections={4}
         renderTooltip={(item: BarDataItemType) =>
           renderTooltip(item, `${format(new Date(item.day), 'MMM d')}\n`)
         }
-        leftShiftForTooltip={7}
-        leftShiftForLastIndexTooltip={3}
+        leftShiftForTooltip={15}
+        leftShiftForLastIndexTooltip={30}
         yAxisLabelWidth={50}
         yAxisLabelTexts={yAxisLabelTexts}
         yAxisTextStyle={{ color: theme['text-hint-color'] }}

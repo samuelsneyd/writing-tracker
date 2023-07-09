@@ -9,8 +9,8 @@ import {
   TotalWordsByDay,
   TotalWordsByProject,
   SessionHeatmap,
+  WordsIntervalChartGroup,
 } from '../../components/Charts';
-import WordsIntervalChartGroup from '../../components/Charts/WordsIntervalChartGroup';
 import { Project, Session } from '../../models';
 import { SerializedProject, SerializedSession } from '../../models/serialized';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';

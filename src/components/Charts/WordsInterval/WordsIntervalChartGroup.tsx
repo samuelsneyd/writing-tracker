@@ -7,7 +7,7 @@ import { WordsIntervalMonth } from './WordsIntervalMonth';
 import { WordsIntervalWeek } from './WordsIntervalWeek';
 import { WordsIntervalYear } from './WordsIntervalYear';
 
-const WordsIntervalChartGroup = (props: TabViewProps) => {
+export const WordsIntervalChartGroup = (props: TabViewProps) => {
   const [selectedIndex, setSelectedIndex] = React.useState<number>(1);
   const shouldLoadComponent = (index: number): boolean => index === selectedIndex;
 
@@ -43,5 +43,3 @@ const styles = StyleSheet.create({
     paddingBottom: 8,
   },
 });
-
-export default WordsIntervalChartGroup;

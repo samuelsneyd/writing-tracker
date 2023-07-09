@@ -5,19 +5,18 @@ import { BarChart } from 'react-native-gifted-charts';
 import {
   add,
   eachDayOfInterval,
-  endOfWeek,
+  endOfDay,
   format,
   getDay,
   isWithinInterval,
   setDefaultOptions,
   startOfDay,
-  startOfWeek,
   sub,
 } from 'date-fns';
-import { useAppSelector } from '../../store/hooks';
-import ChartAggregateHeader from '../ChartAggregateHeader/ChartAggregateHeader';
-import { BarDataItemType } from './chart-types';
-import { formatInterval, getMaxYAxisValue, getYAxisLabelTexts, renderLabel, renderTooltip } from './chart-utils';
+import { useAppSelector } from '../../../store/hooks';
+import ChartAggregateHeader from '../../ChartAggregateHeader/ChartAggregateHeader';
+import { BarDataItemType } from '../chart-types';
+import { formatInterval, getMaxYAxisValue, getYAxisLabelTexts, renderLabel, renderTooltip } from '../chart-utils';
 
 setDefaultOptions({ weekStartsOn: 1 });
 
@@ -25,14 +24,15 @@ type Props = {
   showTitle?: boolean;
 };
 
-export const WordsIntervalWeek = (props: Props): React.ReactElement => {
+// TODO - refactor to show hours 0-23 as bars instead of days
+export const WordsIntervalDay = (props: Props): React.ReactElement => {
   const { showTitle = true } = props;
   const theme = useTheme();
   const reduxSessions = useAppSelector(state => state.sessions);
   const today = new Date();
   const [interval, setInterval] = React.useState<Interval>({
-    start: startOfWeek(today),
-    end: endOfWeek(today),
+    start: startOfDay(today),
+    end: endOfDay(today),
   });
   const allDatesInInterval = eachDayOfInterval(interval).map(date => date.toISOString());
 
@@ -72,27 +72,31 @@ export const WordsIntervalWeek = (props: Props): React.ReactElement => {
     .value();
 
   // Average per day during current interval
-  const average = Math.round(_(barData).filter(data => data.value).meanBy('value')) || 0;
+  const total = Math.round(_(barData).filter(data => data.value).sumBy('value')) || 0;
 
   const maxValue = getMaxYAxisValue(barData);
   const yAxisLabelTexts = getYAxisLabelTexts(maxValue);
 
   return (
     <>
-      {showTitle && <Text category="h6">Words (week)</Text>}
+      {showTitle && <Text category="h6">Words (day)</Text>}
       <ChartAggregateHeader
-        aggregateText="daily average"
-        value={average}
+        aggregateText="total"
+        value={total}
         valueText="words"
         intervalText={formatInterval(interval)}
-        onBackButtonPress={() => setInterval({
-          start: sub(interval.start, { weeks: 1 }),
-          end: sub(interval.end, { weeks: 1 }),
-        })}
-        onForwardButtonPress={() => setInterval({
-          start: add(interval.start, { weeks: 1 }),
-          end: add(interval.end, { weeks: 1 }),
-        })}
+        onBackButtonPress={() => {
+          setInterval({
+            start: sub(interval.start, { days: 1 }),
+            end: sub(interval.end, { days: 1 }),
+          });
+        }}
+        onForwardButtonPress={() => {
+          setInterval({
+            start: add(interval.start, { days: 1 }),
+            end: add(interval.end, { days: 1 }),
+          });
+        }}
         forwardButtonDisabled={isWithinInterval(today, interval)}
       />
       <BarChart

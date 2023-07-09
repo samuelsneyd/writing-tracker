@@ -13,10 +13,10 @@ import {
   startOfYear,
   sub,
 } from 'date-fns';
-import { useAppSelector } from '../../store/hooks';
-import ChartAggregateHeader from '../ChartAggregateHeader/ChartAggregateHeader';
-import { BarDataItemType } from './chart-types';
-import { formatInterval, getMaxYAxisValue, getYAxisLabelTexts, renderLabel, renderTooltip } from './chart-utils';
+import { useAppSelector } from '../../../store/hooks';
+import ChartAggregateHeader from '../../ChartAggregateHeader/ChartAggregateHeader';
+import { BarDataItemType } from '../chart-types';
+import { formatInterval, getMaxYAxisValue, getYAxisLabelTexts, renderLabel, renderTooltip } from '../chart-utils';
 
 setDefaultOptions({ weekStartsOn: 1 });
 
