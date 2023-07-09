@@ -10,7 +10,6 @@ import {
   format,
   getDay,
   isWithinInterval,
-  minutesToHours,
   setDefaultOptions,
   startOfDay,
   sub,
