@@ -5,15 +5,12 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { DataStore } from 'aws-amplify';
 import {
   ProgressPercentageByProject,
-  TimeIntervalDay,
+  SessionHeatmap,
+  TimeIntervalChartGroup,
   TotalTimeByProject,
   TotalWordsByDay,
   TotalWordsByProject,
-  SessionHeatmap,
   WordsIntervalChartGroup,
-  TimeIntervalWeek,
-  TimeIntervalMonth,
-  TimeInterval6Month, TimeIntervalYear,
 } from '../../components/Charts';
 import { Project, Session } from '../../models';
 import { SerializedProject, SerializedSession } from '../../models/serialized';
@@ -81,12 +78,8 @@ const ChartsScreen = (_props: Props): React.ReactElement => {
       <ScrollView style={styles.container}>
         <Layout style={styles.body}>
           {[
-            TimeIntervalDay,
-            TimeIntervalWeek,
-            TimeIntervalMonth,
-            TimeInterval6Month,
-            TimeIntervalYear,
             WordsIntervalChartGroup,
+            TimeIntervalChartGroup,
             ProgressPercentageByProject,
             TotalWordsByProject,
             TotalTimeByProject,

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import _ from 'lodash';
-import { Text, useTheme } from '@ui-kitten/components';
+import { Layout, Text, useTheme } from '@ui-kitten/components';
+import { StyleProp, StyleSheet, ViewStyle } from 'react-native';
 import { BarChart } from 'react-native-gifted-charts';
 import {
   add,
@@ -29,10 +30,11 @@ setDefaultOptions({ weekStartsOn: 1 });
 
 type Props = {
   showTitle?: boolean;
+  barChartContainerStyle?: StyleProp<ViewStyle>;
 };
 
 export const TimeIntervalYear = (props: Props): React.ReactElement => {
-  const { showTitle = true } = props;
+  const { showTitle = true, barChartContainerStyle = undefined } = props;
   const theme = useTheme();
   const reduxSessions = useAppSelector(state => state.sessions);
   const today = new Date();
@@ -98,28 +100,38 @@ export const TimeIntervalYear = (props: Props): React.ReactElement => {
         })}
         forwardButtonDisabled={isWithinInterval(today, interval)}
       />
-      <BarChart
-        data={barData}
-        frontColor={theme['color-primary-500']}
-        gradientColor={theme['color-primary-300']}
-        showGradient
-        barBorderRadius={3}
-        hideRules
-        barWidth={20}
-        spacing={6}
-        initialSpacing={8}
-        maxValue={maxValue}
-        noOfSections={4}
-        renderTooltip={(item: BarDataItemType) => renderTooltip(item, `${format(new Date(item.month), 'MMM')}\n`)}
-        leftShiftForTooltip={12}
-        leftShiftForLastIndexTooltip={22}
-        yAxisLabelWidth={50}
-        yAxisLabelTexts={yAxisLabelTexts}
-        yAxisTextStyle={{ color: theme['text-hint-color'] }}
-        yAxisColor={theme['text-hint-color']}
-        xAxisColor={theme['text-hint-color']}
-        scrollToEnd
-      />
+      <Layout style={barChartContainerStyle || styles.defaultBarChartContainer}>
+        <BarChart
+          data={barData}
+          frontColor={theme['color-primary-500']}
+          gradientColor={theme['color-primary-300']}
+          showGradient
+          barBorderRadius={3}
+          hideRules
+          barWidth={20}
+          spacing={6}
+          initialSpacing={8}
+          maxValue={maxValue}
+          noOfSections={4}
+          renderTooltip={(item: BarDataItemType) =>
+            renderTooltip(item, `${format(new Date(item.month), 'MMM')}\n`)
+          }
+          leftShiftForTooltip={12}
+          leftShiftForLastIndexTooltip={22}
+          yAxisLabelWidth={50}
+          yAxisLabelTexts={yAxisLabelTexts}
+          yAxisTextStyle={{ color: theme['text-hint-color'] }}
+          yAxisColor={theme['text-hint-color']}
+          xAxisColor={theme['text-hint-color']}
+          scrollToEnd
+        />
+      </Layout>
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  defaultBarChartContainer: {
+    width: '100%',
+  },
+});
