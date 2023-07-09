@@ -13,6 +13,7 @@ import {
   WordsIntervalChartGroup,
   TimeIntervalWeek,
   TimeIntervalMonth,
+  TimeInterval6Month,
 } from '../../components/Charts';
 import { Project, Session } from '../../models';
 import { SerializedProject, SerializedSession } from '../../models/serialized';
@@ -83,12 +84,13 @@ const ChartsScreen = (_props: Props): React.ReactElement => {
             TimeIntervalDay,
             TimeIntervalWeek,
             TimeIntervalMonth,
-            // WordsIntervalChartGroup,
-            // ProgressPercentageByProject,
-            // TotalWordsByProject,
-            // TotalTimeByProject,
-            // TotalWordsByDay,
-            // SessionHeatmap,
+            TimeInterval6Month,
+            WordsIntervalChartGroup,
+            ProgressPercentageByProject,
+            TotalWordsByProject,
+            TotalTimeByProject,
+            TotalWordsByDay,
+            SessionHeatmap,
           ].map((Chart, i) =>
             // Order should never change so using index as key shouldn't cause unnecessary re-renders
             <React.Fragment key={i}><Chart /><Divider style={styles.divider} /></React.Fragment>,
