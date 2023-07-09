@@ -51,7 +51,6 @@ const DailyGoalTabs = (props: TabViewProps): React.ReactElement => {
 
 const styles = StyleSheet.create({
   tabViewContainer: {
-    flex: 1,
     width: '100%',
   },
   tabContainer: {

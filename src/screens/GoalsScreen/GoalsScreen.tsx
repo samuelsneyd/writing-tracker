@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { SafeAreaView } from 'react-native';
+import { SafeAreaView, ScrollView, StyleSheet } from 'react-native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import DailyGoalTabs from '../../components/DailyGoalTabs/DailyGoalTabs';
 import { ArrowIosBackIcon } from '../../components/Icons/Icons';
 import type { GoalsStackParamList } from '../../types/types';
 import { Divider, Layout, TopNavigation, Text, TopNavigationAction } from '@ui-kitten/components';
@@ -13,14 +14,29 @@ const GoalsScreen = ({ navigation }: Props): React.ReactElement => {
   );
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={styles.container}>
       <TopNavigation title="Goals" alignment="center" accessoryLeft={backAction} />
       <Divider />
-      <Layout style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text category="h1">Goals</Text>
-      </Layout>
+      <ScrollView style={styles.container} contentContainerStyle={{ flexGrow: 1 }}>
+        <Layout style={styles.body}>
+          <Text category="h5">Daily Goals</Text>
+          <DailyGoalTabs />
+        </Layout>
+      </ScrollView>
     </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  body: {
+    flex: 1,
+    alignItems: 'center',
+    padding: 16,
+    gap: 16,
+  },
+});
 
 export default GoalsScreen;
