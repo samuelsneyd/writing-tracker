@@ -82,7 +82,7 @@ Database models are defined via a GraphQL schema.
 
 Edit data store schemas in `amplify/backend/api/schema.graph.ql` then run
 
-    amplify codegen models
+    amplify codegen && amplify codegen models
 
 This auto-generates the models' code and type declarations.
 
