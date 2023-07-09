@@ -1,6 +1,6 @@
 import * as React from 'react';
 import _ from 'lodash';
-import { format, isToday } from 'date-fns';
+import { endOfDay, format, isToday, isWithinInterval, startOfDay } from 'date-fns';
 import { WeeklyTarget } from '../../models';
 import { SerializedProject } from '../../models/serialized';
 import { useAppSelector } from '../../store/hooks';
@@ -19,19 +19,26 @@ export type DailyTaskSummary = {
   completedTasks: DailyTask[];
 };
 
-const useDailyTasks = (): DailyTaskSummary => {
+const useDailyTasks = (date: Date | undefined = undefined): DailyTaskSummary => {
   const reduxProjects = useAppSelector(state => state.projects);
   const reduxSessions = useAppSelector(state => state.sessions);
+  const interval = date && {
+    start: startOfDay(date),
+    end: endOfDay(date),
+  };
 
   // Group today's sessions by projects
   const groupedSessions = _(reduxSessions)
-    .filter(session => isToday(new Date(session.date)))
+    .filter(session => date && interval
+      ? isWithinInterval(new Date(session.date), interval)
+      : isToday(new Date(session.date)),
+    )
     .groupBy('projectSessionsId')
     .value();
 
-  // Get today's day key 'mon' | 'tue' | ... | 'sun'
-  const today = new Date();
-  const dayKey = format(today, 'E').toLowerCase() as keyof WeeklyTarget;
+  // Get target date's day key: 'mon' | 'tue' | ... | 'sun'
+  const targetDate = date || new Date();
+  const dayKey = format(targetDate, 'E').toLowerCase() as keyof WeeklyTarget;
 
   const allTasks = reduxProjects
     // Active projects with targets today
