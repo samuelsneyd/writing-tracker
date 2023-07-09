@@ -6,7 +6,7 @@ import { ArrowIosBackIcon } from '../../components/Icons/Icons';
 import type { GoalsStackParamList } from '../../types/types';
 import { Divider, Layout, TopNavigation, Text, TopNavigationAction } from '@ui-kitten/components';
 
-type Props = NativeStackScreenProps<GoalsStackParamList, 'Goals'>
+type Props = NativeStackScreenProps<GoalsStackParamList, 'Goals'>;
 
 const GoalsScreen = ({ navigation }: Props): React.ReactElement => {
   const backAction = () => (
