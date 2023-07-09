@@ -20,7 +20,6 @@ export const WordsIntervalChartGroup = (props: TabViewProps) => {
         onSelect={index => setSelectedIndex(index)}
         // Lazy loading
         shouldLoadComponent={shouldLoadComponent}
-        // Workaround for animation bug https://github.com/akveo/react-native-ui-kitten/issues/1234
         animationDuration={0}
         swipeEnabled={false}
         style={styles.tabViewContainer}
