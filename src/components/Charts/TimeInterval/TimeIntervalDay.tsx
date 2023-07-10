@@ -67,18 +67,22 @@ export const TimeIntervalDay = (props: ChartProps): React.ReactElement => {
       })
       // Sort chronologically
       .sortBy('day')
-      .map((item): BarDataItemType => (
-        theme.useRainbow
-          ? {
-            ...item,
-            frontColor: theme[`color-rainbow-${item.dayIndex % Number.parseInt(theme.rainbowLength)}-500`],
-            gradientColor: theme[`color-rainbow-${item.dayIndex % Number.parseInt(theme.rainbowLength)}-300`],
-            showGradient: true,
-          }
-          : item
-      ))
       .value(),
-    [reduxSessions, interval.start, interval.end, allDatesInInterval, theme],
+    [reduxSessions, interval.start, interval.end, allDatesInInterval],
+  );
+
+  const themedBarData = React.useMemo(
+    () => _.map(barData, (item): BarDataItemType => (
+      theme.useRainbow
+        ? {
+          ...item,
+          frontColor: theme[`color-rainbow-${item.dayIndex % Number.parseInt(theme.rainbowLength)}-500`],
+          gradientColor: theme[`color-rainbow-${item.dayIndex % Number.parseInt(theme.rainbowLength)}-300`],
+          showGradient: true,
+        }
+        : item
+    )),
+    [barData, theme],
   );
 
   // Sum minutes during current interval
@@ -121,7 +125,7 @@ export const TimeIntervalDay = (props: ChartProps): React.ReactElement => {
       />
       <Layout style={chartContainerStyle}>
         <BarChart
-          data={barData}
+          data={themedBarData}
           frontColor={theme['color-primary-500']}
           gradientColor={theme['color-primary-300']}
           showGradient
