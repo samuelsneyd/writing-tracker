@@ -9,12 +9,9 @@ import { useAppSelector } from './store/hooks';
 import { themesMap } from './themes';
 import { Provider } from 'react-redux';
 import { store } from './store/store';
-import useLoginStreak from './hooks/useLoginStreak/useLoginStreak';
 
 const ThemedContent = () => {
   const theme = useAppSelector(state => state.theme);
-
-  useLoginStreak();
 
   return (
     <>
