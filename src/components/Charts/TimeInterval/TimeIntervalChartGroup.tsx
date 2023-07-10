@@ -47,7 +47,6 @@ const styles = StyleSheet.create({
     width: '100%',
     rowGap: 16,
     paddingBottom: 8,
-    overflow: 'visible',
   },
   barChartContainer: {
     width: '100%',
