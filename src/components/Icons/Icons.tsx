@@ -57,8 +57,20 @@ export const MenuIcon = (props: IconProps): IconElement => (
   <Icon {...props} name="menu" />
 );
 
+export const LogInIcon = (props: IconProps): IconElement => (
+  <Icon {...props} name="log-in-outline" />
+);
+
+export const LogOutIcon = (props: IconProps): IconElement => (
+  <Icon {...props} name="log-out-outline" />
+);
+
 export const PlusIcon = (props: IconProps): IconElement => (
   <Icon {...props} name="plus-outline" />
+);
+
+export const PersonIcon = (props: IconProps): IconElement => (
+  <Icon {...props} name="person-outline" />
 );
 
 export const SettingsIcon = (props: IconProps): IconElement => (
