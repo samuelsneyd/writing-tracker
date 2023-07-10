@@ -13,6 +13,7 @@ import {
   startOfDay,
   sub,
 } from 'date-fns';
+import useThemedBarData from '../../../hooks/useThemedBarData/useThemedBarData';
 import { useAppSelector } from '../../../store/hooks';
 import ChartAggregateHeader from '../../ChartAggregateHeader/ChartAggregateHeader';
 import { defaultChartStyles } from '../chart-styles';
@@ -71,19 +72,7 @@ export const TimeIntervalDay = (props: ChartProps): React.ReactElement => {
     [reduxSessions, interval.start, interval.end, allDatesInInterval],
   );
 
-  const themedBarData = React.useMemo(
-    () => _.map(barData, (item): BarDataItemType => (
-      theme.useRainbow
-        ? {
-          ...item,
-          frontColor: theme[`color-rainbow-${item.dayIndex % Number.parseInt(theme.rainbowLength)}-500`],
-          gradientColor: theme[`color-rainbow-${item.dayIndex % Number.parseInt(theme.rainbowLength)}-300`],
-          showGradient: true,
-        }
-        : item
-    )),
-    [barData, theme],
-  );
+  const themedBarData = useThemedBarData(barData, theme, 'dayIndex');
 
   // Sum minutes during current interval
   const total = React.useMemo(

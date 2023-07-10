@@ -3,6 +3,7 @@ import _ from 'lodash';
 import { Layout, Text, useTheme } from '@ui-kitten/components';
 import { BarChart } from 'react-native-gifted-charts';
 import { format, setDefaultOptions } from 'date-fns';
+import useThemedBarData from '../../../hooks/useThemedBarData/useThemedBarData';
 import { useAppSelector } from '../../../store/hooks';
 import ChartAggregateHeader from '../../ChartAggregateHeader/ChartAggregateHeader';
 import { defaultChartStyles } from '../chart-styles';
@@ -36,19 +37,11 @@ export const TotalWordsByDay = (props: ChartProps): React.ReactElement => {
       }))
       // Sort Mon -> Sun
       .sortBy(item => _.indexOf(DAYS_OF_WEEK, item.label))
-      .map((item, i): BarDataItemType => (
-        theme.useRainbow
-          ? {
-            ...item,
-            frontColor: theme[`color-rainbow-${i % Number.parseInt(theme.rainbowLength)}-500`],
-            gradientColor: theme[`color-rainbow-${i % Number.parseInt(theme.rainbowLength)}-300`],
-            showGradient: true,
-          }
-          : item
-      ))
       .value(),
     [reduxSessions, theme],
   );
+
+  const themedBarData = useThemedBarData(barData, theme);
 
   const trackedWords = React.useMemo(
     () => Math.round(_.sumBy(barData, 'value')),
@@ -75,7 +68,7 @@ export const TotalWordsByDay = (props: ChartProps): React.ReactElement => {
       />
       <Layout style={chartContainerStyle}>
         <BarChart
-          data={barData}
+          data={themedBarData}
           frontColor={theme['color-primary-500']}
           gradientColor={theme['color-primary-300']}
           showGradient

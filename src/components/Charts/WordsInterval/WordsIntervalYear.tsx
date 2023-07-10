@@ -13,6 +13,7 @@ import {
   startOfYear,
   sub,
 } from 'date-fns';
+import useThemedBarData from '../../../hooks/useThemedBarData/useThemedBarData';
 import { useAppSelector } from '../../../store/hooks';
 import ChartAggregateHeader from '../../ChartAggregateHeader/ChartAggregateHeader';
 import { defaultChartStyles } from '../chart-styles';
@@ -57,19 +58,11 @@ export const WordsIntervalYear = (props: ChartProps): React.ReactElement => {
       })
       // Sort chronologically
       .sortBy('month')
-      .map((item, i): BarDataItemType => (
-        theme.useRainbow
-          ? {
-            ...item,
-            frontColor: theme[`color-rainbow-${i % Number.parseInt(theme.rainbowLength)}-500`],
-            gradientColor: theme[`color-rainbow-${i % Number.parseInt(theme.rainbowLength)}-300`],
-            showGradient: true,
-          }
-          : item
-      ))
       .value(),
     [reduxSessions, interval.start, interval.end, allMonthsInInterval, theme],
   );
+
+  const themedBarData = useThemedBarData(barData, theme);
 
   // Average per month for the current interval
   const average = React.useMemo(
@@ -100,7 +93,7 @@ export const WordsIntervalYear = (props: ChartProps): React.ReactElement => {
       />
       <Layout style={chartContainerStyle}>
         <BarChart
-          data={barData}
+          data={themedBarData}
           frontColor={theme['color-primary-500']}
           gradientColor={theme['color-primary-300']}
           showGradient

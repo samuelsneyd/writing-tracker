@@ -14,6 +14,7 @@ import {
   startOfMonth,
   sub,
 } from 'date-fns';
+import useThemedBarData from '../../../hooks/useThemedBarData/useThemedBarData';
 import { useAppSelector } from '../../../store/hooks';
 import ChartAggregateHeader from '../../ChartAggregateHeader/ChartAggregateHeader';
 import { defaultChartStyles } from '../chart-styles';
@@ -72,19 +73,11 @@ export const TimeIntervalMonth = (props: ChartProps): React.ReactElement => {
       })
       // Sort chronologically
       .sortBy('day')
-      .map((item): BarDataItemType => (
-        theme.useRainbow
-          ? {
-            ...item,
-            frontColor: theme[`color-rainbow-${item.dayIndex % Number.parseInt(theme.rainbowLength)}-500`],
-            gradientColor: theme[`color-rainbow-${item.dayIndex % Number.parseInt(theme.rainbowLength)}-300`],
-            showGradient: true,
-          }
-          : item
-      ))
       .value(),
-    [reduxSessions, interval.start, interval.end, allDatesInInterval, theme],
+    [reduxSessions, interval.start, interval.end, allDatesInInterval],
   );
+
+  const themedBarData = useThemedBarData(barData, theme, 'dayIndex');
 
   // Average minutes during current interval
   const average = React.useMemo(
@@ -122,7 +115,7 @@ export const TimeIntervalMonth = (props: ChartProps): React.ReactElement => {
       />
       <Layout style={chartContainerStyle}>
         <BarChart
-          data={barData}
+          data={themedBarData}
           frontColor={theme['color-primary-500']}
           gradientColor={theme['color-primary-300']}
           showGradient
