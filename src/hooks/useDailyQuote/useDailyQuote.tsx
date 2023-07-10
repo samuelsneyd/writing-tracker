@@ -9,22 +9,16 @@ type UseDailyQuoteParams = {
 /**
  * Returns the daily quote. The quote updates daily, sequentially,
  * based on the device's local timezone.
+ * React.useMemo() offers no performance benefit here.
  */
 const useDailyQuote = ({ isFocused = false }: UseDailyQuoteParams): Quote => {
-  const [dailyQuote, setDailyQuote] = React.useState<Quote>({ quote: '', author: '' });
+  const now = new Date();
+  const timezoneOffsetMilliseconds = now.getTimezoneOffset() * 60 * 1000;
+  const millisecondsSinceEpoch = now.getTime() + timezoneOffsetMilliseconds;
+  const daysSinceEpoch = Math.floor(millisecondsSinceEpoch / (1000 * 60 * 60 * 24));
+  const dailyQuoteIndex = daysSinceEpoch % quotes.length;
 
-  React.useEffect(() => {
-    const now = new Date();
-    // Convert to local timezone
-    const timezoneOffsetMilliseconds = now.getTimezoneOffset() * 60 * 1000;
-    const millisecondsSinceEpoch = now.getTime() + timezoneOffsetMilliseconds;
-    const daysSinceEpoch = Math.floor(millisecondsSinceEpoch / (1000 * 60 * 60 * 24));
-    const dailyQuoteIndex = daysSinceEpoch % quotes.length;
-
-    setDailyQuote(quotes[dailyQuoteIndex]);
-  }, [isFocused]);
-
-  return dailyQuote;
+  return quotes[dailyQuoteIndex];
 };
 
 export default useDailyQuote;
