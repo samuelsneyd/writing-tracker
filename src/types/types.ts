@@ -1,5 +1,9 @@
-export type RootTabParamList = {
+export type HomeDrawerParamList = {
   // ScreenName: Props | undefined
+  RootTabNavigator: undefined;
+}
+
+export type RootTabParamList = {
   HomeStackNavigator: undefined;
   ProjectsStackNavigator: undefined;
   ChartsStackNavigator: undefined;
