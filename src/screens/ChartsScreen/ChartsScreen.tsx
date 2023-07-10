@@ -74,15 +74,13 @@ const ChartsScreen = (_props: Props): React.ReactElement => {
       <Divider />
       <ScrollView style={styles.container}>
         <Layout style={styles.body}>
-          {[
-            WordsIntervalChartGroup,
-            TimeIntervalChartGroup,
-            ProjectsChartGroup,
-            MiscChartGroup,
-          ].map((Chart, i) =>
-            // Order should never change so using index as key shouldn't cause unnecessary re-renders
-            <React.Fragment key={i}><Chart /><Divider style={styles.divider} /></React.Fragment>,
-          )}
+          <WordsIntervalChartGroup />
+          <Divider style={styles.divider} />
+          <TimeIntervalChartGroup />
+          <Divider style={styles.divider} />
+          <ProjectsChartGroup />
+          <Divider style={styles.divider} />
+          <MiscChartGroup />
         </Layout>
       </ScrollView>
     </SafeAreaView>
