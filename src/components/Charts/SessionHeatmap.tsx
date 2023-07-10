@@ -1,23 +1,43 @@
 import * as React from 'react';
+import _ from 'lodash';
 import { Layout, Text, useTheme } from '@ui-kitten/components';
-import { format, getDaysInYear } from 'date-fns';
+import { format, getDaysInYear, isWithinInterval, sub } from 'date-fns';
 import { useAppSelector } from '../../store/hooks';
 import CalendarHeatmap from '../CalendarHeatmap/CalendarHeatmap';
+import ChartAggregateHeader from '../ChartAggregateHeader/ChartAggregateHeader';
 import { defaultChartStyles } from './chart-styles';
+import { ChartProps } from './chart-types';
+import { formatInterval } from './chart-utils';
 
-export const SessionHeatmap = () => {
+export const SessionHeatmap = (props: ChartProps) => {
+  const { showTitle = true, chartContainerStyle = defaultChartStyles.chartContainer } = props;
   const theme = useTheme();
   const today = new Date();
+  const interval: Interval = {
+    start: sub(today, { years: 1 }),
+    end: today,
+  };
   const reduxSessions = useAppSelector(state => state.sessions);
   const reduxTheme = useAppSelector(state => state.theme);
 
+  const heatmapData = _(reduxSessions)
+    .filter(session => isWithinInterval(new Date(session.date), interval))
+    .map(session => ({ date: format(new Date(session.date), 'yyyy-MM-dd') }))
+    .value();
+
   return (
     <>
-      <Text category="h6" appearance="hint">Session heatmap (year)</Text>
-      <Text category="s1" appearance="hint">Total sessions: {reduxSessions.length.toLocaleString()}</Text>
-      <Layout style={defaultChartStyles.chartContainer}>
+      {showTitle && <Text category="h6">Session heatmap (year)</Text>}
+      <ChartAggregateHeader
+        aggregateText="total"
+        value={reduxSessions.length}
+        valueText="sessions"
+        intervalText={formatInterval(interval)}
+        showNavButtons={false}
+      />
+      <Layout style={chartContainerStyle}>
         <CalendarHeatmap
-          values={reduxSessions.map(session => ({ date: format(new Date(session.date), 'yyyy-MM-dd') }))}
+          values={heatmapData}
           endDate={today}
           numDays={getDaysInYear(today)}
           colorArray={[
