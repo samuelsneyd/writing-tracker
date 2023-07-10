@@ -1,7 +1,6 @@
 import * as React from 'react';
 import _ from 'lodash';
 import { Layout, Text, useTheme } from '@ui-kitten/components';
-import { StyleSheet } from 'react-native';
 import { BarChart } from 'react-native-gifted-charts';
 import { format, setDefaultOptions } from 'date-fns';
 import { useAppSelector } from '../../store/hooks';
