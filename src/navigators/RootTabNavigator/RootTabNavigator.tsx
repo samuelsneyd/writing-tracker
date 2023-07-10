@@ -32,10 +32,10 @@ const RootTabNavigator = (): React.ReactElement => (
     tabBar={props => <BottomTabBar {...props} />}
     screenOptions={{ headerShown: false }}
   >
-    <Tab.Screen name="HomeStackNavigator" component={HomeStackNavigator} />
-    <Tab.Screen name="ProjectsStackNavigator" component={ProjectsStackNavigator} />
-    <Tab.Screen name="ChartsStackNavigator" component={ChartsStackNavigator} />
-    <Tab.Screen name="MoreStackNavigator" component={MoreStackNavigator} />
+    <Tab.Screen name="HomeStackNavigator" component={HomeStackNavigator} options={{ lazy: false }} />
+    <Tab.Screen name="ProjectsStackNavigator" component={ProjectsStackNavigator} options={{ lazy: false }} />
+    <Tab.Screen name="ChartsStackNavigator" component={ChartsStackNavigator} options={{ lazy: false }} />
+    <Tab.Screen name="MoreStackNavigator" component={MoreStackNavigator} options={{ lazy: false }} />
   </Tab.Navigator>
 );
 
