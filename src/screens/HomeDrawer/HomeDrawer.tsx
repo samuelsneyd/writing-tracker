@@ -2,8 +2,9 @@ import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { DrawerScreenProps } from '@react-navigation/drawer';
 import { Divider, Drawer, DrawerElement, DrawerItem, IndexPath, Layout, Text } from '@ui-kitten/components';
+import { Auth } from 'aws-amplify';
 import { name as appName } from '../../../app.json';
-import { BookIcon, MenuIcon } from '../../components/Icons/Icons';
+import { HomeIcon, LogOutIcon, PersonIcon, SettingsIcon } from '../../components/Icons/Icons';
 import { SafeAreaLayout } from '../../components/SafeAreaComponent/SafeAreaComponent';
 import { HomeDrawerParamList } from '../../types/types';
 
@@ -15,22 +16,42 @@ type Props = DrawerScreenProps<HomeDrawerParamList, 'RootTabNavigator'>;
 export const HomeDrawer = ({ navigation }: Props): DrawerElement => {
   const [selectedIndex, setSelectedIndex] = React.useState<IndexPath>();
 
-  // TODO - refactor links and navigation
+  // TODO - add onPress handlers
   const DATA = [
     {
-      title: 'Libraries',
-      icon: MenuIcon,
+      title: 'Home',
+      icon: HomeIcon,
       onPress: () => {
-        console.log('Libraries');
-        navigation.toggleDrawer();
+        console.log('Home');
+        navigation.navigate('RootTabNavigator');
+        navigation.closeDrawer();
       },
     },
     {
-      title: 'Documentation',
-      icon: BookIcon,
+      title: 'Profile',
+      icon: PersonIcon,
       onPress: () => {
-        console.log('Documentation');
-        navigation.toggleDrawer();
+        console.log('Profile');
+        navigation.closeDrawer();
+      },
+    },
+    {
+      title: 'Settings',
+      icon: SettingsIcon,
+      onPress: () => {
+        console.log('Settings');
+        navigation.closeDrawer();
+      },
+    },
+    {
+      title: 'Log Out',
+      icon: LogOutIcon,
+      onPress: async () => {
+        try {
+          await Auth.signOut();
+        } catch (error) {
+          console.log('error signing out: ', error);
+        }
       },
     },
   ];
@@ -57,7 +78,7 @@ export const HomeDrawer = ({ navigation }: Props): DrawerElement => {
       <React.Fragment>
         <Divider />
         <View style={styles.footer}>
-          <Text>{`Version ${version}`}</Text>
+          <Text category="s2">{`Version ${version}`}</Text>
         </View>
       </React.Fragment>
     </SafeAreaLayout>
@@ -95,6 +116,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-start',
     marginLeft: 16,
+    marginVertical: 8,
   },
   profileContainer: {
     flexDirection: 'row',
