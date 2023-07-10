@@ -32,7 +32,7 @@ export const MiscChartGroup = (props: TabViewProps) => {
           <TotalWordsByDay showTitle={false} chartContainerStyle={styles.barChartContainer} />
         </Tab>
         <Tab title="Session heatmap">
-          <SessionHeatmap showTitle={false} chartContainerStyle={styles.barChartContainer} />
+          <SessionHeatmap showTitle={false} />
         </Tab>
       </TabView>
     </>
