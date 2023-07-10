@@ -1,29 +1,31 @@
 import * as React from 'react';
 import _ from 'lodash';
 import { Layout, Text, useTheme } from '@ui-kitten/components';
-import { format, getDaysInYear, isWithinInterval, sub } from 'date-fns';
-import { useAppSelector } from '../../store/hooks';
-import CalendarHeatmap from '../CalendarHeatmap/CalendarHeatmap';
-import ChartAggregateHeader from '../ChartAggregateHeader/ChartAggregateHeader';
-import { defaultChartStyles } from './chart-styles';
-import { ChartProps } from './chart-types';
-import { formatInterval } from './chart-utils';
+import { endOfDay, format, getDaysInYear, isWithinInterval, startOfDay, sub } from 'date-fns';
+import { useAppSelector } from '../../../store/hooks';
+import CalendarHeatmap from '../../CalendarHeatmap/CalendarHeatmap';
+import ChartAggregateHeader from '../../ChartAggregateHeader/ChartAggregateHeader';
+import { defaultChartStyles } from '../chart-styles';
+import { ChartProps } from '../chart-types';
+import { formatInterval } from '../chart-utils';
 
 export const SessionHeatmap = (props: ChartProps) => {
   const { showTitle = true, chartContainerStyle = defaultChartStyles.chartContainer } = props;
   const theme = useTheme();
   const today = new Date();
-  const interval: Interval = {
-    start: sub(today, { years: 1 }),
-    end: today,
-  };
+  const start = startOfDay(sub(today, { years: 1 })).getTime();
+  const end = endOfDay(today).getTime();
+  const interval: Interval = React.useMemo(() => ({ start, end }), [start, end]);
   const reduxSessions = useAppSelector(state => state.sessions);
   const reduxTheme = useAppSelector(state => state.theme);
 
-  const heatmapData = _(reduxSessions)
-    .filter(session => isWithinInterval(new Date(session.date), interval))
-    .map(session => ({ date: format(new Date(session.date), 'yyyy-MM-dd') }))
-    .value();
+  const heatmapData = React.useMemo(
+    () => _(reduxSessions)
+      .filter(session => isWithinInterval(new Date(session.date), interval))
+      .map(session => ({ date: format(new Date(session.date), 'yyyy-MM-dd') }))
+      .value(),
+    [reduxSessions, interval],
+  );
 
   return (
     <>

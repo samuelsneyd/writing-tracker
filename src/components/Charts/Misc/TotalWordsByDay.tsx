@@ -3,11 +3,11 @@ import _ from 'lodash';
 import { Layout, Text, useTheme } from '@ui-kitten/components';
 import { BarChart } from 'react-native-gifted-charts';
 import { format, setDefaultOptions } from 'date-fns';
-import { useAppSelector } from '../../store/hooks';
-import ChartAggregateHeader from '../ChartAggregateHeader/ChartAggregateHeader';
-import { defaultChartStyles } from './chart-styles';
-import type { ChartProps, BarDataItemType } from './chart-types';
-import { getMaxYAxisValue, getYAxisLabelTexts, renderLabel, renderTooltip } from './chart-utils';
+import { useAppSelector } from '../../../store/hooks';
+import ChartAggregateHeader from '../../ChartAggregateHeader/ChartAggregateHeader';
+import { defaultChartStyles } from '../chart-styles';
+import type { ChartProps, BarDataItemType } from '../chart-types';
+import { getMaxYAxisValue, getYAxisLabelTexts, renderLabel, renderTooltip } from '../chart-utils';
 
 setDefaultOptions({ weekStartsOn: 1 });
 
@@ -20,39 +20,48 @@ export const TotalWordsByDay = (props: ChartProps): React.ReactElement => {
   const reduxSessions = useAppSelector(state => state.sessions);
 
   // Sum words of all projects, grouped by day of the week
-  const barData = _(reduxSessions)
-    .map(session => ({
-      value: session.words,
-      label: format(new Date(session.date), 'E'),
-    }))
-    .groupBy('label')
-    .mapValues(group => _.sumBy(group, 'value'))
-    .defaults(_.zipObject(DAYS_OF_WEEK, Array(DAYS_OF_WEEK.length).fill(0)))
-    .map((value, label): BarDataItemType => ({
-      value,
-      label,
-      labelComponent: () => renderLabel(label),
-    }))
-    // Sort Mon -> Sun
-    .sortBy(item => _.indexOf(DAYS_OF_WEEK, item.label))
-    .map((item, i): BarDataItemType => (
-      theme.useRainbow
-        ? {
-          ...item,
-          frontColor: theme[`color-rainbow-${i % Number.parseInt(theme.rainbowLength)}-500`],
-          gradientColor: theme[`color-rainbow-${i % Number.parseInt(theme.rainbowLength)}-300`],
-          showGradient: true,
-        }
-        : item
-    ))
-    .value();
+  const barData = React.useMemo(
+    () => _(reduxSessions)
+      .map(session => ({
+        value: session.words,
+        label: format(new Date(session.date), 'E'),
+      }))
+      .groupBy('label')
+      .mapValues(group => _.sumBy(group, 'value'))
+      .defaults(_.zipObject(DAYS_OF_WEEK, Array(DAYS_OF_WEEK.length).fill(0)))
+      .map((value, label): BarDataItemType => ({
+        value,
+        label,
+        labelComponent: () => renderLabel(label),
+      }))
+      // Sort Mon -> Sun
+      .sortBy(item => _.indexOf(DAYS_OF_WEEK, item.label))
+      .map((item, i): BarDataItemType => (
+        theme.useRainbow
+          ? {
+            ...item,
+            frontColor: theme[`color-rainbow-${i % Number.parseInt(theme.rainbowLength)}-500`],
+            gradientColor: theme[`color-rainbow-${i % Number.parseInt(theme.rainbowLength)}-300`],
+            showGradient: true,
+          }
+          : item
+      ))
+      .value(),
+    [reduxSessions, theme],
+  );
 
-  const trackedWords = Math.round(_.sumBy(barData, 'value'));
-  const initialWords = Math.round(_.sumBy(reduxProjects, 'initialWords'));
+  const trackedWords = React.useMemo(
+    () => Math.round(_.sumBy(barData, 'value')),
+    [barData],
+  );
+  const initialWords = React.useMemo(
+    () => Math.round(_.sumBy(reduxProjects, 'initialWords')),
+    [reduxProjects],
+  );
   const totalWords = trackedWords + initialWords;
 
-  const maxValue = getMaxYAxisValue(barData);
-  const yAxisLabelTexts = getYAxisLabelTexts(maxValue);
+  const maxValue = React.useMemo(() => getMaxYAxisValue(barData), [barData]);
+  const yAxisLabelTexts = React.useMemo(() => getYAxisLabelTexts(maxValue), [maxValue]);
 
   return (
     <>

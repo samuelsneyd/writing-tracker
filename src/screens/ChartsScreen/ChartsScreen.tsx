@@ -4,10 +4,9 @@ import { SafeAreaView, ScrollView, StyleSheet } from 'react-native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { DataStore } from 'aws-amplify';
 import {
+  MiscChartGroup,
   ProjectsChartGroup,
-  SessionHeatmap,
   TimeIntervalChartGroup,
-  TotalWordsByDay,
   WordsIntervalChartGroup,
 } from '../../components/Charts';
 import { Project, Session } from '../../models';
@@ -79,8 +78,7 @@ const ChartsScreen = (_props: Props): React.ReactElement => {
             WordsIntervalChartGroup,
             TimeIntervalChartGroup,
             ProjectsChartGroup,
-            TotalWordsByDay,
-            SessionHeatmap,
+            MiscChartGroup,
           ].map((Chart, i) =>
             // Order should never change so using index as key shouldn't cause unnecessary re-renders
             <React.Fragment key={i}><Chart /><Divider style={styles.divider} /></React.Fragment>,
