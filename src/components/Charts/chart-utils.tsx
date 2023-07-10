@@ -1,7 +1,7 @@
 import * as React from 'react';
 import _ from 'lodash';
 import { format, isSameDay, isSameMonth, isSameYear } from 'date-fns';
-import { Text, TextElement, ThemeType } from '@ui-kitten/components';
+import { Text, TextElement, ThemeType, Tooltip } from '@ui-kitten/components';
 import { StyleSheet } from 'react-native';
 import { BarDataItemType } from './chart-types';
 
@@ -27,7 +27,7 @@ export const renderTooltip = (
     value = (item.value * offset).toLocaleString();
   }
 
-  return <Text appearance="hint" style={styles.toolTip}>{prefix}{value}{suffix}</Text>;
+  return <Text style={styles.toolTip}>{prefix}{value}{suffix}</Text>
 };
 
 /**
