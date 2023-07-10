@@ -34,48 +34,63 @@ export const TimeIntervalYear = (props: ChartProps): React.ReactElement => {
   const reduxSessions = useAppSelector(state => state.sessions);
   const today = new Date();
   const [interval, setInterval] = React.useState<Interval>({
-    start: startOfYear(today),
-    end: endOfYear(today),
+    start: startOfYear(today).getTime(),
+    end: endOfYear(today).getTime(),
   });
-  const allMonthsInInterval = eachMonthOfInterval(interval).map(date => date.toISOString());
+  const allMonthsInInterval = React.useMemo(
+    () => eachMonthOfInterval(interval).map(date => date.toISOString()),
+    [interval.start, interval.end],
+  );
 
   // Sum minutes of all projects, grouped by month
-  const barData = _(reduxSessions)
-    .filter(session => isWithinInterval(new Date(session.date), interval))
-    .map(session => ({
-      value: session.minutes,
-      month: startOfMonth(new Date(session.date)).toISOString(),
-    }))
-    .groupBy('month')
-    .mapValues(group => _.sumBy(group, 'value'))
-    .defaults(_.zipObject(allMonthsInInterval, Array(allMonthsInInterval.length).fill(0)))
-    .map((value, month): BarDataItemType => ({
-      month,
-      value,
-      labelComponent: () => {
-        return renderLabel(format(new Date(month), 'MMM')[0], 2);
-      },
-    }))
-    // Sort chronologically
-    .sortBy('month')
-    .map((item, i): BarDataItemType => (
-      theme.useRainbow
-        ? {
-          ...item,
-          frontColor: theme[`color-rainbow-${i % Number.parseInt(theme.rainbowLength)}-500`],
-          gradientColor: theme[`color-rainbow-${i % Number.parseInt(theme.rainbowLength)}-300`],
-          showGradient: true,
-        }
-        : item
-    ))
-    .value();
+  const barData = React.useMemo(
+    () => _(reduxSessions)
+      .filter(session => isWithinInterval(new Date(session.date), interval))
+      .map(session => ({
+        value: session.minutes,
+        month: startOfMonth(new Date(session.date)).toISOString(),
+      }))
+      .groupBy('month')
+      .mapValues(group => _.sumBy(group, 'value'))
+      .defaults(_.zipObject(allMonthsInInterval, Array(allMonthsInInterval.length).fill(0)))
+      .map((value, month): BarDataItemType => ({
+        month,
+        value,
+        labelComponent: () => {
+          return renderLabel(format(new Date(month), 'MMM')[0], 2);
+        },
+      }))
+      // Sort chronologically
+      .sortBy('month')
+      .map((item, i): BarDataItemType => (
+        theme.useRainbow
+          ? {
+            ...item,
+            frontColor: theme[`color-rainbow-${i % Number.parseInt(theme.rainbowLength)}-500`],
+            gradientColor: theme[`color-rainbow-${i % Number.parseInt(theme.rainbowLength)}-300`],
+            showGradient: true,
+          }
+          : item
+      ))
+      .value(),
+    [reduxSessions, interval.start, interval.end, allMonthsInInterval, theme],
+  );
 
   // Average minutes per month during current interval
-  const average = Math.round(_(barData).filter(data => data.value).meanBy('value')) || 0;
+  const average = React.useMemo(
+    () => Math.round(_(barData).filter(data => data.value).meanBy('value')) || 0,
+    [barData],
+  );
 
-  const maxValue = getMaxYAxisValue(barData, 2 * 60, 2 * 60);
-  const yAxisLabelTexts = getYAxisLabelTexts(maxValue, 4, '', 'h', 1 / 60);
-  const formattedTime = formatMinutesAsHourMinutes(average);
+  const maxValue = React.useMemo(
+    () => getMaxYAxisValue(barData, 2 * 60, 2 * 60),
+    [barData],
+  );
+  const yAxisLabelTexts = React.useMemo(
+    () => getYAxisLabelTexts(maxValue, 4, '', 'h', 1 / 60),
+    [maxValue],
+  );
+  const formattedTime = React.useMemo(() => formatMinutesAsHourMinutes(average), [average]);
 
   return (
     <>
