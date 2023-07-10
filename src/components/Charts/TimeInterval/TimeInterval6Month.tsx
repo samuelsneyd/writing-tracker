@@ -138,12 +138,12 @@ export const TimeInterval6Month = (props: ChartProps): React.ReactElement => {
         valueText=""
         intervalText={formatInterval(interval)}
         onBackButtonPress={() => setInterval({
-          start: startOfMonth(sub(interval.start, { months: 6 })),
-          end: endOfMonth(sub(interval.end, { months: 6 })),
+          start: startOfMonth(sub(interval.start, { months: 6 })).getTime(),
+          end: endOfMonth(sub(interval.end, { months: 6 })).getTime(),
         })}
         onForwardButtonPress={() => setInterval({
-          start: startOfMonth(add(interval.start, { months: 6 })),
-          end: endOfMonth(add(interval.end, { months: 6 })),
+          start: startOfMonth(add(interval.start, { months: 6 })).getTime(),
+          end: endOfMonth(add(interval.end, { months: 6 })).getTime(),
         })}
         forwardButtonDisabled={isWithinInterval(today, interval)}
       />
