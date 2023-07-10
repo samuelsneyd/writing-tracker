@@ -6,7 +6,7 @@ import { LoginDate } from '../../models';
 import type { DateStreakSummary } from '../../types/types';
 
 type UseLoginStreakParams = {
-  isFocused?: boolean,
+  isFocused?: boolean;
 };
 
 /**
