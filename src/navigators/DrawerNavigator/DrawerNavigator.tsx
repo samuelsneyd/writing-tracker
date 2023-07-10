@@ -8,7 +8,7 @@ const Drawer = createDrawerNavigator<HomeDrawerParamList>();
 
 const DrawerNavigator = (): React.ReactElement => (
   <Drawer.Navigator
-    screenOptions={{ headerShown: false }}
+    screenOptions={{ headerShown: false, swipeEdgeWidth: 0 }}
     // @ts-ignore
     drawerContent={props => <HomeDrawer {...props} />}
   >
