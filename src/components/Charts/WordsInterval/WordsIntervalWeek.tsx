@@ -37,7 +37,6 @@ export const WordsIntervalWeek = (props: ChartProps): React.ReactElement => {
     [interval.start, interval.end],
   );
 
-  const startP = performance.now();
   // Sum words of all projects, grouped by day of the week
   const barData = React.useMemo(
     () => _(reduxSessions)
