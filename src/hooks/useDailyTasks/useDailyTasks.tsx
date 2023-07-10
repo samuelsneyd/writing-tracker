@@ -19,7 +19,7 @@ export type DailyTaskSummary = {
   completedTasks: DailyTask[];
 };
 
-const useDailyTasks = (date: Date | undefined = undefined): DailyTaskSummary => {
+const useDailyTasks = (date: Date | number | undefined = undefined): DailyTaskSummary => {
   const reduxProjects = useAppSelector(state => state.projects);
   const reduxSessions = useAppSelector(state => state.sessions);
   const interval = date && {
