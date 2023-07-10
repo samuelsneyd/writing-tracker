@@ -5,6 +5,7 @@ import { StyleSheet } from 'react-native';
 import { BarChart } from 'react-native-gifted-charts';
 import { format, setDefaultOptions } from 'date-fns';
 import { useAppSelector } from '../../store/hooks';
+import ChartAggregateHeader from '../ChartAggregateHeader/ChartAggregateHeader';
 import { defaultChartStyles } from './chart-styles';
 import type { ChartProps, BarDataItemType } from './chart-types';
 import { getMaxYAxisValue, getYAxisLabelTexts, renderLabel, renderTooltip } from './chart-utils';
@@ -47,19 +48,23 @@ export const TotalWordsByDay = (props: ChartProps): React.ReactElement => {
     ))
     .value();
 
-  const trackedWords = Math.round(_(barData).sumBy('value'));
-  const initialWords = Math.round(_(reduxProjects).sumBy('initialWords'));
+  const trackedWords = Math.round(_.sumBy(barData, 'value'));
+  const initialWords = Math.round(_.sumBy(reduxProjects, 'initialWords'));
+  const totalWords = trackedWords + initialWords;
 
   const maxValue = getMaxYAxisValue(barData);
   const yAxisLabelTexts = getYAxisLabelTexts(maxValue);
 
   return (
     <>
-      {showTitle && <Text category="h6" appearance="hint">Words by day of the week</Text>}
-      <Text category="s1" appearance="hint">
-        Total: {(trackedWords + initialWords).toLocaleString()}
-        {initialWords && ` | Tracked: ${trackedWords.toLocaleString()} | Initial: ${initialWords.toLocaleString()}`}
-      </Text>
+      {showTitle && <Text category="h6">Words by day of the week</Text>}
+      <ChartAggregateHeader
+        aggregateText="total"
+        value={totalWords}
+        valueText="words"
+        intervalText={`Initial: ${initialWords.toLocaleString()} | Tracked: ${trackedWords.toLocaleString()}`}
+        showNavButtons={false}
+      />
       <Layout style={chartContainerStyle}>
         <BarChart
           data={barData}
