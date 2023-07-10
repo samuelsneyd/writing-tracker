@@ -35,52 +35,68 @@ export const TimeIntervalWeek = (props: ChartProps): React.ReactElement => {
   const reduxSessions = useAppSelector(state => state.sessions);
   const today = new Date();
   const [interval, setInterval] = React.useState<Interval>({
-    start: startOfWeek(today),
-    end: endOfWeek(today),
+    start: startOfWeek(today).getTime(),
+    end: endOfWeek(today).getTime(),
   });
-  const allDatesInInterval = eachDayOfInterval(interval).map(date => date.toISOString());
+  const allDatesInInterval = React.useMemo(
+    () => eachDayOfInterval(interval).map(date => date.toISOString()),
+    [interval.start, interval.end],
+  );
 
   // Sum minutes of all projects, grouped by day of the week
-  const barData = _(reduxSessions)
-    .filter(session => isWithinInterval(new Date(session.date), interval))
-    .map(session => ({
-      value: session.minutes,
-      day: startOfDay(new Date(session.date)).toISOString(),
-    }))
-    .groupBy('day')
-    .mapValues(group => _.sumBy(group, 'value'))
-    .defaults(_.zipObject(allDatesInInterval, Array(allDatesInInterval.length).fill(0)))
-    .map((value, day): BarDataItemType => {
-      const dayDate = new Date(day);
-      const dayIndex = (getDay(dayDate) + 6) % 7;
-      const label = format(dayDate, 'E');
-      return ({
-        day,
-        dayIndex,
-        value,
-        labelComponent: () => renderLabel(label),
-      });
-    })
-    // Sort chronologically
-    .sortBy('day')
-    .map((item): BarDataItemType => (
-      theme.useRainbow
-        ? {
-          ...item,
-          frontColor: theme[`color-rainbow-${item.dayIndex % Number.parseInt(theme.rainbowLength)}-500`],
-          gradientColor: theme[`color-rainbow-${item.dayIndex % Number.parseInt(theme.rainbowLength)}-300`],
-          showGradient: true,
-        }
-        : item
-    ))
-    .value();
+  const barData = React.useMemo(
+    () => _(reduxSessions)
+      .filter(session => isWithinInterval(new Date(session.date), interval))
+      .map(session => ({
+        value: session.minutes,
+        day: startOfDay(new Date(session.date)).toISOString(),
+      }))
+      .groupBy('day')
+      .mapValues(group => _.sumBy(group, 'value'))
+      .defaults(_.zipObject(allDatesInInterval, Array(allDatesInInterval.length).fill(0)))
+      .map((value, day): BarDataItemType => {
+        const dayDate = new Date(day);
+        const dayIndex = (getDay(dayDate) + 6) % 7;
+        const label = format(dayDate, 'E');
+        return ({
+          day,
+          dayIndex,
+          value,
+          labelComponent: () => renderLabel(label),
+        });
+      })
+      // Sort chronologically
+      .sortBy('day')
+      .map((item): BarDataItemType => (
+        theme.useRainbow
+          ? {
+            ...item,
+            frontColor: theme[`color-rainbow-${item.dayIndex % Number.parseInt(theme.rainbowLength)}-500`],
+            gradientColor: theme[`color-rainbow-${item.dayIndex % Number.parseInt(theme.rainbowLength)}-300`],
+            showGradient: true,
+          }
+          : item
+      ))
+      .value(),
+    [reduxSessions, interval.start, interval.end, allDatesInInterval, theme],
+  );
+
 
   // Average minutes during current interval
-  const average = Math.round(_(barData).filter(data => data.value).meanBy('value')) || 0;
+  const average = React.useMemo(
+    () => Math.round(_(barData).filter(data => data.value).meanBy('value')) || 0,
+    [barData],
+  );
 
-  const maxValue = getMaxYAxisValue(barData, 2 * 60, 2 * 60);
-  const yAxisLabelTexts = getYAxisLabelTexts(maxValue, 4, '', 'h', 1 / 60);
-  const formattedTime = formatMinutesAsHourMinutes(average);
+  const maxValue = React.useMemo(
+    () => getMaxYAxisValue(barData, 2 * 60, 2 * 60),
+    [barData],
+  );
+  const yAxisLabelTexts = React.useMemo(
+    () => getYAxisLabelTexts(maxValue, 4, '', 'h', 1 / 60),
+    [maxValue],
+  );
+  const formattedTime = React.useMemo(() => formatMinutesAsHourMinutes(average), [average]);
 
   return (
     <>
@@ -91,12 +107,12 @@ export const TimeIntervalWeek = (props: ChartProps): React.ReactElement => {
         valueText=""
         intervalText={formatInterval(interval)}
         onBackButtonPress={() => setInterval({
-          start: sub(interval.start, { weeks: 1 }),
-          end: sub(interval.end, { weeks: 1 }),
+          start: sub(interval.start, { weeks: 1 }).getTime(),
+          end: sub(interval.end, { weeks: 1 }).getTime(),
         })}
         onForwardButtonPress={() => setInterval({
-          start: add(interval.start, { weeks: 1 }),
-          end: add(interval.end, { weeks: 1 }),
+          start: add(interval.start, { weeks: 1 }).getTime(),
+          end: add(interval.end, { weeks: 1 }).getTime(),
         })}
         forwardButtonDisabled={isWithinInterval(today, interval)}
       />
