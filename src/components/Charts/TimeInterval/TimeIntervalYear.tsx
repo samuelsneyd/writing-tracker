@@ -101,12 +101,12 @@ export const TimeIntervalYear = (props: ChartProps): React.ReactElement => {
         valueText=""
         intervalText={formatInterval(interval)}
         onBackButtonPress={() => setInterval({
-          start: sub(interval.start, { years: 1 }),
-          end: sub(interval.end, { years: 1 }),
+          start: sub(interval.start, { years: 1 }).getTime(),
+          end: sub(interval.end, { years: 1 }).getTime(),
         })}
         onForwardButtonPress={() => setInterval({
-          start: add(interval.start, { years: 1 }),
-          end: add(interval.end, { years: 1 }),
+          start: add(interval.start, { years: 1 }).getTime(),
+          end: add(interval.end, { years: 1 }).getTime(),
         })}
         forwardButtonDisabled={isWithinInterval(today, interval)}
       />
