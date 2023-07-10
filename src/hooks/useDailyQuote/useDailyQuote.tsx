@@ -3,8 +3,8 @@ import type { Quote } from '../../types/types';
 import quotes from './quotes';
 
 type UseDailyQuoteParams = {
-  isFocused: boolean,
-}
+  isFocused: boolean;
+};
 
 /**
  * Returns the daily quote. The quote updates daily, sequentially,
