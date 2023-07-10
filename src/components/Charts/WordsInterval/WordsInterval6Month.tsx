@@ -32,77 +32,88 @@ export const WordsInterval6Month = (props: ChartProps): React.ReactElement => {
   const theme = useTheme();
   const reduxSessions = useAppSelector(state => state.sessions);
   const today = new Date();
-  const startOfThisYear = startOfYear(today);
-  const endOfThisYear = endOfYear(today);
+  const startOfThisYear = startOfYear(today).getTime();
+  const midYearCutoffLower = endOfMonth(add(startOfThisYear, { months: 5 })).getTime();
+  const midYearCutoffUpper = add(startOfThisYear, { months: 6 }).getTime();
+  const endOfThisYear = endOfYear(today).getTime();
 
-  const firstInterval = {
+  const firstInterval: Interval = {
     start: startOfThisYear,
-    end: endOfMonth(add(startOfThisYear, { months: 5 })),
+    end: midYearCutoffLower,
   };
-  const secondInterval = {
-    start: add(startOfThisYear, { months: 6 }),
+  const secondInterval: Interval = {
+    start: midYearCutoffUpper,
     end: endOfThisYear,
   };
   const initialInterval = getMonth(today) < 6 ? firstInterval : secondInterval;
   const [interval, setInterval] = React.useState<Interval>(initialInterval);
-  const allWeeksInInterval = eachWeekOfInterval(interval).map(date => date.toISOString());
+  const allWeeksInInterval = React.useMemo(
+    () => eachWeekOfInterval(interval).map(date => date.toISOString()),
+    [interval.start, interval.end],
+  );
 
   let showLabel = false;
 
   // Sum words of all projects, grouped by week
-  const barData = _(reduxSessions)
-    .filter(session => isWithinInterval(new Date(session.date), interval))
-    .map(session => ({
-      value: session.words,
-      week: startOfWeek(new Date(session.date)).toISOString(),
-    }))
-    .groupBy('week')
-    .mapValues(group => _.sumBy(group, 'value'))
-    .defaults(_.zipObject(allWeeksInInterval, Array(allWeeksInInterval.length).fill(0)))
-    .map((value, week): BarDataItemType => {
-      return ({
-        week,
-        value,
-        labelComponent: () => {
-          // Show label if the week contains the first of the month
-          let label;
-          const start = new Date(week);
-          const end = endOfWeek(start);
+  const barData = React.useMemo(
+    () => _(reduxSessions)
+      .filter(session => isWithinInterval(new Date(session.date), interval))
+      .map(session => ({
+        value: session.words,
+        week: startOfWeek(new Date(session.date)).toISOString(),
+      }))
+      .groupBy('week')
+      .mapValues(group => _.sumBy(group, 'value'))
+      .defaults(_.zipObject(allWeeksInInterval, Array(allWeeksInInterval.length).fill(0)))
+      .map((value, week): BarDataItemType => {
+        return ({
+          week,
+          value,
+          labelComponent: () => {
+            // Show label if the week contains the first of the month
+            let label;
+            const start = new Date(week);
+            const end = endOfWeek(start);
 
-          if (getWeekOfMonth(start) === 1) {
-            showLabel = true;
-            label = format(start, 'MMM');
-          } else if (getWeekOfMonth(end) === 1) {
-            showLabel = true;
-            label = format(end, 'MMM');
-          }
+            if (getWeekOfMonth(start) === 1) {
+              showLabel = true;
+              label = format(start, 'MMM');
+            } else if (getWeekOfMonth(end) === 1) {
+              showLabel = true;
+              label = format(end, 'MMM');
+            }
 
-          if (showLabel) {
-            showLabel = false;
-            return renderLabel(label, 3);
+            if (showLabel) {
+              showLabel = false;
+              return renderLabel(label, 3);
+            }
+          },
+        });
+      })
+      // Sort chronologically
+      .sortBy('week')
+      .map((item, i): BarDataItemType => (
+        theme.useRainbow
+          ? {
+            ...item,
+            frontColor: theme[`color-rainbow-${i % Number.parseInt(theme.rainbowLength)}-500`],
+            gradientColor: theme[`color-rainbow-${i % Number.parseInt(theme.rainbowLength)}-300`],
+            showGradient: true,
           }
-        },
-      });
-    })
-    // Sort chronologically
-    .sortBy('week')
-    .map((item, i): BarDataItemType => (
-      theme.useRainbow
-        ? {
-          ...item,
-          frontColor: theme[`color-rainbow-${i % Number.parseInt(theme.rainbowLength)}-500`],
-          gradientColor: theme[`color-rainbow-${i % Number.parseInt(theme.rainbowLength)}-300`],
-          showGradient: true,
-        }
-        : item
-    ))
-    .value();
+          : item
+      ))
+      .value(),
+    [reduxSessions, interval.start, interval.end, allWeeksInInterval, theme],
+  );
 
   // Average per week during current interval
-  const average = Math.round(_(barData).filter(data => data.value).meanBy('value')) || 0;
+  const average = React.useMemo(
+    () => Math.round(_(barData).filter(data => data.value).meanBy('value')) || 0,
+    [barData],
+  );
 
-  const maxValue = getMaxYAxisValue(barData);
-  const yAxisLabelTexts = getYAxisLabelTexts(maxValue);
+  const maxValue = React.useMemo(() => getMaxYAxisValue(barData), [barData]);
+  const yAxisLabelTexts = React.useMemo(() => getYAxisLabelTexts(maxValue), [maxValue]);
 
   return (
     <>
@@ -113,12 +124,12 @@ export const WordsInterval6Month = (props: ChartProps): React.ReactElement => {
         valueText="words"
         intervalText={formatInterval(interval)}
         onBackButtonPress={() => setInterval({
-          start: startOfMonth(sub(interval.start, { months: 6 })),
-          end: endOfMonth(sub(interval.end, { months: 6 })),
+          start: startOfMonth(sub(interval.start, { months: 6 })).getTime(),
+          end: endOfMonth(sub(interval.end, { months: 6 })).getTime(),
         })}
         onForwardButtonPress={() => setInterval({
-          start: startOfMonth(add(interval.start, { months: 6 })),
-          end: endOfMonth(add(interval.end, { months: 6 })),
+          start: startOfMonth(add(interval.start, { months: 6 })).getTime(),
+          end: endOfMonth(add(interval.end, { months: 6 })).getTime(),
         })}
         forwardButtonDisabled={isWithinInterval(today, interval)}
       />
