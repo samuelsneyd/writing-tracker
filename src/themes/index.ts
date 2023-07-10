@@ -1,4 +1,5 @@
 import { cyanTheme } from './cyan-theme';
+import { greenTheme } from './green-theme';
 import { purpleTheme } from './purple-theme';
 import { oceanTheme } from './ocean-theme';
 import { steampunkTheme } from './steampunk-theme';
@@ -9,16 +10,18 @@ type ThemesMap = {
 };
 
 export const themesMap: ThemesMap = {
-  cyanTheme: cyanTheme,
-  purpleTheme: purpleTheme,
-  oceanTheme: oceanTheme,
-  steampunkTheme: steampunkTheme,
-  rainbowTheme: rainbowTheme,
+  cyanTheme,
+  greenTheme,
+  purpleTheme,
+  oceanTheme,
+  steampunkTheme,
+  rainbowTheme,
 };
 
 export const themesList = Object.keys(themesMap);
 
 export * from './cyan-theme';
+export * from './green-theme';
 export * from './purple-theme';
 export * from './ocean-theme';
 export * from './steampunk-theme';
