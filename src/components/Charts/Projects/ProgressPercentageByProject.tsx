@@ -2,11 +2,12 @@ import * as React from 'react';
 import _ from 'lodash';
 import { Layout, Text, useTheme } from '@ui-kitten/components';
 import { BarChart } from 'react-native-gifted-charts';
+import useThemedBarDataStepped from '../../../hooks/useThemedBarData/useThemedBarDataStepped';
 import { useAppSelector } from '../../../store/hooks';
 import ChartAggregateHeader from '../../ChartAggregateHeader/ChartAggregateHeader';
 import { defaultChartStyles } from '../chart-styles';
 import type { ChartProps, BarDataItemType } from '../chart-types';
-import { getMaxYAxisValue, getSteppedColors, getYAxisLabelTexts, renderLabel, renderTooltip } from '../chart-utils';
+import { getMaxYAxisValue, getYAxisLabelTexts, renderLabel, renderTooltip } from '../chart-utils';
 
 export const ProgressPercentageByProject = (props: ChartProps): React.ReactElement => {
   const { showTitle = true, chartContainerStyle = defaultChartStyles.chartContainer } = props;
@@ -15,36 +16,46 @@ export const ProgressPercentageByProject = (props: ChartProps): React.ReactEleme
   const reduxSessions = useAppSelector(state => state.sessions);
 
   // Group sessions by projects
-  const groupedSessions = _.groupBy(reduxSessions, 'projectSessionsId');
+  const groupedSessions = React.useMemo(
+    () => _.groupBy(reduxSessions, 'projectSessionsId'),
+    [reduxSessions],
+  );
 
   // Sum words of all sessions, grouped by project
-  const barData: BarDataItemType[] = _(reduxProjects)
-    .mapValues((project) => ({
-      ...project,
-      sessions: groupedSessions[project.id] ?? [],
-    }))
-    .map((item): BarDataItemType => ({
-      label: item.title,
-      value: Math.min(
-        (_.sumBy(item.sessions, 'words') + item.initialWords) / item.overallWordTarget * 100,
-        100,
-      ),
-      labelComponent: () => renderLabel(item.title),
-    }))
-    // Sort descending
-    .sortBy('value')
-    .reverse()
-    .map((item): BarDataItemType => ({
-      ...item,
-      ...getSteppedColors(item, theme, 100),
-    }))
-    .value();
+  const barData = React.useMemo(
+    () => _(reduxProjects)
+      .mapValues((project) => ({
+        ...project,
+        sessions: groupedSessions[project.id] ?? [],
+      }))
+      .map((item): BarDataItemType => ({
+        label: item.title,
+        value: Math.min(
+          (_.sumBy(item.sessions, 'words') + item.initialWords) / item.overallWordTarget * 100,
+          100,
+        ),
+        labelComponent: () => renderLabel(item.title),
+      }))
+      // Sort descending
+      .sortBy('value')
+      .reverse()
+      .value(),
+    [reduxProjects, groupedSessions],
+  );
+
+  const themedBarData = useThemedBarDataStepped(barData, theme, 100);
 
   const totalProjects = barData.length;
-  const completedProjects = barData.filter(data => data.value === 100).length;
+  const completedProjects = React.useMemo(
+    () => barData.filter(data => data.value === 100).length,
+    [barData],
+  );
 
-  const maxValue = getMaxYAxisValue(barData, 100, 0);
-  const yAxisLabelTexts = getYAxisLabelTexts(maxValue, 4, '', '%');
+  const maxValue = React.useMemo(() => getMaxYAxisValue(barData, 100, 0), [barData]);
+  const yAxisLabelTexts = React.useMemo(
+    () => getYAxisLabelTexts(maxValue, 4, '', '%'),
+    [maxValue],
+  );
 
   return (
     <>
@@ -58,7 +69,7 @@ export const ProgressPercentageByProject = (props: ChartProps): React.ReactEleme
       />
       <Layout style={chartContainerStyle}>
         <BarChart
-          data={barData}
+          data={themedBarData}
           frontColor={theme['color-primary-500']}
           gradientColor={theme['color-primary-300']}
           showGradient

@@ -7,7 +7,15 @@ import { TotalWordsByProject } from './TotalWordsByProject';
 
 export const ProjectsChartGroup = (props: TabViewProps) => {
   const [selectedIndex, setSelectedIndex] = React.useState<number>(0);
-  const shouldLoadComponent = (index: number): boolean => index === selectedIndex;
+  const [loadedIndexes, setLoadedIndexes] = React.useState<{ [key: number]: boolean }>({
+    [selectedIndex]: true,
+  });
+  // Lazy load on first load, then stay loaded afterward
+  const shouldLoadComponent = (index: number) => selectedIndex === index || loadedIndexes[index];
+  const onSelect = (index: number) => {
+    setSelectedIndex(index);
+    setLoadedIndexes({ ...loadedIndexes, [index]: true });
+  };
 
   return (
     <>
@@ -15,8 +23,7 @@ export const ProjectsChartGroup = (props: TabViewProps) => {
       <TabView
         {...props}
         selectedIndex={selectedIndex}
-        onSelect={index => setSelectedIndex(index)}
-        // Lazy loading
+        onSelect={onSelect}
         shouldLoadComponent={shouldLoadComponent}
         animationDuration={0}
         swipeEnabled={false}

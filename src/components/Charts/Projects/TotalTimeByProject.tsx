@@ -2,6 +2,7 @@ import * as React from 'react';
 import _ from 'lodash';
 import { Layout, Text, useTheme } from '@ui-kitten/components';
 import { BarChart } from 'react-native-gifted-charts';
+import useThemedBarData from '../../../hooks/useThemedBarData/useThemedBarData';
 import { useAppSelector } from '../../../store/hooks';
 import ChartAggregateHeader from '../../ChartAggregateHeader/ChartAggregateHeader';
 import { defaultChartStyles } from '../chart-styles';
@@ -21,42 +22,43 @@ export const TotalTimeByProject = (props: ChartProps): React.ReactElement => {
   const reduxSessions = useAppSelector(state => state.sessions);
 
   // Group sessions by projects
-  const groupedSessions = _.groupBy(reduxSessions, 'projectSessionsId');
+  const groupedSessions = React.useMemo(
+    () => _.groupBy(reduxSessions, 'projectSessionsId'),
+    [reduxSessions],
+  );
 
   // Sum words of all sessions, grouped by project
-  const barData: BarDataItemType[] = _(reduxProjects)
-    .mapValues((project) => ({
-      ...project,
-      sessions: groupedSessions[project.id] ?? [],
-    }))
-    .map((item): BarDataItemType => ({
-      label: item.title,
-      value: _.sumBy(item.sessions, 'minutes'),
-      labelComponent: () => renderLabel(item.title),
-    }))
-    // Sort descending
-    .sortBy('value')
-    .reverse()
-    .map((item, i): BarDataItemType => (
-      theme.useRainbow
-        ? {
-          ...item,
-          frontColor: theme[`color-rainbow-${i % Number.parseInt(theme.rainbowLength)}-500`],
-          gradientColor: theme[`color-rainbow-${i % Number.parseInt(theme.rainbowLength)}-300`],
-          showGradient: true,
-        }
-        : item
-    ))
-    .value();
+  const barData = React.useMemo(
+    () => _(reduxProjects)
+      .mapValues((project) => ({
+        ...project,
+        sessions: groupedSessions[project.id] ?? [],
+      }))
+      .map((item): BarDataItemType => ({
+        label: item.title,
+        value: _.sumBy(item.sessions, 'minutes'),
+        labelComponent: () => renderLabel(item.title),
+      }))
+      // Sort descending
+      .sortBy('value')
+      .reverse()
+      .value(),
+    [reduxProjects, groupedSessions],
+  );
+
+  const themedBarData = useThemedBarData(barData, theme);
 
   // Total of all minutes
-  const totalMinutes = (_(barData).sumBy('value')) || 0;
-  const formattedTotal = formatMinutesAsHourMinutes(totalMinutes);
-  const averageMinutes = Math.round((_(barData).meanBy('value'))) || 0;
-  const formattedAverage = formatMinutesAsHourMinutes(averageMinutes);
+  const totalMinutes = React.useMemo(() => (_.sumBy(barData, 'value')) || 0, [barData]);
+  const formattedTotal = React.useMemo(() => formatMinutesAsHourMinutes(totalMinutes), [totalMinutes]);
+  const averageMinutes = React.useMemo(() => Math.round((_.meanBy(barData, 'value'))) || 0, [barData]);
+  const formattedAverage = React.useMemo(() => formatMinutesAsHourMinutes(averageMinutes), [averageMinutes]);
 
-  const maxValue = getMaxYAxisValue(barData, 2 * 60, 2 * 60);
-  const yAxisLabelTexts = getYAxisLabelTexts(maxValue, 4, '', 'h', 1 / 60);
+  const maxValue = React.useMemo(() => getMaxYAxisValue(barData, 2 * 60, 2 * 60), [barData]);
+  const yAxisLabelTexts = React.useMemo(
+    () => getYAxisLabelTexts(maxValue, 4, '', 'h', 1 / 60),
+    [maxValue],
+  );
 
   return (
     <>
@@ -70,7 +72,7 @@ export const TotalTimeByProject = (props: ChartProps): React.ReactElement => {
       />
       <Layout style={chartContainerStyle}>
         <BarChart
-          data={barData}
+          data={themedBarData}
           frontColor={theme['color-primary-500']}
           gradientColor={theme['color-primary-300']}
           showGradient

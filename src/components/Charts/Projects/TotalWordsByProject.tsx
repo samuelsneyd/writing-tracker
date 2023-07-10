@@ -2,6 +2,7 @@ import * as React from 'react';
 import _ from 'lodash';
 import { Layout, Text, useTheme } from '@ui-kitten/components';
 import { BarChart } from 'react-native-gifted-charts';
+import useThemedBarData from '../../../hooks/useThemedBarData/useThemedBarData';
 import { useAppSelector } from '../../../store/hooks';
 import ChartAggregateHeader from '../../ChartAggregateHeader/ChartAggregateHeader';
 import { defaultChartStyles } from '../chart-styles';
@@ -15,53 +16,54 @@ export const TotalWordsByProject = (props: ChartProps): React.ReactElement => {
   const reduxSessions = useAppSelector(state => state.sessions);
 
   // Group sessions by projects
-  const groupedSessions = _.groupBy(reduxSessions, 'projectSessionsId');
+  const groupedSessions = React.useMemo(
+    () => _.groupBy(reduxSessions, 'projectSessionsId'),
+    [reduxSessions],
+  );
 
   // Sum words of all sessions, grouped by project
-  const barData: BarDataItemType[] = _(reduxProjects)
-    .mapValues((project) => ({
-      ...project,
-      sessions: groupedSessions[project.id] ?? [],
-    }))
-    .map((item): BarDataItemType => ({
-      label: item.title,
-      value: _.sumBy(item.sessions, 'words') + item.initialWords,
-      labelComponent: () => renderLabel(item.title),
-    }))
-    // Sort descending
-    .sortBy('value')
-    .reverse()
-    .map((item, i): BarDataItemType => (
-      theme.useRainbow
-        ? {
-          ...item,
-          frontColor: theme[`color-rainbow-${i % Number.parseInt(theme.rainbowLength)}-500`],
-          gradientColor: theme[`color-rainbow-${i % Number.parseInt(theme.rainbowLength)}-300`],
-          showGradient: true,
-        }
-        : item
-    ))
-    .value();
+  const barData = React.useMemo(
+    () => _(reduxProjects)
+      .mapValues((project) => ({
+        ...project,
+        sessions: groupedSessions[project.id] ?? [],
+      }))
+      .map((item): BarDataItemType => ({
+        label: item.title,
+        value: _.sumBy(item.sessions, 'words') + item.initialWords,
+        labelComponent: () => renderLabel(item.title),
+      }))
+      // Sort descending
+      .sortBy('value')
+      .reverse()
+      .value(),
+    [reduxProjects, groupedSessions],
+  );
 
-  const totalWords = Math.round(_(barData).sumBy('value'));
-  const averageWordsByProject = Math.round(_(barData).meanBy('value'));
+  const themedBarData = useThemedBarData(barData, theme);
 
-  const maxValue = getMaxYAxisValue(barData, 2000, 2000);
-  const yAxisLabelTexts = getYAxisLabelTexts(maxValue);
+  const total = React.useMemo(() => Math.round(_.sumBy(barData, 'value')), [barData]);
+  const average = React.useMemo(() => Math.round(_.meanBy(barData, 'value')), [barData]);
+
+  const maxValue = React.useMemo(() => getMaxYAxisValue(barData, 2000, 2000), [barData]);
+  const yAxisLabelTexts = React.useMemo(
+    () => getYAxisLabelTexts(maxValue),
+    [maxValue],
+  );
 
   return (
     <>
       {showTitle && <Text category="h6" appearance="hint">Total words by project</Text>}
       <ChartAggregateHeader
         aggregateText="total"
-        value={totalWords}
+        value={total}
         valueText="words"
-        intervalText={`${averageWordsByProject.toLocaleString()} average`}
+        intervalText={`${average.toLocaleString()} average`}
         showNavButtons={false}
       />
       <Layout style={chartContainerStyle}>
         <BarChart
-          data={barData}
+          data={themedBarData}
           frontColor={theme['color-primary-500']}
           gradientColor={theme['color-primary-300']}
           showGradient
