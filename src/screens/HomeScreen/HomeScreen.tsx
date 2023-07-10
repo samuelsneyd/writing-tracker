@@ -26,7 +26,7 @@ import { MenuIcon } from '../../components/Icons/Icons';
 
 type Props = NativeStackScreenProps<HomeStackParamList, 'Home'>
 
-const HomeScreen = (_props: Props): React.ReactElement => {
+const HomeScreen = ({ navigation }: Props): React.ReactElement => {
   const isFocused = useIsFocused();
   const dispatch = useAppDispatch();
   const reduxAwards = useAppSelector(state => state.awards);
@@ -81,7 +81,8 @@ const HomeScreen = (_props: Props): React.ReactElement => {
   const renderDrawerAction = (): TopNavigationActionElement => (
     <TopNavigationAction
       icon={MenuIcon}
-      onPress={() => undefined}
+      // @ts-ignore
+      onPress={() => navigation.toggleDrawer()}
     />
   );
 

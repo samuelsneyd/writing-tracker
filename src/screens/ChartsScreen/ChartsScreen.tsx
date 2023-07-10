@@ -26,7 +26,7 @@ import { MenuIcon } from '../../components/Icons/Icons';
 
 type Props = NativeStackScreenProps<ChartsStackParamList, 'Charts'>;
 
-const ChartsScreen = (_props: Props): React.ReactElement => {
+const ChartsScreen = ({ navigation }: Props): React.ReactElement => {
   const dispatch = useAppDispatch();
   const reduxProjects = useAppSelector(state => state.projects);
   const reduxSessions = useAppSelector(state => state.sessions);
@@ -64,7 +64,8 @@ const ChartsScreen = (_props: Props): React.ReactElement => {
   const renderDrawerAction = (): TopNavigationActionElement => (
     <TopNavigationAction
       icon={MenuIcon}
-      onPress={() => undefined}
+      // @ts-ignore
+      onPress={() => navigation.toggleDrawer()}
     />
   );
 

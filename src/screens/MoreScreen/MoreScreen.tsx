@@ -19,7 +19,8 @@ const MoreScreen = ({ navigation }: Props): React.ReactElement => {
   const renderDrawerAction = (): TopNavigationActionElement => (
     <TopNavigationAction
       icon={MenuIcon}
-      onPress={() => undefined}
+      // @ts-ignore
+      onPress={() => navigation.toggleDrawer()}
     />
   );
 
