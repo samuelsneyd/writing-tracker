@@ -9,6 +9,15 @@ import { WordsIntervalYear } from './WordsIntervalYear';
 
 export const WordsIntervalChartGroup = (props: TabViewProps) => {
   const [selectedIndex, setSelectedIndex] = React.useState<number>(1);
+  const [loadedIndexes, setLoadedIndexes] = React.useState<{ [key: number]: boolean }>({
+    [selectedIndex]: true,
+  });
+  // Lazy load on first load, then stay loaded afterward
+  const shouldLoadComponent = (index: number) => selectedIndex === index || loadedIndexes[index];
+  const onSelect = (index: number) => {
+    setSelectedIndex(index);
+    setLoadedIndexes({ ...loadedIndexes, [index]: true });
+  };
 
   return (
     <>
@@ -16,7 +25,8 @@ export const WordsIntervalChartGroup = (props: TabViewProps) => {
       <TabView
         {...props}
         selectedIndex={selectedIndex}
-        onSelect={index => setSelectedIndex(index)}
+        onSelect={onSelect}
+        shouldLoadComponent={shouldLoadComponent}
         animationDuration={0}
         swipeEnabled={false}
         style={styles.tabViewContainer}
