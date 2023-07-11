@@ -143,9 +143,9 @@ const ProjectEditScreen = ({ route, navigation }: Props): React.ReactElement => 
 
   return (
     <SafeAreaView style={styles.container}>
+      <TopNavigation title="Edit Project" alignment="center" accessoryLeft={backAction} />
+      <Divider />
       <ScrollView style={styles.container} contentContainerStyle={{ flexGrow: 1 }}>
-        <TopNavigation title="Edit Project" alignment="center" accessoryLeft={backAction} />
-        <Divider />
         <Layout style={styles.body}>
           {project && isLoaded && !isSaving
             ? <>

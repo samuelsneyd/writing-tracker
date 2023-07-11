@@ -110,9 +110,9 @@ const ProjectNewScreen = ({ navigation }: Props): React.ReactElement => {
 
   return (
     <SafeAreaView style={styles.container}>
+      <TopNavigation title="New Project" alignment="center" accessoryLeft={backAction} />
+      <Divider />
       <ScrollView style={styles.container} contentContainerStyle={{ flexGrow: 1 }}>
-        <TopNavigation title="New Project" alignment="center" accessoryLeft={backAction} />
-        <Divider />
         <Layout style={styles.body}>
           {projectForm && !isSaving
             ? <>
