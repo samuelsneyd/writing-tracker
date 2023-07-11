@@ -8,9 +8,11 @@ import DrawerNavigator from './navigators/DrawerNavigator/DrawerNavigator';
 import { useAppSelector } from './store/hooks';
 import { themesMap } from './themes';
 import { Provider } from 'react-redux';
-import { store } from './store/store';
+import { PersistGate } from 'redux-persist/integration/react';
+import { persistor, store } from './store/store';
 
 const ThemedContent = () => {
+  // The theme is persisted between app loads with redux-persist
   const theme = useAppSelector(state => state.theme);
 
   return (
@@ -33,7 +35,9 @@ const ThemedContent = () => {
 
 const App = () => (
   <Provider store={store}>
-    <ThemedContent />
+    <PersistGate loading={null} persistor={persistor}>
+      <ThemedContent />
+    </PersistGate>
   </Provider>
 );
 
