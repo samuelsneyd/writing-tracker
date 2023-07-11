@@ -1,5 +1,6 @@
 import * as React from 'react';
 import * as eva from '@eva-design/eva';
+import * as material from '@eva-design/material';
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
 import { withAuthenticator } from 'aws-amplify-react-native';
 import { NavigationContainer } from '@react-navigation/native';
@@ -14,15 +15,17 @@ import { persistor, store } from './store/store';
 const ThemedContent = () => {
   // The theme is persisted between app loads with redux-persist
   const theme = useAppSelector(state => state.theme);
+  // App requires restart on design system change
+  const designSystem = theme.designSystem === 'material' ? material : eva;
 
   return (
     <>
       <IconRegistry icons={EvaIconsPack} />
       <ApplicationProvider
-        {...eva}
+        {...designSystem}
         theme={{
-          ...eva[theme.colorMode],
-          ...themesMap[theme.themeValue],
+          ...designSystem[theme.colorMode],
+          ...themesMap[theme.themeName],
         }}
       >
         <NavigationContainer>

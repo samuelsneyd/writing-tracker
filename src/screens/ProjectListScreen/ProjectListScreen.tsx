@@ -352,7 +352,7 @@ const ProjectListScreen = ({ navigation }: Props): React.ReactElement => {
           <Button size="small" onPress={wipeLocal}>Wipe Local</Button>
         </>
       }
-      <Button size="small" onPress={() => setShowButtons(!showButtons)}>Toggle dev buttons</Button>
+      {/*<Button size="small" onPress={() => setShowButtons(!showButtons)}>Toggle dev buttons</Button>*/}
     </SafeAreaView>
   );
 };

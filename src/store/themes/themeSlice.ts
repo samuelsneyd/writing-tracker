@@ -1,33 +1,40 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 type ThemeMode = 'light' | 'dark';
-type Theme = string;
+type ThemeSystem = 'eva' | 'material';
+type ThemeName = string;
 
 type ThemeState = {
-  colorMode: ThemeMode
-  themeValue: Theme;
+  colorMode: ThemeMode;
+  themeName: ThemeName;
+  designSystem: ThemeSystem;
 };
 
 const initialState: ThemeState = {
   colorMode: 'light',
-  themeValue: 'rainbowTheme',
+  themeName: 'rainbowTheme',
+  designSystem: 'eva',
 };
 
 export const themeSlice = createSlice({
   name: 'theme',
   initialState,
   reducers: {
-    themeSet: (state, action: PayloadAction<Theme>) => {
-      state.themeValue = action.payload;
+    themeSet: (state, action: PayloadAction<ThemeName>) => {
+      state.themeName = action.payload;
     },
 
     colorModeSet: (state, action: PayloadAction<ThemeMode>) => {
       state.colorMode = action.payload;
     },
+
+    designSystemSet: (state, action: PayloadAction<ThemeSystem>) => {
+      state.designSystem = action.payload;
+    },
   },
 });
 
-export const { themeSet, colorModeSet } = themeSlice.actions;
+export const { themeSet, colorModeSet, designSystemSet } = themeSlice.actions;
 
 const themeReducer = themeSlice.reducer;
 

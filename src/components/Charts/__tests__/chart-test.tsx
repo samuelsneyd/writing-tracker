@@ -27,7 +27,7 @@ const mockStore = configureStore();
 const initialState = {
   projects: [],
   sessions: [],
-  theme: { colorMode: 'light', themeValue: undefined },
+  theme: { colorMode: 'light', themeName: undefined, designSystem: 'eva' },
 };
 const rainbowTheme = { colorMode: 'light', themeValue: 'rainbowTheme' };
 

@@ -1,6 +1,8 @@
+import { TabIndicator } from '@ui-kitten/components/ui/shared/tabIndicator.component';
 import * as React from 'react';
 import { createBottomTabNavigator, BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import { BottomNavigation, BottomNavigationTab, Divider } from '@ui-kitten/components';
+import { StyleSheet } from 'react-native';
 import type { RootTabParamList } from '../../types/types';
 import ChartsStackNavigator from '../ChartsStackNavigator/ChartsStackNavigator';
 import HomeStackNavigator from '../HomeStackNavigator/HomeStackNavigator';
@@ -13,8 +15,10 @@ const Tab = createBottomTabNavigator<RootTabParamList>();
 const BottomTabBar = ({ navigation, state }: BottomTabBarProps): React.ReactElement => (
   <>
     <Divider />
+    <TabIndicator></TabIndicator>
     <BottomNavigation
-      appearance="noIndicator"
+      appearance="default"
+      indicatorStyle={styles.indicator}
       selectedIndex={state.index}
       onSelect={index => navigation.navigate(state.routeNames[index])}
     >
@@ -38,5 +42,13 @@ const RootTabNavigator = (): React.ReactElement => (
     <Tab.Screen name="MoreStackNavigator" component={MoreStackNavigator} options={{ lazy: false }} />
   </Tab.Navigator>
 );
+
+const styles = StyleSheet.create({
+  indicator: {
+    // Negative margin removes light indicator background on dark theme
+    margin: -4,
+    height: 4,
+  },
+});
 
 export default RootTabNavigator;

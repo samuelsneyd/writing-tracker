@@ -4,7 +4,7 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { noCase } from 'change-case';
 import { titleCase } from 'title-case';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { colorModeSet, themeSet } from '../../store/themes/themeSlice';
+import { colorModeSet, designSystemSet, themeSet } from '../../store/themes/themeSlice';
 import { themesList } from '../../themes';
 import type { MoreStackParamList } from '../../types/types';
 import { Divider, Layout, TopNavigation, Text, Button, TopNavigationAction } from '@ui-kitten/components';
@@ -16,10 +16,14 @@ const ThemesScreen = ({ navigation }: Props): React.ReactElement => {
   const dispatch = useAppDispatch();
   const theme = useAppSelector(state => state.theme);
 
-  // TODO - handle multiple themes beyond light/dark
   const handleColorModeChange = () => {
     const nextColorMode = theme.colorMode === 'light' ? 'dark' : 'light';
     dispatch(colorModeSet(nextColorMode));
+  };
+
+  const handleDesignSystemChange = () => {
+    const nextDesignSystem = theme.designSystem === 'eva' ? 'material' : 'eva';
+    dispatch(designSystemSet(nextDesignSystem));
   };
 
   const handleThemeChange = (theme: string): void => {
@@ -38,6 +42,7 @@ const ThemesScreen = ({ navigation }: Props): React.ReactElement => {
         <Layout style={styles.body}>
           <Text category="h1">Themes</Text>
           <Button onPress={handleColorModeChange}>Toggle light/dark mode</Button>
+          <Button onPress={handleDesignSystemChange}>Toggle design system</Button>
           {themesList.map(theme =>
             <Button key={theme} onPress={() => handleThemeChange(theme)}>
               <Text>{titleCase(noCase(theme))}</Text>

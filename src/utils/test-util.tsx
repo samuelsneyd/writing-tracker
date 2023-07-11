@@ -13,7 +13,7 @@ export type TestingWrapperOptions = {
 
 const ThemedWrapper = ({ children }: React.PropsWithChildren): React.ReactElement => {
   // Read theme from Redux, but use default values if none found
-  const theme = useAppSelector(state => state.theme) ?? { colorMode: 'light', themeValue: undefined };
+  const theme = useAppSelector(state => state.theme) ?? { colorMode: 'light', themeName: undefined };
 
   return (
     <>
@@ -22,7 +22,7 @@ const ThemedWrapper = ({ children }: React.PropsWithChildren): React.ReactElemen
         {...eva}
         theme={{
           ...eva[theme.colorMode],
-          ...themesMap[theme.themeValue],
+          ...themesMap[theme.themeName],
         }}
       >
         {children}
