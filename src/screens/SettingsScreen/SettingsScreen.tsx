@@ -2,7 +2,7 @@ import * as React from 'react';
 import { SafeAreaView, ScrollView, StyleSheet } from 'react-native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { SettingsStackParamList } from '../../types/types';
-import { Divider, Layout, TopNavigation, Text, TopNavigationAction } from '@ui-kitten/components';
+import { Divider, Layout, TopNavigation, TopNavigationAction } from '@ui-kitten/components';
 import { ArrowIosBackIcon } from '../../components/Icons/Icons';
 
 type Props = NativeStackScreenProps<SettingsStackParamList, 'Settings'>;
