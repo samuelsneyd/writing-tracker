@@ -5,7 +5,7 @@ import type { SettingsStackParamList } from '../../types/types';
 import { Divider, Layout, TopNavigation, Text, TopNavigationAction } from '@ui-kitten/components';
 import { ArrowIosBackIcon } from '../../components/Icons/Icons';
 
-type Props = NativeStackScreenProps<SettingsStackParamList, 'Settings'>
+type Props = NativeStackScreenProps<SettingsStackParamList, 'Settings'>;
 
 const SettingsScreen = ({ navigation }: Props): React.ReactElement => {
   const BackAction = () => (
