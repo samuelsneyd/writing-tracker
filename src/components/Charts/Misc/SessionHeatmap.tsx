@@ -10,7 +10,13 @@ import { ChartProps } from '../chart-types';
 import { formatInterval } from '../chart-utils';
 
 export const SessionHeatmap = (props: ChartProps) => {
-  const { showTitle = true, chartContainerStyle = defaultChartStyles.chartContainer } = props;
+  const {
+    showTitle = true,
+    chartContainerStyle = {
+      ...defaultChartStyles.chartContainer,
+      height: 240, // Explicit height to match bar charts' height
+    },
+  } = props;
   const theme = useTheme();
   const today = new Date();
   const start = startOfDay(sub(today, { years: 1 })).getTime();

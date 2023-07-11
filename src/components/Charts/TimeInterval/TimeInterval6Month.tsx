@@ -176,7 +176,7 @@ export const TimeInterval6Month = (props: ChartProps): React.ReactElement => {
           yAxisTextStyle={{ color: theme['text-hint-color'] }}
           yAxisColor={theme['text-hint-color']}
           xAxisColor={theme['text-hint-color']}
-          scrollToEnd
+          disableScroll
         />
       </Layout>
     </>
