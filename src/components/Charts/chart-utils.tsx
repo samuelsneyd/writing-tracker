@@ -1,8 +1,8 @@
 import * as React from 'react';
 import _ from 'lodash';
 import { format, isSameDay, isSameMonth, isSameYear } from 'date-fns';
-import { Text, TextElement, ThemeType, Tooltip } from '@ui-kitten/components';
-import { StyleSheet } from 'react-native';
+import { Text, TextElement, ThemeType } from '@ui-kitten/components';
+import { Dimensions, StyleSheet } from 'react-native';
 import { BarDataItemType } from './chart-types';
 
 /**
@@ -27,7 +27,7 @@ export const renderTooltip = (
     value = (item.value * offset).toLocaleString();
   }
 
-  return <Text style={styles.toolTip}>{prefix}{value}{suffix}</Text>
+  return <Text style={styles.toolTip}>{prefix}{value}{suffix}</Text>;
 };
 
 /**
@@ -174,6 +174,33 @@ export const formatMinutesAsHourMinutes = (minutes: number): string => {
     (hours || (!hours && !remainingMinutes) ? `${hours.toLocaleString()}h ` : '')
     + (remainingMinutes || (!hours && !remainingMinutes) ? `${remainingMinutes.toLocaleString()}m` : '')
   );
+};
+
+/**
+ * Calculates chart and bar static widths for bar charts that do not allow scrolling
+ * and that will
+ * @param numberOfBars the number of bars that will show side by side.
+ * @param yAxisLabelWidth how many pixels the yAxisLabel takes up.
+ * @param initialSpacing initial distance between the yAxis and the first bar.
+ * @param spacing distance between consecutive bars.
+ */
+export const getStaticBarChartDimensions = (
+  numberOfBars: number,
+  yAxisLabelWidth: number,
+  initialSpacing: number,
+  spacing: number,
+) => {
+  const screenWidth = Dimensions.get('window').width;
+  const containerPaddingHorizontal = 8;
+  const chartWidth = Math.floor(screenWidth - yAxisLabelWidth - (containerPaddingHorizontal * 2));
+  const barWidth = (
+    chartWidth
+    - (initialSpacing * 2)
+    - (spacing * (numberOfBars - 1))
+    - containerPaddingHorizontal * 2
+  ) / numberOfBars;
+
+  return { chartWidth, barWidth };
 };
 
 const styles = StyleSheet.create({

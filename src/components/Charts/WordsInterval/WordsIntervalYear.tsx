@@ -18,7 +18,14 @@ import { useAppSelector } from '../../../store/hooks';
 import ChartAggregateHeader from '../../ChartAggregateHeader/ChartAggregateHeader';
 import { defaultChartStyles } from '../chart-styles';
 import type { ChartProps, BarDataItemType } from '../chart-types';
-import { formatInterval, getMaxYAxisValue, getYAxisLabelTexts, renderLabel, renderTooltip } from '../chart-utils';
+import {
+  formatInterval,
+  getMaxYAxisValue,
+  getStaticBarChartDimensions,
+  getYAxisLabelTexts,
+  renderLabel,
+  renderTooltip,
+} from '../chart-utils';
 
 setDefaultOptions({ weekStartsOn: 1 });
 
@@ -70,8 +77,18 @@ export const WordsIntervalYear = (props: ChartProps): React.ReactElement => {
     [barData],
   );
 
-  const maxValue = React.useMemo(() => getMaxYAxisValue(barData), [barData]);
+  const maxValue = React.useMemo(() => getMaxYAxisValue(barData, 2000, 2000), [barData]);
   const yAxisLabelTexts = React.useMemo(() => getYAxisLabelTexts(maxValue), [maxValue]);
+
+  const numberOfBars = allMonthsInInterval.length;
+  const yAxisLabelWidth = 50;
+  const initialSpacing = 8;
+  const spacing = 6;
+  const barBorderRadius = 3;
+  const { chartWidth, barWidth } = React.useMemo(
+    () => getStaticBarChartDimensions(numberOfBars, yAxisLabelWidth, initialSpacing, spacing),
+    [numberOfBars],
+  );
 
   return (
     <>
@@ -94,20 +111,21 @@ export const WordsIntervalYear = (props: ChartProps): React.ReactElement => {
       <Layout style={chartContainerStyle}>
         <BarChart
           data={themedBarData}
+          width={chartWidth}
           frontColor={theme['color-primary-500']}
           gradientColor={theme['color-primary-300']}
           showGradient
-          barBorderRadius={3}
+          barBorderRadius={barBorderRadius}
           hideRules
-          barWidth={20}
-          spacing={6}
-          initialSpacing={8}
+          barWidth={barWidth}
+          spacing={spacing}
+          initialSpacing={initialSpacing}
           maxValue={maxValue}
           noOfSections={4}
           renderTooltip={(item: BarDataItemType) => renderTooltip(item, `${format(new Date(item.month), 'MMM')}\n`)}
           leftShiftForTooltip={12}
           leftShiftForLastIndexTooltip={22}
-          yAxisLabelWidth={50}
+          yAxisLabelWidth={yAxisLabelWidth}
           yAxisLabelTexts={yAxisLabelTexts}
           yAxisTextStyle={{ color: theme['text-hint-color'] }}
           yAxisColor={theme['text-hint-color']}

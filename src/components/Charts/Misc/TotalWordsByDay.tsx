@@ -53,7 +53,7 @@ export const TotalWordsByDay = (props: ChartProps): React.ReactElement => {
   );
   const totalWords = trackedWords + initialWords;
 
-  const maxValue = React.useMemo(() => getMaxYAxisValue(barData), [barData]);
+  const maxValue = React.useMemo(() => getMaxYAxisValue(barData, 2000, 2000), [barData]);
   const yAxisLabelTexts = React.useMemo(() => getYAxisLabelTexts(maxValue), [maxValue]);
 
   return (
@@ -79,8 +79,8 @@ export const TotalWordsByDay = (props: ChartProps): React.ReactElement => {
           maxValue={maxValue}
           noOfSections={4}
           renderTooltip={(item: BarDataItemType) => renderTooltip(item)}
-          leftShiftForTooltip={3}
-          leftShiftForLastIndexTooltip={3}
+          leftShiftForTooltip={12}
+          leftShiftForLastIndexTooltip={12}
           yAxisLabelWidth={50}
           yAxisLabelTexts={yAxisLabelTexts}
           yAxisTextStyle={{ color: theme['text-hint-color'] }}

@@ -24,7 +24,14 @@ import { useAppSelector } from '../../../store/hooks';
 import ChartAggregateHeader from '../../ChartAggregateHeader/ChartAggregateHeader';
 import { defaultChartStyles } from '../chart-styles';
 import type { ChartProps, BarDataItemType } from '../chart-types';
-import { formatInterval, getMaxYAxisValue, getYAxisLabelTexts, renderLabel, renderTooltip } from '../chart-utils';
+import {
+  formatInterval,
+  getMaxYAxisValue,
+  getStaticBarChartDimensions,
+  getYAxisLabelTexts,
+  renderLabel,
+  renderTooltip,
+} from '../chart-utils';
 
 setDefaultOptions({ weekStartsOn: 1 });
 
@@ -105,8 +112,18 @@ export const WordsInterval6Month = (props: ChartProps): React.ReactElement => {
     [barData],
   );
 
-  const maxValue = React.useMemo(() => getMaxYAxisValue(barData), [barData]);
+  const maxValue = React.useMemo(() => getMaxYAxisValue(barData, 2000, 2000), [barData]);
   const yAxisLabelTexts = React.useMemo(() => getYAxisLabelTexts(maxValue), [maxValue]);
+
+  const numberOfBars = allWeeksInInterval.length;
+  const yAxisLabelWidth = 50;
+  const initialSpacing = 6;
+  const spacing = 4;
+  const barBorderRadius = 2;
+  const { chartWidth, barWidth } = React.useMemo(
+    () => getStaticBarChartDimensions(numberOfBars, yAxisLabelWidth, initialSpacing, spacing),
+    [numberOfBars],
+  );
 
   return (
     <>
@@ -129,14 +146,15 @@ export const WordsInterval6Month = (props: ChartProps): React.ReactElement => {
       <Layout style={chartContainerStyle}>
         <BarChart
           data={themedBarData}
+          width={chartWidth}
           frontColor={theme['color-primary-500']}
           gradientColor={theme['color-primary-300']}
           showGradient
-          barBorderRadius={2}
+          barBorderRadius={barBorderRadius}
           hideRules
-          barWidth={8}
-          spacing={4}
-          initialSpacing={8}
+          barWidth={barWidth}
+          spacing={spacing}
+          initialSpacing={initialSpacing}
           maxValue={maxValue}
           noOfSections={4}
           renderTooltip={(item: BarDataItemType) => {

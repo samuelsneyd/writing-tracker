@@ -19,7 +19,14 @@ import { useAppSelector } from '../../../store/hooks';
 import ChartAggregateHeader from '../../ChartAggregateHeader/ChartAggregateHeader';
 import { defaultChartStyles } from '../chart-styles';
 import type { ChartProps, BarDataItemType } from '../chart-types';
-import { formatInterval, getMaxYAxisValue, getYAxisLabelTexts, renderLabel, renderTooltip } from '../chart-utils';
+import {
+  formatInterval,
+  getMaxYAxisValue,
+  getStaticBarChartDimensions,
+  getYAxisLabelTexts,
+  renderLabel,
+  renderTooltip,
+} from '../chart-utils';
 
 setDefaultOptions({ weekStartsOn: 1 });
 
@@ -76,6 +83,13 @@ export const WordsIntervalWeek = (props: ChartProps): React.ReactElement => {
   const maxValue = React.useMemo(() => getMaxYAxisValue(barData), [barData]);
   const yAxisLabelTexts = React.useMemo(() => getYAxisLabelTexts(maxValue), [maxValue]);
 
+  const numberOfBars = 7;
+  const yAxisLabelWidth = 50;
+  const initialSpacing = 20;
+  const spacing = 15;
+  const barBorderRadius = 4;
+  const { chartWidth, barWidth } = getStaticBarChartDimensions(numberOfBars, yAxisLabelWidth, initialSpacing, spacing);
+
   return (
     <>
       {showTitle && <Text category="h6">Words (week)</Text>}
@@ -97,13 +111,15 @@ export const WordsIntervalWeek = (props: ChartProps): React.ReactElement => {
       <Layout style={chartContainerStyle}>
         <BarChart
           data={themedBarData}
+          width={chartWidth}
           frontColor={theme['color-primary-500']}
           gradientColor={theme['color-primary-300']}
           showGradient
-          barBorderRadius={4}
+          barWidth={barWidth}
+          barBorderRadius={barBorderRadius}
           hideRules
-          spacing={15}
-          initialSpacing={20}
+          spacing={spacing}
+          initialSpacing={initialSpacing}
           maxValue={maxValue}
           noOfSections={4}
           renderTooltip={(item: BarDataItemType) =>
@@ -111,7 +127,7 @@ export const WordsIntervalWeek = (props: ChartProps): React.ReactElement => {
           }
           leftShiftForTooltip={7}
           leftShiftForLastIndexTooltip={3}
-          yAxisLabelWidth={50}
+          yAxisLabelWidth={yAxisLabelWidth}
           yAxisLabelTexts={yAxisLabelTexts}
           yAxisTextStyle={{ color: theme['text-hint-color'] }}
           yAxisColor={theme['text-hint-color']}

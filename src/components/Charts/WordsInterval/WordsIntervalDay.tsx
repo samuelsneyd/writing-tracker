@@ -20,7 +20,7 @@ import { defaultChartStyles } from '../chart-styles';
 import type { ChartProps, BarDataItemType } from '../chart-types';
 import {
   formatInterval,
-  getMaxYAxisValue,
+  getMaxYAxisValue, getStaticBarChartDimensions,
   getSteppedColors,
   getYAxisLabelTexts,
   renderLabel,
@@ -103,6 +103,13 @@ export const WordsIntervalDay = (props: ChartProps): React.ReactElement => {
   );
   const yAxisLabelTexts = React.useMemo(() => getYAxisLabelTexts(maxValue), [maxValue]);
 
+  const numberOfBars = 2;
+  const yAxisLabelWidth = 50;
+  const initialSpacing = 20;
+  const spacing = 16;
+  const barBorderRadius = 4;
+  const { chartWidth, barWidth } = getStaticBarChartDimensions(numberOfBars, yAxisLabelWidth, initialSpacing, spacing);
+
   return (
     <>
       {showTitle && <Text category="h6">Words (day)</Text>}
@@ -128,14 +135,15 @@ export const WordsIntervalDay = (props: ChartProps): React.ReactElement => {
       <Layout style={chartContainerStyle}>
         <BarChart
           data={barData}
+          width={chartWidth}
           frontColor={theme['color-primary-500']}
           gradientColor={theme['color-primary-300']}
           showGradient
-          barBorderRadius={4}
-          barWidth={120}
+          barWidth={barWidth}
+          barBorderRadius={barBorderRadius}
           hideRules
-          spacing={15}
-          initialSpacing={20}
+          spacing={spacing}
+          initialSpacing={initialSpacing}
           maxValue={maxValue}
           noOfSections={4}
           renderTooltip={(item: BarDataItemType) =>
@@ -143,7 +151,7 @@ export const WordsIntervalDay = (props: ChartProps): React.ReactElement => {
           }
           leftShiftForTooltip={7}
           leftShiftForLastIndexTooltip={3}
-          yAxisLabelWidth={50}
+          yAxisLabelWidth={yAxisLabelWidth}
           yAxisLabelTexts={yAxisLabelTexts}
           yAxisTextStyle={{ color: theme['text-hint-color'] }}
           yAxisColor={theme['text-hint-color']}
