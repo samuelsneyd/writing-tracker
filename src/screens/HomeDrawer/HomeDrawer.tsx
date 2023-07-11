@@ -16,13 +16,11 @@ type Props = DrawerScreenProps<HomeDrawerParamList, 'RootTabNavigator'>;
 export const HomeDrawer = ({ navigation }: Props): DrawerElement => {
   const [selectedIndex, setSelectedIndex] = React.useState<IndexPath>();
 
-  // TODO - add onPress handlers
   const DATA = [
     {
       title: 'Home',
       icon: HomeIcon,
       onPress: () => {
-        console.log('Home');
         navigation.navigate('RootTabNavigator');
         navigation.closeDrawer();
       },
@@ -31,7 +29,7 @@ export const HomeDrawer = ({ navigation }: Props): DrawerElement => {
       title: 'Profile',
       icon: PersonIcon,
       onPress: () => {
-        console.log('Profile');
+        navigation.navigate('ProfileStackNavigator');
         navigation.closeDrawer();
       },
     },
@@ -39,7 +37,7 @@ export const HomeDrawer = ({ navigation }: Props): DrawerElement => {
       title: 'Settings',
       icon: SettingsIcon,
       onPress: () => {
-        console.log('Settings');
+        navigation.navigate('SettingsStackNavigator');
         navigation.closeDrawer();
       },
     },
@@ -50,6 +48,7 @@ export const HomeDrawer = ({ navigation }: Props): DrawerElement => {
         try {
           await Auth.signOut();
         } catch (error) {
+          // TODO - add error toast
           console.log('error signing out: ', error);
         }
       },
@@ -75,12 +74,10 @@ export const HomeDrawer = ({ navigation }: Props): DrawerElement => {
 
   const renderFooter = () => (
     <SafeAreaLayout insets="bottom">
-      <React.Fragment>
-        <Divider />
-        <View style={styles.footer}>
-          <Text category="s2">{`Version ${version}`}</Text>
-        </View>
-      </React.Fragment>
+      <Divider />
+      <View style={styles.footer}>
+        <Text category="s2">{`Version ${version}`}</Text>
+      </View>
     </SafeAreaLayout>
   );
 
@@ -89,7 +86,8 @@ export const HomeDrawer = ({ navigation }: Props): DrawerElement => {
       header={renderHeader}
       footer={renderFooter}
       selectedIndex={selectedIndex}
-      onSelect={(index) => setSelectedIndex(index)}
+      // First index always highlighted in UI, other screens have no access to drawer
+      onSelect={() => setSelectedIndex(new IndexPath(0))}
     >
       {DATA.map((el, index) => (
         <DrawerItem

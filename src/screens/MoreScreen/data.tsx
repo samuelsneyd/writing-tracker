@@ -32,9 +32,9 @@ export const data: LayoutData[] = [
     icon: FlagIcon,
   },
   {
-    title: 'Charts',
-    route: 'ChartsStackNavigator',
-    icon: BarChartIcon,
+    title: 'Goals',
+    route: 'Goals',
+    icon: EditIcon,
   },
   {
     title: 'Projects',
@@ -42,13 +42,8 @@ export const data: LayoutData[] = [
     icon: BookIcon,
   },
   {
-    title: 'Goals',
-    route: 'Goals',
-    icon: EditIcon,
-  },
-  {
-    title: 'Settings',
-    route: 'Settings',
-    icon: SettingsIcon,
+    title: 'Charts',
+    route: 'ChartsStackNavigator',
+    icon: BarChartIcon,
   },
 ];

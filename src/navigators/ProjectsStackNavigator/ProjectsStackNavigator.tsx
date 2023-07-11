@@ -11,18 +11,16 @@ import ProjectEditScreen from '../../screens/ProjectEditScreen/ProjectEditScreen
 
 const Stack = createNativeStackNavigator<ProjectsStackParamList>();
 
-const ProjectsStackNavigator = (): React.ReactElement => {
-  return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="ProjectList" component={ProjectListScreen} />
-      <Stack.Screen name="ProjectDetails" component={ProjectDetailsScreen} />
-      <Stack.Screen name="ProjectEdit" component={ProjectEditScreen} />
-      <Stack.Screen name="ProjectNew" component={ProjectNewScreen} />
-      <Stack.Screen name="SessionList" component={SessionListScreen} />
-      <Stack.Screen name="SessionEdit" component={SessionEditScreen} />
-      <Stack.Screen name="SessionNew" component={SessionNewScreen} />
-    </Stack.Navigator>
-  );
-};
+const ProjectsStackNavigator = (): React.ReactElement => (
+  <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Screen name="ProjectList" component={ProjectListScreen} />
+    <Stack.Screen name="ProjectDetails" component={ProjectDetailsScreen} />
+    <Stack.Screen name="ProjectEdit" component={ProjectEditScreen} />
+    <Stack.Screen name="ProjectNew" component={ProjectNewScreen} />
+    <Stack.Screen name="SessionList" component={SessionListScreen} />
+    <Stack.Screen name="SessionEdit" component={SessionEditScreen} />
+    <Stack.Screen name="SessionNew" component={SessionNewScreen} />
+  </Stack.Navigator>
+);
 
 export default ProjectsStackNavigator;

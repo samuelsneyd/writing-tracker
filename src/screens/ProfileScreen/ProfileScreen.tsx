@@ -1,20 +1,20 @@
 import * as React from 'react';
 import { SafeAreaView, ScrollView, StyleSheet } from 'react-native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
-import type { SettingsStackParamList } from '../../types/types';
+import type { ProfileStackParamList } from '../../types/types';
 import { Divider, Layout, TopNavigation, Text, TopNavigationAction } from '@ui-kitten/components';
 import { ArrowIosBackIcon } from '../../components/Icons/Icons';
 
-type Props = NativeStackScreenProps<SettingsStackParamList, 'Settings'>
+type Props = NativeStackScreenProps<ProfileStackParamList, 'Profile'>
 
-const SettingsScreen = ({ navigation }: Props): React.ReactElement => {
+const ProfileScreen = ({ navigation }: Props): React.ReactElement => {
   const BackAction = () => (
     <TopNavigationAction icon={ArrowIosBackIcon} onPress={() => navigation.goBack()} />
   );
 
   return (
     <SafeAreaView style={styles.container}>
-      <TopNavigation title="Settings" alignment="center" accessoryLeft={BackAction} />
+      <TopNavigation title="Profile" alignment="center" accessoryLeft={BackAction} />
       <Divider />
       <ScrollView style={styles.container} contentContainerStyle={{ flexGrow: 1 }}>
         <Layout style={styles.body}>
@@ -36,4 +36,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SettingsScreen;
+export default ProfileScreen;

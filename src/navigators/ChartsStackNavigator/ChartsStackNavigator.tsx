@@ -5,12 +5,10 @@ import type { ChartsStackParamList } from '../../types/types';
 
 const Stack = createNativeStackNavigator<ChartsStackParamList>();
 
-const ChartsStackNavigator = (): React.ReactElement => {
-  return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Charts" component={ChartsScreen} />
-    </Stack.Navigator>
-  );
-};
+const ChartsStackNavigator = (): React.ReactElement => (
+  <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Screen name="Charts" component={ChartsScreen} />
+  </Stack.Navigator>
+);
 
 export default ChartsStackNavigator;

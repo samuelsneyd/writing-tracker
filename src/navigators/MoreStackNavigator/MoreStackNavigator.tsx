@@ -10,17 +10,15 @@ import SettingsScreen from '../../screens/SettingsScreen/SettingsScreen';
 
 const Stack = createNativeStackNavigator<MoreStackParamList>();
 
-const MoreStackNavigator = (): React.ReactElement => {
-  return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="More" options={{ title: 'More' }} component={MoreScreen} />
-      <Stack.Screen name="Awards" options={{ title: 'Awards' }} component={AwardsScreen} />
-      <Stack.Screen name="Themes" options={{ title: 'Themes' }} component={ThemesScreen} />
-      <Stack.Screen name="Challenges" options={{ title: 'Challenges' }} component={ChallengesScreen} />
-      <Stack.Screen name="Goals" options={{ title: 'Goals' }} component={GoalsScreen} />
-      <Stack.Screen name="Settings" options={{ title: 'Settings' }} component={SettingsScreen} />
-    </Stack.Navigator>
-  );
-};
+const MoreStackNavigator = (): React.ReactElement => (
+  <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Screen name="More" component={MoreScreen} />
+    <Stack.Screen name="Awards" component={AwardsScreen} />
+    <Stack.Screen name="Themes" component={ThemesScreen} />
+    <Stack.Screen name="Challenges" component={ChallengesScreen} />
+    <Stack.Screen name="Goals" component={GoalsScreen} />
+    <Stack.Screen name="Settings" component={SettingsScreen} />
+  </Stack.Navigator>
+);
 
 export default MoreStackNavigator;
