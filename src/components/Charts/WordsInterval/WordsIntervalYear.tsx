@@ -54,15 +54,11 @@ export const WordsIntervalYear = (props: ChartProps): React.ReactElement => {
       .groupBy('month')
       .mapValues(group => _.sumBy(group, 'value'))
       .defaults(_.zipObject(allMonthsInInterval, Array(allMonthsInInterval.length).fill(0)))
-      .map((value, month): BarDataItemType => {
-        return ({
-          month,
-          value,
-          labelComponent: () => {
-            return renderLabel(format(new Date(month), 'MMM')[0], 2);
-          },
-        });
-      })
+      .map((value, month): BarDataItemType => ({
+        month,
+        value,
+        labelComponent: () => renderLabel(format(new Date(month), 'MMM')[0], 2),
+      }))
       // Sort chronologically
       .sortBy('month')
       .value(),
