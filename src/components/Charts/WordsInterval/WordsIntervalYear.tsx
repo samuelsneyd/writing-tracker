@@ -82,8 +82,8 @@ export const WordsIntervalYear = (props: ChartProps): React.ReactElement => {
 
   const numberOfBars = allMonthsInInterval.length;
   const yAxisLabelWidth = 50;
-  const initialSpacing = 8;
-  const spacing = 6;
+  const initialSpacing = 10;
+  const spacing = 8;
   const barBorderRadius = 3;
   const { chartWidth, barWidth } = React.useMemo(
     () => getStaticBarChartDimensions(numberOfBars, yAxisLabelWidth, initialSpacing, spacing),
