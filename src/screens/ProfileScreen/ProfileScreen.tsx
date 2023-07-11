@@ -5,7 +5,7 @@ import type { ProfileStackParamList } from '../../types/types';
 import { Divider, Layout, TopNavigation, TopNavigationAction } from '@ui-kitten/components';
 import { ArrowIosBackIcon } from '../../components/Icons/Icons';
 
-type Props = NativeStackScreenProps<ProfileStackParamList, 'Profile'>
+type Props = NativeStackScreenProps<ProfileStackParamList, 'Profile'>;
 
 const ProfileScreen = ({ navigation }: Props): React.ReactElement => {
   const BackAction = () => (
