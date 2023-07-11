@@ -22,7 +22,7 @@ import type { ChartProps, BarDataItemType } from '../chart-types';
 import {
   formatInterval,
   formatMinutesAsHourMinutes,
-  getMaxYAxisValue,
+  getMaxYAxisValue, getStaticBarChartDimensions,
   getYAxisLabelTexts,
   renderLabel,
   renderTooltip,
@@ -90,6 +90,13 @@ export const TimeIntervalWeek = (props: ChartProps): React.ReactElement => {
   );
   const formattedTime = React.useMemo(() => formatMinutesAsHourMinutes(average), [average]);
 
+  const numberOfBars = 7;
+  const yAxisLabelWidth = 50;
+  const initialSpacing = 20;
+  const spacing = 15;
+  const barBorderRadius = 4;
+  const { chartWidth, barWidth } = getStaticBarChartDimensions(numberOfBars, yAxisLabelWidth, initialSpacing, spacing);
+
   return (
     <>
       {showTitle && <Text category="h6">Time (week)</Text>}
@@ -111,13 +118,14 @@ export const TimeIntervalWeek = (props: ChartProps): React.ReactElement => {
       <Layout style={chartContainerStyle}>
         <BarChart
           data={themedBarData}
+          width={chartWidth}
           frontColor={theme['color-primary-500']}
           gradientColor={theme['color-primary-300']}
           showGradient
-          barBorderRadius={4}
+          barBorderRadius={barBorderRadius}
           hideRules
-          spacing={15}
-          initialSpacing={20}
+          spacing={spacing}
+          initialSpacing={initialSpacing}
           maxValue={maxValue}
           noOfSections={4}
           renderTooltip={(item: BarDataItemType) =>
@@ -125,7 +133,7 @@ export const TimeIntervalWeek = (props: ChartProps): React.ReactElement => {
           }
           leftShiftForTooltip={7}
           leftShiftForLastIndexTooltip={3}
-          yAxisLabelWidth={50}
+          yAxisLabelWidth={yAxisLabelWidth}
           yAxisLabelTexts={yAxisLabelTexts}
           yAxisTextStyle={{ color: theme['text-hint-color'] }}
           yAxisColor={theme['text-hint-color']}

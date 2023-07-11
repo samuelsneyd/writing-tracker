@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { GestureResponderEvent, StyleSheet } from 'react-native';
-import { Button, Divider, Layout, Text } from '@ui-kitten/components';
+import { Button, Divider, Layout, Text, useTheme } from '@ui-kitten/components';
+import { useAppSelector } from '../../store/hooks';
 import { ArrowIosBackIcon, ArrowIosForwardIcon } from '../Icons/Icons';
 
 type ChartAggregateHeaderProps = {
@@ -31,17 +32,24 @@ const ChartAggregateHeader = (props: ChartAggregateHeaderProps) => {
     backButtonDisabled = false,
     forwardButtonDisabled = false,
   } = props;
+  const theme = useTheme();
+  const reduxTheme = useAppSelector(state => state.theme);
+
+  // Slightly more contrast against dark backgrounds than the text hint color
+  const semiHintColor = reduxTheme.colorMode === 'light'
+    ? theme['color-basic-600'] // Same as default text-hint-color
+    : theme['color-basic-500'];
 
   return (
     <>
       <Layout style={styles.horizontalContainer}>
         <Layout style={styles.aggregateContainer}>
-          <Text category="s2" appearance="hint">{aggregateText.toUpperCase()}</Text>
+          <Text category="s2" style={{ color: semiHintColor }}>{aggregateText.toUpperCase()}</Text>
           <Text>
             <Text category="h4">{typeof value === 'number' ? value.toLocaleString() : value} </Text>
-            <Text category="s1" appearance="hint">{valueText}</Text>
+            <Text category="s1" style={{ color: semiHintColor }} appearance="hint">{valueText}</Text>
           </Text>
-          <Text category="s1" appearance="hint">{intervalText}</Text>
+          <Text category="s1" style={{ color: semiHintColor }}>{intervalText}</Text>
         </Layout>
         <Layout style={styles.buttonContainer}>
           {showNavButtons &&
@@ -92,7 +100,7 @@ const styles = StyleSheet.create({
   divider: {
     height: 0,
     marginTop: 4,
-    marginBottom: 12
+    marginBottom: 12,
   },
 });
 

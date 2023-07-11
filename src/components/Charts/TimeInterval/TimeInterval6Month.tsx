@@ -27,7 +27,7 @@ import type { BarDataItemType, ChartProps } from '../chart-types';
 import {
   formatInterval,
   formatMinutesAsHourMinutes,
-  getMaxYAxisValue,
+  getMaxYAxisValue, getStaticBarChartDimensions,
   getYAxisLabelTexts,
   renderLabel,
   renderTooltip,
@@ -122,6 +122,16 @@ export const TimeInterval6Month = (props: ChartProps): React.ReactElement => {
   );
   const formattedTime = React.useMemo(() => formatMinutesAsHourMinutes(average), [average]);
 
+  const numberOfBars = allWeeksInInterval.length;
+  const yAxisLabelWidth = 50;
+  const initialSpacing = 6;
+  const spacing = 4;
+  const barBorderRadius = 2;
+  const { chartWidth, barWidth } = React.useMemo(
+    () => getStaticBarChartDimensions(numberOfBars, yAxisLabelWidth, initialSpacing, spacing),
+    [numberOfBars],
+  );
+
   return (
     <>
       {showTitle && <Text category="h6">Time (6 months)</Text>}
@@ -143,14 +153,15 @@ export const TimeInterval6Month = (props: ChartProps): React.ReactElement => {
       <Layout style={chartContainerStyle}>
         <BarChart
           data={themedBarData}
+          width={chartWidth}
           frontColor={theme['color-primary-500']}
           gradientColor={theme['color-primary-300']}
           showGradient
-          barBorderRadius={2}
+          barBorderRadius={barBorderRadius}
           hideRules
-          barWidth={8}
-          spacing={4}
-          initialSpacing={8}
+          barWidth={barWidth}
+          spacing={spacing}
+          initialSpacing={initialSpacing}
           maxValue={maxValue}
           noOfSections={4}
           renderTooltip={(item: BarDataItemType) => {
@@ -160,7 +171,7 @@ export const TimeInterval6Month = (props: ChartProps): React.ReactElement => {
           }}
           leftShiftForTooltip={20}
           leftShiftForLastIndexTooltip={30}
-          yAxisLabelWidth={50}
+          yAxisLabelWidth={yAxisLabelWidth}
           yAxisLabelTexts={yAxisLabelTexts}
           yAxisTextStyle={{ color: theme['text-hint-color'] }}
           yAxisColor={theme['text-hint-color']}
