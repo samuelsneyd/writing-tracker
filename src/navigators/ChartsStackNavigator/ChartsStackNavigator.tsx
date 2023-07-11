@@ -8,7 +8,7 @@ const Stack = createNativeStackNavigator<ChartsStackParamList>();
 const ChartsStackNavigator = (): React.ReactElement => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Charts" options={{ title: 'Add Words' }} component={ChartsScreen} />
+      <Stack.Screen name="Charts" component={ChartsScreen} />
     </Stack.Navigator>
   );
 };
