@@ -199,16 +199,30 @@ const ProjectEditScreen = ({ route, navigation }: Props): React.ReactElement => 
               >
                 {PROJECT_STATUS_DATA.map(status => renderOption(status.display))}
               </Select>
-              <Input
-                placeholder="0"
-                label="Initial words"
-                value={project.initialWords ? project.initialWords.toString() : ''}
-                onChangeText={nextValue => setProject(Project.copyOf(project, draft => {
-                  draft.initialWords = parseInt(nextValue.replace(/\D/g, '')) || 0;
-                }))}
-                size="large"
-                keyboardType="number-pad"
-              />
+              <Layout style={styles.horizontalContainer}>
+                <Input
+                  style={styles.horizontalContent}
+                  placeholder="0"
+                  label="Overall word target"
+                  value={project.overallWordTarget ? project.overallWordTarget.toString() : ''}
+                  onChangeText={nextValue => setProject(Project.copyOf(project, draft => {
+                    draft.overallWordTarget = parseInt(nextValue.replace(/\D/g, '')) || 0;
+                  }))}
+                  size="large"
+                  keyboardType="number-pad"
+                />
+                <Input
+                  style={styles.horizontalContent}
+                  placeholder="0"
+                  label="Initial words"
+                  value={project.initialWords ? project.initialWords.toString() : ''}
+                  onChangeText={nextValue => setProject(Project.copyOf(project, draft => {
+                    draft.initialWords = parseInt(nextValue.replace(/\D/g, '')) || 0;
+                  }))}
+                  size="large"
+                  keyboardType="number-pad"
+                />
+              </Layout>
               <Text appearance="hint">Daily targets</Text>
               <DailyWordRow project={project} setProject={setProject} dayName="Monday" dayKey="mon" />
               <DailyWordRow project={project} setProject={setProject} dayName="Tuesday" dayKey="tue" />
@@ -248,6 +262,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 16,
     gap: 10,
+  },
+  horizontalContainer: {
+    flexDirection: 'row',
+    gap: 16,
+  },
+  horizontalContent: {
+    flex: 1,
   },
   select: {
     width: '100%',

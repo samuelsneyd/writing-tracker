@@ -158,17 +158,32 @@ const ProjectNewScreen = ({ navigation }: Props): React.ReactElement => {
               >
                 {PROJECT_STATUS_DATA.map(status => renderOption(status.display))}
               </Select>
-              <Input
-                placeholder="0"
-                label="Initial words"
-                value={projectForm.initialWords ? projectForm.initialWords.toString() : ''}
-                onChangeText={nextValue => setProjectForm({
-                  ...projectForm,
-                  initialWords: parseInt(nextValue.replace(/\D/g, '')) || 0,
-                })}
-                size="large"
-                keyboardType="number-pad"
-              />
+              <Layout style={styles.horizontalContainer}>
+                <Input
+                  style={styles.horizontalContent}
+                  placeholder="0"
+                  label="Overall word target"
+                  value={projectForm.overallWordTarget ? projectForm.overallWordTarget.toString() : ''}
+                  onChangeText={nextValue => setProjectForm({
+                    ...projectForm,
+                    overallWordTarget: parseInt(nextValue.replace(/\D/g, '')) || 0,
+                  })}
+                  size="large"
+                  keyboardType="number-pad"
+                />
+                <Input
+                  style={styles.horizontalContent}
+                  placeholder="0"
+                  label="Initial words"
+                  value={projectForm.initialWords ? projectForm.initialWords.toString() : ''}
+                  onChangeText={nextValue => setProjectForm({
+                    ...projectForm,
+                    initialWords: parseInt(nextValue.replace(/\D/g, '')) || 0,
+                  })}
+                  size="large"
+                  keyboardType="number-pad"
+                />
+              </Layout>
               <Text appearance="hint">Daily targets</Text>
               <DailyWordRow form={projectForm} setForm={setProjectForm} dayName="Monday" dayKey="mon" />
               <DailyWordRow form={projectForm} setForm={setProjectForm} dayName="Tuesday" dayKey="tue" />
@@ -209,6 +224,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 16,
     gap: 10,
+  },
+  horizontalContainer: {
+    flexDirection: 'row',
+    gap: 16,
+  },
+  horizontalContent: {
+    flex: 1,
   },
   select: {
     width: '100%',

@@ -95,6 +95,7 @@ const DailyWordRow = (props: DailyWordRowProps) => {
 const styles = StyleSheet.create({
   dailyTargetRow: {
     flexDirection: 'row',
+    gap: 16
   },
   toggleContainer: {
     flex: 1,
