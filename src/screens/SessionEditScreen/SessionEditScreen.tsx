@@ -20,6 +20,7 @@ import {
   TopNavigationAction,
 } from '@ui-kitten/components';
 import { ArrowIosBackIcon, CalendarIcon, ClockIcon, WriteIcon } from '../../components/Icons/Icons';
+import { forceIntOrZero } from '../../utils/util';
 
 type Props = NativeStackScreenProps<ProjectsStackParamList, 'SessionEdit'>;
 
@@ -125,7 +126,7 @@ const SessionEditScreen = ({ navigation, route }: Props): React.ReactElement => 
                   label="Words"
                   value={session.words ? session.words.toString() : ''}
                   onChangeText={nextValue => {
-                    const nextIntValue = parseInt(nextValue.replace(/\D/g, '')) || 0;
+                    const nextIntValue = forceIntOrZero(nextValue);
                     setSession(Session.copyOf(session, draft => {
                       draft.words = nextIntValue;
                     }));
@@ -140,7 +141,7 @@ const SessionEditScreen = ({ navigation, route }: Props): React.ReactElement => 
                   label="Minutes"
                   value={session.minutes ? session.minutes.toString() : ''}
                   onChangeText={nextValue => {
-                    const nextIntValue = parseInt(nextValue.replace(/\D/g, '')) || 0;
+                    const nextIntValue = forceIntOrZero(nextValue);
                     setSession(Session.copyOf(session, draft => {
                       draft.minutes = nextIntValue;
                     }));

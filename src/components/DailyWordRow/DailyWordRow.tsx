@@ -3,6 +3,7 @@ import { StyleSheet } from 'react-native';
 import { Input, Layout, Toggle } from '@ui-kitten/components';
 import { Project } from '../../models';
 import { CreateProjectInput, WeeklyTargetInput } from '../../types/API';
+import { forceIntOrZero } from '../../utils/util';
 
 type DailyWordRowProps = {
   form?: CreateProjectInput;
@@ -49,7 +50,7 @@ const DailyWordRow = (props: DailyWordRowProps) => {
 
   const handleInputChange = (nextValue: string) => {
     // Limit input to integers
-    const nextIntValue = parseInt(nextValue.replace(/\D/g, '')) || 0;
+    const nextIntValue = forceIntOrZero(nextValue);
 
     if (form && setForm) {
       setForm({

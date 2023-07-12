@@ -25,6 +25,7 @@ import {
 import DailyWordRow from '../../components/DailyWordRow/DailyWordRow';
 import { capitalCase } from 'change-case';
 import { ArrowIosBackIcon } from '../../components/Icons/Icons';
+import { forceIntOrZero } from '../../utils/util';
 
 type EnumObject<T> = {
   enumVal: T,
@@ -206,7 +207,7 @@ const ProjectEditScreen = ({ route, navigation }: Props): React.ReactElement => 
                   label="Overall word target"
                   value={project.overallWordTarget ? project.overallWordTarget.toString() : ''}
                   onChangeText={nextValue => setProject(Project.copyOf(project, draft => {
-                    draft.overallWordTarget = parseInt(nextValue.replace(/\D/g, '')) || 0;
+                    draft.overallWordTarget = forceIntOrZero(nextValue);
                   }))}
                   size="large"
                   keyboardType="number-pad"
@@ -217,7 +218,7 @@ const ProjectEditScreen = ({ route, navigation }: Props): React.ReactElement => 
                   label="Initial words"
                   value={project.initialWords ? project.initialWords.toString() : ''}
                   onChangeText={nextValue => setProject(Project.copyOf(project, draft => {
-                    draft.initialWords = parseInt(nextValue.replace(/\D/g, '')) || 0;
+                    draft.initialWords = forceIntOrZero(nextValue);
                   }))}
                   size="large"
                   keyboardType="number-pad"
@@ -237,7 +238,7 @@ const ProjectEditScreen = ({ route, navigation }: Props): React.ReactElement => 
                 label="Words per page"
                 value={project.wordsPerPage ? project.wordsPerPage.toString() : ''}
                 onChangeText={nextValue => setProject(Project.copyOf(project, draft => {
-                  draft.wordsPerPage = parseInt(nextValue.replace(/\D/g, '')) || 0;
+                  draft.wordsPerPage = forceIntOrZero(nextValue);
                 }))}
                 size="large"
                 keyboardType="number-pad"

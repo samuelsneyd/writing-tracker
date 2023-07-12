@@ -60,10 +60,24 @@ export const getRandomInt = (min: number, max: number): number => {
   return Math.floor(Math.random() * (maxi - mini) + mini);
 };
 
+/**
+ * Forces a string to a positive int or zero.
+ *
+ * forceIntOrZero('2'); // 2
+ *
+ * forceIntOrZero('-2'); // 2
+ *
+ * forceIntOrZero('hello, world'); // 0
+ *
+ * @param s string to convert to an int.
+ */
+export const forceIntOrZero = (s: string): number => parseInt(s?.replace(/\D/g, '')) || 0;
+
 const util = {
   getRandomInt,
   getS3SignedHeaders,
   getS3ObjectURI,
+  forceIntOrZero,
 };
 
 export default util;

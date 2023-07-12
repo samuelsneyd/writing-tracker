@@ -26,6 +26,7 @@ import {
 import DailyWordRow from '../../components/DailyWordRow/DailyWordRow';
 import { capitalCase } from 'change-case';
 import { ArrowIosBackIcon } from '../../components/Icons/Icons';
+import { forceIntOrZero } from '../../utils/util';
 
 type EnumObject<T> = {
   enumVal: T,
@@ -166,7 +167,7 @@ const ProjectNewScreen = ({ navigation }: Props): React.ReactElement => {
                   value={projectForm.overallWordTarget ? projectForm.overallWordTarget.toString() : ''}
                   onChangeText={nextValue => setProjectForm({
                     ...projectForm,
-                    overallWordTarget: parseInt(nextValue.replace(/\D/g, '')) || 0,
+                    overallWordTarget: forceIntOrZero(nextValue),
                   })}
                   size="large"
                   keyboardType="number-pad"
@@ -178,7 +179,7 @@ const ProjectNewScreen = ({ navigation }: Props): React.ReactElement => {
                   value={projectForm.initialWords ? projectForm.initialWords.toString() : ''}
                   onChangeText={nextValue => setProjectForm({
                     ...projectForm,
-                    initialWords: parseInt(nextValue.replace(/\D/g, '')) || 0,
+                    initialWords: forceIntOrZero(nextValue),
                   })}
                   size="large"
                   keyboardType="number-pad"
@@ -199,7 +200,7 @@ const ProjectNewScreen = ({ navigation }: Props): React.ReactElement => {
                 value={projectForm.wordsPerPage ? projectForm.wordsPerPage.toString() : ''}
                 onChangeText={nextValue => setProjectForm({
                   ...projectForm,
-                  wordsPerPage: parseInt(nextValue.replace(/\D/g, '')) || 0,
+                  wordsPerPage: forceIntOrZero(nextValue),
                 })}
                 size="large"
                 keyboardType="number-pad"

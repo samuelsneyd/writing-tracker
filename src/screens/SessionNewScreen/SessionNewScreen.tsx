@@ -21,6 +21,7 @@ import {
   TopNavigationAction,
 } from '@ui-kitten/components';
 import { ArrowIosBackIcon, CalendarIcon, ClockIcon, WriteIcon } from '../../components/Icons/Icons';
+import { forceIntOrZero } from '../../utils/util';
 
 type Props = NativeStackScreenProps<ProjectsStackParamList, 'SessionNew'>;
 
@@ -95,7 +96,7 @@ const SessionNewScreen = ({ navigation, route }: Props): React.ReactElement => {
                   label="Words"
                   value={sessionForm.words ? sessionForm.words.toString() : ''}
                   onChangeText={nextValue => {
-                    const nextIntValue = parseInt(nextValue.replace(/\D/g, '')) || 0;
+                    const nextIntValue = forceIntOrZero(nextValue);
                     setSessionForm({ ...sessionForm, words: nextIntValue });
                   }}
                   accessoryRight={WriteIcon}
@@ -108,7 +109,7 @@ const SessionNewScreen = ({ navigation, route }: Props): React.ReactElement => {
                   label="Minutes"
                   value={sessionForm.minutes ? sessionForm.minutes.toString() : ''}
                   onChangeText={nextValue => {
-                    const nextIntValue = parseInt(nextValue.replace(/\D/g, '')) || 0;
+                    const nextIntValue = forceIntOrZero(nextValue);
                     setSessionForm({ ...sessionForm, minutes: nextIntValue });
                   }}
                   accessoryRight={ClockIcon}
