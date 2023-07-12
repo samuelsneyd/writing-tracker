@@ -1,14 +1,16 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 type SettingsState = {
-  isNotificationsEnabled: boolean;
+  notificationsEnabled: boolean;
   // 0: Sunday, 1: Monday
   weekStartsOn: 0 | 1 | 2 | 3 | 4 | 5 | 6;
+  tabBarIndicator: boolean;
 };
 
 const initialState: SettingsState = {
-  isNotificationsEnabled: false,
+  notificationsEnabled: false,
   weekStartsOn: 0,
+  tabBarIndicator: true,
 };
 
 export const settingsSlice = createSlice({

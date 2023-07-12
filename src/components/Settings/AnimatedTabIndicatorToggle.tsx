@@ -3,19 +3,19 @@ import { Toggle } from '@ui-kitten/components';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { settingsSet } from '../../store/settings/settingsSlice';
 
-const NotificationsToggle = () => {
+const AnimatedTabIndicatorToggle = () => {
   const settings = useAppSelector(state => state.settings);
   const dispatch = useAppDispatch();
 
   return (
     <Toggle
-      checked={settings.notificationsEnabled}
+      checked={settings.tabBarIndicator}
       onChange={() => dispatch(settingsSet({
         ...settings,
-        notificationsEnabled: !settings.notificationsEnabled,
+        tabBarIndicator: !settings.tabBarIndicator,
       }))}
     />
   );
 };
 
-export default NotificationsToggle;
+export default AnimatedTabIndicatorToggle;

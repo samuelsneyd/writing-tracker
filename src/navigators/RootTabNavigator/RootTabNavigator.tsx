@@ -3,6 +3,7 @@ import { StyleSheet } from 'react-native';
 import { TabIndicator } from '@ui-kitten/components/ui/shared/tabIndicator.component';
 import { createBottomTabNavigator, BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import { BottomNavigation, BottomNavigationTab, Divider } from '@ui-kitten/components';
+import { useAppSelector } from '../../store/hooks';
 import type { RootTabParamList } from '../../types/types';
 import ChartsStackNavigator from '../ChartsStackNavigator/ChartsStackNavigator';
 import HomeStackNavigator from '../HomeStackNavigator/HomeStackNavigator';
@@ -12,23 +13,27 @@ import { BarChartIcon, BookIcon, GridIcon, HomeIcon } from '../../components/Ico
 
 const Tab = createBottomTabNavigator<RootTabParamList>();
 
-const BottomTabBar = ({ navigation, state }: BottomTabBarProps): React.ReactElement => (
-  <>
-    <Divider />
-    <TabIndicator></TabIndicator>
-    <BottomNavigation
-      appearance="default"
-      indicatorStyle={styles.indicator}
-      selectedIndex={state.index}
-      onSelect={index => navigation.navigate(state.routeNames[index])}
-    >
-      <BottomNavigationTab title="Home" icon={HomeIcon} />
-      <BottomNavigationTab title="Projects" icon={BookIcon} />
-      <BottomNavigationTab title="Charts" icon={BarChartIcon} />
-      <BottomNavigationTab title="More" icon={GridIcon} />
-    </BottomNavigation>
-  </>
-);
+const BottomTabBar = ({ navigation, state }: BottomTabBarProps): React.ReactElement => {
+  const settings = useAppSelector(state => state.settings);
+
+  return (
+    <>
+      <Divider />
+      <TabIndicator></TabIndicator>
+      <BottomNavigation
+        appearance={settings.tabBarIndicator ? 'default' : 'noIndicator'}
+        indicatorStyle={styles.indicator}
+        selectedIndex={state.index}
+        onSelect={index => navigation.navigate(state.routeNames[index])}
+      >
+        <BottomNavigationTab title="Home" icon={HomeIcon} />
+        <BottomNavigationTab title="Projects" icon={BookIcon} />
+        <BottomNavigationTab title="Charts" icon={BarChartIcon} />
+        <BottomNavigationTab title="More" icon={GridIcon} />
+      </BottomNavigation>
+    </>
+  );
+};
 
 const RootTabNavigator = (): React.ReactElement => (
   <Tab.Navigator
