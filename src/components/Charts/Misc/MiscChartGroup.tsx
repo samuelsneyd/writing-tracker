@@ -28,11 +28,11 @@ export const MiscChartGroup = (props: TabViewProps) => {
         swipeEnabled={false}
         style={styles.tabViewContainer}
       >
-        <Tab title="Words by day of the week">
-          <TotalWordsByDay showTitle={false} chartContainerStyle={styles.barChartContainer} />
-        </Tab>
         <Tab title="Session heatmap">
           <SessionHeatmap showTitle={false} />
+        </Tab>
+        <Tab title="Words by day of the week">
+          <TotalWordsByDay showTitle={false} chartContainerStyle={styles.barChartContainer} />
         </Tab>
       </TabView>
     </>
