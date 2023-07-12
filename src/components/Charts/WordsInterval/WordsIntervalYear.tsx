@@ -33,6 +33,8 @@ export const WordsIntervalYear = (props: ChartProps): React.ReactElement => {
   const { showTitle = true, chartContainerStyle = defaultChartStyles.chartContainer } = props;
   const theme = useTheme();
   const reduxSessions = useAppSelector(state => state.sessions);
+  const settings = useAppSelector(state => state.settings);
+  setDefaultOptions({ weekStartsOn: settings.weekStartsOn });
   const today = new Date();
   const [interval, setInterval] = React.useState<Interval>({
     start: startOfYear(today).getTime(),
@@ -62,7 +64,7 @@ export const WordsIntervalYear = (props: ChartProps): React.ReactElement => {
       // Sort chronologically
       .sortBy('month')
       .value(),
-    [reduxSessions, interval.start, interval.end, allMonthsInInterval, theme],
+    [reduxSessions, interval.start, interval.end, allMonthsInInterval],
   );
 
   const themedBarData = useThemedBarData(barData, theme);

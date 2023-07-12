@@ -46,7 +46,7 @@ const WeekStartsOnRadioButtonGroup = () => {
       style={styles.horizontalContainer}
       selectedIndex={selectedIndex}
       onChange={index => {
-        dispatch(settingsSet({ ...settings, weekStartsOn: index }));
+        dispatch(settingsSet({ ...settings, weekStartsOn: index as 0 | 1 }));
         setSelectedIndex(index);
       }}
     >

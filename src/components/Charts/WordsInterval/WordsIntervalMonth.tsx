@@ -29,12 +29,12 @@ import {
   renderTooltip,
 } from '../chart-utils';
 
-setDefaultOptions({ weekStartsOn: 1 });
-
 export const WordsIntervalMonth = (props: ChartProps): React.ReactElement => {
   const { showTitle = true, chartContainerStyle = defaultChartStyles.chartContainer } = props;
   const theme = useTheme();
   const reduxSessions = useAppSelector(state => state.sessions);
+  const settings = useAppSelector(state => state.settings);
+  setDefaultOptions({ weekStartsOn: settings.weekStartsOn });
   const today = new Date();
   const [interval, setInterval] = React.useState<Interval>({
     start: startOfMonth(today).getTime(),
@@ -58,12 +58,12 @@ export const WordsIntervalMonth = (props: ChartProps): React.ReactElement => {
       .defaults(_.zipObject(allDatesInInterval, Array(allDatesInInterval.length).fill(0)))
       .map((value, day): BarDataItemType => {
         const dayDate = new Date(day);
-        const dayIndex = (getDay(dayDate) + 6) % 7;
+        const dayIndex = (getDay(dayDate) + settings.weekStartsOn) % 7;
         return ({
           day,
           dayIndex,
           value,
-          // Only render label for Mondays
+          // Only render label for first day of week
           labelComponent: () => {
             if (dayIndex === 0) {
               const label = format(dayDate, 'd');
@@ -75,7 +75,7 @@ export const WordsIntervalMonth = (props: ChartProps): React.ReactElement => {
       // Sort chronologically
       .sortBy('day')
       .value(),
-    [reduxSessions, interval.start, interval.end, allDatesInInterval],
+    [reduxSessions, interval.start, interval.end, allDatesInInterval, settings.weekStartsOn],
   );
 
   const themedBarData = useThemedBarData(barData, theme);

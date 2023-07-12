@@ -39,6 +39,8 @@ export const TimeInterval6Month = (props: ChartProps): React.ReactElement => {
   const { showTitle = true, chartContainerStyle = defaultChartStyles.chartContainer } = props;
   const theme = useTheme();
   const reduxSessions = useAppSelector(state => state.sessions);
+  const settings = useAppSelector(state => state.settings);
+  setDefaultOptions({ weekStartsOn: settings.weekStartsOn });
   const today = new Date();
   const startOfThisYear = startOfYear(today).getTime();
   const midYearCutoffLower = endOfMonth(add(startOfThisYear, { months: 5 })).getTime();
@@ -57,7 +59,7 @@ export const TimeInterval6Month = (props: ChartProps): React.ReactElement => {
   const [interval, setInterval] = React.useState<Interval>(initialInterval);
   const allWeeksInInterval = React.useMemo(
     () => eachWeekOfInterval(interval).map(date => date.toISOString()),
-    [interval.start, interval.end],
+    [interval.start, interval.end, settings.weekStartsOn],
   );
 
   let showLabel = false;

@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 type SettingsState = {
   isNotificationsEnabled: boolean;
   // 0: Sunday, 1: Monday
-  weekStartsOn: number;
+  weekStartsOn: 0 | 1 | 2 | 3 | 4 | 5 | 6;
 };
 
 const initialState: SettingsState = {

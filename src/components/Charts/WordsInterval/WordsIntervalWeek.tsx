@@ -28,21 +28,28 @@ import {
   renderTooltip,
 } from '../chart-utils';
 
-setDefaultOptions({ weekStartsOn: 1 });
-
 export const WordsIntervalWeek = (props: ChartProps): React.ReactElement => {
   const { showTitle = true, chartContainerStyle = defaultChartStyles.chartContainer } = props;
   const theme = useTheme();
   const reduxSessions = useAppSelector(state => state.sessions);
+  const settings = useAppSelector(state => state.settings);
+  setDefaultOptions({ weekStartsOn: settings.weekStartsOn });
   const today = new Date();
-  const [interval, setInterval] = React.useState<Interval>({
-    start: startOfWeek(today).getTime(),
-    end: endOfWeek(today).getTime(),
-  });
+  const initialInterval: Interval = React.useMemo(() => ({
+      start: startOfWeek(today).getTime(),
+      end: endOfWeek(today).getTime(),
+    }), [settings.weekStartsOn],
+  );
+  const [interval, setInterval] = React.useState<Interval>(initialInterval);
   const allDatesInInterval = React.useMemo(
     () => eachDayOfInterval(interval).map(date => date.toISOString()),
     [interval.start, interval.end],
   );
+
+  // When settings.weekStartsOn changes the initial interval, reset to initial interval
+  React.useEffect(() => {
+    setInterval(initialInterval);
+  }, [initialInterval]);
 
   // Sum words of all projects, grouped by day of the week
   const barData = React.useMemo(
@@ -57,7 +64,7 @@ export const WordsIntervalWeek = (props: ChartProps): React.ReactElement => {
       .defaults(_.zipObject(allDatesInInterval, Array(allDatesInInterval.length).fill(0)))
       .map((value, day): BarDataItemType => {
         const dayDate = new Date(day);
-        const dayIndex = (getDay(dayDate) + 6) % 7;
+        const dayIndex = (getDay(dayDate) + settings.weekStartsOn) % 7;
         const label = format(dayDate, 'E');
         return ({
           day,
@@ -69,7 +76,7 @@ export const WordsIntervalWeek = (props: ChartProps): React.ReactElement => {
       // Sort chronologically
       .sortBy('day')
       .value(),
-    [reduxSessions, interval.start, interval.end, allDatesInInterval],
+    [reduxSessions, interval.start, interval.end, allDatesInInterval, settings.weekStartsOn],
   );
 
   const themedBarData = useThemedBarData(barData, theme);
@@ -99,12 +106,12 @@ export const WordsIntervalWeek = (props: ChartProps): React.ReactElement => {
         valueText="words"
         intervalText={formatInterval(interval)}
         onBackButtonPress={() => setInterval({
-          start: sub(interval.start, { weeks: 1 }),
-          end: sub(interval.end, { weeks: 1 }),
+          start: sub(interval.start, { weeks: 1 }).getTime(),
+          end: sub(interval.end, { weeks: 1 }).getTime(),
         })}
         onForwardButtonPress={() => setInterval({
-          start: add(interval.start, { weeks: 1 }),
-          end: add(interval.end, { weeks: 1 }),
+          start: add(interval.start, { weeks: 1 }).getTime(),
+          end: add(interval.end, { weeks: 1 }).getTime(),
         })}
         forwardButtonDisabled={isWithinInterval(today, interval)}
       />

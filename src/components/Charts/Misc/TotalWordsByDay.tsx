@@ -16,15 +16,20 @@ import {
   renderTooltip,
 } from '../chart-utils';
 
-setDefaultOptions({ weekStartsOn: 1 });
-
-const DAYS_OF_WEEK = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-
 export const TotalWordsByDay = (props: ChartProps): React.ReactElement => {
   const { showTitle = true, chartContainerStyle = defaultChartStyles.chartContainer } = props;
   const theme = useTheme();
   const reduxProjects = useAppSelector(state => state.projects);
   const reduxSessions = useAppSelector(state => state.sessions);
+  const settings = useAppSelector(state => state.settings);
+  setDefaultOptions({ weekStartsOn: settings.weekStartsOn });
+
+  const daysOfWeek = React.useMemo(
+    () => settings.weekStartsOn === 0
+      ? ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+      : ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+    [settings.weekStartsOn],
+  );
 
   // Sum words of all projects, grouped by day of the week
   const barData = React.useMemo(
@@ -35,16 +40,16 @@ export const TotalWordsByDay = (props: ChartProps): React.ReactElement => {
       }))
       .groupBy('label')
       .mapValues(group => _.sumBy(group, 'value'))
-      .defaults(_.zipObject(DAYS_OF_WEEK, Array(DAYS_OF_WEEK.length).fill(0)))
+      .defaults(_.zipObject(daysOfWeek, Array(daysOfWeek.length).fill(0)))
       .map((value, label): BarDataItemType => ({
         value,
         label,
         labelComponent: () => renderLabel(label),
       }))
       // Sort Mon -> Sun
-      .sortBy(item => _.indexOf(DAYS_OF_WEEK, item.label))
+      .sortBy(item => _.indexOf(daysOfWeek, item.label))
       .value(),
-    [reduxSessions, theme],
+    [reduxSessions, daysOfWeek, theme],
   );
 
   const themedBarData = useThemedBarData(barData, theme);
