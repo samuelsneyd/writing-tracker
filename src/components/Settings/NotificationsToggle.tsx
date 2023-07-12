@@ -6,18 +6,14 @@ import { settingsSet } from '../../store/settings/settingsSlice';
 const NotificationsToggle = () => {
   const settings = useAppSelector(state => state.settings);
   const dispatch = useAppDispatch();
-  const [checked, setChecked] = React.useState<boolean>(settings.isNotificationsEnabled);
 
   return (
     <Toggle
-      checked={checked}
-      onChange={() => {
-        setChecked(!settings.isNotificationsEnabled);
-        dispatch(settingsSet({
-          ...settings,
-          isNotificationsEnabled: !settings.isNotificationsEnabled,
-        }));
-      }}
+      checked={settings.isNotificationsEnabled}
+      onChange={() => dispatch(settingsSet({
+        ...settings,
+        isNotificationsEnabled: !settings.isNotificationsEnabled,
+      }))}
     />
   );
 };
