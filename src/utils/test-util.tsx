@@ -5,6 +5,7 @@ import { EvaIconsPack } from '@ui-kitten/eva-icons';
 import { Provider } from 'react-redux';
 import { MockStoreEnhanced } from 'redux-mock-store';
 import { useAppSelector } from '../store/hooks';
+import { RootState } from '../store/store';
 import { themesMap } from '../themes';
 
 export type TestingWrapperOptions = {
@@ -53,3 +54,16 @@ export const testingWrapper = (
     </ThemedWrapper>
   </Provider>
 );
+
+export const initialState: RootState = {
+  _persist: { version: -1, rehydrated: true },
+  awards: [],
+  projects: [],
+  sessions: [],
+  theme: { colorMode: 'light', themeName: '', designSystem: 'eva' },
+  settings: {
+    notificationsEnabled: false,
+    weekStartsOn: 0,
+    tabBarIndicator: false,
+  },
+};
