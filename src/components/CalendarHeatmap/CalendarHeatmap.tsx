@@ -51,6 +51,8 @@ type CalendarHeatmapProps = {
   onPress?: (index: number) => any;
   // Array of colors to render the squares
   colorArray?: any[];
+  // Scroll to the end when the component mounts
+  scrollToEnd?: boolean;
 };
 
 /**
@@ -76,14 +78,17 @@ const CalendarHeatmap = (props: CalendarHeatmapProps) => {
     monthLabelComponent = undefined,
     showMonthLabels = true,
     colorArray = rectColor,
+    scrollToEnd = false,
   } = props;
 
   const scrollViewRef = React.useRef(null);
 
   React.useEffect(() => {
-    // Scroll to the end when the component mounts
-    // @ts-ignore
-    scrollViewRef.current.scrollToEnd({ animated: false });
+    if (scrollToEnd) {
+      // Scroll to the end when the component mounts
+      // @ts-ignore
+      scrollViewRef.current.scrollToEnd({ animated: false });
+    }
   }, []);
 
   const getValueCache = (values: Value[]) => {

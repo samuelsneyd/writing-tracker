@@ -63,6 +63,7 @@ export const SessionHeatmap = (props: ChartProps) => {
           monthLabelComponent={label => <Text appearance="hint">{label}</Text>}
           gutterSize={2}
           horizontal
+          scrollToEnd
         />
       </Layout>
     </>
