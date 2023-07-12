@@ -8,7 +8,6 @@ import {
   ColorPaletteIcon,
   EditIcon,
   FlagIcon,
-  SettingsIcon,
 } from '../../components/Icons/Icons';
 
 export type LayoutData = MenuItem & {

@@ -13,19 +13,21 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import awardsReducer from './awards/awardsSlice';
 import projectsReducer from './projects/projectsSlice';
 import sessionsReducer from './sessions/sessionsSlice';
+import settingsReducer from './settings/settingsSlice';
 import themeReducer from './themes/themeSlice';
 
 const rootReducer = combineReducers({
   awards: awardsReducer,
   projects: projectsReducer,
   sessions: sessionsReducer,
+  settings: settingsReducer,
   theme: themeReducer,
 });
 
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
-  whitelist: ['theme'],
+  whitelist: ['settings', 'theme'],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

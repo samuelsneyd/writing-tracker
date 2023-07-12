@@ -5,6 +5,10 @@ export const ArrowIosBackIcon = (props: IconProps): IconElement => (
   <Icon {...props} name="arrow-ios-back" />
 );
 
+export const ArrowIosDownIcon = (props: IconProps): IconElement => (
+  <Icon {...props} name="arrow-ios-downward" />
+);
+
 export const ArrowIosForwardIcon = (props: IconProps): IconElement => (
   <Icon {...props} name="arrow-ios-forward" />
 );
