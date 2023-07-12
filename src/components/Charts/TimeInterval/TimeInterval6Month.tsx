@@ -33,8 +33,6 @@ import {
   renderTooltip,
 } from '../chart-utils';
 
-setDefaultOptions({ weekStartsOn: 1 });
-
 export const TimeInterval6Month = (props: ChartProps): React.ReactElement => {
   const { showTitle = true, chartContainerStyle = defaultChartStyles.chartContainer } = props;
   const theme = useTheme();
@@ -46,7 +44,6 @@ export const TimeInterval6Month = (props: ChartProps): React.ReactElement => {
   const midYearCutoffLower = endOfMonth(add(startOfThisYear, { months: 5 })).getTime();
   const midYearCutoffUpper = add(startOfThisYear, { months: 6 }).getTime();
   const endOfThisYear = endOfYear(today).getTime();
-
   const firstInterval: Interval = {
     start: startOfThisYear,
     end: midYearCutoffLower,

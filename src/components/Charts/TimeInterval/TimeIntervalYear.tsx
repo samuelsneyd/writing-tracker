@@ -27,12 +27,12 @@ import {
   renderTooltip,
 } from '../chart-utils';
 
-setDefaultOptions({ weekStartsOn: 1 });
-
 export const TimeIntervalYear = (props: ChartProps): React.ReactElement => {
   const { showTitle = true, chartContainerStyle = defaultChartStyles.chartContainer } = props;
   const theme = useTheme();
   const reduxSessions = useAppSelector(state => state.sessions);
+  const settings = useAppSelector(state => state.settings);
+  setDefaultOptions({ weekStartsOn: settings.weekStartsOn });
   const today = new Date();
   const [interval, setInterval] = React.useState<Interval>({
     start: startOfYear(today).getTime(),

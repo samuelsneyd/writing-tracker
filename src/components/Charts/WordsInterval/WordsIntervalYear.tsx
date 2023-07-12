@@ -27,8 +27,6 @@ import {
   renderTooltip,
 } from '../chart-utils';
 
-setDefaultOptions({ weekStartsOn: 1 });
-
 export const WordsIntervalYear = (props: ChartProps): React.ReactElement => {
   const { showTitle = true, chartContainerStyle = defaultChartStyles.chartContainer } = props;
   const theme = useTheme();
