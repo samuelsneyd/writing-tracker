@@ -2,7 +2,7 @@ import 'react-native';
 import * as React from 'react';
 import renderer from 'react-test-renderer';
 import configureStore from 'redux-mock-store';
-import { testingWrapper } from '../../../utils/test-util';
+import { initialState, testingWrapper } from '../../../utils/test-util';
 import {
   ProgressPercentageByProject,
   SessionHeatmap,
@@ -24,12 +24,7 @@ import {
 } from '../../Charts';
 
 const mockStore = configureStore();
-const initialState = {
-  projects: [],
-  sessions: [],
-  theme: { colorMode: 'light', themeName: undefined, designSystem: 'eva' },
-};
-const rainbowTheme = { colorMode: 'light', themeValue: 'rainbowTheme' };
+const rainbowTheme = { colorMode: 'light', themeValue: 'rainbowTheme', designSystem: 'eva' };
 
 describe('ProgressPercentageByProject', () => {
   it('renders correctly', () => {
