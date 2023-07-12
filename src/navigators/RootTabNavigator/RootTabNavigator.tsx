@@ -1,8 +1,8 @@
-import { TabIndicator } from '@ui-kitten/components/ui/shared/tabIndicator.component';
 import * as React from 'react';
+import { StyleSheet } from 'react-native';
+import { TabIndicator } from '@ui-kitten/components/ui/shared/tabIndicator.component';
 import { createBottomTabNavigator, BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import { BottomNavigation, BottomNavigationTab, Divider } from '@ui-kitten/components';
-import { StyleSheet } from 'react-native';
 import type { RootTabParamList } from '../../types/types';
 import ChartsStackNavigator from '../ChartsStackNavigator/ChartsStackNavigator';
 import HomeStackNavigator from '../HomeStackNavigator/HomeStackNavigator';
