@@ -1,5 +1,12 @@
 import { BarDataItemType } from '../chart-types';
-import { getMaxYAxisValue, getSteppedColors, getYAxisLabelTexts, renderLabel, renderTooltip } from '../chart-utils';
+import {
+  formatMinutesAsHourMinutes,
+  getMaxYAxisValue,
+  getSteppedColors,
+  getYAxisLabelTexts,
+  renderLabel,
+  renderTooltip,
+} from '../chart-utils';
 
 describe('renderTooltip', () => {
   const mockItem: BarDataItemType = {
@@ -142,7 +149,7 @@ describe('getYAxisLabelTexts', () => {
   const customStepCount = 10;
   const defaultKLimit = 10000;
 
-  it('should return default labels', () => {
+  it('returns default labels', () => {
     const labels = getYAxisLabelTexts(maxYAxisValue);
     const expectedLabels = ['0', '250', '500', '750', '1,000'];
 
@@ -150,7 +157,7 @@ describe('getYAxisLabelTexts', () => {
     expect(labels).toEqual(expectedLabels);
   });
 
-  it('should return labels with custom step counts', () => {
+  it('returns labels with custom step counts', () => {
     const labels = getYAxisLabelTexts(maxYAxisValue, customStepCount);
     const expectedLabels = ['0', '100', '200', '300', '400', '500', '600', '700', '800', '900', '1,000'];
 
@@ -158,7 +165,7 @@ describe('getYAxisLabelTexts', () => {
     expect(labels).toEqual(expectedLabels);
   });
 
-  it('should apply prefix and suffix', () => {
+  it('applies prefix and suffix', () => {
     const prefix = '-';
     const suffix = '%';
     const labels = getYAxisLabelTexts(maxYAxisValue, defaultStepCount, prefix, suffix);
@@ -167,7 +174,7 @@ describe('getYAxisLabelTexts', () => {
     expect(labels).toEqual(expectedLabels);
   });
 
-  it('should apply offset', () => {
+  it('applies offset', () => {
     const customOffset = 2;
     const labels = getYAxisLabelTexts(maxYAxisValue, defaultStepCount, '', '', customOffset);
     const expectedLabels = ['0', '500', '1,000', '1,500', '2,000'];
@@ -175,7 +182,7 @@ describe('getYAxisLabelTexts', () => {
     expect(labels).toEqual(expectedLabels);
   });
 
-  it('should use default kLimit', () => {
+  it('uses default kLimit', () => {
     const belowKLimit = defaultKLimit - 1000;
     const atKLimit = defaultKLimit;
     const aboveKLimit = defaultKLimit + 1000;
@@ -191,7 +198,7 @@ describe('getYAxisLabelTexts', () => {
     expect(labelsAboveKLimit).toEqual(expectedLabelsAboveKLimit);
   });
 
-  it('should use a custom kLimit if set', () => {
+  it('uses a custom kLimit if set', () => {
     const customKLimit = 100000;
     const belowKLimit = customKLimit - 10000;
     const atKLimit = customKLimit;
@@ -258,7 +265,7 @@ describe('getSteppedColors', () => {
     'color-danger-900': '#7A0C3B',
   };
 
-  it('should return primary color on undefined or null value', () => {
+  it('returns primary color on undefined or null value', () => {
     // @ts-ignore
     const values: BarDataItemType[] = [{ value: undefined }, { value: null }];
     const steppedColors = values.map(ele => getSteppedColors(ele, mockTheme));
@@ -272,7 +279,7 @@ describe('getSteppedColors', () => {
     });
   });
 
-  it('should return stepped colors', () => {
+  it('returns stepped colors', () => {
     const values: BarDataItemType[] = [
       { value: -1 },
       { value: 0 },
@@ -316,5 +323,36 @@ describe('getSteppedColors', () => {
         showGradient: true,
       });
     });
+  });
+});
+
+describe('formatMinutesAsHourMinutes', () => {
+  it('returns 0 hours and 0 minutes when given zero', () => {
+    const minutes = 0;
+    const formatted = formatMinutesAsHourMinutes(minutes);
+
+    expect(formatted).toEqual('0h 0m');
+  });
+
+  it('returns minutes only when less than 1 hour', () => {
+    const minutes = 30;
+    const formatted = formatMinutesAsHourMinutes(minutes);
+
+    expect(formatted).toEqual('30m');
+  });
+
+  it('returns hours only when multiples of 1 hour', () => {
+    const minutesArray = [60, 120, 180, 240, 300, 360, 420, 480, 540, 600];
+    const formattedArray = minutesArray.map(minutes => formatMinutesAsHourMinutes(minutes));
+    const expectedArray = ['1h', '2h', '3h', '4h', '5h', '6h', '7h', '8h', '9h', '10h'];
+
+    formattedArray.forEach((formatted, i) => expect(formatted).toEqual(expectedArray[i]));
+  });
+
+  it('returns hours minutes when above 1 hour and not a multiple of 1 hour', () => {
+    const minutes = 90;
+    const formatted = formatMinutesAsHourMinutes(minutes);
+
+    expect(formatted).toEqual('1h 30m');
   });
 });

@@ -171,7 +171,8 @@ export const formatMinutesAsHourMinutes = (minutes: number): string => {
   const remainingMinutes = minutes % 60;
 
   return (
-    (hours || (!hours && !remainingMinutes) ? `${hours.toLocaleString()}h ` : '')
+    (hours || (!hours && !remainingMinutes) ? `${hours.toLocaleString()}h` : '')
+    + (!!hours === !!remainingMinutes ? ' ' : '')
     + (remainingMinutes || (!hours && !remainingMinutes) ? `${remainingMinutes.toLocaleString()}m` : '')
   );
 };
