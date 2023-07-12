@@ -4,7 +4,6 @@ import { DataStore } from 'aws-amplify';
 import { SafeAreaView, ScrollView, StyleSheet } from 'react-native';
 import { useIsFocused } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
-import DailyGoalTabs from '../../components/DailyGoalTabs/DailyGoalTabs';
 import { Award, Project, Session } from '../../models';
 import { SerializedAward, SerializedProject, SerializedSession } from '../../models/serialized';
 import { awardsSet } from '../../store/awards/awardsSlice';
@@ -20,6 +19,7 @@ import {
   TopNavigationAction,
   TopNavigationActionElement,
 } from '@ui-kitten/components';
+import DailyGoalTabs from '../../components/DailyGoal/DailyGoalTabs';
 import DailyQuote from '../../components/DailyQuote/DailyQuote';
 import LoginStreak from '../../components/LoginStreak/LoginStreak';
 import { MenuIcon } from '../../components/Icons/Icons';

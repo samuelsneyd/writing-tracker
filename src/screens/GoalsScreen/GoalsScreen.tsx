@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { SafeAreaView, ScrollView, StyleSheet } from 'react-native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
-import DailyGoalTabs from '../../components/DailyGoalTabs/DailyGoalTabs';
+import DailyGoalTabs from '../../components/DailyGoal/DailyGoalTabs';
 import { ArrowIosBackIcon } from '../../components/Icons/Icons';
 import type { GoalsStackParamList } from '../../types/types';
 import { Divider, Layout, TopNavigation, Text, TopNavigationAction } from '@ui-kitten/components';

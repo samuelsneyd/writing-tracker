@@ -2,7 +2,7 @@ import * as React from 'react';
 import { StyleSheet } from 'react-native';
 import { Layout, Tab, TabView, TabViewProps, Text } from '@ui-kitten/components';
 import useDailyTasks from '../../hooks/useDailyTasks/useDailyTasks';
-import DailyGoalCard from '../DailyGoalCard/DailyGoalCard';
+import DailyGoalCard from './DailyGoalCard';
 
 const DailyGoalTabs = (props: TabViewProps): React.ReactElement => {
   const [selectedIndex, setSelectedIndex] = React.useState<number>(0);

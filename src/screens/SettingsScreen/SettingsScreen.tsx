@@ -1,73 +1,19 @@
 import * as React from 'react';
 import { ListRenderItemInfo, SafeAreaView, StyleSheet } from 'react-native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { settingsSet } from '../../store/settings/settingsSlice';
 import type { SettingsStackParamList } from '../../types/types';
 import {
   Divider,
   Layout,
   List,
-  ListItem, Radio, RadioGroup,
-  Toggle,
+  ListItem,
   TopNavigation,
   TopNavigationAction,
 } from '@ui-kitten/components';
 import { ArrowIosBackIcon } from '../../components/Icons/Icons';
+import { data } from './data';
 
 type Props = NativeStackScreenProps<SettingsStackParamList, 'Settings'>;
-
-const NotificationsToggle = () => {
-  const settings = useAppSelector(state => state.settings);
-  const dispatch = useAppDispatch();
-  const [checked, setChecked] = React.useState<boolean>(settings.isNotificationsEnabled);
-
-  return (
-    <Toggle
-      checked={checked}
-      onChange={() => {
-        setChecked(!settings.isNotificationsEnabled);
-        dispatch(settingsSet({
-          ...settings,
-          isNotificationsEnabled: !settings.isNotificationsEnabled,
-        }));
-      }}
-    />
-  );
-};
-
-const WeekStartsOnRadioButtonGroup = () => {
-  const settings = useAppSelector(state => state.settings);
-  const dispatch = useAppDispatch();
-  const [selectedIndex, setSelectedIndex] = React.useState<number>(settings.weekStartsOn);
-
-  return (
-    <RadioGroup
-      style={styles.horizontalContainer}
-      selectedIndex={selectedIndex}
-      onChange={index => {
-        dispatch(settingsSet({ ...settings, weekStartsOn: index as 0 | 1 }));
-        setSelectedIndex(index);
-      }}
-    >
-      <Radio>Sunday</Radio>
-      <Radio>Monday</Radio>
-    </RadioGroup>
-  );
-};
-
-const data = [
-  {
-    title: 'Notifications',
-    description: 'Enable or disable notifications',
-    accessoryRight: NotificationsToggle,
-  },
-  {
-    title: 'Week Starts On',
-    description: 'For weekly goals and charts',
-    accessoryRight: WeekStartsOnRadioButtonGroup,
-  },
-];
 
 const SettingsScreen = ({ navigation }: Props): React.ReactElement => {
   const renderItem = (info: ListRenderItemInfo<any>) => {
@@ -114,9 +60,6 @@ const styles = StyleSheet.create({
   },
   verticalList: {
     width: '100%',
-  },
-  horizontalContainer: {
-    flexDirection: 'row',
   },
 });
 
