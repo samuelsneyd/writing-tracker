@@ -7,6 +7,7 @@ import {
   Layout,
   List,
   ListItem,
+  Text,
   TopNavigation,
   TopNavigationAction,
 } from '@ui-kitten/components';
@@ -19,13 +20,15 @@ const SettingsScreen = ({ navigation }: Props): React.ReactElement => {
   const renderItem = (info: ListRenderItemInfo<any>) => {
     const { item } = info;
 
-    return (
-      <ListItem
-        title={item.title}
-        description={item.description}
-        accessoryRight={item.accessoryRight}
-      />
-    );
+    return item.isSeparator
+      ? <Layout level="2" style={styles.listSeparator} />
+      : (
+        <ListItem
+          title={() => <Text category="s2" status={item.status || 'basic'} style={styles.listItem}>{item.title}</Text>}
+          description={item.description}
+          accessoryRight={item.accessoryRight}
+        />
+      );
   };
 
   const BackAction = () => (
@@ -60,6 +63,13 @@ const styles = StyleSheet.create({
   },
   verticalList: {
     width: '100%',
+  },
+  listSeparator: {
+    width: '100%',
+    height: 32,
+  },
+  listItem: {
+    paddingLeft: 8,
   },
 });
 
