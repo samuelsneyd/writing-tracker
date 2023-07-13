@@ -9,7 +9,7 @@ export type BarDataAggregate = {
 
 type BarDataAggregateOptions = {
   iteratee?: string;
-  filterPredicate?: _.ObjectIterateeCustom<BarDataItemType[], boolean>
+  filterPredicate?: _.ObjectIterateeCustom<BarDataItemType[], boolean>;
 };
 
 /**
