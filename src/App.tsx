@@ -12,7 +12,7 @@ import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { persistor, store } from './store/store';
 
-const ThemedContent = () => {
+const ThemedContent = (): React.ReactElement => {
   // The theme is persisted between app loads with redux-persist
   const theme = useAppSelector(state => state.theme);
   // App requires restart on design system change
@@ -36,7 +36,7 @@ const ThemedContent = () => {
   );
 };
 
-const App = () => (
+const App = (): React.ReactElement => (
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
       <ThemedContent />
