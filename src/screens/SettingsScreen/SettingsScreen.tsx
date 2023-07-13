@@ -27,6 +27,7 @@ const SettingsScreen = ({ navigation }: Props): React.ReactElement => {
           title={() => <Text category="s2" status={item.status || 'basic'} style={styles.listItem}>{item.title}</Text>}
           description={item.description}
           accessoryRight={item.accessoryRight}
+          onPress={item.onPress}
         />
       );
   };

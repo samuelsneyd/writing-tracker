@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { ListItemProps } from '@ui-kitten/components';
 import { globalSignOut, signOut } from '../../auth/auth';
-import { ArrowIosForwardIcon, LogOutIcon } from '../../components/Icons/Icons';
+import { ArrowIosForwardIcon } from '../../components/Icons/Icons';
 import AnimatedTabIndicatorToggle from '../../components/Settings/AnimatedTabIndicatorToggle';
 import NotificationsToggle from '../../components/Settings/NotificationsToggle';
 import WeekStartsOnRadioButtonGroup from '../../components/Settings/WeekStartsOnRadioButtonGroup';
