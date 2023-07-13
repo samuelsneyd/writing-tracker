@@ -43,14 +43,15 @@ export const data: SettingsListItem[] = [
   separator,
   {
     title: 'Log Out',
-    accessoryRight: <LogOutIcon onPress={signOut} />,
+    description: 'Log out on this device',
+    onPress: signOut,
     status: 'danger',
   },
   separator,
   {
     title: 'Global Log Out',
     description: 'Log out on all devices',
-    accessoryRight: <LogOutIcon onPress={globalSignOut} />,
+    onPress: globalSignOut,
     status: 'danger',
   },
 ];

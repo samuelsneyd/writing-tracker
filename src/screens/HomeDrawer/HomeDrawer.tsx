@@ -4,7 +4,7 @@ import { DrawerScreenProps } from '@react-navigation/drawer';
 import { Divider, Drawer, DrawerElement, DrawerItem, IndexPath, Layout, Text } from '@ui-kitten/components';
 import { Auth } from 'aws-amplify';
 import { name as appName } from '../../../app.json';
-import { HomeIcon, LogOutIcon, PersonIcon, SettingsIcon } from '../../components/Icons/Icons';
+import { ColorPaletteIcon, HomeIcon, LogOutIcon, PersonIcon, SettingsIcon } from '../../components/Icons/Icons';
 import { SafeAreaLayout } from '../../components/SafeAreaComponent/SafeAreaComponent';
 import { HomeDrawerParamList } from '../../types/types';
 
@@ -30,6 +30,14 @@ export const HomeDrawer = ({ navigation }: Props): DrawerElement => {
       icon: PersonIcon,
       onPress: () => {
         navigation.navigate('ProfileStackNavigator');
+        navigation.closeDrawer();
+      },
+    },
+    {
+      title: 'Themes',
+      icon: ColorPaletteIcon,
+      onPress: () => {
+        navigation.navigate('ThemesStackNavigator');
         navigation.closeDrawer();
       },
     },

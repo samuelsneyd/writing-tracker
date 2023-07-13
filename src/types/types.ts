@@ -1,8 +1,9 @@
 export type HomeDrawerParamList = {
   // ScreenName: Props | undefined
   RootTabNavigator: undefined;
-  SettingsStackNavigator: undefined;
   ProfileStackNavigator: undefined;
+  ThemesStackNavigator: undefined;
+  SettingsStackNavigator: undefined;
 }
 
 export type RootTabParamList = {
@@ -52,9 +53,13 @@ export type SettingsStackParamList = {
   Settings: undefined;
 };
 
+export type ThemesStackParamList = {
+  Themes: undefined;
+};
+
 export type ProfileStackParamList = {
   Profile: undefined;
-}
+};
 
 export type Quote = {
   quote: string;

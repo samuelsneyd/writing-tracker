@@ -12,8 +12,9 @@ type Props = NativeStackScreenProps<MoreStackParamList, 'More'>
 
 const MoreScreen = ({ navigation }: Props): React.ReactElement => {
   const onItemPress = (index: number): void => {
-    // Parent allows navigation to a different tab from inside nested stack
-    navigation.getParent()!.navigate(data[index].route);
+    // Some routes propagate to parent
+    // @ts-ignore
+    navigation.navigate(data[index].route);
   };
 
   const renderDrawerAction = (): TopNavigationActionElement => (
