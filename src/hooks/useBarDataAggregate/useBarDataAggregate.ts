@@ -29,8 +29,8 @@ const useBarDataAggregate = (
     } = options;
 
     const filteredData = _.filter(barData, filterPredicate);
-    const average = Math.round(_.meanBy(filteredData, iteratee)) || 0;
     const total = Math.round(_.sumBy(filteredData, iteratee)) || 0;
+    const average = Math.round(total / filteredData.length) || 0;
 
     return { average, total };
   },
