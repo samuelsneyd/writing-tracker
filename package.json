@@ -59,7 +59,6 @@
     "@react-native-community/eslint-config": "^3.2.0",
     "@tsconfig/react-native": "^2.0.2",
     "@types/aws-lambda": "^8.10.119",
-    "@types/date-fns": "^2.6.0",
     "@types/jest": "^29.2.1",
     "@types/lodash": "^4.14.195",
     "@types/react": "^18.0.24",
