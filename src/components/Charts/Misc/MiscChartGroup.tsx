@@ -29,7 +29,7 @@ export const MiscChartGroup = (props: TabViewProps) => {
         style={styles.tabViewContainer}
       >
         <Tab title="Session heatmap">
-          <SessionHeatmap showTitle={false} />
+          <SessionHeatmap showTitle={false} chartContainerStyle={styles.heatMapContainer} />
         </Tab>
         <Tab title="Words by day of the week">
           <TotalWordsByDay showTitle={false} chartContainerStyle={styles.barChartContainer} />
@@ -50,5 +50,9 @@ const styles = StyleSheet.create({
     width: '100%',
     marginHorizontal: -8,
     paddingBottom: 20,
+  },
+  heatMapContainer: {
+    // To fix overflow from bar chart negative margin
+    marginRight: 8,
   },
 });
