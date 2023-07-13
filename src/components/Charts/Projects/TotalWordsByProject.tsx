@@ -2,6 +2,7 @@ import * as React from 'react';
 import _ from 'lodash';
 import { Layout, Text, useTheme } from '@ui-kitten/components';
 import { BarChart } from 'react-native-gifted-charts';
+import useBarDataAggregate from '../../../hooks/useBarDataAggregate/useBarDataAggregate';
 import useThemedBarData from '../../../hooks/useThemedBarData/useThemedBarData';
 import { useAppSelector } from '../../../store/hooks';
 import ChartAggregateHeader from '../../ChartAggregateHeader/ChartAggregateHeader';
@@ -42,8 +43,7 @@ export const TotalWordsByProject = (props: ChartProps): React.ReactElement => {
 
   const themedBarData = useThemedBarData(barData, theme);
 
-  const total = React.useMemo(() => Math.round(_.sumBy(barData, 'value')), [barData]);
-  const average = React.useMemo(() => Math.round(_.meanBy(barData, 'value')), [barData]);
+  const { average, total } = useBarDataAggregate(barData);
 
   const maxValue = React.useMemo(() => getMaxYAxisValue(barData, 2000, 2000), [barData]);
   const yAxisLabelTexts = React.useMemo(

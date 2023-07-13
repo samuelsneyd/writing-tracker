@@ -13,6 +13,7 @@ import {
   startOfYear,
   sub,
 } from 'date-fns';
+import useBarDataAggregate from '../../../hooks/useBarDataAggregate/useBarDataAggregate';
 import useThemedBarData from '../../../hooks/useThemedBarData/useThemedBarData';
 import { useAppSelector } from '../../../store/hooks';
 import ChartAggregateHeader from '../../ChartAggregateHeader/ChartAggregateHeader';
@@ -67,11 +68,8 @@ export const WordsIntervalYear = (props: ChartProps): React.ReactElement => {
 
   const themedBarData = useThemedBarData(barData, theme);
 
-  // Average per month for the current interval
-  const average = React.useMemo(
-    () => Math.round(_(barData).filter(data => data.value).meanBy('value')) || 0,
-    [barData],
-  );
+  // Average per month, total during the current interval
+  const { average, total } = useBarDataAggregate(barData);
 
   const maxValue = React.useMemo(() => getMaxYAxisValue(barData, 2000, 2000), [barData]);
   const yAxisLabelTexts = React.useMemo(() => getYAxisLabelTexts(maxValue), [maxValue]);

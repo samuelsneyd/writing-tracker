@@ -2,6 +2,7 @@ import * as React from 'react';
 import _ from 'lodash';
 import { Layout, Text, useTheme } from '@ui-kitten/components';
 import { BarChart } from 'react-native-gifted-charts';
+import useBarDataAggregate from '../../../hooks/useBarDataAggregate/useBarDataAggregate';
 import useThemedBarData from '../../../hooks/useThemedBarData/useThemedBarData';
 import { useAppSelector } from '../../../store/hooks';
 import ChartAggregateHeader from '../../ChartAggregateHeader/ChartAggregateHeader';
@@ -48,11 +49,10 @@ export const TotalTimeByProject = (props: ChartProps): React.ReactElement => {
 
   const themedBarData = useThemedBarData(barData, theme);
 
-  // Total of all minutes
-  const totalMinutes = React.useMemo(() => (_.sumBy(barData, 'value')) || 0, [barData]);
-  const formattedTotal = React.useMemo(() => formatMinutesAsHourMinutes(totalMinutes), [totalMinutes]);
-  const averageMinutes = React.useMemo(() => Math.round((_.meanBy(barData, 'value'))) || 0, [barData]);
-  const formattedAverage = React.useMemo(() => formatMinutesAsHourMinutes(averageMinutes), [averageMinutes]);
+  // Average minutes per project and total all minutes
+  const { average, total } = useBarDataAggregate(barData);
+  const formattedAverage = React.useMemo(() => formatMinutesAsHourMinutes(average), [average]);
+  const formattedTotal = React.useMemo(() => formatMinutesAsHourMinutes(total), [total]);
 
   const maxValue = React.useMemo(() => getMaxYAxisValue(barData, 2 * 60, 2 * 60), [barData]);
   const yAxisLabelTexts = React.useMemo(

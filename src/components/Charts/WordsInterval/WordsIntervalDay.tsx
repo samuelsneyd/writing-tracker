@@ -13,6 +13,7 @@ import {
   startOfDay,
   sub,
 } from 'date-fns';
+import useBarDataAggregate from '../../../hooks/useBarDataAggregate/useBarDataAggregate';
 import useDailyTasks from '../../../hooks/useDailyTasks/useDailyTasks';
 import { useAppSelector } from '../../../store/hooks';
 import ChartAggregateHeader from '../../ChartAggregateHeader/ChartAggregateHeader';
@@ -88,11 +89,10 @@ export const WordsIntervalDay = (props: ChartProps): React.ReactElement => {
     [reduxSessions, interval.start, interval.end, allDatesInInterval, settings.weekStartsOn, theme],
   );
 
-  // Average per day during current interval
-  const total = React.useMemo(
-    () => Math.round(_(barData).filter(data => data.value && data.label === 'Actual').sumBy('value')) || 0,
-    [barData],
-  );
+  // Average per day, total during current interval
+  const { average, total } = useBarDataAggregate(barData, {
+    filterPredicate: (data: BarDataItemType) => data.value && data.label === 'Actual',
+  });
 
   // Custom logic for max value to display smaller daily targets < 1000 words as larger bars
   const maxValue = React.useMemo(

@@ -47,7 +47,7 @@ export const ProgressPercentageByProject = (props: ChartProps): React.ReactEleme
 
   const totalProjects = barData.length;
   const completedProjects = React.useMemo(
-    () => barData.filter(data => data.value === 100).length,
+    () => _.countBy(barData, data => data.value === 100).true || 0,
     [barData],
   );
 

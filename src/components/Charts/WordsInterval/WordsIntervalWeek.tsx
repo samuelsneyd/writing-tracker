@@ -14,6 +14,7 @@ import {
   startOfWeek,
   sub,
 } from 'date-fns';
+import useBarDataAggregate from '../../../hooks/useBarDataAggregate/useBarDataAggregate';
 import useThemedBarData from '../../../hooks/useThemedBarData/useThemedBarData';
 import { useAppSelector } from '../../../store/hooks';
 import ChartAggregateHeader from '../../ChartAggregateHeader/ChartAggregateHeader';
@@ -81,11 +82,8 @@ export const WordsIntervalWeek = (props: ChartProps): React.ReactElement => {
 
   const themedBarData = useThemedBarData(barData, theme);
 
-  // Average per day during current interval
-  const average = React.useMemo(
-    () => Math.round(_(barData).filter(data => data.value).meanBy('value')) || 0,
-    [barData],
-  );
+  // Average per day, total during current interval
+  const { average, total } = useBarDataAggregate(barData);
 
   const maxValue = React.useMemo(() => getMaxYAxisValue(barData), [barData]);
   const yAxisLabelTexts = React.useMemo(() => getYAxisLabelTexts(maxValue), [maxValue]);

@@ -19,6 +19,7 @@ import {
   startOfYear,
   sub,
 } from 'date-fns';
+import useBarDataAggregate from '../../../hooks/useBarDataAggregate/useBarDataAggregate';
 import useThemedBarData from '../../../hooks/useThemedBarData/useThemedBarData';
 import { useAppSelector } from '../../../store/hooks';
 import ChartAggregateHeader from '../../ChartAggregateHeader/ChartAggregateHeader';
@@ -105,11 +106,8 @@ export const WordsInterval6Month = (props: ChartProps): React.ReactElement => {
 
   const themedBarData = useThemedBarData(barData, theme);
 
-  // Average per week during current interval
-  const average = React.useMemo(
-    () => Math.round(_(barData).filter(data => data.value).meanBy('value')) || 0,
-    [barData],
-  );
+  // Average per week, total during current interval
+  const { average, total } = useBarDataAggregate(barData);
 
   const maxValue = React.useMemo(() => getMaxYAxisValue(barData, 2000, 2000), [barData]);
   const yAxisLabelTexts = React.useMemo(() => getYAxisLabelTexts(maxValue), [maxValue]);
@@ -159,7 +157,7 @@ export const WordsInterval6Month = (props: ChartProps): React.ReactElement => {
           renderTooltip={(item: BarDataItemType) => {
             const start = format(new Date(item.week), 'd');
             const end = format(lastDayOfWeek(new Date(item.week)), 'd MMM');
-            return renderTooltip(item, `${start} -\n${end}\n`);
+            return renderTooltip(item, `${start}-${end}\n`);
           }}
           leftShiftForTooltip={20}
           leftShiftForLastIndexTooltip={30}

@@ -13,6 +13,7 @@ import {
   startOfYear,
   sub,
 } from 'date-fns';
+import useBarDataAggregate from '../../../hooks/useBarDataAggregate/useBarDataAggregate';
 import useThemedBarData from '../../../hooks/useThemedBarData/useThemedBarData';
 import { useAppSelector } from '../../../store/hooks';
 import ChartAggregateHeader from '../../ChartAggregateHeader/ChartAggregateHeader';
@@ -69,11 +70,8 @@ export const TimeIntervalYear = (props: ChartProps): React.ReactElement => {
 
   const themedBarData = useThemedBarData(barData, theme);
 
-  // Average minutes per month during current interval
-  const average = React.useMemo(
-    () => Math.round(_(barData).filter(data => data.value).meanBy('value')) || 0,
-    [barData],
-  );
+  // Average minutes per month, total during current interval
+  const { average, total } = useBarDataAggregate(barData);
 
   const maxValue = React.useMemo(
     () => getMaxYAxisValue(barData, 2 * 60, 2 * 60),
