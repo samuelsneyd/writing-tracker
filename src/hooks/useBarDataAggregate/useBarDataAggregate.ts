@@ -14,6 +14,8 @@ type BarDataAggregateOptions = {
 
 /**
  * Get memoized aggregates (average and total) from a bar data array.
+ * By default, it calculates based on truthy values only. This can be
+ * changed by supplying a filterPredicate callback.
  *
  * @param barData an array of bar data to get aggregates from, memoized.
  * @param options customize the iteratee or the filter predicate.
