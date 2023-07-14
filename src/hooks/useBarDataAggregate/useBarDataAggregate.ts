@@ -9,7 +9,7 @@ export type BarDataAggregate = {
 
 type BarDataAggregateOptions = {
   iteratee?: string;
-  filterPredicate?: _.ObjectIterateeCustom<BarDataItemType[], boolean>;
+  filterPredicate?: _.ObjectIterateeCustom<BarDataItemType[], boolean> | undefined | null;
 };
 
 /**
@@ -28,7 +28,7 @@ const useBarDataAggregate = (
       filterPredicate = (data: BarDataItemType) => data.value,
     } = options;
 
-    const filteredData = _.filter(barData, filterPredicate);
+    const filteredData = filterPredicate ? _.filter(barData, filterPredicate) : barData;
     const total = Math.round(_.sumBy(filteredData, iteratee)) || 0;
     const average = Math.round(total / filteredData.length) || 0;
 
